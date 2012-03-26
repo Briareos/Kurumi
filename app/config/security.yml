@@ -1,0 +1,29 @@
+security:
+    encoders:
+        App\UserBundle\Entity\User: sha512
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        default_database:
+            entity: { class: UserBundle:User, property: email }
+
+    firewalls:
+        secured_area:
+            pattern:    ^/
+            form_login:
+                check_path: /login_check
+                login_path: /login
+            logout:
+                path:   /logout
+                target: /
+            anonymous: ~
+            #http_basic:
+            #    realm: "Secured Demo Area"
+
+    access_control:
+        - { path: ^/profile, roles: ROLE_USER }
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        #- { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

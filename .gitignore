@@ -1,0 +1,9 @@
+.settings/
+.buildpath
+.idea/
+/web/bundles/
+/app/bootstrap.php.cache
+/app/cache/*
+/app/logs/*
+/vendor/
+/app/config/parameters.ini
