@@ -7,3 +7,4 @@
 /app/logs/*
 /vendor/
 /app/config/parameters.ini
+/web/library/*
