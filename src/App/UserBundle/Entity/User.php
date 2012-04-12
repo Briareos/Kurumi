@@ -3,9 +3,13 @@
 namespace App\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Serializable;
+use App\UserBundle\Entity\Profile;
+use App\UserBundle\Entity\Facebook;
 
 /**
  * App\UserBundle\Entity\User
@@ -13,7 +17,7 @@ use Serializable;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\UserBundle\Entity\UserRepository")
  */
-class User implements AdvancedUserInterface, Serializable
+class User implements AdvancedUserInterface, EquatableInterface, Serializable
 {
     /**
      * @var integer $id
@@ -34,7 +38,7 @@ class User implements AdvancedUserInterface, Serializable
     /**
      * @var string $password
      *
-     * @ORM\Column(name="password", type="string", length=255)
+     * @ORM\Column(name="password", type="string", length=255, nullable=true)
      */
     private $password;
 
@@ -46,7 +50,7 @@ class User implements AdvancedUserInterface, Serializable
     /**
      * @var string $timezone
      *
-     * @ORM\Column(name="timezone", type="string", length=255)
+     * @ORM\Column(name="timezone", type="string", length=255, nullable=true)
      */
     private $timezone;
 
@@ -58,20 +62,50 @@ class User implements AdvancedUserInterface, Serializable
     private $salt;
 
     /**
-     * @var boolean $isActive
+     * @var boolean $active
      *
-     * @ORM\Column(name="is_active", type="boolean")
+     * @ORM\Column(name="active", type="boolean")
      */
-    private $isActive;
+    private $active = true;
 
-    public function __construct() {
-        $this->salt = base_convert(sha1(uniqid(mt_rand(),true)),16,36);
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var datetime $created
+     *
+     * @ORM\Column(name="created", type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    private $created;
+
+    /**
+     * @var Profile
+     *
+     * @ORM\OneToOne(targetEntity="Profile", mappedBy="user", cascade={"remove"})
+     */
+    private $profile;
+
+    /**
+     * @var Facebook
+     *
+     * @ORM\OneToOne(targetEntity="Facebook", mappedBy="user", cascade={"remove"})
+     */
+    private $facebook;
+
+    public function __construct()
+    {
+        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -91,7 +125,7 @@ class User implements AdvancedUserInterface, Serializable
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -111,7 +145,7 @@ class User implements AdvancedUserInterface, Serializable
     /**
      * Get salt
      *
-     * @return string 
+     * @return string
      */
     public function getSalt()
     {
@@ -131,27 +165,11 @@ class User implements AdvancedUserInterface, Serializable
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
         return $this->email;
-    }
-
-    /**
-     * @param boolean $isActive
-     */
-    public function setIsActive($isActive)
-    {
-        $this->isActive = $isActive;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getIsActive()
-    {
-        return $this->isActive;
     }
 
     /**
@@ -165,15 +183,18 @@ class User implements AdvancedUserInterface, Serializable
     }
 
 
-    public function getRoles() {
+    public function getRoles()
+    {
         return array('ROLE_USER');
     }
 
-    public function equals(UserInterface $user) {
+    public function isEqualTo(UserInterface $user)
+    {
         return $this->getId() == $user->getId();
     }
 
-    public function eraseCredentials() {
+    public function eraseCredentials()
+    {
         $this->setPlainPassword(null);
     }
 
@@ -189,7 +210,7 @@ class User implements AdvancedUserInterface, Serializable
      */
     function isEnabled()
     {
-        return $this->getIsActive();
+        return $this->getActive();
     }
 
     /**
@@ -240,11 +261,13 @@ class User implements AdvancedUserInterface, Serializable
         return true;
     }
 
-    public function serialize() {
+    public function serialize()
+    {
         return serialize($this->getId());
     }
 
-    public function unserialize($serialized) {
+    public function unserialize($serialized)
+    {
         $this->id = unserialize($serialized);
     }
 
@@ -278,5 +301,94 @@ class User implements AdvancedUserInterface, Serializable
     public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
+    }
+
+    /**
+     * @param boolean $emptyPassword
+     */
+    public function setEmptyPassword($emptyPassword)
+    {
+        $this->emptyPassword = $emptyPassword;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getEmptyPassword()
+    {
+        return $this->emptyPassword;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Set profile
+     *
+     * @param App\UserBundle\Entity\Profile $profile
+     */
+    public function setProfile(Profile $profile)
+    {
+        $this->profile = $profile;
+        $profile->setUser($this);
+    }
+
+    /**
+     * Get profile
+     *
+     * @return App\UserBundle\Entity\Profile 
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean 
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @return \App\UserBundle\Entity\Facebook
+     */
+    public function getFacebook()
+    {
+        return $this->facebook;
+    }
+
+    /**
+     * @param \App\UserBundle\Entity\Facebook $facebook
+     */
+    public function setFacebook($facebook)
+    {
+        $this->facebook = $facebook;
     }
 }

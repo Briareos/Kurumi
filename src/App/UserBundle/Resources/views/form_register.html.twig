@@ -1,0 +1,24 @@
+<form novalidate id="user_register" action="{{ path('register') }}" {{ form_enctype(form_register) }} method="post" class="clearfix" data-ajax="register">
+    <dl>
+        <dt>{{ form_label(form_register.email,'form.register.email'|trans) }}</dt>
+        <dd class="email">{{ form_widget(form_register.email, {attr:{class:'text', autocomplete:'on'}}) }}
+            {{ form_errors(form_register.email) }}</dd>
+        <dt>{{ form_label(form_register.plainPassword, 'form.register.password'|trans({'%site_name%':site_name})) }}</dt>
+        <dd class="password">{{ form_widget(form_register.plainPassword, {attr:{class:'text', autocomplete:'off'}}) }}
+            {{ form_errors(form_register.plainPassword) }}</dd>
+        <dt>{{ form_label(form_register.profile.birthday, 'form.register.birthday'|trans) }}</dt>
+        <dd class="birthday">{{ form_widget(form_register.profile.birthday, {empty_value:{year:'godina',month:'mesec',day:'dan'}}) }}
+            {{ form_errors(form_register.profile.birthday) }}</dd>
+        <dt>{{ form_label(form_register.name, 'form.register.name'|trans) }}</dt>
+        <dd class="name">{{ form_widget(form_register.name, {attr:{class:'text'}}) }}
+            {{ form_errors(form_register.name) }}</dd>
+        <dt>{{ form_label(form_register.profile.gender, 'form.register.gender.label'|trans) }}</dt>
+        <dd class="gender">{{ form_widget(form_register.profile.gender.1) }}{{ form_label(form_register.profile.gender.1, 'form.register.gender.male'|trans, {attr:{class:'male'}}) }}{{ form_widget(form_register.profile.gender.2) }}{{ form_label(form_register.profile.gender.2, 'form.register.gender.female'|trans, {attr:{class:'female'}}) }}
+            {{ form_errors(form_register.profile.gender) }}</dd>
+        <dt>{{ form_label(form_register.profile.city.fullName, 'form.register.city.label'|trans ) }}</dt>
+        <dd class="city">{{ form_widget(form_register.profile.city, {attr:{class:'text',placeholder:'form.register.city.placeholder'|trans,'data-country-code':geoip.country_code,'data-country-name':geoip.country_name,'data-continent-code':geoip.continent_code,'data-language':lunetics_getLocaleLanguage()}}) }}
+            {{ form_errors(form_register.city) }}</dd>
+    </dl>
+    {{ form_rest(form_register) }}
+    <button type="submit">{{ 'form.register.submit'|trans }}</button>
+</form>

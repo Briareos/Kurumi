@@ -1,8 +1,5 @@
 {% extends '::login.html.twig' %}
 
 {% block body %}
-<form action="{{ path('register') }}" method="post">
-{{ form_widget(form) }}
-    <input type="submit" value="{{ 'Register' }}" />
-</form>
+{% include 'UserBundle:Register:register_form.html.twig' %}
 {% endblock %}

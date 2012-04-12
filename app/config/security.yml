@@ -1,3 +1,7 @@
+jms_security_extra:
+    secure_all_services: false
+    expressions: true
+
 security:
     encoders:
         App\UserBundle\Entity\User: sha512
@@ -9,21 +13,41 @@ security:
     providers:
         default_database:
             entity: { class: UserBundle:User, property: email }
+        facebook_provider:
+            id: facebook_provider
 
     firewalls:
-        secured_area:
+        main:
             pattern:    ^/
             form_login:
                 check_path: /login_check
                 login_path: /login
+                csrf_provider: form.csrf_provider
+                success_handler: ajax_authentication_handler
+                failure_handler: ajax_authentication_handler
+            #fos_facebook:
+            #    check_path: /facebook_check
+            #    app_url: "http://apps.facebook.com/appName/"
+            #    server_url: "http://localhost/facebookApp/"
             logout:
-                path:   /logout
-                target: /
+                path:           /logout
+                target:         /
+                #csrf_parameter: _csrf_token
+                csrf_provider:  form.csrf_provider
+                #intention: logout
+                handlers:       [fos_facebook.logout_handler]
             anonymous: ~
+            remember_me:
+                key:      %secret%
+                lifetime: 86400
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
             #http_basic:
             #    realm: "Secured Demo Area"
 
     access_control:
         - { path: ^/profile, roles: ROLE_USER }
+        #- { path: ^/secured/.*, role: [IS_AUTHENTICATED_FULLY] } # This is the route secured with fos_facebook
+        #- { path: ^/.*, role: [IS_AUTHENTICATED_ANONYMOUSLY] }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         #- { path: ^/_internal, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

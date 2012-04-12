@@ -1,0 +1,32 @@
+page:
+    front:
+        title: Kurumi - Meet new people in your area
+        motto: Register, would you kindly?
+        log_in: Log in
+        meet_your_area: Meet new people in your area.
+        meet_your_city: Meet new people in %city%.
+        first_time: First time on Kurumi?
+        join_now: Join today!
+
+form:
+    login:
+        email: Your e-mail address:
+        password: Your password:
+        log_in: Log in
+        remember_me: Keep me logged in
+        forgot_password: Forgot your password?
+    register:
+        email: Your e-mail address:
+        password: Choose your password:
+        birthday: Your birthday:
+        name: Your name or nickname:
+        gender:
+            label: I am
+            male: male
+            female: female
+        city:
+            label: Your city:
+            your_country: showing cities in %country%
+            all_countries: showing cities in all countries
+            placeholder: Your city
+        submit: Continue

@@ -1,0 +1,32 @@
+page:
+    front:
+        title: Куруми - Упознај нове људе
+        motto: Региструј се, важи?
+        log_in: Пријави се
+        meet_your_area: Упознај нове људе у близу тебе.
+        meet_your_city: Упознај нове људе у граду %city%.
+        first_time: Први пут на нашем сајту?
+        join_now: Придружи нам се!
+
+form:
+    login:
+        email: Твоја и-мејл адреса:
+        password: Твоја лозинка:
+        log_in: Пријави ме
+        remember_me: Упамти ме
+        forgot_password: Заборавио сам лозинку
+    register:
+        email: Твоја и-мејл адреса:
+        password: Изабери своју лозинку:
+        birthday: Твој датум рођења:
+        name: Твоје име или надимак:
+        gender:
+            label: Ја сам
+            male: мушко
+            female: женско
+        city:
+            label: Твој град:
+            your_country: градови из твоје земље, %country% (промени)
+            all_countries: градови из читавог света (промени)
+            placeholder: Твој град
+        submit: Наставак

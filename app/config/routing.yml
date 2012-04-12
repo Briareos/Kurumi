@@ -1,4 +1,30 @@
+NodejsBundle:
+    resource: "@NodejsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+front:
+    pattern: /
+
+PageBundle:
+    resource: "@PageBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 UserBundle:
     resource: "@UserBundle/Controller/"
     type:     annotation
     prefix:   /
+
+LuneticsLocaleBundle:
+    resource: "@LuneticsLocaleBundle/Resources/config/routing.yml"
+    prefix:   /
+
+login_check:
+    pattern:  /login_check
+
+logout:
+    pattern:  /logout
+
+facebook_check:
+    pattern:  /facebook_check

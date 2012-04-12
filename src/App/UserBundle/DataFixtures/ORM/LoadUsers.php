@@ -24,6 +24,7 @@ class LoadUsers implements FixtureInterface, ContainerAwareInterface {
         $admin->setPassword($this->encodePassword($admin, "metalfox"));
         $admin->setIsActive(true);
         $admin->setTimezone('Europe/Belgrade');
+        $admin->setName("Fox");
         $manager->persist($admin);
 
         $manager->flush();

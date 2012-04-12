@@ -1,9 +1,12 @@
 .settings/
 .buildpath
 .idea/
-/web/bundles/
+cgi-bin/
+certs/
+
+/vendor/
+/webroot/bundles/
 /app/bootstrap.php.cache
 /app/cache/*
 /app/logs/*
-/vendor/
-/app/config/parameters.ini
+/app/config/parameters.yml

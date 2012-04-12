@@ -8,12 +8,6 @@
     <div>{{ error.message }}</div>
 {% endif %}
 
-<form action="{{ path('login_check') }}" method="post">
-    <label for="email">Email address</label>
-    <input id="email" name="_username" type="email" />
-    <label for="password">Password</label>
-    <input id="password" name="_password" type="password" />
-    <input type="submit" name="login" />
-</form>
+{% include 'UserBundle:Login:login_form.html.twig' %}
 
 {% endblock %}
