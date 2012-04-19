@@ -44,10 +44,10 @@ class RegisterController extends Controller
                 } else {
                     $user->getProfile()->setCity($city);
                 }
-                $em->persist($user->getProfile());
                 $user->setPassword($this->encodePassword($user, $user->getPlainPassword()));
-                $em->persist($user);
                 $user->setActive(true);
+                $em->persist($user->getProfile());
+                $em->persist($user);
                 $em->flush();
                 $this->authenticateUser($user);
                 return new RedirectResponse($this->generateUrl('front'));
@@ -79,7 +79,8 @@ class RegisterController extends Controller
         $this->get('security.context')->setToken($token);
     }
 
-    private function encodePassword(UserInterface $user, $plainPassword) {
+    private function encodePassword(UserInterface $user, $plainPassword)
+    {
         $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
         return $encoder->encodePassword($plainPassword, $user->getSalt());
     }

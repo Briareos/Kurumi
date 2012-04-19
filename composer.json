@@ -24,7 +24,55 @@
         "knplabs/knp-zend-cache-bundle":"dev-master",
         "friendsofsymfony/facebook-bundle":"dev-master",
         "facebook/php-sdk":"dev-master",
-        "stof/doctrine-extensions-bundle":"dev-master"
+        "stof/doctrine-extensions-bundle":"dev-master",
+        "sonata-project/admin-bundle":"dev-master",
+        "sonata-project/doctrine-orm-admin-bundle":"dev-master"
+    },
+    "repositories":{
+        "zendframework/zend-cache":{
+            "type":"package",
+            "package":{
+                "name":"zendframework/zend-cache",
+                "version":"2.0.0beta1",
+                "dist":{
+                    "url":"http://github.com/KnpLabs/zend-cache/zipball/master",
+                    "type":"zip"
+                },
+                "source":{
+                    "url":"git://github.com/KnpLabs/zend-cache.git",
+                    "type":"git",
+                    "reference":"master"
+                },
+                "autoload":{
+                    "psr-0":{
+                        "Zend\\Cache":""
+                    }
+                },
+                "target-dir":"Zend/Cache"
+            }
+        },
+        "zendframework/zend-filter":{
+            "type":"package",
+            "package":{
+                "name":"zendframework/zend-filter",
+                "version":"2.0.0beta1",
+                "dist":{
+                    "url":"http://github.com/KnpLabs/zend-filter/zipball/master",
+                    "type":"zip"
+                },
+                "source":{
+                    "url":"git://github.com/KnpLabs/zend-filter.git",
+                    "type":"git",
+                    "reference":"master"
+                },
+                "autoload":{
+                    "psr-0":{
+                        "Zend\\Filter":""
+                    }
+                },
+                "target-dir":"Zend/Filter"
+            }
+        }
     },
     "scripts":{
         "post-install-cmd":[

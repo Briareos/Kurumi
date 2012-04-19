@@ -1,0 +1,108 @@
+@import "css/library.less";
+
+@base-color: #4183C4;
+@text-color: #333;
+@navigation-color: #222;
+@font-family: Helvetica,arial,freesans,clean,sans-serif;
+@site-width: 920px;
+@header-height: 46px;
+
+
+.clearfix {
+    display: block;
+}
+
+.clearfix::after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+body {
+    font: 13px @font-family;
+    line-height: 1.4;
+    color: @text-color;
+}
+
+a {
+    color: @base-color;
+    text-decoration: none;
+}
+
+a:hover {
+    color: darken(@base-color, 10%);
+    text-decoration: underline;
+}
+
+.container {
+    width: @site-width;
+    margin: 0 auto;
+}
+
+#header {
+    position: relative;
+    border-bottom: 1px solid #CACACA;
+    z-index: 10;
+    .box-shadow(0 1px 0 fade(white, 40%), 0 0 10px fade(black, 10%));
+    .gradient(#fafafa, #eaeaea);
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    .logo {
+        display: block;
+        float: left;
+        line-height: @header-height;
+        font-size: @header-height - 20px;
+        color: @navigation-color;
+        font-weight: bold;
+        margin-right: 15px;
+
+        &:hover {
+            color: @base-color;
+        }
+    }
+
+    .wrapper {
+        float: left;
+        width: auto;
+        border-left: 1px solid #FAFAFA;
+        .box-shadow(-1px 0 0 #e0e0e0);
+        padding: 10px 10px 10px 10px;
+
+        .navigation {
+            margin-left: 20px;
+
+            li {
+                float: left;
+                margin: 0 10px 0 0;
+
+                a {
+                    font-weight: bold;
+                    color: @navigation-color;
+                    text-shadow: 0 1px 0 fade(white, 50%);
+                    line-height: @header-height - 20px;
+                    .transition(.15s, ease-in 0);
+
+                    &:hover {
+                        color: @base-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#body {
+    position: relative;
+    padding: 20px 0 0 0;
+    width: 100%;
+    z-index: 9;
+}
+
+#footer {
+
+}

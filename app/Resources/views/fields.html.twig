@@ -1,0 +1,98 @@
+{% block field_errors %}
+{% spaceless %}
+{% if errors|length > 0 %}
+<div class="form-errors" data-for="{{ id }}">
+    <ul class="errors">
+        {% for error in errors %}
+        <li class="error">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endspaceless %}
+{% endblock field_errors %}
+
+
+{% block field_widget %}
+{% spaceless %}
+{% set type = type|default('text') %}
+{% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ type}) %}
+<input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{% endspaceless %}
+{% endblock field_widget %}
+
+
+{% block detect_timezone_widget %}
+{{ block('field_errors') }}
+{{ block('hidden_widget') }}
+<script type="text/javascript">
+    (function ($) {
+        App.loadLibrary('jstz', function () {
+            var timezone = jstz.determine_timezone();
+            $('#{{ id }}').val(timezone.name());
+        });
+    })(jQuery);
+</script>
+{% endblock %}
+
+
+{% block city_widget %}
+{{ form_widget(form.fullName,{attr:attr}) }}
+{{ form_widget(form.geonameId) }}
+<script type="text/javascript">
+    (function ($) {
+        $("#{{ id }}_fullName").autocomplete({
+            source:function (request, response) {
+                $.ajax({
+                    url:"http://ws.geonames.org/searchJSON",
+                    dataType:"jsonp",
+                    autoFocus:true,
+                    data:{
+                        username:"grayfox",
+                        lang:$(this.element).data('language'),
+                        style:"full",
+                        featureClass:"P",
+                        maxRows:6,
+                        country:$(this.element).data('country-code'),
+                        name_startsWith:request.term.split(',').shift()
+                    },
+                    success:function (data) {
+                        response($.map(data.geonames,
+                                function (item) {
+                                    var label;
+                                    if (item.countryCode == "US") {
+                                        label = item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", US";
+                                    } else {
+                                        label = item.name + ", " + item.countryName;
+                                    }
+                                    return {
+                                        label:label,
+                                        data:item
+                                    }
+                                }).sort(function (a, b) {
+                                    if(a.data.population == b.data.population) {
+                                        return 0;
+                                    } else {
+                                        return (a.data.population < b.data.population) ? 1 : -1;
+                                    }
+                                }));
+                    }
+                });
+            },
+            minLength:1,
+            create:function (event, ui) {
+                $(this).data('container', $('#{{ id }}_geonameId'));
+            },
+            select:function (event, ui) {
+                $(this).data('container').val(ui.item.data.geonameId)
+            },
+            change:function (event, ui) {
+                if (!$(this).val()) {
+                    $(this).data('container').val('');
+                }
+            }
+        });
+    })(jQuery);
+</script>
+{% endblock %}
+

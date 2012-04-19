@@ -1,0 +1,136 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'page.front.title'|trans }}{% endblock %}
+
+{% block javascript_header %}
+{{ parent() }}
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-30793556-1']);
+    _gaq.push(['_trackPageview']);
+    _gaq.push(['_trackPageLoadTime']);
+
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+</script>
+{% endblock %}
+
+{% block body %}
+{{ facebook_initialize({'xfbml': true, 'fbAsyncInit': 'App.facebookInit();'}) }}
+<script type="text/javascript">
+    App.facebookInit = function() {
+        FB.Event.subscribe('auth.statusChange', function(response) {
+            if (response.session || response.authResponse) {
+                window.location.href = "{{ path('facebook_check') }}";
+            }
+        });
+    }
+</script>
+<div id="front-page">
+    <div class="wrapper">
+        <div class="container">
+            <div class="content-wrapper clearfix">
+                <div class="content">
+                    <noscript>
+                        <div class="noscript">{{ 'page.front.javascript_required'|trans({'%site_name%':site_name}) }}</div>
+                    </noscript>
+                    <div class="language-wrapper">
+                        <div class="language">
+                            <a href="" id="language">{{ lunetics_languageName(lunetics_getLocaleLanguage()) }}</a>
+                        </div>
+                        <div id="language-swap" class="clearfix">
+                            <ul>
+                                {% for locale_id in lunetics_availableLocales %}
+                                {% if locale_id == lunetics_getLocaleLanguage() %}
+                                <li class="{{ locale_id }}"><span>{{ lunetics_languageName(locale_id) }}</span></li>
+                                {% else %}
+                                <li class="{{ locale_id }}"><a href="{{ path('LuneticsLocaleBundle_localeswitch', {_locale: locale_id}) }}">{{ lunetics_languageName(locale_id) }}</a></li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="left">
+                        <img src="{{ asset('images/logo.png') }}" height="57" />
+                        {{ 'page.front.motto'|trans }}
+                        <div class="message">
+                            {% if geoip is empty or geoip.city is empty %}
+                            {{ 'page.front.meet_your_area'|trans }}
+                            {% else %}
+                            {{ 'page.front.meet_your_city'|trans({'%city%':geoip.city}) }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="right clearfix">
+                        <div class="login clearfix">
+                            <h2>{{ 'page.front.log_in'|trans }}</h2>
+                            <form id="user_login" action="{{ path("login_check") }}" method="post" class="clearfix" data-ajax="login">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+                                <div class="form-element email">
+                                    <label for="user_login_email">{{ 'form.login.email'|trans }}</label>
+                                    <input class="text" tabindex="1" id="user_login_email" type="email" name="_username" required="required" />
+                                </div>
+                                <div class="form-element password">
+                                    <label for="user_login_password">{{ 'form.login.password'|trans }}</label>
+                                    <input class="text" tabindex="2" id="user_login_password" type="password" name="_password" required="required" />
+                                </div>
+                                <div class="form-element log-in">
+                                    <button tabindex="4" type="submit" id="_submit">{{ 'form.login.log_in'|trans }}</button>
+                                </div>
+                                <div class="login-error">
+                                    <div class="error">
+                                        <div class="error-text"></div>
+                                    </div>
+                                    <div class="arrow"></div>
+                                </div>
+                                <div class="form-element remember-me">
+                                    <label for="user_login_remember_me">
+                                        <input tabindex="3" type="checkbox" id="user_login_remember_me" name="_remember_me" checked="checked" /> {{ 'form.login.remember_me'|trans }}
+                                    </label>
+                                </div>
+                                <div class="form-element forgot-password">
+                                    <a tabindex="5" href="{{ path('login') }}">{{ 'form.login.forgot_password'|trans }}</a>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="register clearfix">
+                            <h2><strong>{{ 'page.front.first_time'|trans }}</strong> {{ 'page.front.join_now'|trans }}</h2>
+                            {% include 'UserBundle:Register:register_form.html.twig' with {form:form_register} %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="info">
+            <ul>
+                <li class="fun">
+                    <h3>Fun</h3>
+                    <p>Kurumi is all about having fun, playing games and visiting profiles.</p>
+                </li>
+                <li class="chat">
+                    <h3>Chat</h3>
+                    <p>We promise you lots of people who are eager to have a chat.</p>
+                </li>
+                <li class="real">
+                    <h3>With real people</h3>
+                    <p>No fake profiles on Kurumi. You should feel safe and have lots of fun!</p>
+                </li>
+                <li class="you">
+                    <h3>It's up to you</h3>
+                    <p>So what do you want to do? You decide!</p>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+            {{ facebook_login_button() }}
+        </div>
+    </div>
+</div>
+{% endblock %}

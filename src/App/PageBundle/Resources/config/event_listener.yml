@@ -1,0 +1,11 @@
+services:
+    front_page:
+        class: App\PageBundle\EventListener\FrontPage
+        scope: request
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: -10 }
+        arguments:
+            - @request
+            - @router
+            - @security.context
+            - @event_dispatcher

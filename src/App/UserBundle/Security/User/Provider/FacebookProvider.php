@@ -6,15 +6,27 @@ use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\UserBundle\Entity\Facebook;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Validator\Validator;
 use BaseFacebook;
 use FacebookApiException;
 
 class FacebookProvider implements UserProviderInterface {
 
+    /**
+     * @var BaseFacebook
+     */
     private $facebookApi;
 
+    /**
+     * @var EntityManager
+     */
     private $em;
 
+    /**
+     * @var Validator
+     */
     private $validator;
 
     public function __construct($facebookApi, $em, $validator) {

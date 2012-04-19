@@ -10,3 +10,4 @@ certs/
 /app/cache/*
 /app/logs/*
 /app/config/parameters.yml
+/src/FOS/

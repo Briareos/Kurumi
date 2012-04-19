@@ -1,0 +1,10 @@
+services:
+    validator.timezone:
+        class: App\UserBundle\Validator\TimezoneValidator
+        tags:
+            - { name: validator.constraint_validator, alias: validator.timezone }
+    validator.geoname_id:
+        class: App\UserBundle\Validator\GeonameIdValidator
+        arguments: [@geoname_lookup]
+        tags:
+            - { name: validator.constraint_validator, alias: validator.geoname_id }

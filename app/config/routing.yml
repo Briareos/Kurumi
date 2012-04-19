@@ -28,3 +28,13 @@ logout:
 
 facebook_check:
     pattern:  /facebook_check
+
+admin:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    #pattern: /dashboard
+    type: sonata_admin
+    prefix: /admin

@@ -1,0 +1,51 @@
+parameters:
+    # relative to cwd, which is set to /web
+    geoip.class: App\UserBundle\Util\GeoIp
+    geoip.location: %kernel.root_dir%/Resources/geoip
+    geoname.class: App\UserBundle\Util\GeonameLookup
+    geoname.cache_id: geoname_lookup
+    geoname.cache_frontend: geoname
+    geoname.lookup_url: "http://www.geonames.org/getJSON"
+    geoname.lookup_paremeters: []
+    city_manager.class: App\UserBundle\Util\CityManager
+
+services:
+    form.type.detect_timezone:
+        class: App\UserBundle\Form\Type\DetectTimezoneType
+        tags:
+            - { name: form.type, alias: detect_timezone }
+    form.type.gender:
+        class: App\UserBundle\Form\Type\GenderType
+        tags:
+            - { name: form.type, alias: gender }
+    geoname_lookup:
+        class: %geoname.class%
+        arguments: [%geoname.lookup_url%, %geoname.lookup_paremeters%, @knp_zend_cache.manager, %geoname.cache_frontend%, %geoname.cache_id%]
+    geoip:
+        class: %geoip.class%
+        arguments: [%geoip.location%, @kernel]
+    geoip.twig.extension:
+        class: App\UserBundle\Twig\Extension\GeoIp
+        arguments: [@geoip]
+        tags:
+            - { name: twig.extension }
+    city_manager:
+        class: %city_manager.class%
+        arguments: [@doctrine.orm.entity_manager, @geoname_lookup]
+    facebook.user:
+        class: App\UserBundle\Security\User\Provider\FacebookProvider
+        arguments: [@fos_facebook.api, @doctrine.orm.entity_manager, @validator]
+    sonata.admin.user:
+        class: App\UserBundle\Admin\UserAdmin
+        arguments: [ null, App\UserBundle\Entity\User, SonataAdminBundle:CRUD ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: users_group, label: users_label }
+        calls:
+            - [ setTranslationDomain, [ "UserAdmin" ] ]
+    sonata.admin.profile:
+        class: App\UserBundle\Admin\ProfileAdmin
+        arguments: [ null, App\UserBundle\Entity\Profile, SonataAdminBundle:CRUD ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: users_group, label: profiles_label }
+        calls:
+            - [ setTranslationDomain, [ "UserAdmin" ] ]

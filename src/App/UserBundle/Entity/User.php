@@ -31,7 +31,7 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable
     /**
      * @var string $email
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
      */
     private $email;
 
@@ -76,7 +76,7 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable
     private $name;
 
     /**
-     * @var datetime $created
+     * @var DateTime $created
      *
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
@@ -390,5 +390,27 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable
     public function setFacebook($facebook)
     {
         $this->facebook = $facebook;
+    }
+
+    /**
+     * Set created
+     *
+     * @param datetime $created
+     * @return User
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return datetime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
     }
 }
