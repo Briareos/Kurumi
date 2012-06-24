@@ -3,7 +3,7 @@
 namespace App\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class CityType extends AbstractType
 {
@@ -17,7 +17,7 @@ class CityType extends AbstractType
         return 'city';
     }
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('fullName', 'text', array(
             'error_bubbling' => true,
@@ -36,7 +36,6 @@ class CityType extends AbstractType
                 'data-country-name' => '',
             ),
             'validation_groups' => array('registration'),
-            'error_bubbling' => false,
         );
     }
 

@@ -3,7 +3,7 @@
 namespace App\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use App\UserBundle\Entity\User;
 use App\UserBundle\Entity\Profile;
 use App\UserBundle\Entity\City;
@@ -21,7 +21,7 @@ class RegisterFormType extends AbstractType
         return 'user_register';
     }
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('email', 'email', array(
         ));

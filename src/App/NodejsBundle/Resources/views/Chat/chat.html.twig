@@ -1,0 +1,22 @@
+{% import 'NodejsBundle:Chat:chat_template.html.twig' as chat %}
+
+<script type="text/javascript">
+    App.settings.chat = {
+        tpl:{
+            status:'{{ chat.status() }}',
+            user:'{{ chat.user() }}',
+            window:'{{ chat.window() }}',
+            message:'{{ chat.message() }}',
+            messages:'{{ chat.messages() }}',
+            chat:'{{ chat.chat() }}'
+        },
+        enabled:true,
+        cacheUrl:'{{ path('chat_cache') }}',
+        activateUrl:'{{ path('chat_activate') }}',
+        closeUrl:'{{ path('chat_close') }}',
+        sendUrl:'{{ path('chat_send') }}',
+        pingUrl:'{{ path('chat_ping') }}'
+    };
+</script>
+<script type="text/javascript" src="{{ asset('bundles/nodejs/js/chat.js') }}"></script>
+<link href="{{ asset('bundles/nodejs/css/chat.css') }}" type="text/css" rel="stylesheet"/>

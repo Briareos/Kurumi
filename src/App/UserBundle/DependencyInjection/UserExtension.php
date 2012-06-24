@@ -27,4 +27,6 @@ class UserExtension extends Extension
         $loader->load('validator.yml');
         $loader->load('security.yml');
     }
+
+
 }

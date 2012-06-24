@@ -9,7 +9,11 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\HttpFoundation\Session\Storage;
+namespace App\UserBundle\Security\Session\Storage;
+
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\Security\Core\SecurityContext;
+use App\UserBundle\Entity\User;
 
 /**
  * PdoSessionStorage.
@@ -21,16 +25,25 @@ class PdoSessionStorage extends NativeSessionStorage
 {
     protected $db;
     private $options;
+
+    /**
+     * @var SecurityContext
+     */
+    private $securityContext;
+
     /**
      * @throws \InvalidArgumentException When "db_table" option is not provided
      */
-    public function __construct(\PDO $db, $options = null)
+    public function __construct(\PDO $db, $options = null, SecurityContext $securityContext)
     {
+        $this->securityContext = $securityContext;
+
         $this->db = $db;
         $options = array_merge(array(
-            'db_id_col'   => 'sess_id',
+            'db_id_col' => 'sess_id',
             'db_data_col' => 'sess_data',
             'db_time_col' => 'sess_time',
+            'db_user_id_col' => 'user_id',
         ), $options);
 
         if (!array_key_exists('db_table', $options)) {
@@ -94,11 +107,11 @@ class PdoSessionStorage extends NativeSessionStorage
     public function sessionDestroy($id)
     {
         // get table/column
-        $dbTable  = $this->options['db_table'];
+        $dbTable = $this->options['db_table'];
         $dbIdCol = $this->options['db_id_col'];
 
         // delete the record associated with this id
-        $sql = 'DELETE FROM '.$dbTable.' WHERE '.$dbIdCol.'= ?';
+        $sql = 'DELETE FROM ' . $dbTable . ' WHERE ' . $dbIdCol . '= ?';
 
         try {
             $stmt = $this->db->prepare($sql);
@@ -123,11 +136,11 @@ class PdoSessionStorage extends NativeSessionStorage
     public function sessionGC($lifetime)
     {
         // get table/column
-        $dbTable    = $this->options['db_table'];
+        $dbTable = $this->options['db_table'];
         $dbTimeCol = $this->options['db_time_col'];
 
         // delete the record associated with this id
-        $sql = 'DELETE FROM '.$dbTable.' WHERE '.$dbTimeCol.' < '.(time() - $lifetime);
+        $sql = 'DELETE FROM ' . $dbTable . ' WHERE ' . $dbTimeCol . ' < ' . (time() - $lifetime);
 
         try {
             $this->db->query($sql);
@@ -150,13 +163,13 @@ class PdoSessionStorage extends NativeSessionStorage
     public function sessionRead($id)
     {
         // get table/columns
-        $dbTable    = $this->options['db_table'];
+        $dbTable = $this->options['db_table'];
         $dbDataCol = $this->options['db_data_col'];
-        $dbIdCol   = $this->options['db_id_col'];
+        $dbIdCol = $this->options['db_id_col'];
         $dbTimeCol = $this->options['db_time_col'];
 
         try {
-            $sql = 'SELECT '.$dbDataCol.' FROM '.$dbTable.' WHERE '.$dbIdCol.'=?';
+            $sql = 'SELECT ' . $dbDataCol . ' FROM ' . $dbTable . ' WHERE ' . $dbIdCol . '=?';
 
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(1, $id, \PDO::PARAM_STR, 255);
@@ -192,17 +205,26 @@ class PdoSessionStorage extends NativeSessionStorage
     public function sessionWrite($id, $data)
     {
         // get table/column
-        $dbTable    = $this->options['db_table'];
+        $dbTable = $this->options['db_table'];
         $dbDataCol = $this->options['db_data_col'];
-        $dbIdCol   = $this->options['db_id_col'];
+        $dbIdCol = $this->options['db_id_col'];
         $dbTimeCol = $this->options['db_time_col'];
+        $dbUserIdCol = $this->options['db_user_id_col'];
 
-        $sql = 'UPDATE '.$dbTable.' SET '.$dbDataCol.' = ?, '.$dbTimeCol.' = '.time().' WHERE '.$dbIdCol.'= ?';
+        $userId = null;
+        if ($token = $this->securityContext->getToken()) {
+            if (is_object($user = $token->getUser())) {
+                $userId = $user->getId();
+            }
+        }
+
+        $sql = 'UPDATE ' . $dbTable . ' SET ' . $dbDataCol . ' = ?, ' . $dbTimeCol . ' = ' . time() . ', ' . $dbUserIdCol . ' = ?' . ' WHERE ' . $dbIdCol . '= ?';
 
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->bindParam(1, $data, \PDO::PARAM_STR);
             $stmt->bindParam(2, $id, \PDO::PARAM_STR);
+            $stmt->bindParam(3, $userId, \PDO::PARAM_INT);
             $stmt->execute();
 
             if (!$stmt->rowCount()) {
@@ -226,17 +248,27 @@ class PdoSessionStorage extends NativeSessionStorage
     private function createNewSession($id, $data = '')
     {
         // get table/column
-        $dbTable    = $this->options['db_table'];
+        $dbTable = $this->options['db_table'];
         $dbDataCol = $this->options['db_data_col'];
-        $dbIdCol   = $this->options['db_id_col'];
+        $dbIdCol = $this->options['db_id_col'];
         $dbTimeCol = $this->options['db_time_col'];
+        $dbUserIdCol = $this->options['db_user_id_col'];
 
-        $sql = 'INSERT INTO '.$dbTable.'('.$dbIdCol.', '.$dbDataCol.', '.$dbTimeCol.') VALUES (?, ?, ?)';
+        $userId = null;
+        if ($token = $this->securityContext->getToken()) {
+            if (is_object($user = $token->getUser())) {
+                $userId = $user->getId();
+            }
+        }
+
+
+        $sql = 'INSERT INTO ' . $dbTable . '(' . $dbIdCol . ', ' . $dbDataCol . ', ' . $dbTimeCol . ', ' . $dbUserIdCol . ') VALUES (?, ?, ?, ?)';
 
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(1, $id, \PDO::PARAM_STR);
         $stmt->bindValue(2, $data, \PDO::PARAM_STR);
         $stmt->bindValue(3, time(), \PDO::PARAM_INT);
+        $stmt->bindValue(4, $userId, \PDO::PARAM_INT);
         $stmt->execute();
 
         return true;

@@ -8,30 +8,27 @@
     <link href="//yui.yahooapis.com/3.4.1/build/cssreset/cssreset-min.css" type="text/css" rel="stylesheet"/>
     <link href="{{ asset('library/jquery.tipsy/src/stylesheets/tipsy.css') }}" type="text/css" rel="stylesheet"/>
     <link href="//symfony.servehttp.com:1337/css/screen.less" type="text/css" rel="stylesheet"/>
-    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/ui-lightness/jquery-ui.css" type="text/css" rel="stylesheet"/>
-
+    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/ui-lightness/jquery-ui.css" type="text/css"
+          rel="stylesheet"/>
     {% endblock %}
     {% block javascript_library %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
-
     {% endblock %}
     {% block javascript_plugin %}
     <script src="{{ asset('library/jquery.tipsy/src/javascripts/jquery.tipsy.js') }}" type="text/javascript"></script>
     <script src="{{ asset('library/jquery.form/jquery.form.js') }}" type="text/javascript"></script>
     <script src="{{ asset('library/jquery.cookie/jquery.cookie.js') }}" type="text/javascript"></script>
-
     {% endblock %}
     {% block javascript_header %}
     <script src="{{ asset('js/core.js') }}" type="text/javascript"></script>
     <script type="text/javascript">
         (function ($) {
-            App.library.jstz = {
+            App.Library.register('jstz', {
                 js: "{{ asset('bundles/user/js/jstz.min.js') }}"
-            }
+            });
         })(jQuery);
     </script>
-
     {% endblock %}
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/>
 </head>

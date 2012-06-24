@@ -1,0 +1,4 @@
+admin:
+    group:
+        users: Users & profiles
+        media: Media info

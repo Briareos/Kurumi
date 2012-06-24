@@ -3,6 +3,7 @@
 namespace App\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
@@ -10,6 +11,11 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 use Serializable;
 use App\UserBundle\Entity\Profile;
 use App\UserBundle\Entity\Facebook;
+use App\UserBundle\Entity\Role;
+use App\NodejsBundle\Entity\ChatCache;
+use App\NodejsBundle\Entity\ChatUser;
+use Application\Sonata\MediaBundle\Entity\Media;
+
 
 /**
  * App\UserBundle\Entity\User
@@ -19,6 +25,7 @@ use App\UserBundle\Entity\Facebook;
  */
 class User implements AdvancedUserInterface, EquatableInterface, Serializable
 {
+
     /**
      * @var integer $id
      *
@@ -66,7 +73,7 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable
      *
      * @ORM\Column(name="active", type="boolean")
      */
-    private $active = true;
+    private $active;
 
     /**
      * @var string
@@ -76,7 +83,7 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable
     private $name;
 
     /**
-     * @var DateTime $created
+     * @var \DateTime $created
      *
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
@@ -86,20 +93,51 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable
     /**
      * @var Profile
      *
-     * @ORM\OneToOne(targetEntity="Profile", mappedBy="user", cascade={"remove"})
+     * @ORM\OneToOne(targetEntity="Profile", mappedBy="user", orphanRemoval=true)
      */
     private $profile;
 
     /**
+     * @var Media
+     *
+     * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
+     * @ORM\JoinColumn(name="picture_id", onDelete="SET NULL")
+     */
+    private $picture;
+
+    /**
      * @var Facebook
      *
-     * @ORM\OneToOne(targetEntity="Facebook", mappedBy="user", cascade={"remove"})
+     * @ORM\OneToOne(targetEntity="Facebook", mappedBy="user", orphanRemoval=true)
      */
     private $facebook;
+
+    /**
+     * @var App\NodejsBundle\Entity\ChatCache
+     *
+     * @ORM\OneToOne(targetEntity="App\NodejsBundle\Entity\ChatCache", mappedBy="user")
+     */
+    private $chatCache;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
+     * @ORM\JoinTable(name="user_role",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
+     * )
+     */
+    private $userRoles;
+
 
     public function __construct()
     {
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->password = null;
+        $this->timezone = null;
+        $this->active = true;
+        $this->userRoles = new ArrayCollection();
     }
 
     /**
@@ -185,7 +223,7 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return $this->getUserRoles()->toArray();
     }
 
     public function isEqualTo(UserInterface $user)
@@ -304,22 +342,6 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable
     }
 
     /**
-     * @param boolean $emptyPassword
-     */
-    public function setEmptyPassword($emptyPassword)
-    {
-        $this->emptyPassword = $emptyPassword;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function getEmptyPassword()
-    {
-        return $this->emptyPassword;
-    }
-
-    /**
      * @return string
      */
     public function getName()
@@ -338,18 +360,20 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable
     /**
      * Set profile
      *
-     * @param App\UserBundle\Entity\Profile $profile
+     * @param App\UserBundle\Entity\Profile|null $profile
      */
-    public function setProfile(Profile $profile)
+    public function setProfile($profile)
     {
         $this->profile = $profile;
-        $profile->setUser($this);
+        if (is_object($profile)) {
+            $profile->setUser($this);
+        }
     }
 
     /**
      * Get profile
      *
-     * @return App\UserBundle\Entity\Profile 
+     * @return App\UserBundle\Entity\Profile|null
      */
     public function getProfile()
     {
@@ -369,7 +393,7 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
@@ -377,7 +401,7 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable
     }
 
     /**
-     * @return \App\UserBundle\Entity\Facebook
+     * @return \App\UserBundle\Entity\Facebook|null
      */
     public function getFacebook()
     {
@@ -385,7 +409,7 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable
     }
 
     /**
-     * @param \App\UserBundle\Entity\Facebook $facebook
+     * @param \App\UserBundle\Entity\Facebook|null $facebook
      */
     public function setFacebook($facebook)
     {
@@ -407,10 +431,113 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable
     /**
      * Get created
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreated()
     {
         return $this->created;
+    }
+
+    function __toString()
+    {
+        return sprintf('%s (%s)', $this->getName(), $this->getEmail());
+    }
+
+    public function setPasswordClear($clear = true)
+    {
+        if ($clear) {
+            $this->password = null;
+        }
+    }
+
+    public function isPasswordClear()
+    {
+        return (null === $this->password);
+    }
+
+
+    /**
+     * Add userRoles
+     *
+     * @param Role $userRole
+     * @return User
+     */
+    public function addUserRole(Role $role)
+    {
+        $this->userRoles->add($role);
+        return $this;
+    }
+
+    public function removeUserRole(Role $role)
+    {
+        $this->userRoles->removeElement($role);
+        return $this;
+    }
+
+    /**
+     * Get userRoles
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getUserRoles()
+    {
+        return $this->userRoles;
+    }
+
+    /**
+     * Add userRoles
+     *
+     * @param App\UserBundle\Entity\Role $userRoles
+     * @return User
+     */
+    public function addRole(\App\UserBundle\Entity\Role $userRoles)
+    {
+        $this->userRoles[] = $userRoles;
+        return $this;
+    }
+
+
+    /**
+     * Set chatCache
+     *
+     * @param App\NodejsBundle\Entity\ChatCache $chatCache
+     * @return User
+     */
+    public function setChatCache(\App\NodejsBundle\Entity\ChatCache $chatCache = null)
+    {
+        $this->chatCache = $chatCache;
+        return $this;
+    }
+
+    /**
+     * Get chatCache
+     *
+     * @return App\NodejsBundle\Entity\ChatCache 
+     */
+    public function getChatCache()
+    {
+        return $this->chatCache;
+    }
+
+    /**
+     * Set picture
+     *
+     * @param Application\Sonata\MediaBundle\Entity\Media $picture
+     * @return User
+     */
+    public function setPicture(\Application\Sonata\MediaBundle\Entity\Media $picture = null)
+    {
+        $this->picture = $picture;
+        return $this;
+    }
+
+    /**
+     * Get picture
+     *
+     * @return Application\Sonata\MediaBundle\Entity\Media 
+     */
+    public function getPicture()
+    {
+        return $this->picture;
     }
 }

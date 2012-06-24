@@ -4,10 +4,11 @@
 cgi-bin/
 certs/
 
-/vendor/
-/webroot/bundles/
-/app/bootstrap.php.cache
-/app/cache/*
-/app/logs/*
-/app/config/parameters.yml
-/src/FOS/
+webroot/bundles/
+app/bootstrap.php.cache
+app/cache/*
+app/logs/*
+build/
+vendor/
+composer.phar
+app/config/parameters.yml

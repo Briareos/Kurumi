@@ -3,6 +3,8 @@
 namespace App\UserBundle\Util;
 
 use Symfony\Component\HttpFoundation\Request;
+use Zend\Cache\Manager;
+use Symfony\Bridge\Monolog\Logger;
 
 class GeonameLookup
 {
@@ -16,25 +18,37 @@ class GeonameLookup
      */
     private $cacheFrontend;
 
-    private $cacheId;
+    private $cachePrefix;
 
-    public function __construct($lookupUrl, array $lookupParameters = array(), $cacheManager = null, $cacheFrontend = null, $cacheId = 'geoname_lookup')
+    /**
+     * @var Logger
+     */
+    private $logger;
+
+    public function __construct($lookupUrl, array $lookupParameters = array())
     {
         $this->lookupUrl = $lookupUrl;
         $this->lookupParameters = $lookupParameters;
-        $this->cacheId = $cacheId;
-        if ($cacheManager instanceof \Zend\Cache\Manager and $cacheFrontend) {
-            $this->cacheFrontend = $cacheManager->getCache($cacheFrontend);
-        }
+    }
+
+    public function setCacheManager(Manager $manager, $cacheId, $cachePrefix)
+    {
+        $this->cacheFrontend = $manager->getCache($cacheId);
+        $this->cachePrefix = $cachePrefix;
+    }
+
+    public function setLogger(Logger $logger)
+    {
+        $this->logger = $logger;
     }
 
     public function get($geonameId)
     {
-        if(!is_numeric($geonameId)) {
+        if (!is_numeric($geonameId) || $geonameId < 1) {
             throw new \InvalidArgumentException(sprintf('Geoname ID must be numeric.'));
         }
         if ($this->cacheFrontend) {
-            $cacheId = $this->cacheId . '_' . intval($geonameId);
+            $cacheId = $this->cachePrefix . '_' . intval($geonameId);
             if ($this->cacheFrontend->test($cacheId)) {
                 return $this->cacheFrontend->load($cacheId);
             } else {
@@ -48,7 +62,7 @@ class GeonameLookup
 
     public function lookup($geonameId)
     {
-        if(!is_numeric($geonameId)) {
+        if (!is_numeric($geonameId) || $geonameId < 1) {
             throw new \InvalidArgumentException(sprintf('Geoname ID must be numeric.'));
         }
         $parameters = $this->lookupParameters + array('geonameId' => $geonameId);
@@ -59,12 +73,10 @@ class GeonameLookup
         $response = curl_exec($ch);
         $data = @json_decode($response);
         if (empty($data->geonameId)) {
-            if (empty($data->message)) {
-                $message = '';
-            } else {
-                $message = $data->message;
+            if (12 === $data->status->value) {
+                throw new \InvalidArgumentException(sprintf('Non-existent Geoname ID specified.'));
             }
-            throw new \Exception(sprintf('Geoname lookup failed for ID \'%s\' on url \'%s\'. Error message: %s', $geonameId, $url, $message));
+            throw new \Exception(sprintf('Geoname lookup failed for ID \'%s\' on url \'%s\'. Error message: %s', $geonameId, $url, $data->status->message));
         }
         return $data;
     }

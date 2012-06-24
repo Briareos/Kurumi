@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\UserBundle\Entity\User;
+use App\UserBundle\Entity\UserManager;
 
 class UserAdmin extends Admin
 {
@@ -17,26 +18,33 @@ class UserAdmin extends Admin
 
     protected $baseRoutePattern = 'user';
 
+    /**
+     * @var UserManager
+     */
+    protected $userManager;
+
     protected $formOptions = array(
         'validation_groups' => array('admin'),
     );
 
-    public function prePersist($profile)
+    /**
+     * @param UserManager
+     */
+    public function setUserManager(UserManager $userManager)
     {
-        if ($profile->getId()) {
-        } else {
-            if ($this->getPlainPassword()) {
-                $profile->setPassword($this->encodePassword($profile, $profile->getPlainPassword()));
-            }
-        }
+        $this->userManager = $userManager;
     }
 
-    private function encodePassword(UserInterface $user, $plainPassword)
+
+    public function prePersist($user)
     {
-        $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
-        return $encoder->encodePassword($plainPassword, $user->getSalt());
+        $this->userManager->updatePassword($user);
     }
 
+    public function preUpdate($user)
+    {
+        $this->userManager->updatePassword($user);
+    }
 
     public function configureShowFields(ShowMapper $showMapper)
     {
@@ -57,16 +65,32 @@ class UserAdmin extends Admin
             ->add('plainPassword', 'password', array(
             'label' => "Password",
             'required' => false,
-        ))
+        ));
+
+        if ($user->getId()) {
+            $formMapper->add('passwordClear', 'checkbox', array(
+                'required' => false,
+            ));
+        }
+
+        $formMapper
             ->add('name')
-            ->add('active', null, array('required' => false))
-            ->end();
-        $profile = $user->getProfile();
-        $formMapper->with("Profile")
+            ->add('active', null, array(
+            'required' => false,
+        ))
+            ->add('timezone', 'timezone', array(
+            'required' => false,
+            'empty_value' => '-',
+        ))
+            ->add('userRoles', null, array(
+            'expanded' => true,
+        ))
+            ->end()
+            ->with("Profile")
             ->add('profile', 'sonata_type_model', array(
         ), array(
             'edit' => 'list',
-        ));
+        ))->end();
     }
 
     public function configureListFields(ListMapper $listMapper)

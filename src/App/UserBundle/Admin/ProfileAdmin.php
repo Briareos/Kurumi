@@ -33,7 +33,7 @@ class ProfileAdmin extends Admin
 
     public function configureFormFields(FormMapper $formMapper)
     {
-        $user = $this->getSubject();
+        $profile = $this->getSubject();
         $formMapper
             ->with("General")
             ->add('firstName', null, array(
@@ -45,28 +45,33 @@ class ProfileAdmin extends Admin
             ->add('birthday', null, array(
             'required' => false,
             'empty_value' => array(
-                'year' => 'Year',
-                'month' => 'Month',
-                'day' => 'Day'
+                'year' => '-',
+                'month' => '-',
+                'day' => '-'
             ),
             'years' => range(date('Y'), date('Y') - 100),
         ))
-            ->add('gender', 'choice', array(
+            ->add('gender', 'gender', array(
             'required' => false,
-            'empty_value' => '- Unspecified -',
-            'choices' => array(
-                1 => 'Male',
-                2 => 'Female'
-            ),
+            'empty_value' => $this->trans('admin.gender.unspecified'),
+        ))
+            ->add('user', 'sonata_type_model', array(
         ))
             ->end();
+    }
+
+    public function getUsersWithoutProfile()
+    {
+
     }
 
     public function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('firstName')
+            ->addIdentifier('id')
+            ->add('firstName')
             ->add('lastName')
+            ->add('user')
             ->add('_actions', 'actions', array(
             'actions' => array(
                 'view' => array(),

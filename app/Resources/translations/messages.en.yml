@@ -1,3 +1,10 @@
+admin:
+    gender.unspecified: - Unspecified -
+    label:
+        users: Users
+        profiles: Profiles
+        roles: Roles
+
 page:
     front:
         title: Kurumi - Meet new people in your area
@@ -30,3 +37,6 @@ form:
             all_countries: showing cities in all countries
             placeholder: Your city
         submit: Continue
+    user_picture:
+        title: Get seen by everyone!
+

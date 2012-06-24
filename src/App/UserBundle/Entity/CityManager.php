@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UserBundle\Util;
+namespace App\UserBundle\Entity;
 
 use App\UserBundle\Entity\City;
 use App\UserBundle\Util\GeonameLookup;

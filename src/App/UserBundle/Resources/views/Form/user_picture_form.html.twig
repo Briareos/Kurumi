@@ -1,0 +1,25 @@
+<div data-width="600" data-title="{{ 'form.user_picture.title'|trans }}">
+
+    <form id="{{ form.vars.id }}" action="{{ path('upload_picture') }}" method="post" {{ form_enctype(form) }}
+          data-ajax="userPicture">
+
+        {% if user.picture %}
+        <p class="description">
+            Your current picture
+        </p>
+        {% thumbnail user.picture, 'medium' with {title:''} %}
+        {% else %}
+        <p class="description">
+            Add a picture so {{ site_name }} members can see who you are!
+        </p>
+        {% endif %}
+
+        {{ form_rest(form) }}
+
+        {% if(app.request.isXmlHttpRequest) %}
+        <button type="submit">Upload</button>
+        {% endif %}
+
+    </form>
+
+</div>

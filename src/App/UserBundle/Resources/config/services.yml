@@ -4,12 +4,15 @@ parameters:
     geoip.location: %kernel.root_dir%/Resources/geoip
     geoname.class: App\UserBundle\Util\GeonameLookup
     geoname.cache_id: geoname_lookup
-    geoname.cache_frontend: geoname
+    geoname.cache_prefix: geoname
     geoname.lookup_url: "http://www.geonames.org/getJSON"
     geoname.lookup_paremeters: []
-    city_manager.class: App\UserBundle\Util\CityManager
+    city_manager.class: App\UserBundle\Entity\CityManager
+    user_manager.class: App\UserBundle\Entity\UserManager
+    user_manager.user_class: App\UserBundle\Entity\User
 
 services:
+    # Form types #
     form.type.detect_timezone:
         class: App\UserBundle\Form\Type\DetectTimezoneType
         tags:
@@ -18,9 +21,14 @@ services:
         class: App\UserBundle\Form\Type\GenderType
         tags:
             - { name: form.type, alias: gender }
+
+    # Geoname and GeoIP services #
     geoname_lookup:
         class: %geoname.class%
-        arguments: [%geoname.lookup_url%, %geoname.lookup_paremeters%, @knp_zend_cache.manager, %geoname.cache_frontend%, %geoname.cache_id%]
+        arguments: [%geoname.lookup_url%, %geoname.lookup_paremeters%]
+        calls:
+            - [ setCacheManager, [ @knp_zend_cache.manager, %geoname.cache_id%, %geoname.cache_prefix% ] ]
+            - [ setLogger, [ @logger ] ]
     geoip:
         class: %geoip.class%
         arguments: [%geoip.location%, @kernel]
@@ -29,23 +37,38 @@ services:
         arguments: [@geoip]
         tags:
             - { name: twig.extension }
+    md5.twig.extension:
+        class: App\UserBundle\Twig\Extension\Md5
+        tags:
+            - { name: twig.extension }
+
+    # Entity managers #
     city_manager:
         class: %city_manager.class%
         arguments: [@doctrine.orm.entity_manager, @geoname_lookup]
+    user_manager:
+        class: %user_manager.class%
+        arguments: [@doctrine.orm.entity_manager, @security.encoder_factory, %user_manager.user_class%]
+    # Register/login users via Facebook OAuth #
     facebook.user:
         class: App\UserBundle\Security\User\Provider\FacebookProvider
         arguments: [@fos_facebook.api, @doctrine.orm.entity_manager, @validator]
+
+    # Sonata Admin Bundle services #
     sonata.admin.user:
         class: App\UserBundle\Admin\UserAdmin
         arguments: [ null, App\UserBundle\Entity\User, SonataAdminBundle:CRUD ]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: users_group, label: users_label }
+            - { name: sonata.admin, manager_type: orm, group: users_group, label: admin.label.users }
         calls:
-            - [ setTranslationDomain, [ "UserAdmin" ] ]
+            - [ setUserManager, [ @user_manager ] ]
+    sonata.admin.role:
+        class: App\UserBundle\Admin\RoleAdmin
+        arguments: [ null, App\UserBundle\Entity\Role, SonataAdminBundle:CRUD ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: users_group, label: admin.label.roles }
     sonata.admin.profile:
         class: App\UserBundle\Admin\ProfileAdmin
         arguments: [ null, App\UserBundle\Entity\Profile, SonataAdminBundle:CRUD ]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: users_group, label: profiles_label }
-        calls:
-            - [ setTranslationDomain, [ "UserAdmin" ] ]
+            - { name: sonata.admin, manager_type: orm, group: users_group, label: admin.label.profiles }

@@ -1,23 +1,8 @@
-{% extends '::base.html.twig' %}
+{% extends '::main.html.twig' %}
 
 {% block title %}Dashboard{% endblock %}
 
-{% block javascript_header %}
-{{ parent() }}
-<script type="text/javascript">
-    App.settings.nodejs = {
-        secure:false,
-        host:'{{ nodejs.host }}',
-        port:{{ nodejs.port }},
-        connectTimeout:{{ nodejs.connectTimeout }},
-        authToken:'',
-        contentTokens:''
-    };
-</script>
-<script type="text/javascript" src="//{{ nodejs.host }}:{{ nodejs.port }}/socket.io/socket.io.js"></script>
-<script type="text/javascript" src="{{ asset('bundles/nodejs/js/nodejs.js') }}"></script>
-{% endblock %}
-
-{% block body %}
-<a href="{{ path('logout', {_csrf_token:csrf_token('logout')}) }}">Logout</a>
+{% block content %}
+content
+<a href="{{ path('upload_picture') }}" data-ajax="">Set your photo!</a>
 {% endblock %}

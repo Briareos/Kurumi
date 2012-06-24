@@ -6,14 +6,16 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use App\UserBundle\Util\GeonameLookup;
 
-class GeonameIdValidator extends ConstraintValidator {
+class GeonameIdValidator extends ConstraintValidator
+{
 
     /**
      * @var GeonameLookup
      */
     private $geonameLookup;
 
-    public function __construct($geonameLookup) {
+    public function __construct($geonameLookup)
+    {
         $this->geonameLookup = $geonameLookup;
     }
 
@@ -30,15 +32,17 @@ class GeonameIdValidator extends ConstraintValidator {
     function isValid($value, Constraint $constraint)
     {
         if (null === $value || '' === $value) {
-            return true;
+            return;
         }
 
         try {
             $this->geonameLookup->get($value);
         } catch (\Exception $e) {
-            $this->context->addViolation($constraint->message, array(
-                '{{ value }}' => $value,
-            ));
+            if ($e instanceof \InvalidArgumentException) {
+                $this->context->addViolation($constraint->message, array(
+                    '{{ value }}' => $value,
+                ));
+            }
         }
     }
 

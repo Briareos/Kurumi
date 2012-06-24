@@ -8,7 +8,7 @@ use Symfony\Component\Form\FormBuilder;
 class DetectTimezoneType extends AbstractType
 {
 
-    public function getParent(array $options)
+    public function getParent()
     {
         return 'hidden';
     }

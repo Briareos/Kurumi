@@ -3,7 +3,7 @@
 namespace App\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use App\UserBundle\Form\Type\CityType;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
@@ -19,7 +19,7 @@ class RegisterProfileType extends AbstractType
         return 'register_profile';
     }
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('birthday', 'birthday', array(
             'empty_value' => array(
@@ -36,6 +36,7 @@ class RegisterProfileType extends AbstractType
         ));
         $builder->add('city', new CityType(), array(
             'data' => $options['data']->getCity(),
+            'error_bubbling' => false,
         ));
     }
 

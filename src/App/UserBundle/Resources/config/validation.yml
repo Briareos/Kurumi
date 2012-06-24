@@ -31,6 +31,8 @@ App\UserBundle\Entity\User:
                 groups: [registration,admin]
         profile:
             - Valid: ~
+        picture:
+            - Valid: ~
 
 App\UserBundle\Entity\Profile:
     constraints:
@@ -69,10 +71,6 @@ App\UserBundle\Entity\City:
             - NotBlank:
                 message: Please enter your city
                 groups: [registration]
-            - Type:
-                type: integer
-                message: Geoname ID must be numeric
-                groups: [registration]
             - App\UserBundle\Validator\GeonameId:
                 message: Invalid city specified
                 groups: [registration]
@@ -80,3 +78,8 @@ App\UserBundle\Entity\City:
                 limit: 24
                 message: Geoname ID specified is too long
                 groups: [registration]
+
+#App\UserBundle\Entity\Role:
+#    properties:
+#        name: ~
+

@@ -7,16 +7,6 @@
         'connectionSetupHandlers': {}
     };
 
-    Drupal.behaviors.nodejs = {
-        attach: function (context, settings) {
-            if (!App.Nodejs.socket) {
-                if (App.Nodejs.connect()) {
-                    App.Nodejs.sendAuthMessage();
-                }
-            }
-        }
-    };
-
     App.Nodejs.runCallbacks = function (message) {
         // It's possible that this message originated from an ajax request from the
         // client associated with this socket.
@@ -86,23 +76,10 @@
             App.Nodejs.runSetupHandlers('connect');
             App.Nodejs.socket.on('message', App.Nodejs.runCallbacks);
 
-            if (Drupal.ajax != undefined) {
-                // Monkey-patch Drupal.ajax.prototype.beforeSerialize to auto-magically
-                // send sessionId for AJAX requests so we can exclude the current browser
-                // window from resulting notifications. We do this so that modules can hook
-                // in to other modules ajax requests without having to patch them.
-                App.Nodejs.originalBeforeSerialize = Drupal.ajax.prototype.beforeSerialize;
-                Drupal.ajax.prototype.beforeSerialize = function(element_settings, options) {
-                    options.data['nodejs_client_socket_id'] = App.Nodejs.socket.socket.sessionid;
-                    return App.Nodejs.originalBeforeSerialize(element_settings, options);
-                };
-            }
+            //options.data['nodejs_client_socket_id'] = App.Nodejs.socket.socket.sessionid;
         });
         App.Nodejs.socket.on('disconnect', function() {
             App.Nodejs.runSetupHandlers('disconnect');
-            if (Drupal.ajax != undefined) {
-                Drupal.ajax.prototype.beforeSerialize = App.Nodejs.originalBeforeSerialize;
-            }
         });
         setTimeout("App.Nodejs.checkConnection()", App.settings.nodejs.connectTimeout + 250);
     };
@@ -121,4 +98,9 @@
         App.Nodejs.socket.emit('authenticate', authMessage);
     };
 
+    if (!App.Nodejs.socket) {
+        if (App.Nodejs.connect()) {
+            App.Nodejs.sendAuthMessage();
+        }
+    }
 })(jQuery);

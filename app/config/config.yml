@@ -32,11 +32,7 @@ parameters:
         db_id_col: session_id
         db_data_col: session_value
         db_time_col: session_time
-    nodejs.settings:
-        host: symfony.servehttp.com
-        port: 8080
-        connectTimeout: 5000
-        serviceKey: kurumi2012
+        db_user_id_col: user_id
 
 services:
     pdo:
@@ -46,8 +42,9 @@ services:
             user: %database_user%
             password: %database_password%
     session.storage.pdo:
-        class: Symfony\Component\HttpFoundation\Session\Storage\PdoSessionStorage
-        arguments: [@pdo, %pdo.db_options%, %session.storage.options%]
+        #class: Symfony\Component\HttpFoundation\Session\Storage\PdoSessionStorage
+        class: App\UserBundle\Security\Session\Storage\PdoSessionStorage
+        arguments: [@pdo, %pdo.db_options%, @security.context]
     facebook_provider:
         class: App\UserBundle\Security\User\Provider\FacebookProvider
         arguments: [@fos_facebook.api, @doctrine.orm.entity_manager, @validator]
@@ -62,7 +59,6 @@ twig:
     exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
     globals:
         site_name:  Kurumi
-        nodejs: %nodejs.settings%
 
 # Assetic Configuration
 assetic:
@@ -80,17 +76,26 @@ assetic:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   %database_driver%
-        host:     %database_host%
-        port:     %database_port%
-        dbname:   %database_name%
-        user:     %database_user%
-        password: %database_password%
-        charset:  UTF8
+        default_connection: default
+        connections:
+            default:
+                driver:   %database_driver%
+                host:     %database_host%
+                port:     %database_port%
+                dbname:   %database_name%
+                user:     %database_user%
+                password: %database_password%
+                charset:  UTF8
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        mappings:
+            SonataMediaBundle: ~
+            ApplicationSonataMediaBundle: ~
+        dql:
+            string_functions:
+                FindInSet: DoctrineExtensions\Query\Mysql\FindInSet
 
 stof_doctrine_extensions:
     default_locale: %locale%
@@ -185,14 +190,14 @@ sonata_block:
         sonata.block.service.rss:
 
         # Some specific block from the SonataMediaBundle
-        #sonata.media.block.media:
-        #sonata.media.block.gallery:
-        #sonata.media.block.feature_media:
+        sonata.media.block.media:
+        sonata.media.block.gallery:
+        sonata.media.block.feature_media:
 
 sonata_admin:
     #security_handler: sonata.admin.security.handler.noop
 
-    title:      Sonata Project
+    title:      Project Kurumi
     title_logo: /bundles/sonataadmin/logo_title.png
     templates:
         # default global templates
@@ -213,6 +218,11 @@ sonata_admin:
             # Customize this part to add new block configuration
             - { position: right, type: sonata.block.service.text, settings: { content: "<h2>Welcome to the Sonata Admin</h2> <p>This is a <code>sonata.block.service.text</code> from the Block Bundle, you can create and add new block in these area by configuring the <code>sonata_admin</code> section.</p> <br /> For instance, here a RSS feed parser (<code>sonata.block.service.rss</code>):"} }
             - { position: right, type: sonata.block.service.rss, settings: { title: Sonata Project's Feeds, url: http://sonata-project.org/blog/archive.rss }}
+        groups:
+            users_group:
+                label: admin.group.users
+            sonata_media:
+                label: admin.group.media
 
 sonata_doctrine_orm_admin:
     # default value is null, so doctrine uses the value defined in the configuration
@@ -252,3 +262,39 @@ sonata_doctrine_orm_admin:
                 bigint:     SonataAdminBundle:CRUD:base_show_field.html.twig
                 integer:    SonataAdminBundle:CRUD:base_show_field.html.twig
                 decimal:    SonataAdminBundle:CRUD:base_show_field.html.twig
+
+sonata_media:
+    default_context: default
+    db_driver: doctrine_orm # or doctrine_mongodb
+    contexts:
+        default:  # the default context is mandatory
+            providers:
+                - sonata.media.provider.dailymotion
+                - sonata.media.provider.youtube
+                - sonata.media.provider.image
+                - sonata.media.provider.file
+
+            formats: ~
+        user_picture:
+            providers:
+                - sonata.media.provider.image
+            formats:
+                small: { width: 32, height: 32, quality: 70 }
+                medium: { width: 100, height: 100, quality: 70 }
+    cdn:
+        server:
+            path: /uploads/media # http://media.sonata-project.org/
+
+    filesystem:
+        local:
+            directory:  %kernel.root_dir%/../webroot/uploads/media
+            create:     false
+
+sonata_intl:
+    timezone:
+        # default timezone used as fallback
+        default: Europe/Belgrade
+
+user:
+    firewall_name: main
+

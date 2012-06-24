@@ -1,4 +1,4 @@
-{% block field_errors %}
+{% block form_errors %}
 {% spaceless %}
 {% if errors|length > 0 %}
 <div class="form-errors" data-for="{{ id }}">
@@ -10,16 +10,16 @@
 </div>
 {% endif %}
 {% endspaceless %}
-{% endblock field_errors %}
+{% endblock form_errors %}
 
 
-{% block field_widget %}
+{% block input %}
 {% spaceless %}
 {% set type = type|default('text') %}
 {% set attr = attr|merge({'class': attr.class|default('') ~ ' ' ~ type}) %}
 <input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
 {% endspaceless %}
-{% endblock field_widget %}
+{% endblock input %}
 
 
 {% block detect_timezone_widget %}
@@ -27,7 +27,7 @@
 {{ block('hidden_widget') }}
 <script type="text/javascript">
     (function ($) {
-        App.loadLibrary('jstz', function () {
+        App.Library.load('jstz', function () {
             var timezone = jstz.determine_timezone();
             $('#{{ id }}').val(timezone.name());
         });

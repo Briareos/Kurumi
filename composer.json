@@ -2,14 +2,17 @@
     "name":"symfony/framework-standard-edition",
     "autoload":{
         "psr-0":{
-            "":"src/"
+            "":"src/",
+            "Application":"app/"
         }
     },
     "require":{
         "php":">=5.3.2",
-        "symfony/symfony":"2.1.*",
-        "doctrine/orm":"2.2.0",
-        "doctrine/doctrine-bundle":"dev-master",
+        "symfony/symfony":"2.1.x-dev",
+        "doctrine/common":"2.2.2",
+        "doctrine/orm":"2.2.2",
+        "doctrine/doctrine-bundle":"1.0.x-dev",
+        "doctrine/doctrine-fixtures-bundle":"dev-master",
         "twig/extensions":"dev-master",
         "symfony/assetic-bundle":"dev-master",
         "symfony/swiftmailer-bundle":"dev-master",
@@ -19,14 +22,21 @@
         "sensio/generator-bundle":"dev-master",
         "jms/security-extra-bundle":"1.1.0",
         "jms/di-extra-bundle":"1.0.1",
-        "doctrine/doctrine-fixtures-bundle":"dev-master",
         "lunetics/locale-bundle":"dev-master",
         "knplabs/knp-zend-cache-bundle":"dev-master",
         "friendsofsymfony/facebook-bundle":"dev-master",
         "facebook/php-sdk":"dev-master",
         "stof/doctrine-extensions-bundle":"dev-master",
         "sonata-project/admin-bundle":"dev-master",
-        "sonata-project/doctrine-orm-admin-bundle":"dev-master"
+        "sonata-project/doctrine-orm-admin-bundle":"dev-master",
+        "sonata-project/media-bundle":"dev-master",
+        "sonata-project/intl-bundle":"dev-master",
+        "sonata-project/easy-extends-bundle":"dev-master",
+        "knplabs/gaufrette":"dev-master",
+        "kriswallsmith/buzz":"dev-master",
+        "beberlei/DoctrineExtensions":"dev-master",
+        "knplabs/knp-menu":"1.1.x-dev",
+        "knplabs/knp-menu-bundle":"dev-master"
     },
     "repositories":{
         "zendframework/zend-cache":{

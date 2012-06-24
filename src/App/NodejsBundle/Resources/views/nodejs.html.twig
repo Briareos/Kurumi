@@ -1,0 +1,12 @@
+<script type="text/javascript">
+    App.settings.nodejs = {
+        secure:false,
+        host:'{{ nodejs.host }}',
+        port:{{ nodejs.port }},
+        connectTimeout:{{ nodejs.connect_timeout }},
+        authToken:'{{ nodejs.auth_token }}',
+        contentTokens:''
+    };
+</script>
+<script type="text/javascript" src="//{{ nodejs.host }}:{{ nodejs.port }}/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="{{ asset('bundles/nodejs/js/nodejs.js') }}"></script>

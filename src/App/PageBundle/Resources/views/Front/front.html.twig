@@ -69,38 +69,11 @@
                     <div class="right clearfix">
                         <div class="login clearfix">
                             <h2>{{ 'page.front.log_in'|trans }}</h2>
-                            <form id="user_login" action="{{ path("login_check") }}" method="post" class="clearfix" data-ajax="login">
-                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
-                                <div class="form-element email">
-                                    <label for="user_login_email">{{ 'form.login.email'|trans }}</label>
-                                    <input class="text" tabindex="1" id="user_login_email" type="email" name="_username" required="required" />
-                                </div>
-                                <div class="form-element password">
-                                    <label for="user_login_password">{{ 'form.login.password'|trans }}</label>
-                                    <input class="text" tabindex="2" id="user_login_password" type="password" name="_password" required="required" />
-                                </div>
-                                <div class="form-element log-in">
-                                    <button tabindex="4" type="submit" id="_submit">{{ 'form.login.log_in'|trans }}</button>
-                                </div>
-                                <div class="login-error">
-                                    <div class="error">
-                                        <div class="error-text"></div>
-                                    </div>
-                                    <div class="arrow"></div>
-                                </div>
-                                <div class="form-element remember-me">
-                                    <label for="user_login_remember_me">
-                                        <input tabindex="3" type="checkbox" id="user_login_remember_me" name="_remember_me" checked="checked" /> {{ 'form.login.remember_me'|trans }}
-                                    </label>
-                                </div>
-                                <div class="form-element forgot-password">
-                                    <a tabindex="5" href="{{ path('login') }}">{{ 'form.login.forgot_password'|trans }}</a>
-                                </div>
-                            </form>
+                            {% include 'UserBundle:Form:login_form.html.twig' %}
                         </div>
                         <div class="register clearfix">
                             <h2><strong>{{ 'page.front.first_time'|trans }}</strong> {{ 'page.front.join_now'|trans }}</h2>
-                            {% include 'UserBundle:Register:register_form.html.twig' with {form:form_register} %}
+                            {% include 'UserBundle:Form:register_form.html.twig' with {form:form_register} %}
                         </div>
                     </div>
                 </div>
