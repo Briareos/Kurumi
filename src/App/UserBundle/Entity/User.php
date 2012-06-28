@@ -12,9 +12,9 @@ use Serializable;
 use App\UserBundle\Entity\Profile;
 use App\UserBundle\Entity\Facebook;
 use App\UserBundle\Entity\Role;
-use App\NodejsBundle\Entity\ChatCache;
 use App\NodejsBundle\Entity\ChatUser;
 use Application\Sonata\MediaBundle\Entity\Media;
+use Briareos\ChatBundle\Entity\ChatSubjectInterface;
 
 
 /**
@@ -23,7 +23,7 @@ use Application\Sonata\MediaBundle\Entity\Media;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\UserBundle\Entity\UserRepository")
  */
-class User implements AdvancedUserInterface, EquatableInterface, Serializable
+class User implements AdvancedUserInterface, EquatableInterface, Serializable, ChatSubjectInterface
 {
 
     /**
@@ -113,18 +113,11 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable
     private $facebook;
 
     /**
-     * @var App\NodejsBundle\Entity\ChatCache
-     *
-     * @ORM\OneToOne(targetEntity="App\NodejsBundle\Entity\ChatCache", mappedBy="user")
-     */
-    private $chatCache;
-
-    /**
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
      * @ORM\JoinTable(name="user_role",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
      * )
      */

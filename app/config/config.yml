@@ -89,13 +89,17 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%
-        auto_mapping: true
+        auto_mapping: false
         mappings:
+            UserBundle: ~
             SonataMediaBundle: ~
             ApplicationSonataMediaBundle: ~
+            BriareosChatBundle: ~
         dql:
             string_functions:
                 FindInSet: DoctrineExtensions\Query\Mysql\FindInSet
+        resolve_target_entities:
+            Briareos\ChatBundle\Entity\ChatSubjectInterface: App\UserBundle\Entity\User
 
 stof_doctrine_extensions:
     default_locale: %locale%

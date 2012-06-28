@@ -5,6 +5,7 @@ cgi-bin/
 certs/
 
 webroot/bundles/
+webroot/uploads/
 app/bootstrap.php.cache
 app/cache/*
 app/logs/*
@@ -12,3 +13,4 @@ build/
 vendor/
 composer.phar
 app/config/parameters.yml
+src/Briareos

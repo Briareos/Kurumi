@@ -14,16 +14,16 @@
         "doctrine/doctrine-bundle":"1.0.x-dev",
         "doctrine/doctrine-fixtures-bundle":"dev-master",
         "twig/extensions":"dev-master",
-        "symfony/assetic-bundle":"dev-master",
-        "symfony/swiftmailer-bundle":"dev-master",
-        "symfony/monolog-bundle":"dev-master",
+        "symfony/assetic-bundle":"2.1.x-dev",
+        "symfony/swiftmailer-bundle":"2.1.x-dev",
+        "symfony/monolog-bundle":"2.1.x-dev",
         "sensio/distribution-bundle":"dev-master",
-        "sensio/framework-extra-bundle":"dev-master",
-        "sensio/generator-bundle":"dev-master",
+        "sensio/framework-extra-bundle":"2.1.x-dev",
+        "sensio/generator-bundle":"2.1.x-dev",
         "jms/security-extra-bundle":"1.1.0",
         "jms/di-extra-bundle":"1.0.1",
-        "lunetics/locale-bundle":"dev-master",
-        "knplabs/knp-zend-cache-bundle":"dev-master",
+        "lunetics/locale-bundle":"dev-rework",
+        "knplabs/knp-zend-cache-bundle":"0.1",
         "friendsofsymfony/facebook-bundle":"dev-master",
         "facebook/php-sdk":"dev-master",
         "stof/doctrine-extensions-bundle":"dev-master",
@@ -34,56 +34,62 @@
         "sonata-project/easy-extends-bundle":"dev-master",
         "knplabs/gaufrette":"dev-master",
         "kriswallsmith/buzz":"dev-master",
-        "beberlei/DoctrineExtensions":"dev-master",
-        "knplabs/knp-menu":"1.1.x-dev",
-        "knplabs/knp-menu-bundle":"dev-master"
+        "beberlei/DoctrineExtensions":"v0.1",
+        "knplabs/knp-menu":"v1.1.2",
+        "knplabs/knp-menu-bundle":"v1.1.0"
     },
-    "repositories":{
-        "zendframework/zend-cache":{
+    "repositories":[
+        {
             "type":"package",
             "package":{
                 "name":"zendframework/zend-cache",
-                "version":"2.0.0beta1",
+                "version":"2.0.0-beta1",
                 "dist":{
-                    "url":"http://github.com/KnpLabs/zend-cache/zipball/master",
-                    "type":"zip"
-                },
-                "source":{
-                    "url":"git://github.com/KnpLabs/zend-cache.git",
-                    "type":"git",
-                    "reference":"master"
+                    "url":"http://packages.zendframework.com/get/Zend_Cache-2.0.0beta1.tgz",
+                    "type":"pear"
                 },
                 "autoload":{
                     "psr-0":{
-                        "Zend\\Cache":""
+                        "Zend\\Cache":"php/"
                     }
-                },
-                "target-dir":"Zend/Cache"
+                }
             }
         },
-        "zendframework/zend-filter":{
+        {
             "type":"package",
             "package":{
                 "name":"zendframework/zend-filter",
-                "version":"2.0.0beta1",
+                "version":"2.0.0-beta1",
                 "dist":{
-                    "url":"http://github.com/KnpLabs/zend-filter/zipball/master",
-                    "type":"zip"
-                },
-                "source":{
-                    "url":"git://github.com/KnpLabs/zend-filter.git",
-                    "type":"git",
-                    "reference":"master"
+                    "url":"http://packages.zendframework.com/get/Zend_Filter-2.0.0beta1.tgz",
+                    "type":"pear"
                 },
                 "autoload":{
                     "psr-0":{
-                        "Zend\\Filter":""
+                        "Zend\\Filter":"php/"
+                    }
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package":{
+                "name":"lunetics/locale-bundle",
+                "version":"dev-rework",
+                "autoload":{
+                    "psr-0":{
+                        "Lunetics\\LocaleBundle":""
                     }
                 },
-                "target-dir":"Zend/Filter"
+                "target-dir":"Lunetics/LocaleBundle",
+                "source":{
+                    "url":"git://github.com/lunetics/LocaleBundle.git",
+                    "type":"git",
+                    "reference":"rework"
+                }
             }
         }
-    },
+    ],
     "scripts":{
         "post-install-cmd":[
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",

@@ -40,7 +40,9 @@ class AppKernel extends Kernel
 
             new App\UserBundle\UserBundle(),
             new App\PageBundle\PageBundle(),
-            new App\NodejsBundle\NodejsBundle(),
+            //new App\NodejsBundle\NodejsBundle(),
+            new Briareos\ChatBundle\BriareosChatBundle(),
+            new Briareos\NodejsBundle\BriareosNodejsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

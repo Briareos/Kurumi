@@ -1,3 +1,13 @@
+BriareosNodejsBundle:
+    resource: "@BriareosNodejsBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+BriareosChatBundle:
+    resource: "@BriareosChatBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 NodejsBundle:
     resource: "@NodejsBundle/Controller/"
     type:     annotation
