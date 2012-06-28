@@ -36,7 +36,8 @@
         "kriswallsmith/buzz":"dev-master",
         "beberlei/DoctrineExtensions":"v0.1",
         "knplabs/knp-menu":"v1.1.2",
-        "knplabs/knp-menu-bundle":"v1.1.0"
+        "knplabs/knp-menu-bundle":"v1.1.0",
+        "briareos/chat-bundle":"dev-master"
     },
     "repositories":[
         {
@@ -86,6 +87,24 @@
                     "url":"git://github.com/lunetics/LocaleBundle.git",
                     "type":"git",
                     "reference":"rework"
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package":{
+                "name":"briareos/chat-bundle",
+                "version":"dev-master",
+                "autoload":{
+                    "psr-0":{
+                        "Briareos\\ChatBundle":""
+                    }
+                },
+                "target-dir":"Briareos/ChatBundle",
+                "source":{
+                    "url":"git@github.com:Briareos/BriareosChatBundle.git",
+                    "type":"git",
+                    "reference":"master"
                 }
             }
         }

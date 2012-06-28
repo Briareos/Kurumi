@@ -1,9 +1,15 @@
 {
-    "hash": "a7e3cd01f739fdc47db408faedf8bcee",
+    "hash": "edbc536262903c316e97196853cce4cd",
     "packages": [
         {
             "package": "beberlei/DoctrineExtensions",
             "version": "v0.1"
+        },
+        {
+            "package": "briareos/chat-bundle",
+            "version": "dev-master",
+            "source-reference": "master",
+            "commit-date": "1340917252"
         },
         {
             "package": "doctrine/common",
@@ -12,8 +18,8 @@
         {
             "package": "doctrine/data-fixtures",
             "version": "dev-master",
-            "source-reference": "1f0b8be5db0b53681f80c99324c94e21e1efe39a",
-            "commit-date": "1340392920"
+            "source-reference": "64538135ef2b17a296e26f88a04c7ce2e4551459",
+            "commit-date": "1340776266"
         },
         {
             "package": "doctrine/dbal",
@@ -28,14 +34,14 @@
         {
             "package": "doctrine/doctrine-bundle",
             "version": "dev-master",
-            "source-reference": "94951737d6c692500d6b13bb92871935568a4ba5",
-            "commit-date": "1340102167"
+            "source-reference": "9b4dd7398cbc4d2dfe04eefc3c0451f1e13e141c",
+            "commit-date": "1340813490"
         },
         {
             "package": "doctrine/doctrine-fixtures-bundle",
             "version": "dev-master",
-            "source-reference": "33b267d3068d6c2f8daa0b417285cf76e7f82fc4",
-            "commit-date": "1333478471"
+            "source-reference": "45db22f6d0a0ff0d2f26e3154458c1e62d163921",
+            "commit-date": "1340840008"
         },
         {
             "package": "doctrine/orm",
@@ -50,14 +56,14 @@
         {
             "package": "friendsofsymfony/facebook-bundle",
             "version": "dev-master",
-            "source-reference": "6e9c8fab26106b371261306059c5de158a1c4012",
-            "commit-date": "1340630962"
+            "source-reference": "bbc12fd16d7ab08f60ffb9dd167c82b837481a1b",
+            "commit-date": "1340877505"
         },
         {
             "package": "gedmo/doctrine-extensions",
             "version": "dev-master",
-            "source-reference": "9ed48efd2868652f9020c681519d176688a0e87f",
-            "commit-date": "1340362268"
+            "source-reference": "f3b75e0fa19b8559b76128fc3f50ecf3bb4306f0",
+            "commit-date": "1340773520"
         },
         {
             "package": "imagine/Imagine",
@@ -134,8 +140,8 @@
         {
             "package": "sensio/distribution-bundle",
             "version": "dev-master",
-            "source-reference": "a360ad61fe34206a7295c1ef00b5455b2b2e1071",
-            "commit-date": "1340305968"
+            "source-reference": "f3515e702f9cae8e727d982557dca8de82dd12c5",
+            "commit-date": "1340790396"
         },
         {
             "package": "sensio/framework-extra-bundle",
@@ -146,8 +152,8 @@
         {
             "package": "sensio/framework-extra-bundle",
             "version": "dev-master",
-            "source-reference": "62e41b85947034b0f1dfe31bb8e76920e1488571",
-            "commit-date": "1340116878"
+            "source-reference": "b9f630e35059f661a59ec4e0f5505b067fed4e55",
+            "commit-date": "1340889912"
         },
         {
             "package": "sensio/generator-bundle",
@@ -235,15 +241,7 @@
         },
         {
             "package": "swiftmailer/swiftmailer",
-            "version": "dev-master",
-            "alias-pretty-version": "4.1.x-dev",
-            "alias-version": "4.1.9999999.9999999-dev"
-        },
-        {
-            "package": "swiftmailer/swiftmailer",
-            "version": "dev-master",
-            "source-reference": "0173abd7bb539bc5dd0b823b06b46636121384e9",
-            "commit-date": "1340373948"
+            "version": "v4.1.8"
         },
         {
             "package": "symfony/assetic-bundle",
@@ -266,20 +264,8 @@
         {
             "package": "symfony/monolog-bundle",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
-        },
-        {
-            "package": "symfony/monolog-bundle",
-            "version": "dev-master",
             "source-reference": "660a1aeaf93e8ffdc34c27b3a82dc47195ad1d8d",
             "commit-date": "1340609637"
-        },
-        {
-            "package": "symfony/swiftmailer-bundle",
-            "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
         },
         {
             "package": "symfony/swiftmailer-bundle",
@@ -308,8 +294,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "5a8e20643e4f3fd0a32b5712c1d19a47edbfd91b",
-            "commit-date": "1340656150"
+            "source-reference": "a725f023c1fa9cfe567e919bba28e9398bdf3d24",
+            "commit-date": "1340922909"
         },
         {
             "package": "twig/extensions",
@@ -326,8 +312,8 @@
         {
             "package": "twig/twig",
             "version": "dev-master",
-            "source-reference": "4679ad51c5390648b7ea4c8f0ecd2c0c344145ba",
-            "commit-date": "1339959143"
+            "source-reference": "73da773aaad0f97f2e967ec8241b8adf7b1e03d2",
+            "commit-date": "1340890758"
         },
         {
             "package": "zendframework/zend-cache",
@@ -364,6 +350,7 @@
         "sonata-project/intl-bundle": 20,
         "sonata-project/easy-extends-bundle": 20,
         "knplabs/gaufrette": 20,
-        "kriswallsmith/buzz": 20
+        "kriswallsmith/buzz": 20,
+        "briareos/chat-bundle": 20
     }
 }
