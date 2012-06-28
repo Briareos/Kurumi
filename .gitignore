@@ -6,11 +6,16 @@ certs/
 
 webroot/bundles/
 webroot/uploads/
-app/bootstrap.php.cache
-app/cache/*
-app/logs/*
+webroot/php_errors.log
+
+app/cache/
+app/logs/
+
 build/
 vendor/
-composer.phar
+
+src/Briareos/
+
+app/bootstrap.php.cache
 app/config/parameters.yml
-src/Briareos
+composer.phar
