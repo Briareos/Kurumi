@@ -94,11 +94,13 @@ doctrine:
             UserBundle: ~
             SonataMediaBundle: ~
             ApplicationSonataMediaBundle: ~
+            BriareosNodejsBundle: ~
             BriareosChatBundle: ~
         dql:
             string_functions:
                 FindInSet: DoctrineExtensions\Query\Mysql\FindInSet
         resolve_target_entities:
+            Briareos\NodejsBundle\Entity\NodejsSubjectInterface: App\UserBundle\Entity\User
             Briareos\ChatBundle\Entity\ChatSubjectInterface: App\UserBundle\Entity\User
 
 stof_doctrine_extensions:

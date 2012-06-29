@@ -37,6 +37,7 @@
         "beberlei/DoctrineExtensions":"v0.1",
         "knplabs/knp-menu":"v1.1.2",
         "knplabs/knp-menu-bundle":"v1.1.0",
+        "briareos/nodejs-bundle":"dev-master",
         "briareos/chat-bundle":"dev-master"
     },
     "repositories":[
@@ -103,6 +104,24 @@
                 "target-dir":"Briareos/ChatBundle",
                 "source":{
                     "url":"git@github.com:Briareos/BriareosChatBundle.git",
+                    "type":"git",
+                    "reference":"master"
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package":{
+                "name":"briareos/nodejs-bundle",
+                "version":"dev-master",
+                "autoload":{
+                    "psr-0":{
+                        "Briareos\\NodejsBundle":""
+                    }
+                },
+                "target-dir":"Briareos/NodejsBundle",
+                "source":{
+                    "url":"git@github.com:Briareos/BriareosNodejsBundle.git",
                     "type":"git",
                     "reference":"master"
                 }

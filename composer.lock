@@ -1,5 +1,5 @@
 {
-    "hash": "edbc536262903c316e97196853cce4cd",
+    "hash": "237fe4b878f4c59a0796c3d01a08a6d1",
     "packages": [
         {
             "package": "beberlei/DoctrineExtensions",
@@ -10,6 +10,12 @@
             "version": "dev-master",
             "source-reference": "master",
             "commit-date": "1340917252"
+        },
+        {
+            "package": "briareos/nodejs-bundle",
+            "version": "dev-master",
+            "source-reference": "master",
+            "commit-date": "1340923929"
         },
         {
             "package": "doctrine/common",
@@ -288,12 +294,6 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
-        },
-        {
-            "package": "symfony/symfony",
-            "version": "dev-master",
             "source-reference": "a725f023c1fa9cfe567e919bba28e9398bdf3d24",
             "commit-date": "1340922909"
         },
@@ -351,6 +351,7 @@
         "sonata-project/easy-extends-bundle": 20,
         "knplabs/gaufrette": 20,
         "kriswallsmith/buzz": 20,
+        "briareos/nodejs-bundle": 20,
         "briareos/chat-bundle": 20
     }
 }

@@ -8,11 +8,6 @@ BriareosChatBundle:
     type:     annotation
     prefix:   /
 
-NodejsBundle:
-    resource: "@NodejsBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 front:
     pattern: /
 

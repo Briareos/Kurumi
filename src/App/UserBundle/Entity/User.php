@@ -533,4 +533,9 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable, C
     {
         return $this->picture;
     }
+
+    public function getChatName()
+    {
+        return $this->getName();
+    }
 }
