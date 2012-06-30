@@ -9,13 +9,13 @@
             "package": "briareos/chat-bundle",
             "version": "dev-master",
             "source-reference": "master",
-            "commit-date": "1340917252"
+            "commit-date": "1341013141"
         },
         {
             "package": "briareos/nodejs-bundle",
             "version": "dev-master",
             "source-reference": "master",
-            "commit-date": "1340923929"
+            "commit-date": "1340939688"
         },
         {
             "package": "doctrine/common",
@@ -294,8 +294,14 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "a725f023c1fa9cfe567e919bba28e9398bdf3d24",
-            "commit-date": "1340922909"
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/symfony",
+            "version": "dev-master",
+            "source-reference": "62100f1a1805af80fccf1cca734c7f5394f9c20b",
+            "commit-date": "1340985788"
         },
         {
             "package": "twig/extensions",
