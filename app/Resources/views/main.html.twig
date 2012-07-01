@@ -2,8 +2,8 @@
 
 {% block javascript_header %}
 {{ parent() }}
-{% include 'NodejsBundle::nodejs.html.twig' %}
-{% include 'NodejsBundle:Chat:chat.html.twig' %}
+{% include 'BriareosNodejsBundle:Nodejs:nodejs.html.twig' %}
+{% include 'BriareosChatBundle:Chat:chat.html.twig' %}
 {% endblock %}
 
 {% block body %}
@@ -13,7 +13,7 @@
             {% spaceless %}
             <ul class="profile">
                 <li><a href="">{% trans %}Settings{% endtrans %}</a></li>
-                <li><a href="{{ path('logout', {_csrf_token:csrf_token('logout')}) }}">{% trans %}Log Out{% endtrans %}</a></li>
+                <li><a href="{{ logout_url('main') }}">{% trans %}Log Out{% endtrans %}</a></li>
             </ul>
             {% endspaceless %}
         </div>

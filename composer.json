@@ -38,7 +38,8 @@
         "knplabs/knp-menu":"v1.1.2",
         "knplabs/knp-menu-bundle":"v1.1.0",
         "briareos/nodejs-bundle":"dev-master",
-        "briareos/chat-bundle":"dev-master"
+        "briareos/chat-bundle":"dev-master",
+        "elao/web-profiler-extra-bundle":"dev-master"
     },
     "repositories":[
         {

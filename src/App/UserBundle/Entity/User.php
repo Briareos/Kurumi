@@ -16,7 +16,6 @@ use App\NodejsBundle\Entity\ChatUser;
 use Application\Sonata\MediaBundle\Entity\Media;
 use Briareos\ChatBundle\Entity\ChatSubjectInterface;
 
-
 /**
  * App\UserBundle\Entity\User
  *
