@@ -15,6 +15,7 @@
         "doctrine/doctrine-fixtures-bundle":"dev-master",
         "twig/extensions":"dev-master",
         "symfony/assetic-bundle":"2.1.x-dev",
+        "swiftmailer/swiftmailer":"4.2.x-dev",
         "symfony/swiftmailer-bundle":"2.1.x-dev",
         "symfony/monolog-bundle":"2.1.x-dev",
         "sensio/distribution-bundle":"dev-master",
@@ -39,6 +40,7 @@
         "knplabs/knp-menu-bundle":"v1.1.0",
         "briareos/nodejs-bundle":"dev-master",
         "briareos/chat-bundle":"dev-master",
+        "briareos/acl-bundle":"dev-master",
         "elao/web-profiler-extra-bundle":"dev-master"
     },
     "repositories":[
@@ -123,6 +125,24 @@
                 "target-dir":"Briareos/NodejsBundle",
                 "source":{
                     "url":"git@github.com:Briareos/BriareosNodejsBundle.git",
+                    "type":"git",
+                    "reference":"master"
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package":{
+                "name":"briareos/acl-bundle",
+                "version":"dev-master",
+                "autoload":{
+                    "psr-0":{
+                        "Briareos\\AclBundle":""
+                    }
+                },
+                "target-dir":"Briareos/AclBundle",
+                "source":{
+                    "url":"git@github.com:Briareos/BriareosAclBundle.git",
                     "type":"git",
                     "reference":"master"
                 }

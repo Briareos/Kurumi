@@ -8,13 +8,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Request;
 
-class LoginController extends Controller {
+class LoginController extends Controller
+{
 
     /**
      * @Route("/login", name="login")
      * @Template()
      */
-    public function loginAction(Request $request) {
+    public function loginAction(Request $request)
+    {
         $session = $request->getSession();
 
         $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
@@ -26,8 +28,24 @@ class LoginController extends Controller {
 
         return array(
             'last_username' => $lastUsername,
-            'error'         => $error,
+            'error' => $error,
             'csrf_token' => $csrfToken,
         );
+    }
+
+    /**
+     * @Route("/login_check", name="login_check")
+     */
+    public function loginCheckAction()
+    {
+
+    }
+
+    /**
+     * @Route("/logout", name="logout")
+     */
+    public function logoutAction()
+    {
+
     }
 }

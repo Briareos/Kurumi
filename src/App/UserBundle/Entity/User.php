@@ -12,7 +12,6 @@ use Serializable;
 use App\UserBundle\Entity\Profile;
 use App\UserBundle\Entity\Facebook;
 use App\UserBundle\Entity\Role;
-use App\NodejsBundle\Entity\ChatUser;
 use Application\Sonata\MediaBundle\Entity\Media;
 use Briareos\ChatBundle\Entity\ChatSubjectInterface;
 
@@ -486,29 +485,6 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable, C
     {
         $this->userRoles[] = $userRoles;
         return $this;
-    }
-
-
-    /**
-     * Set chatCache
-     *
-     * @param App\NodejsBundle\Entity\ChatCache $chatCache
-     * @return User
-     */
-    public function setChatCache(\App\NodejsBundle\Entity\ChatCache $chatCache = null)
-    {
-        $this->chatCache = $chatCache;
-        return $this;
-    }
-
-    /**
-     * Get chatCache
-     *
-     * @return App\NodejsBundle\Entity\ChatCache 
-     */
-    public function getChatCache()
-    {
-        return $this->chatCache;
     }
 
     /**

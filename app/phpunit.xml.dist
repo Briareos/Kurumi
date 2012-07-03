@@ -15,13 +15,13 @@
 
     <testsuites>
         <testsuite name="Project Test Suite">
-            <directory>../src/App/*Bundle/Tests</directory>
-            <!--<directory>../src/*/Bundle/*Bundle/Tests</directory>-->
+            <directory>../src/*/*Bundle/Tests</directory>
+            <directory>../src/*/Bundle/*Bundle/Tests</directory>
         </testsuite>
     </testsuites>
 
     <php>
-        <server name="KERNEL_DIR" value="./app" />
+        <server name="KERNEL_DIR" value="./app/" />
     </php>
 
     <filter>
