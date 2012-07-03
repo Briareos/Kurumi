@@ -1,6 +1,13 @@
 jms_security_extra:
-    secure_all_services: false
-    expressions: false
+    secure_all_services:    false
+    expressions:            false
+    enable_iddqd_attribute: false
+    cache_dir:              %kernel.cache_dir%/jms_security
+    voters:
+        disable_authenticated:  false   # Enables 3 basic permission checks, IS_AUTHENTICATED_(ANONYMOUS|REMEMBERED|FULLY)
+        disable_role:           true    # Checks against the array of roles given by UserInterface::getRoles()
+        disable_acl:            true    # Uses the core ACL component http://symfony.com/doc/current/cookbook/security/acl.html
+    method_access_control: []
 
 security:
     encoders:
