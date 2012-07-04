@@ -55,7 +55,7 @@ twig:
     strict_variables: %kernel.debug%
     form:
         resources:
-            - '::fields.html.twig'
+            - "::fields.html.twig"
     exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
     globals:
         site_name:  Kurumi
@@ -97,6 +97,10 @@ doctrine:
             BriareosNodejsBundle: ~
             BriareosChatBundle: ~
             BriareosAclBundle: ~
+            GedmoTree:
+                type:   annotation
+                prefix: Gedmo\Tree\Entity
+                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
         dql:
             string_functions:
                 FindInSet: DoctrineExtensions\Query\Mysql\FindInSet
@@ -105,11 +109,12 @@ doctrine:
             Briareos\ChatBundle\Entity\ChatSubjectInterface: App\UserBundle\Entity\User
             Briareos\AclBundle\Entity\AclSubjectInterface: App\UserBundle\Entity\User
 
+
 stof_doctrine_extensions:
     default_locale: %locale%
     orm:
         default:
-            timestampable: true
+            tree: true
 
 # Swiftmailer Configuration
 swiftmailer:
