@@ -6,14 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
-use Serializable;
 use App\UserBundle\Entity\Profile;
 use App\UserBundle\Entity\Facebook;
-use App\UserBundle\Entity\Role;
 use Application\Sonata\MediaBundle\Entity\Media;
 use Briareos\ChatBundle\Entity\ChatSubjectInterface;
+use Briareos\AclBundle\Entity\AclSubjectInterface;
 
 /**
  * App\UserBundle\Entity\User
@@ -21,14 +19,14 @@ use Briareos\ChatBundle\Entity\ChatSubjectInterface;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="App\UserBundle\Entity\UserRepository")
  */
-class User implements AdvancedUserInterface, EquatableInterface, Serializable, ChatSubjectInterface
+class User implements UserInterface, EquatableInterface, \Serializable, ChatSubjectInterface, AclSubjectInterface
 {
 
     /**
      * @var integer $id
      *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
@@ -83,10 +81,10 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable, C
     /**
      * @var \DateTime $created
      *
-     * @ORM\Column(name="created", type="datetime")
+     * @ORM\Column(name="createdAt", type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
-    private $created;
+    private $createdAt;
 
     /**
      * @var Profile
@@ -111,15 +109,11 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable, C
     private $facebook;
 
     /**
-     * @var ArrayCollection
+     * @var
      *
-     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
-     * @ORM\JoinTable(name="user_role",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
-     * )
+     * @ORM\ManyToMany(targetEntity="Briareos\AclBundle\Entity\AclRole", mappedBy="subjects")
      */
-    private $userRoles;
+    private $aclRoles;
 
 
     public function __construct()
@@ -128,7 +122,7 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable, C
         $this->password = null;
         $this->timezone = null;
         $this->active = true;
-        $this->userRoles = new ArrayCollection();
+        $this->aclRoles = new ArrayCollection();
     }
 
     /**
@@ -214,80 +208,18 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable, C
 
     public function getRoles()
     {
-        return $this->getUserRoles()->toArray();
+        return array();
     }
 
     public function isEqualTo(UserInterface $user)
     {
+        /** @var $user User */
         return $this->getId() == $user->getId();
     }
 
     public function eraseCredentials()
     {
         $this->setPlainPassword(null);
-    }
-
-    /**
-     * Checks whether the user is enabled.
-     *
-     * Internally, if this method returns false, the authentication system
-     * will throw a DisabledException and prevent login.
-     *
-     * @return Boolean true if the user is enabled, false otherwise
-     *
-     * @see DisabledException
-     */
-    function isEnabled()
-    {
-        return $this->getActive();
-    }
-
-    /**
-     * Checks whether the user's account has expired.
-     *
-     * Internally, if this method returns false, the authentication system
-     * will throw an AccountExpiredException and prevent login.
-     *
-     * @return Boolean true if the user's account is non expired, false otherwise
-     *
-     * @see AccountExpiredException
-     */
-    function isAccountNonExpired()
-    {
-        // TODO: Implement isAccountNonExpired() method.
-        return true;
-    }
-
-    /**
-     * Checks whether the user is locked.
-     *
-     * Internally, if this method returns false, the authentication system
-     * will throw a LockedException and prevent login.
-     *
-     * @return Boolean true if the user is not locked, false otherwise
-     *
-     * @see LockedException
-     */
-    function isAccountNonLocked()
-    {
-        // TODO: Implement isAccountNonLocked() method.
-        return true;
-    }
-
-    /**
-     * Checks whether the user's credentials (password) has expired.
-     *
-     * Internally, if this method returns false, the authentication system
-     * will throw a CredentialsExpiredException and prevent login.
-     *
-     * @return Boolean true if the user's credentials are non expired, false otherwise
-     *
-     * @see CredentialsExpiredException
-     */
-    function isCredentialsNonExpired()
-    {
-        // TODO: Implement isCredentialsNonExpired() method.
-        return true;
     }
 
     public function serialize()
@@ -408,30 +340,25 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable, C
     }
 
     /**
-     * Set created
+     * Set createdAt
      *
-     * @param datetime $created
+     * @param \DateTime $createdAt
      * @return User
      */
-    public function setCreated($created)
+    public function setCreatedAt($createdAt)
     {
-        $this->created = $created;
+        $this->createdAt = $createdAt;
         return $this;
     }
 
     /**
-     * Get created
+     * Get createdAt
      *
-     * @return datetime
+     * @return \DateTime
      */
-    public function getCreated()
+    public function getCreatedAt()
     {
-        return $this->created;
-    }
-
-    function __toString()
-    {
-        return sprintf('%s (%s)', $this->getName(), $this->getEmail());
+        return $this->createdAt;
     }
 
     public function setPasswordClear($clear = true)
@@ -446,51 +373,10 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable, C
         return (null === $this->password);
     }
 
-
-    /**
-     * Add userRoles
-     *
-     * @param Role $userRole
-     * @return User
-     */
-    public function addUserRole(Role $role)
-    {
-        $this->userRoles->add($role);
-        return $this;
-    }
-
-    public function removeUserRole(Role $role)
-    {
-        $this->userRoles->removeElement($role);
-        return $this;
-    }
-
-    /**
-     * Get userRoles
-     *
-     * @return Doctrine\Common\Collections\Collection
-     */
-    public function getUserRoles()
-    {
-        return $this->userRoles;
-    }
-
-    /**
-     * Add userRoles
-     *
-     * @param App\UserBundle\Entity\Role $userRoles
-     * @return User
-     */
-    public function addRole(\App\UserBundle\Entity\Role $userRoles)
-    {
-        $this->userRoles[] = $userRoles;
-        return $this;
-    }
-
     /**
      * Set picture
      *
-     * @param Application\Sonata\MediaBundle\Entity\Media $picture
+     * @param \Application\Sonata\MediaBundle\Entity\Media $picture
      * @return User
      */
     public function setPicture(\Application\Sonata\MediaBundle\Entity\Media $picture = null)
@@ -502,7 +388,7 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable, C
     /**
      * Get picture
      *
-     * @return Application\Sonata\MediaBundle\Entity\Media 
+     * @return \Application\Sonata\MediaBundle\Entity\Media|null
      */
     public function getPicture()
     {
@@ -512,5 +398,28 @@ class User implements AdvancedUserInterface, EquatableInterface, Serializable, C
     public function getChatName()
     {
         return $this->getName();
+    }
+
+
+    /**
+     * Add aclRoles
+     *
+     * @param \Briareos\AclBundle\Entity\AclRole $aclRoles
+     * @return User
+     */
+    public function addAclRole(\Briareos\AclBundle\Entity\AclRole $aclRoles)
+    {
+        $this->aclRoles[] = $aclRoles;
+        return $this;
+    }
+
+    /**
+     * Get aclRoles
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAclRoles()
+    {
+        return $this->aclRoles;
     }
 }

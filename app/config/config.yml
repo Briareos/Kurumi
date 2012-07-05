@@ -97,10 +97,6 @@ doctrine:
             BriareosNodejsBundle: ~
             BriareosChatBundle: ~
             BriareosAclBundle: ~
-            GedmoTree:
-                type:   annotation
-                prefix: Gedmo\Tree\Entity
-                dir: "%kernel.root_dir%/../vendor/gedmo/doctrine-extensions/lib/Gedmo/Tree/Entity"
         dql:
             string_functions:
                 FindInSet: DoctrineExtensions\Query\Mysql\FindInSet
@@ -115,6 +111,7 @@ stof_doctrine_extensions:
     orm:
         default:
             tree: true
+            timestampable: true
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -208,10 +205,10 @@ sonata_block:
         sonata.media.block.feature_media:
 
 sonata_admin:
-    #security_handler: sonata.admin.security.handler.noop
-
     title:      Project Kurumi
     title_logo: /bundles/sonataadmin/logo_title.png
+    security:
+        handler: sonata.admin.security.handler.briareos_acl
     templates:
         # default global templates
         layout:  SonataAdminBundle::standard_layout.html.twig

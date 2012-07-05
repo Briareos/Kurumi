@@ -2,16 +2,20 @@
 
 namespace App\UserBundle\DataFixtures\ORM;
 
-use Doctrine\Common\DataFixtures\FixtureInterface;
-use App\UserBundle\Entity\User;
-use App\UserBundle\Entity\Role;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use App\UserBundle\Entity\UserManager;
+use App\UserBundle\Entity\User;
 
-class LoadUsers implements FixtureInterface, ContainerAwareInterface {
+class LoadUsers extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+{
 
+    /**
+     * @var ContainerInterface
+     */
     private $container;
 
     /**
@@ -21,23 +25,19 @@ class LoadUsers implements FixtureInterface, ContainerAwareInterface {
      */
     public function load(ObjectManager $manager)
     {
-        $defaultRole = new Role();
-        $defaultRole->setName('ROLE_USER');
-        $manager->persist($defaultRole);
-
-        $superAdminRole = new Role();
-        $superAdminRole->setName('ROLE_SUPER_ADMIN');
-        $manager->persist($superAdminRole);
-
+        /** @var $userManager UserManager */
+        $userManager = $this->container->get('user_manager');
         $admin = new User();
         $admin->setEmail("gmefox@gmail.com");
         $admin->setPlainPassword("metalfox");
-        $this->container->get('user_manager')->updatePassword($admin);
+        $userManager->updatePassword($admin);
         $admin->setTimezone('Europe/Belgrade');
         $admin->setName("Fox");
-        $admin->addUserRole($defaultRole);
-        $admin->addUserRole($superAdminRole);
+        /** @var $administratorRole \Briareos\AclBundle\Entity\AclRole */
+        $administratorRole = $this->getReference('role-administrator');
+        $administratorRole->addUser($admin);
         $manager->persist($admin);
+        $manager->persist($administratorRole);
 
         $manager->flush();
     }
@@ -53,4 +53,16 @@ class LoadUsers implements FixtureInterface, ContainerAwareInterface {
     {
         $this->container = $container;
     }
+
+    /**
+     * Get the order of this fixture
+     *
+     * @return integer
+     */
+    function getOrder()
+    {
+        return 10;
+    }
+
+
 }
