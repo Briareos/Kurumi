@@ -65,13 +65,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     private $salt;
 
     /**
-     * @var boolean $active
-     *
-     * @ORM\Column(name="active", type="boolean")
-     */
-    private $active;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -109,7 +102,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     private $facebook;
 
     /**
-     * @var
+     * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Briareos\AclBundle\Entity\AclRole", mappedBy="subjects")
      */
@@ -121,7 +114,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->password = null;
         $this->timezone = null;
-        $this->active = true;
         $this->aclRoles = new ArrayCollection();
     }
 
@@ -304,26 +296,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     }
 
     /**
-     * Set active
-     *
-     * @param boolean $active
-     */
-    public function setActive($active)
-    {
-        $this->active = $active;
-    }
-
-    /**
-     * Get active
-     *
-     * @return boolean
-     */
-    public function getActive()
-    {
-        return $this->active;
-    }
-
-    /**
      * @return \App\UserBundle\Entity\Facebook|null
      */
     public function getFacebook()
@@ -409,6 +381,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
      */
     public function addAclRole(\Briareos\AclBundle\Entity\AclRole $aclRoles)
     {
+        $aclRoles->addUser($this);
         $this->aclRoles[] = $aclRoles;
         return $this;
     }

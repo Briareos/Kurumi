@@ -21,28 +21,30 @@ class RegisterController extends Controller
      */
     public function registerAction(Request $request)
     {
-        $defaultUser = new User();
+        $user = new User();
         $defaultProfile = new Profile();
-        $defaultUser->setProfile($defaultProfile);
+        $user->setProfile($defaultProfile);
         $defaultCity = new City();
         $defaultProfile->setCity($defaultCity);
 
-        $form = $this->createForm(new RegisterFormType(), $defaultUser);
+        $form = $this->createForm(new RegisterFormType(), $user);
 
         if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);
             if ($form->isValid()) {
-                $user = $form->getData();
-
+                /** @var $em \Doctrine\ORM\EntityManager */
                 $em = $this->getDoctrine()->getManager();
-                $city = $this->get('city_manager')->manageCity($user->getProfile()->getCity());
+                /** @var $cityManager \App\UserBundle\Entity\CityManager */
+                $cityManager = $this->get('city_manager');
+                $city = $cityManager->manageCity($user->getProfile()->getCity());
                 if (!$city->getId()) {
                     $em->persist($city);
                 } else {
                     $user->getProfile()->setCity($city);
                 }
-                $this->get('user_manager')->updatePassword($user);
-                $user->setActive(true);
+                /** @var $userManager \App\UserBundle\Entity\UserManager */
+                $userManager = $this->get('user_manager');
+                $userManager->updatePassword($user);
                 $em->persist($user->getProfile());
                 $em->persist($user);
                 $em->flush();

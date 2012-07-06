@@ -6,7 +6,6 @@ framework:
     #esi:             ~
     translator:      { fallback: %locale% }
     secret:          %secret%
-    charset:         UTF-8
     router:          { resource: "%kernel.root_dir%/config/routing.yml" }
     form:            true
     csrf_protection: true
@@ -14,37 +13,17 @@ framework:
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
     default_locale:  %locale%
     session:
-        auto_start:      true
-        storage_id:      session.storage.pdo
-        name:            kurumi
-        gc_divisor:      108
-        gc_probability:  1
-        gc_maxlifetime:  7200   #gc_probability/gc_divisor chance of being run
-        cookie_lifetime: 3600
-        #cookie_path:     \
-        #cookie_domain:   example.com
-        #cookie_secure:   true
-        cookie_httponly: true
-
-parameters:
-    pdo.db_options:
-        db_table: session
-        db_id_col: session_id
-        db_data_col: session_value
-        db_time_col: session_time
-        db_user_id_col: user_id
+        storage_id:         session.storage.native
+        handler_id:         session.handler.native_file
+        name:               kurumi
+        #cookie_lifetime
+        #cookie_path:       \
+        #cookie_domain:     example.com
+        #cookie_secure:     true
+        cookie_httponly:    true
+        save_path:          %kernel.cache_dir%/sessions
 
 services:
-    pdo:
-        class: PDO
-        arguments:
-            dsn: "mysql:dbname=%database_name%"
-            user: %database_user%
-            password: %database_password%
-    session.storage.pdo:
-        #class: Symfony\Component\HttpFoundation\Session\Storage\PdoSessionStorage
-        class: App\UserBundle\Security\Session\Storage\PdoSessionStorage
-        arguments: [@pdo, %pdo.db_options%, @security.context]
     facebook_provider:
         class: App\UserBundle\Security\User\Provider\FacebookProvider
         arguments: [@fos_facebook.api, @doctrine.orm.entity_manager, @validator]

@@ -42,6 +42,11 @@ class GeonameLookup
         $this->logger = $logger;
     }
 
+    /**
+     * @param $geonameId
+     * @return array|mixed|\Zend\Cache\Frontend\false
+     * @throws \InvalidArgumentException
+     */
     public function get($geonameId)
     {
         if (!is_numeric($geonameId) || $geonameId < 1) {
@@ -60,6 +65,12 @@ class GeonameLookup
         return $this->lookup($geonameId);
     }
 
+    /**
+     * @param $geonameId
+     * @return array
+     * @throws \InvalidArgumentException
+     * @throws \Exception
+     */
     public function lookup($geonameId)
     {
         if (!is_numeric($geonameId) || $geonameId < 1) {

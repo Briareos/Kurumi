@@ -6,7 +6,8 @@ use App\UserBundle\Entity\City;
 use App\UserBundle\Util\GeonameLookup;
 use Doctrine\ORM\EntityManager;
 
-class CityManager {
+class CityManager
+{
 
     /**
      * @var EntityManager
@@ -18,17 +19,25 @@ class CityManager {
      */
     private $geonameLookup;
 
-    public function __construct($em, $geonameLookup) {
+    public function __construct($em, $geonameLookup)
+    {
         $this->em = $em;
         $this->geonameLookup = $geonameLookup;
     }
 
-    public function manageCity(City $city) {
-        if(!$city->getGeonameId()) {
+    /**
+     * @param City $city
+     * @return City|null|object
+     */
+    public function manageCity(City $city)
+    {
+        if (!$city->getGeonameId()) {
             return null;
         }
-        $existingCity = $this->em->getRepository(get_class($city))->findOneByGeonameId($city->getGeonameId());
-        if($existingCity) {
+        $existingCity = $this->em->getRepository(get_class($city))->findOneBy(array(
+            'geonameId' => $city->getGeonameId(),
+        ));
+        if ($existingCity) {
             return $existingCity;
         }
         $data = $this->geonameLookup->get($city->getGeonameId());

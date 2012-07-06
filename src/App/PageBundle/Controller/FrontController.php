@@ -18,8 +18,6 @@ class FrontController extends Controller
      */
     public function frontAction()
     {
-        var_dump($this->getDoctrine()->getEntityManager()->getClassMetadata('App\UserBundle\Entity\User'));
-
         $defaultUser = new User();
         $defaultProfile = new Profile();
         $defaultCity = new City();

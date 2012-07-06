@@ -27,17 +27,26 @@ class LoadUsers extends AbstractFixture implements OrderedFixtureInterface, Cont
     {
         /** @var $userManager UserManager */
         $userManager = $this->container->get('user_manager');
+
+        /** @var $administratorRole \Briareos\AclBundle\Entity\AclRole */
+        $administratorRole = $this->getReference('role-administrator');
+
         $admin = new User();
         $admin->setEmail("gmefox@gmail.com");
         $admin->setPlainPassword("metalfox");
-        $userManager->updatePassword($admin);
         $admin->setTimezone('Europe/Belgrade');
         $admin->setName("Fox");
-        /** @var $administratorRole \Briareos\AclBundle\Entity\AclRole */
-        $administratorRole = $this->getReference('role-administrator');
-        $administratorRole->addUser($admin);
+        $admin->addAclRole($administratorRole);
+        $userManager->updatePassword($admin);
         $manager->persist($admin);
-        $manager->persist($administratorRole);
+
+        $user1 = new User();
+        $user1->setEmail("gmefox@live.com");
+        $user1->setPlainPassword("metalfox");
+        $user1->setTimezone('Europe/Belgrade');
+        $user1->setName("Gray");
+        $userManager->updatePassword($user1);
+        $manager->persist($user1);
 
         $manager->flush();
     }
@@ -61,7 +70,7 @@ class LoadUsers extends AbstractFixture implements OrderedFixtureInterface, Cont
      */
     function getOrder()
     {
-        return 10;
+        return 1;
     }
 
 
