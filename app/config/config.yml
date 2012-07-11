@@ -35,6 +35,7 @@ twig:
     form:
         resources:
             - "::fields.html.twig"
+            - "BriareosAclBundle::fields.html.twig"
     exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
     globals:
         site_name:  Kurumi
@@ -43,14 +44,21 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
-    bundles:        [ ]
-    # java: /usr/bin/java
+    bundles:
+        - PageBundle
+    read_from: %kernel.root_dir%/../webroot
+    node: "C:/Program Files (x86)/nodejs/node.exe"
+    java: "C:/Program Files (x86)/Java/jre7/bin/java.exe"
     filters:
         cssrewrite: ~
-        # closure:
-        #     jar: %kernel.root_dir%/java/compiler.jar
-        # yui_css:
-        #     jar: %kernel.root_dir%/java/yuicompressor-2.4.2.jar
+        yui_css:
+            jar: "C:/Users/Fox/Programs/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar"
+        yui_js:
+            jar: "C:/Users/Fox/Programs/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar"
+        less:
+            node: "C:/Program Files (x86)/nodejs/node.exe"
+            node_paths:
+                - "C:/Program Files (x86)/nodejs/node_module"
 
 # Doctrine Configuration
 doctrine:
@@ -210,6 +218,10 @@ sonata_admin:
         groups:
             users_group:
                 label: admin.group.users
+                items:
+                    - sonata.admin.user
+                    - sonata.admin.profile
+                    - sonata.admin.briareos_acl.acl_role_admin
             sonata_media:
                 label: admin.group.media
 

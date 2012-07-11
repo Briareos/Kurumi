@@ -1,0 +1,46 @@
+{% block _user_register_profile_birthday_widget %}
+{% spaceless %}
+{% if widget == 'single_text' %}
+{{ block('form_widget_simple') }}
+{% else %}
+<div {{ block('widget_container_attributes') }}>
+    {{ date_pattern|replace({
+                '{{ year }}':  form_widget(form.year, {attr:{class:'input-small'} }),
+                '{{ month }}': form_widget(form.month, {attr:{class:'input-small'} }),
+                '{{ day }}':   form_widget(form.day, {attr:{class:'input-small'} }),
+            })|raw }}
+</div>
+{% endif %}
+{% endspaceless %}
+{% endblock %}
+
+{% block _user_register_profile_gender_widget %}
+{% spaceless %}
+<div class="input-prepend input-append">
+    <div class="add-on">{{ form_widget(form['0']) }}</div>
+    {{ form_label(form['0'],'form.register.gender.male',{label_attr:{class:'btn label-male'}}) }}
+    {{ form_label(form['1'],'form.register.gender.female',{label_attr:{class:'btn label-female'}}) }}
+    <div class="add-on">{{ form_widget(form['1']) }}</div>
+</div>
+{% endspaceless %}
+{% endblock %}
+
+
+{% block form_errors %}
+{% spaceless %}
+{% if errors|length > 0 %}
+<div class="form-errors" data-for="{{ id }}">
+    <ul class="errors">
+        {% for error in errors %}
+        <li class="error">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endspaceless %}
+{% endblock form_errors %}
+
+{% block city_widget %}
+{{ form_widget(form.fullName,{attr:attr}) }}
+{{ form_widget(form.geonameId) }}
+{% endblock %}

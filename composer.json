@@ -6,11 +6,13 @@
             "Application":"app/"
         }
     },
+    "minimum-stability":"dev",
     "require":{
         "php":">=5.3.2",
         "symfony/symfony":"2.1.x-dev",
-        "doctrine/common":"2.2.2",
-        "doctrine/orm":"2.2.2",
+        "doctrine/common":"dev-master",
+        "doctrine/orm":"dev-master",
+        "doctrine/dbal":"dev-master",
         "doctrine/doctrine-bundle":"1.0.x-dev",
         "doctrine/doctrine-fixtures-bundle":"dev-master",
         "twig/extensions":"dev-master",
@@ -23,7 +25,7 @@
         "sensio/generator-bundle":"2.1.x-dev",
         "jms/security-extra-bundle":"1.1.0",
         "jms/di-extra-bundle":"1.0.1",
-        "lunetics/locale-bundle":"dev-rework",
+        "lunetics/locale-bundle":"dev-bc",
         "knplabs/knp-zend-cache-bundle":"0.1",
         "friendsofsymfony/facebook-bundle":"dev-master",
         "facebook/php-sdk":"dev-master",
@@ -80,7 +82,7 @@
             "type":"package",
             "package":{
                 "name":"lunetics/locale-bundle",
-                "version":"dev-rework",
+                "version":"dev-bc",
                 "autoload":{
                     "psr-0":{
                         "Lunetics\\LocaleBundle":""
@@ -88,9 +90,9 @@
                 },
                 "target-dir":"Lunetics/LocaleBundle",
                 "source":{
-                    "url":"git://github.com/lunetics/LocaleBundle.git",
+                    "url":"git://github.com/briareos/LocaleBundle.git",
                     "type":"git",
-                    "reference":"rework"
+                    "reference":"bc"
                 }
             }
         },

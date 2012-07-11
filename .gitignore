@@ -6,6 +6,9 @@ certs/
 
 webroot/bundles/
 webroot/uploads/
+webroot/bootstrap/
+webroot/css-compiled/
+webroot/js-compiled/
 webroot/php_errors.log
 
 app/cache/

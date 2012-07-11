@@ -59,14 +59,14 @@ services:
         class: App\UserBundle\Admin\UserAdmin
         arguments: [ null, App\UserBundle\Entity\User, SonataAdminBundle:CRUD ]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: users_group, label: admin.label.users }
+            - { name: sonata.admin, manager_type: orm, label: admin.label.users }
         calls:
             - [ setUserManager, [ @user_manager ] ]
     sonata.admin.profile:
         class: App\UserBundle\Admin\ProfileAdmin
         arguments: [ null, App\UserBundle\Entity\Profile, SonataAdminBundle:CRUD ]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: users_group, label: admin.label.profiles }
+            - { name: sonata.admin, manager_type: orm, label: admin.label.profiles }
     user.permission_container:
         class: App\UserBundle\Admin\PermissionContainer
         tags:

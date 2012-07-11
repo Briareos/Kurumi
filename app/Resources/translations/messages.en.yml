@@ -3,7 +3,8 @@ admin:
     label:
         users: Users
         profiles: Profiles
-        roles: Roles
+
+sonata.admin.label.acl_roles: Roles
 
 page:
     front:

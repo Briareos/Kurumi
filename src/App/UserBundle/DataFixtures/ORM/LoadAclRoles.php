@@ -1,6 +1,6 @@
 <?php
 
-namespace REM\UserBundle\DataFixtures\ORM;
+namespace App\UserBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;

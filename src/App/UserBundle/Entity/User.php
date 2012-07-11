@@ -317,7 +317,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
      * @param \DateTime $createdAt
      * @return User
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTime $createdAt)
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -394,5 +394,10 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     public function getAclRoles()
     {
         return $this->aclRoles;
+    }
+
+    public function __toString()
+    {
+        return $this->getUsername();
     }
 }

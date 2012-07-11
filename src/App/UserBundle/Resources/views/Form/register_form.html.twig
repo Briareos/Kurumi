@@ -1,3 +1,5 @@
+{% form_theme form 'PageBundle:Front:form_theme.html.twig' %}
+
 <div>
 
     <form novalidate id="{{ form.vars.id }}" action="{{ path('register') }}" {{ form_enctype(form) }} method="post" class="clearfix" data-ajax="register">

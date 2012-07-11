@@ -27,7 +27,7 @@ class CityManager
 
     /**
      * @param City $city
-     * @return City|null|object
+     * @return City|null
      */
     public function manageCity(City $city)
     {

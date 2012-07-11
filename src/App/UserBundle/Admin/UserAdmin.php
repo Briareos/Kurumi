@@ -51,7 +51,6 @@ class UserAdmin extends Admin
         $showMapper
             ->add('name')
             ->add('email')
-            ->add('active')
             ->add('timezone')
             ->add('created');
     }
@@ -75,19 +74,17 @@ class UserAdmin extends Admin
 
         $formMapper
             ->add('name')
-            ->add('active', null, array(
-            'required' => false,
-        ))
             ->add('timezone', 'timezone', array(
             'required' => false,
             'empty_value' => '-',
         ))
-            ->add('userRoles', null, array(
+            ->add('aclRoles', null, array(
             'expanded' => true,
+            'required' => false,
         ))
             ->end()
             ->with("Profile")
-            ->add('profile', 'sonata_type_model', array(
+            ->add('profile', null, array(
         ), array(
             'edit' => 'list',
         ))->end();
@@ -98,7 +95,6 @@ class UserAdmin extends Admin
         $listMapper
             ->addIdentifier('email')
             ->add('name')
-            ->add('active')
             ->add('profile', null, array(
             'template' => 'UserBundle:CRUD:list_profile.html.twig',
         ))
@@ -114,7 +110,13 @@ class UserAdmin extends Admin
     {
         $datagridMapper
             ->add('name')
-            ->add('email')
-            ->add('active');
+            ->add('email');
     }
+
+    public function toString($object)
+    {
+        return $object->getUsername();
+    }
+
+
 }
