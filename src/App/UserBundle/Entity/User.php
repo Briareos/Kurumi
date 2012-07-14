@@ -104,7 +104,11 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Briareos\AclBundle\Entity\AclRole", mappedBy="subjects")
+     * @ORM\ManyToMany(targetEntity="Briareos\AclBundle\Entity\AclRole", inversedBy="subjects")
+     * @ORM\JoinTable(name="acl__subject_role",
+     *  joinColumns={@ORM\JoinColumn(name="subject_id", referencedColumnName="id", onDelete="CASCADE")},
+     *  inverseJoinColumns={@ORM\JoinColumn(name="aclRole_id", referencedColumnName="id", onDelete="CASCADE")}
+     * )
      */
     private $aclRoles;
 
@@ -270,6 +274,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
     }
 
     /**
@@ -277,12 +282,13 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
      *
      * @param App\UserBundle\Entity\Profile|null $profile
      */
-    public function setProfile($profile)
+    public function setProfile(Profile $profile = null)
     {
         $this->profile = $profile;
-        if (is_object($profile)) {
+        if (null !== $profile) {
             $profile->setUser($this);
         }
+        return $this;
     }
 
     /**
@@ -306,9 +312,10 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     /**
      * @param \App\UserBundle\Entity\Facebook|null $facebook
      */
-    public function setFacebook($facebook)
+    public function setFacebook(Facebook $facebook = null)
     {
         $this->facebook = $facebook;
+        return $this;
     }
 
     /**
@@ -333,11 +340,17 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
         return $this->createdAt;
     }
 
+    /**
+     * Clear the user's password
+     *
+     * @param bool $clear
+     */
     public function setPasswordClear($clear = true)
     {
         if ($clear) {
             $this->password = null;
         }
+        return $this;
     }
 
     public function isPasswordClear()
@@ -367,6 +380,9 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
         return $this->picture;
     }
 
+    /**
+     * @return string
+     */
     public function getChatName()
     {
         return $this->getName();
@@ -381,8 +397,19 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
      */
     public function addAclRole(\Briareos\AclBundle\Entity\AclRole $aclRoles)
     {
-        $aclRoles->addUser($this);
         $this->aclRoles[] = $aclRoles;
+        return $this;
+    }
+
+    /**
+     * Remove aclRoles
+     *
+     * @param \Briareos\AclBundle\Entity\AclRole $aclRoles
+     * @return User
+     */
+    public function removeAclRole(\Briareos\AclBundle\Entity\AclRole $aclRoles)
+    {
+        $this->aclRoles->removeElement($aclRoles);
         return $this;
     }
 

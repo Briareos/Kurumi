@@ -343,4 +343,14 @@ class City
     {
         return $this->countryName;
     }
+
+    /**
+     * Remove profiles
+     *
+     * @param App\UserBundle\Entity\Profile $profiles
+     */
+    public function removeProfile(\App\UserBundle\Entity\Profile $profiles)
+    {
+        $this->profiles->removeElement($profiles);
+    }
 }

@@ -60,8 +60,15 @@ class UserAdmin extends Admin
         $user = $this->getSubject();
         $formMapper
             ->with("General")
-            ->add('email')
+            ->add('email', null, array(
+            'attr' => array(
+                'autocomplete' => 'off',
+            ),
+        ))
             ->add('plainPassword', 'password', array(
+            'attr' => array(
+                'autocomplete' => 'off',
+            ),
             'label' => "Password",
             'required' => false,
         ));
@@ -79,6 +86,7 @@ class UserAdmin extends Admin
             'empty_value' => '-',
         ))
             ->add('aclRoles', null, array(
+            'property' => 'name',
             'expanded' => true,
             'required' => false,
         ))

@@ -11,8 +11,17 @@ class PermissionContainer implements PermissionContainerInterface
         return array(
             'admin' => array(
                 '__children' => array(
-                    'user' => array(
+                    'userbundle_user' => array(
                         '__children' => array(
+                            'create' => array(),
+                            'list' => array(),
+                            'edit' => array(),
+                            'delete' => array(),
+                        ),
+                    ),
+                    'userbundle_profile' => array(
+                        '__children' => array(
+                            'create' => array(),
                             'list' => array(),
                             'edit' => array(),
                             'delete' => array(),

@@ -90,9 +90,9 @@
                 },
                 "target-dir":"Lunetics/LocaleBundle",
                 "source":{
-                    "url":"git://github.com/briareos/LocaleBundle.git",
+                    "url":"git://github.com/Briareos/LocaleBundle.git",
                     "type":"git",
-                    "reference":"bc"
+                    "reference":"master"
                 }
             }
         },
