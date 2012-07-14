@@ -25,7 +25,7 @@
         "sensio/generator-bundle":"2.1.x-dev",
         "jms/security-extra-bundle":"1.1.0",
         "jms/di-extra-bundle":"1.0.1",
-        "lunetics/locale-bundle":"dev-bc",
+        "lunetics/locale-bundle":"dev-2.1-compat",
         "knplabs/knp-zend-cache-bundle":"0.1",
         "friendsofsymfony/facebook-bundle":"dev-master",
         "facebook/php-sdk":"dev-master",
@@ -43,7 +43,9 @@
         "briareos/nodejs-bundle":"dev-master",
         "briareos/chat-bundle":"dev-master",
         "briareos/acl-bundle":"dev-master",
-        "elao/web-profiler-extra-bundle":"dev-master"
+        "elao/web-profiler-extra-bundle":"dev-master",
+        "willdurand/geocoder":"1.0.7",
+        "willdurand/geocoder-bundle":"dev-master"
     },
     "repositories":[
         {
@@ -75,24 +77,6 @@
                     "psr-0":{
                         "Zend\\Filter":"php/"
                     }
-                }
-            }
-        },
-        {
-            "type":"package",
-            "package":{
-                "name":"lunetics/locale-bundle",
-                "version":"dev-bc",
-                "autoload":{
-                    "psr-0":{
-                        "Lunetics\\LocaleBundle":""
-                    }
-                },
-                "target-dir":"Lunetics/LocaleBundle",
-                "source":{
-                    "url":"git://github.com/Briareos/LocaleBundle.git",
-                    "type":"git",
-                    "reference":"master"
                 }
             }
         },

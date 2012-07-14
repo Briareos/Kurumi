@@ -34,7 +34,7 @@ twig:
     strict_variables: %kernel.debug%
     form:
         resources:
-            - "::fields.html.twig"
+            - "UserBundle::fields.html.twig"
             - "BriareosAclBundle::fields.html.twig"
     exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
     globals:

@@ -37,6 +37,7 @@ class AppKernel extends Kernel
             new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
+            new Bazinga\Bundle\GeocoderBundle\BazingaGeocoderBundle(),
 
             new Kurumi\UserBundle\UserBundle(),
             new Kurumi\PageBundle\PageBundle(),

@@ -14,6 +14,16 @@
 {% endspaceless %}
 {% endblock %}
 
+{% block form_errors %}
+{% spaceless %}
+{% if compound %}
+... form code ...
+{% else %}
+... field code ...
+{% endif %}
+{% endspaceless %}
+{% endblock form_errors %}
+
 {% block _user_register_profile_gender_widget %}
 {% spaceless %}
 <div class="input-prepend input-append">

@@ -1,5 +1,5 @@
 {
-    "hash": "2ed99d418f0f8c773b9ab9ad7b876718",
+    "hash": "f70387c3ae3405ed0e72fc15de102bbe",
     "packages": [
         {
             "package": "beberlei/DoctrineExtensions",
@@ -9,7 +9,7 @@
             "package": "briareos/acl-bundle",
             "version": "dev-master",
             "source-reference": "master",
-            "commit-date": "1342033612"
+            "commit-date": "1342283480"
         },
         {
             "package": "briareos/chat-bundle",
@@ -104,8 +104,8 @@
         {
             "package": "gedmo/doctrine-extensions",
             "version": "dev-master",
-            "source-reference": "01ca83002414a8e585108b79632881d7ce21cb36",
-            "commit-date": "1342218400"
+            "source-reference": "e73090d10ff612fa3492045af67d95987dbedac5",
+            "commit-date": "1342286029"
         },
         {
             "package": "imagine/Imagine",
@@ -171,9 +171,9 @@
         },
         {
             "package": "lunetics/locale-bundle",
-            "version": "dev-bc",
-            "source-reference": "master",
-            "commit-date": "1341829867"
+            "version": "dev-2.1-compat",
+            "source-reference": "49d10eb365af09ff077ccbadc69c83b51fb3421a",
+            "commit-date": "1341839139"
         },
         {
             "package": "monolog/monolog",
@@ -338,8 +338,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "5fb72144da343e239efae6158e4696c1270076b0",
-            "commit-date": "1342216847"
+            "source-reference": "36d12dde5b050363d9bf0548b98c44cd622669d3",
+            "commit-date": "1342282240"
         },
         {
             "package": "twig/extensions",
@@ -356,8 +356,18 @@
         {
             "package": "twig/twig",
             "version": "dev-master",
-            "source-reference": "3f9f587ba72f9da84266b93ee1d0fc025b6b010f",
-            "commit-date": "1342197076"
+            "source-reference": "17e2c36a58c4b17a58a3befa783d16ac19776df5",
+            "commit-date": "1342275003"
+        },
+        {
+            "package": "willdurand/geocoder",
+            "version": "1.0.7"
+        },
+        {
+            "package": "willdurand/geocoder-bundle",
+            "version": "dev-master",
+            "source-reference": "843f316a11b5af4847c70ef79527d30407403a6e",
+            "commit-date": "1333271030"
         },
         {
             "package": "zendframework/zend-cache",
@@ -402,6 +412,7 @@
         "briareos/nodejs-bundle": 20,
         "briareos/chat-bundle": 20,
         "briareos/acl-bundle": 20,
-        "elao/web-profiler-extra-bundle": 20
+        "elao/web-profiler-extra-bundle": 20,
+        "willdurand/geocoder-bundle": 20
     }
 }
