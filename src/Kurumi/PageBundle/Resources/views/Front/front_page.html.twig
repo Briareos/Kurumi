@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {# Required on all pages#}
-
-
+    {# Required on all pages #}
     <meta charset="UTF-8">
     <title>{{ 'page.front.title'|trans }}</title>
 
-    {# Needed for responsive layout (Twitter Bootstrap) #}
-
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    {# jQuery #}
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
+    {# Used JavaScripts #}
     {% javascripts
       'bootstrap/js/bootstrap-typeahead.js'
       'bootstrap/js/bootstrap-dropdown.js'
@@ -26,10 +21,13 @@
     <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
 
+    {# Twitter bootstrap #}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="//symfony.servehttp.com:1337/bootstrap/less/bootstrap.less">
     <link rel="stylesheet" href="//symfony.servehttp.com:1337/bootstrap/less/responsive.less">
-    <link rel="stylesheet" href="//symfony.servehttp.com:1337/less/front-page.less">
 
+    {# Page style #}
+    <link rel="stylesheet" href="//symfony.servehttp.com:1337/less/front-page.less">
 </head>
 <body id="front-page">
 

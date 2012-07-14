@@ -32,11 +32,7 @@ form:
             label: I am
             male: male
             female: female
-        city:
-            label: Your city:
-            your_country: showing cities in %country%
-            all_countries: showing cities in all countries
-            placeholder: Your city
+        city: Your city:
         submit: Continue
     user_picture:
         title: Get seen by everyone!

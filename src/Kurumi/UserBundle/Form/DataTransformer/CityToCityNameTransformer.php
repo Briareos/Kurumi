@@ -5,6 +5,7 @@ namespace Kurumi\UserBundle\Form\DataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Kurumi\UserBundle\Entity\City;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class CityToCityNameTransformer implements DataTransformerInterface {
 
@@ -39,14 +40,16 @@ class CityToCityNameTransformer implements DataTransformerInterface {
     function transform($value)
     {
         if(null === $value) {
-            return null;
+            return '';
         }
 
         if (!$value instanceof City) {
-            throw new UnexpectedTypeException($value, 'FOS\UserBundle\Model\UserInterface');
+            throw new UnexpectedTypeException($value, 'Kurumi\UserBundle\Entity\City');
         }
 
-        return $value->getFullName();
+        if(!$value->getId()) {
+            return '';
+        }
     }
 
     /**

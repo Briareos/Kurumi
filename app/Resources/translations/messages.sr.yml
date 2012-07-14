@@ -24,9 +24,5 @@ form:
             label: Ја сам
             male: мушко
             female: женско
-        city:
-            label: Твој град:
-            your_country: градови из твоје земље, %country% (промени)
-            all_countries: градови из читавог света (промени)
-            placeholder: Твој град
+        city: label: Твој град:
         submit: Наставак

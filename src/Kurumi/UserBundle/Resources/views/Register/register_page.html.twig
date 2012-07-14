@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {# Required on all pages #}
+    <meta charset="UTF-8">
+    <title>{{ 'page.front.title'|trans }}</title>
+
+    {# jQuery #}
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+    {# Used JavaScripts #}
+    {% javascripts
+      'bootstrap/js/bootstrap-typeahead.js'
+      'bootstrap/js/bootstrap-dropdown.js'
+      'bootstrap/js/bootstrap-button.js'
+      'js/jstz.min.js'
+      'js/front-page.js'
+      filter='?yui_js'
+      output='js-compiled/register-page.js'
+     %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {# Twitter bootstrap #}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//symfony.servehttp.com:1337/bootstrap/less/bootstrap.less">
+    <link rel="stylesheet" href="//symfony.servehttp.com:1337/bootstrap/less/responsive.less">
+
+    {# Page style #}
+    <link rel="stylesheet" href="//symfony.servehttp.com:1337/less/register-page.less">
+</head>
+<body id="register-page">
+<div class="container">
+    {% include 'UserBundle:Form:register_form.html.twig' %}
+</div>
+</body>
+</html>

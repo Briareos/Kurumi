@@ -1,3 +1,23 @@
+{% block field_row %}
+{% spaceless %}
+{% set field_row_classes = ['control-group'] %}
+{% if errors|length > 0 %}
+{% set field_row_classes = field_row_classes|merge(['error']) %}
+{% endif %}
+
+<div class="{{ field_row_classes|join(' ') }}">
+    {{ form_label(form, label|default(null)) }}
+    <div class="controls">
+        {{ form_widget(form, { 'attr' : attr|default({}) }) }}
+        {{ form_errors(form) }}
+        {% if help is defined %}
+        <p class="help-block">{{ help }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endspaceless %}
+{% endblock field_row %}
+
 {% block _user_register_profile_birthday_widget %}
 {% spaceless %}
 {% if widget == 'single_text' %}
@@ -12,14 +32,21 @@
 </div>
 {% endif %}
 {% endspaceless %}
-{% endblock %}
+{% endblock _user_register_profile_birthday_widget %}
 
 {% block form_errors %}
 {% spaceless %}
 {% if compound %}
-... form code ...
+{# form code #}
 {% else %}
-... field code ...
+{# field code #}
+{% if errors|length > 0 %}
+<div class="error" data-for="{{ id }}">
+    {% for error in errors %}
+    <span class="help-inline">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</span>
+    {% endfor %}
+</div>
+{% endif %}
 {% endif %}
 {% endspaceless %}
 {% endblock form_errors %}
@@ -33,24 +60,4 @@
     <div class="add-on">{{ form_widget(form['1']) }}</div>
 </div>
 {% endspaceless %}
-{% endblock %}
-
-
-{% block form_errors %}
-{% spaceless %}
-{% if errors|length > 0 %}
-<div class="form-errors" data-for="{{ id }}">
-    <ul class="errors">
-        {% for error in errors %}
-        <li class="error">{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
-        {% endfor %}
-    </ul>
-</div>
-{% endif %}
-{% endspaceless %}
-{% endblock form_errors %}
-
-{% block city_widget %}
-{{ form_widget(form.fullName,{attr:attr}) }}
-{{ form_widget(form.geonameId) }}
-{% endblock %}
+{% endblock _user_register_profile_gender_widget %}

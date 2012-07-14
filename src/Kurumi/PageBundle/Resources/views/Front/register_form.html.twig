@@ -1,46 +1,19 @@
 {% form_theme form 'PageBundle:Front:register_form_theme.html.twig' %}
 
-<form id="{{ form.vars.id }}" class="register-form well" action="{{ path('register') }}" {{ form_enctype(form) }}
+<form novalidate id="{{ form.vars.id }}" class="register-form well"
+      action="{{ path('register') }}" {{ form_enctype(form) }}
       method="post">
     <h3 class="register-header">{{ 'page.front.first_time'|trans }} {{ 'page.front.join_now'|trans }}</h3>
 
-    <div>
-        <div>
-            {{ form_label(form.email,'form.register.email'|trans) }}
-            {{ form_widget(form.email, {attr:{class:'input-xlarge', autocomplete:'on'}}) }}
-            {{ form_errors(form.email) }}
-        </div>
-        <div>
-            {{ form_label(form.plainPassword, 'form.register.password'|trans({'%site_name%':site_name})) }}
-            {{ form_widget(form.plainPassword, {attr:{class:'input-xlarge'} }) }}
-            {{ form_errors(form.plainPassword) }}
-        </div>
-        <div>
-            {{ form_label(form.profile.birthday, 'form.register.birthday'|trans) }}
-            {{ form_widget(form.profile.birthday) }}
-            {{ form_errors(form.profile.birthday) }}
-        </div>
-        <div>
-            {{ form_label(form.name, 'form.register.name'|trans) }}
-            {{ form_widget(form.name, {attr:{class:'input-xlarge'}}) }}
-            {{ form_errors(form.name) }}
-        </div>
-        <div>
-            {{ form_label(form.profile.gender, 'form.register.gender.label'|trans) }}
-            <div class=" controls">
-                {{ form_widget(form.profile.gender) }}
-            </div>
-            {{ form_errors(form.profile.gender) }}
-        </div>
-        <div>
-            {{ form_label(form.profile.city.fullName, 'form.register.city.label'|trans ) }}
-            {{ form_widget(form.profile.city, {attr:{class:'input-xlarge',placeholder:'form.register.city.placeholder'|trans,'data-country-code':geoip.country_code,'data-country-name':geoip.country_name,'data-continent-code':geoip.continent_code,'data-language':lunetics_getLocaleLanguage(),autocomplete:'off'}}) }}
-            {{ form_errors(form.profile.city) }}
-        </div>
-        <div>
-            {{ form_rest(form) }}
-            {{ form_errors(form) }}
-            <button type="submit" class="btn">{{ 'form.register.submit'|trans }}</button>
-        </div>
-    </div>
+    {{ form_row(form.email, {label:'form.register.email'|trans,attr:{class:'input-xlarge', autocomplete:'off'}})}}
+    {{ form_row(form.plainPassword, {label:'form.register.password'|trans({'%site_name%':site_name}), attr:{class:'input-xlarge'} }) }}
+    {{ form_row(form.profile.birthday, {label:'form.register.birthday'|trans}) }}
+    {{ form_row(form.name, {label:'form.register.name'|trans, attr:{class:'input-xlarge'} }) }}
+    {{ form_row(form.profile.gender, {label:'form.register.gender'|trans}) }}
+    {{ form_row(form.profile.city, {label:'form.register.city'|trans, attr:{class:'input-xlarge'} }) }}
+
+    {{ form_rest(form) }}
+    {{ form_errors(form) }}
+
+    <button type="submit" class="btn">{{ 'form.register.submit'|trans }}</button>
 </form>

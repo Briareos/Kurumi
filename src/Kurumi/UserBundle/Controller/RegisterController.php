@@ -71,7 +71,7 @@ class RegisterController extends Controller
             if ($form->isBound() && $form->isValid()) {
                 return $this->redirect($this->generateUrl('front'));
             } else {
-                return $this->render('UserBundle:Register:register.html.twig', array(
+                return $this->render('UserBundle:Register:register_page.html.twig', array(
                     'form' => $form->createView(),
                 ));
             }

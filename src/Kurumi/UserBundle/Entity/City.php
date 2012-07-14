@@ -89,6 +89,11 @@ class City
     private $data;
 
 
+    public function __construct()
+    {
+        $this->profiles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
     /**
      * Get id
      *
@@ -217,27 +222,6 @@ class City
     public function getLongitude()
     {
         return $this->longitude;
-    }
-
-    public function getFullName()
-    {
-        if(!$this->geonameId) {
-            return '';
-        }
-        if ($this->countryCode == 'US') {
-            return sprintf('%s, %s, %s', $this->name, $this->state, $this->countryCode);
-        }
-        return sprintf('%s, %s', $this->name, $this->countryName);
-    }
-
-    public function setFullName()
-    {
-        // This is a form type stub, since City entities are read-only.
-    }
-
-    public function __construct()
-    {
-        $this->profiles = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

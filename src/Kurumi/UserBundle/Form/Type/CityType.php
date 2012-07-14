@@ -4,6 +4,7 @@ namespace Kurumi\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Kurumi\UserBundle\Form\DataTransformer\CityToCityNameTransformer;
 
 class CityType extends AbstractType
 {
@@ -17,24 +18,16 @@ class CityType extends AbstractType
         return 'city';
     }
 
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('fullName', 'text', array(
-            'error_bubbling' => true,
-        ));
-        $builder->add('geonameId', 'hidden', array(
-            'error_bubbling' => true,
-        ));
+        $builder->addViewTransformer(new CityToCityNameTransformer());
     }
 
     public function getDefaultOptions()
     {
         return array(
             'data_class' => 'Kurumi\UserBundle\Entity\City',
-            'attr' => array(
-                'data-country-code' => '',
-                'data-country-name' => '',
-            ),
             'validation_groups' => array('registration'),
         );
     }

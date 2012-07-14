@@ -46,6 +46,7 @@ assetic:
     use_controller: false
     bundles:
         - PageBundle
+        - UserBundle
     read_from: %kernel.root_dir%/../webroot
     node: "C:/Program Files (x86)/nodejs/node.exe"
     java: "C:/Program Files (x86)/Java/jre7/bin/java.exe"
