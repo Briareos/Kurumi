@@ -11,7 +11,7 @@ jms_security_extra:
 
 security:
     encoders:
-        App\UserBundle\Entity\User: sha512
+        Kurumi\UserBundle\Entity\User: sha512
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER

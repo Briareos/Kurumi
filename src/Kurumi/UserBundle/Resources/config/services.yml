@@ -1,0 +1,69 @@
+parameters:
+    # relative to cwd, which is set to /web
+    geoip.class: Kurumi\UserBundle\Util\GeoIp
+    geoip.location: %kernel.root_dir%/Resources/geoip
+    geoname.class: Kurumi\UserBundle\Util\GeonameLookup
+    geoname.cache_id: geoname_lookup
+    geoname.cache_prefix: geoname
+    geoname.lookup_url: "http://www.geonames.org/getJSON"
+    geoname.lookup_paremeters: []
+    city_manager.class: Kurumi\UserBundle\Entity\CityManager
+    user_manager.class: Kurumi\UserBundle\Entity\UserManager
+    user_manager.user_class: Kurumi\UserBundle\Entity\User
+
+services:
+    # Form types #
+    form.type.detect_timezone:
+        class: Kurumi\UserBundle\Form\Type\DetectTimezoneType
+        tags:
+            - { name: form.type, alias: detect_timezone }
+    form.type.gender:
+        class: Kurumi\UserBundle\Form\Type\GenderType
+        tags:
+            - { name: form.type, alias: gender }
+
+    # Geoname and GeoIP services #
+    geoname_lookup:
+        class: %geoname.class%
+        arguments: [%geoname.lookup_url%, %geoname.lookup_paremeters%]
+        calls:
+            - [ setCacheManager, [ @knp_zend_cache.manager, %geoname.cache_id%, %geoname.cache_prefix% ] ]
+            - [ setLogger, [ @logger ] ]
+    geoip:
+        class: %geoip.class%
+        arguments: [%geoip.location%, @kernel]
+    geoip.twig.extension:
+        class: Kurumi\UserBundle\Twig\Extension\GeoIp
+        arguments: [@geoip]
+        tags:
+            - { name: twig.extension }
+
+    # Entity managers #
+    city_manager:
+        class: %city_manager.class%
+        arguments: [@doctrine.orm.entity_manager, @geoname_lookup]
+    user_manager:
+        class: %user_manager.class%
+        arguments: [@doctrine.orm.entity_manager, @security.encoder_factory, %user_manager.user_class%]
+    # Register/login users via Facebook OAuth #
+    facebook.user:
+        class: Kurumi\UserBundle\Security\User\Provider\FacebookProvider
+        arguments: [@fos_facebook.api, @doctrine.orm.entity_manager, @validator]
+
+    # Sonata Admin Bundle services #
+    sonata.admin.user:
+        class: Kurumi\UserBundle\Admin\UserAdmin
+        arguments: [ null, Kurumi\UserBundle\Entity\User, SonataAdminBundle:CRUD ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: admin.label.users }
+        calls:
+            - [ setUserManager, [ @user_manager ] ]
+    sonata.admin.profile:
+        class: Kurumi\UserBundle\Admin\ProfileAdmin
+        arguments: [ null, Kurumi\UserBundle\Entity\Profile, SonataAdminBundle:CRUD ]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: admin.label.profiles }
+    user.permission_container:
+        class: Kurumi\UserBundle\Admin\PermissionContainer
+        tags:
+            - { name: security.permission_container }

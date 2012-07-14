@@ -1,0 +1,6 @@
+services:
+    ajax_authentication_handler:
+        class: Kurumi\UserBundle\EventListener\AjaxAuthenticationHandler
+        arguments: [@router]
+        tags:
+            - { name: monolog.logger, channel: security }

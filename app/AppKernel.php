@@ -38,8 +38,8 @@ class AppKernel extends Kernel
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
 
-            new App\UserBundle\UserBundle(),
-            new App\PageBundle\PageBundle(),
+            new Kurumi\UserBundle\UserBundle(),
+            new Kurumi\PageBundle\PageBundle(),
             new Briareos\ChatBundle\BriareosChatBundle(),
             new Briareos\NodejsBundle\BriareosNodejsBundle(),
             new Briareos\AclBundle\BriareosAclBundle(),

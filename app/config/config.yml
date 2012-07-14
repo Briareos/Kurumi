@@ -25,7 +25,7 @@ framework:
 
 services:
     facebook_provider:
-        class: App\UserBundle\Security\User\Provider\FacebookProvider
+        class: Kurumi\UserBundle\Security\User\Provider\FacebookProvider
         arguments: [@fos_facebook.api, @doctrine.orm.entity_manager, @validator]
 
 # Twig Configuration
@@ -88,9 +88,9 @@ doctrine:
             string_functions:
                 FindInSet: DoctrineExtensions\Query\Mysql\FindInSet
         resolve_target_entities:
-            Briareos\NodejsBundle\Entity\NodejsSubjectInterface: App\UserBundle\Entity\User
-            Briareos\ChatBundle\Entity\ChatSubjectInterface: App\UserBundle\Entity\User
-            Briareos\AclBundle\Entity\AclSubjectInterface: App\UserBundle\Entity\User
+            Briareos\NodejsBundle\Entity\NodejsSubjectInterface: Kurumi\UserBundle\Entity\User
+            Briareos\ChatBundle\Entity\ChatSubjectInterface: Kurumi\UserBundle\Entity\User
+            Briareos\AclBundle\Entity\AclSubjectInterface: Kurumi\UserBundle\Entity\User
 
 
 stof_doctrine_extensions:

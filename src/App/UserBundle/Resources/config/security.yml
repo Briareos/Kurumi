@@ -1,6 +1,0 @@
-services:
-    ajax_authentication_handler:
-        class: App\UserBundle\EventListener\AjaxAuthenticationHandler
-        arguments: [@router]
-        tags:
-            - { name: monolog.logger, channel: security }

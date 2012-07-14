@@ -1,0 +1,85 @@
+Kurumi\UserBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [email]
+            message: User with specified email address already exists
+            groups: [registration,admin]
+    properties:
+        email:
+            - NotBlank:
+                message: Please enter an e-mail address
+                groups: [registration,admin]
+            - Email:
+                message: The email entered is invalid
+                groups: [registration,admin]
+        name:
+            - NotBlank:
+                message: Please enter your first name or nickname
+                groups: [registration,admin]
+            - MinLength:
+                limit: 3
+                groups: [registration,admin]
+            - MaxLength:
+                limit: 24
+                groups: [registration,admin]
+        plainPassword:
+            - NotBlank:
+                message: Please enter a password
+                groups: [registration]
+        timezone:
+            - Kurumi\UserBundle\Validator\Timezone:
+                groups: [registration,admin]
+        profile:
+            - Valid: ~
+        picture:
+            - Valid: ~
+
+Kurumi\UserBundle\Entity\Profile:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [user]
+            message: The specified user already has a profile assigned
+            groups: [registration,admin]
+    properties:
+        birthday:
+            - NotBlank:
+                message: Enter your date of birth
+                groups: [registration]
+            - Date:
+                message: the fuck...
+                groups: [registration]
+            - Type:
+                type: \DateTime
+                message: the fuck, man...
+                groups: [registration]
+        gender:
+            - NotBlank:
+                message: Please indicate your gender
+                groups: [registration]
+        firstName: []
+        lastName: []
+        user:
+            - NotBlank:
+                message: Profile owner must be specified
+                groups: [registration,admin]
+        city:
+            - Valid: ~
+
+Kurumi\UserBundle\Entity\City:
+    properties:
+        geonameId:
+            - NotBlank:
+                message: Please enter your city
+                groups: [registration]
+            - Kurumi\UserBundle\Validator\GeonameId:
+                message: Invalid city specified
+                groups: [registration]
+            - MaxLength:
+                limit: 24
+                message: Geoname ID specified is too long
+                groups: [registration]
+
+#Kurumi\UserBundle\Entity\Role:
+#    properties:
+#        name: ~
+
