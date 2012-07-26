@@ -13,8 +13,9 @@
       'bootstrap/js/bootstrap-typeahead.js'
       'bootstrap/js/bootstrap-dropdown.js'
       'bootstrap/js/bootstrap-button.js'
-      'js/jstz.min.js'
-      'js/front-page.js'
+      'bootstrap/js/bootstrap-modal.js'
+      'bundles/briareosajax/js/jquery.form.js'
+      'bundles/briareosajax/js/ajax.js'
       filter='?yui_js'
       output='js-compiled/front-page.js'
      %}
@@ -67,9 +68,15 @@
                         {% endfor %}
                     </ul>
                 </div>
-                {% include 'PageBundle:Front:login_form.html.twig' %}
 
-                {% include 'PageBundle:Front:register_form.html.twig' with {form:form_register} %}
+                <h3 class="login-header">{{ 'page.front.log_in'|trans }}</h3>
+                {% include 'UserBundle:Form:login_form.html.twig' %}
+
+                <div class="register-form-container well">
+                    <h3 class="register-header">{{ 'page.front.first_time'|trans }} {{ 'page.front.join_now'|trans }}</h3>
+
+                    {% include 'UserBundle:Form:register_form.html.twig' with {form:form_register} %}
+                </div>
             </div>
         </div>
     </div>
@@ -81,7 +88,7 @@
                         <img src="/images/icon-happy.png" class="pull-left">
                         <h4 class="title">Fun</h4>
 
-                        <p>Kurumi is all about having fun, playing games and visiting profiles.</p>
+                        <p>{{ site_name }} is all about having fun, playing games and visiting profiles.</p>
                     </div>
                 </div>
                 <div class="span3">
@@ -97,7 +104,7 @@
                         <img src="/images/icon-no-robots.png" class="pull-left">
                         <h4 class="title">With real people</h4>
 
-                        <p>No fake profiles on Kurumi. You should feel safe and have lots of fun!</p>
+                        <p>No fake profiles on {{ site_name }}. You should feel safe and have lots of fun!</p>
                     </div>
                 </div>
                 <div class="span3">
@@ -105,7 +112,7 @@
                         <img src="/images/icon-new-people.png" class="pull-left">
                         <h4 class="title">The rest is up to you</h4>
 
-                        <p>Kurumi is for everyone, so come on in and join the fun!</p>
+                        <p>{{ site_name }}is for everyone, so come on in and join the fun!</p>
                     </div>
                 </div>
             </div>

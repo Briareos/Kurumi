@@ -1,32 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8"/>
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    {% block meta %}{% endblock %}
-    {% block stylesheet %}
-    <link href="//yui.yahooapis.com/3.4.1/build/cssreset/cssreset-min.css" type="text/css" rel="stylesheet"/>
-    <link href="{{ asset('library/jquery.tipsy/src/stylesheets/tipsy.css') }}" type="text/css" rel="stylesheet"/>
-    <link href="//symfony.servehttp.com:1337/css/screen.less" type="text/css" rel="stylesheet"/>
-    <link href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/themes/ui-lightness/jquery-ui.css" type="text/css"
-          rel="stylesheet"/>
-    {% endblock %}
-    {% block javascript_library %}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
-    {% endblock %}
-    {% block javascript_plugin %}
-    <script src="{{ asset('library/jquery.tipsy/src/javascripts/jquery.tipsy.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('library/jquery.form/jquery.form.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('library/jquery.cookie/jquery.cookie.js') }}" type="text/javascript"></script>
-    {% endblock %}
-    {% block javascript_header %}
-    <script src="{{ asset('js/core.js') }}" type="text/javascript"></script>
-    {% endblock %}
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}"/>
+    {# Required on all pages #}
+    <meta charset="UTF-8">
+    <title>{{ 'page.front.title'|trans }}</title>
+
+    {# jQuery #}
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    {{ block('javascripts') }}
+
+    {# Twitter bootstrap #}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//symfony.servehttp.com:1337/bootstrap/less/bootstrap.less">
+    <link rel="stylesheet" href="//symfony.servehttp.com:1337/bootstrap/less/responsive.less">
+    {{ block('stylesheets') }}
+
+    {# Page style #}
+    <link rel="stylesheet" href="//symfony.servehttp.com:1337/less/front-page.less">
 </head>
 <body>
 {% block body %}{% endblock %}
-{% block javascript_footer %}{% endblock %}
 </body>
 </html>

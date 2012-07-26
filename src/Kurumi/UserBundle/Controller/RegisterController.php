@@ -25,12 +25,14 @@ class RegisterController extends Controller
         $defaultProfile = new Profile();
         $user->setProfile($defaultProfile);
         $defaultCity = new City();
+        $defaultCity->setName("Modrica");
+        $defaultCity->setCountryName("Bosnia and Herzegovina");
         $defaultProfile->setCity($defaultCity);
 
         $form = $this->createForm(new RegisterFormType(), $user);
 
-        if ('POST' === $request->getMethod()) {
-            $form->bindRequest($request);
+        if ($request->isMethod('POST')) {
+            $form->bind($request);
             if ($form->isValid()) {
                 /** @var $em \Doctrine\ORM\EntityManager */
                 $em = $this->getDoctrine()->getManager();
@@ -42,9 +44,6 @@ class RegisterController extends Controller
                 } else {
                     $user->getProfile()->setCity($city);
                 }
-                /** @var $userManager \Kurumi\UserBundle\Entity\UserManager */
-                $userManager = $this->get('user_manager');
-                $userManager->updatePassword($user);
                 $em->persist($user->getProfile());
                 $em->persist($user);
                 $em->flush();
@@ -58,7 +57,7 @@ class RegisterController extends Controller
             } elseif ($form->isBound()) {
                 $data['form'] = array(
                     'id' => $form->getName(),
-                    'body' => $this->renderView('UserBundle:Form:register_form.html.twig', array('form' => $form->createView())),
+                    'body' => $this->renderView('UserBundle:For:register_form.html.twig', array('form' => $form->createView())),
                     'success' => false,
                 );
             } else {

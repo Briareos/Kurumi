@@ -25,9 +25,6 @@ class LoadUsers extends AbstractFixture implements OrderedFixtureInterface, Cont
      */
     public function load(ObjectManager $manager)
     {
-        /** @var $userManager UserManager */
-        $userManager = $this->container->get('user_manager');
-
         /** @var $administratorRole \Briareos\AclBundle\Entity\AclRole */
         $administratorRole = $this->getReference('role-administrator');
 
@@ -37,7 +34,6 @@ class LoadUsers extends AbstractFixture implements OrderedFixtureInterface, Cont
         $admin->setTimezone('Europe/Belgrade');
         $admin->setName("Fox");
         $admin->addAclRole($administratorRole);
-        $userManager->updatePassword($admin);
         $manager->persist($admin);
 
         $user1 = new User();
@@ -45,7 +41,6 @@ class LoadUsers extends AbstractFixture implements OrderedFixtureInterface, Cont
         $user1->setPlainPassword("metalfox");
         $user1->setTimezone('Europe/Belgrade');
         $user1->setName("Gray");
-        $userManager->updatePassword($user1);
         $manager->persist($user1);
 
         $manager->flush();

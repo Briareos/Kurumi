@@ -4,10 +4,16 @@ namespace Kurumi\UserBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
-use Kurumi\UserBundle\Entity\City;
 use Symfony\Component\Form\Exception\TransformationFailedException;
+use Kurumi\UserBundle\Entity\City;
 
-class CityToCityNameTransformer implements DataTransformerInterface {
+class CityToCityNameTransformer implements DataTransformerInterface
+{
+
+    public function __construct()
+    {
+
+    }
 
     /**
      * Transforms a value from the original representation to a transformed representation.
@@ -39,16 +45,22 @@ class CityToCityNameTransformer implements DataTransformerInterface {
      */
     function transform($value)
     {
-        if(null === $value) {
-            return '';
+        if (null === $value) {
+            return null;
         }
 
         if (!$value instanceof City) {
             throw new UnexpectedTypeException($value, 'Kurumi\UserBundle\Entity\City');
         }
 
-        if(!$value->getId()) {
-            return '';
+        /** @val $value City */
+        if (!$value->getId()) {
+            return null;
+        }
+        if ($value->getCountryCode === 'US') {
+            return sprintf('%s, %s, %s', $value->getName(), $value->getState(), $value->getCountryCode());
+        } else {
+            return sprintf('%s, %s', $value->getName(), $value->getCountry());
         }
     }
 
@@ -79,6 +91,7 @@ class CityToCityNameTransformer implements DataTransformerInterface {
      */
     function reverseTransform($value)
     {
+        return new City();
         // TODO: Implement reverseTransform() method.
     }
 

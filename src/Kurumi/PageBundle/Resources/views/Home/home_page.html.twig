@@ -1,0 +1,65 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block javascripts %}
+<script type="text/javascript" src="//{{ nodejs.host }}:{{ nodejs.port }}{{ nodejs.resource }}/socket.io.js"></script>
+<script type="text/javascript" src="{{ asset('bootstrap/js/bootstrap-modal.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/briareosnodejs/js/nodejs.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/briareoschat/js/chat.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/briareosajax/js/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/briareosajax/js/ajax.js') }}"></script>
+{% endblock javascripts %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('bundles/briareoschat/css/chat.css') }}">
+{% endblock stylesheets %}
+
+{% block body %}
+{% import 'BriareosChatBundle:Chat:chat_template.html.twig' as chat %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var LocalNodejs = new Nodejs('{{ nodejs_auth_token(app.request.session, app.security.getToken().getUser()) }}', {
+            secure:false,
+            host:'{{ nodejs.host }}',
+            port:{{ nodejs.port }},
+            connectTimeout:{{ nodejs.connect_timeout }},
+            contentTokens:''
+        });
+        LocalNodejs.connect();
+
+        var LocalChat = new Chat({
+            container:'body',
+            nodejs:LocalNodejs,
+            tpl:{
+                status:'{{ chat.status() }}',
+                user:'{{ chat.user() }}',
+                window:'{{ chat.window() }}',
+                message:'{{ chat.message() }}',
+                messages:'{{ chat.messages() }}',
+                chat:'{{ chat.chat() }}'
+            },
+            url:{
+                cache:'{{ path('briareos_chat_cache') }}',
+                activate:'{{ path('briareos_chat_activate') }}',
+                close:'{{ path('briareos_chat_close') }}',
+                send:'{{ path('briareos_chat_send') }}',
+                ping:'{{ path('briareos_chat_ping') }}'
+            }
+        });
+        LocalChat.initialize();
+    });
+</script>
+<div class="container">
+    <a href="{{ path('upload_picture') }}" data-ajax="">Set your photo!</a>
+    <a href="{{ logout_url('main') }}">Logout</a>
+    <div class="row">
+        <div id="c1" class="span6" style="position: relative; height: 500px">
+
+        </div>
+        <div id="c2" class="span6" style="position: relative; height: 500px">
+
+        </div>
+    </div>
+</div>
+{% endblock body %}

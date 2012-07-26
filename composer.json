@@ -10,9 +10,9 @@
     "require":{
         "php":">=5.3.2",
         "symfony/symfony":"2.1.x-dev",
-        "doctrine/common":"dev-master",
-        "doctrine/orm":"dev-master",
-        "doctrine/dbal":"dev-master",
+        "doctrine/common":"2.3.x-dev",
+        "doctrine/orm":"2.3.x-dev",
+        "doctrine/dbal":"2.3.x-dev",
         "doctrine/doctrine-bundle":"1.0.x-dev",
         "doctrine/doctrine-fixtures-bundle":"dev-master",
         "twig/extensions":"dev-master",
@@ -45,7 +45,11 @@
         "briareos/acl-bundle":"dev-master",
         "elao/web-profiler-extra-bundle":"dev-master",
         "willdurand/geocoder":"1.0.7",
-        "willdurand/geocoder-bundle":"dev-master"
+        "willdurand/geocoder-bundle":"dev-master",
+        "doctrine/spatial":"dev-master",
+        "briareos/geo-bundle":"dev-master",
+        "briareos/ajax-bundle":"dev-master",
+        "mopa/bootstrap-bundle":"dev-master"
     },
     "repositories":[
         {
@@ -133,7 +137,61 @@
                     "reference":"master"
                 }
             }
+        },
+        {
+            "type":"package",
+            "package":{
+                "name":"briareos/geo-bundle",
+                "version":"dev-master",
+                "autoload":{
+                    "psr-0":{
+                        "Briareos\\GeoBundle":""
+                    }
+                },
+                "target-dir":"Briareos/GeoBundle",
+                "source":{
+                    "url":"git@github.com:Briareos/BriareosGeoBundle.git",
+                    "type":"git",
+                    "reference":"master"
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package":{
+                "name":"briareos/ajax-bundle",
+                "version":"dev-master",
+                "autoload":{
+                    "psr-0":{
+                        "Briareos\\AjaxBundle":""
+                    }
+                },
+                "target-dir":"Briareos/AjaxBundle",
+                "source":{
+                    "url":"git@github.com:Briareos/BriareosAjaxBundle.git",
+                    "type":"git",
+                    "reference":"master"
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package":{
+                "name":"doctrine/spatial",
+                "version":"dev-master",
+                "autoload":{
+                    "psr-0":{
+                        "Doctrine\\Spatial":"src/"
+                    }
+                },
+                "source":{
+                    "url":"git://github.com/Briareos/doctrine-spatial.git",
+                    "type":"git",
+                    "reference":"master"
+                }
+            }
         }
+
     ],
     "scripts":{
         "post-install-cmd":[

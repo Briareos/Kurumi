@@ -24,8 +24,6 @@ class FrontController extends Controller
         $defaultProfile->setCity($defaultCity);
         $defaultUser->setProfile($defaultProfile);
 
-
-
         $registerForm = $this->createForm(new RegisterFormType(), $defaultUser);
 
         return $this->render('PageBundle:Front:front_page.html.twig', array(

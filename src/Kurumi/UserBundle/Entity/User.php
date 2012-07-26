@@ -16,7 +16,7 @@ use Briareos\AclBundle\Entity\AclSubjectInterface;
 /**
  * Kurumi\UserBundle\Entity\User
  *
- * @ORM\Table(name="user")
+ * @ORM\Table(name="users")
  * @ORM\Entity(repositoryClass="Kurumi\UserBundle\Entity\UserRepository")
  */
 class User implements UserInterface, EquatableInterface, \Serializable, ChatSubjectInterface, AclSubjectInterface

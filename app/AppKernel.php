@@ -38,12 +38,15 @@ class AppKernel extends Kernel
             new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
             new Bazinga\Bundle\GeocoderBundle\BazingaGeocoderBundle(),
+            new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
 
             new Kurumi\UserBundle\UserBundle(),
             new Kurumi\PageBundle\PageBundle(),
-            new Briareos\ChatBundle\BriareosChatBundle(),
             new Briareos\NodejsBundle\BriareosNodejsBundle(),
+            new Briareos\ChatBundle\BriareosChatBundle(),
             new Briareos\AclBundle\BriareosAclBundle(),
+            new Briareos\GeoBundle\BriareosGeoBundle(),
+            new Briareos\AjaxBundle\BriareosAjaxBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -2,25 +2,15 @@
 
 namespace Kurumi\UserBundle\Entity;
 
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\Security\Core\Encoder\EncoderFactory;
-use Kurumi\UserBundle\Entity\User;
-use Application\Sonata\MediaBundle\Entity\Media;
+use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
 class UserManager
 {
-
-    private $em;
-
-    private $repository;
-
     private $encoderFactory;
 
-    public function __construct(EntityManager $em, EncoderFactory $encoderFactory, $class)
+    public function __construct(EncoderFactoryInterface $encoderFactory)
     {
-        $this->em = $em;
         $this->encoderFactory = $encoderFactory;
-        $this->repository = $this->em->getRepository($class);
     }
 
     public function updatePassword(User $user)
@@ -32,13 +22,4 @@ class UserManager
             $user->eraseCredentials();
         }
     }
-
-    public function getPicture(User $user)
-    {
-        $picture = $user->getPicture();
-        if ($picture && $picture->getEnabled()) {
-
-        }
-    }
 }
-

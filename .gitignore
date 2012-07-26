@@ -13,6 +13,7 @@ webroot/php_errors.log
 
 app/cache/
 app/logs/
+app/config/parameters.yml
 
 build/
 vendor/

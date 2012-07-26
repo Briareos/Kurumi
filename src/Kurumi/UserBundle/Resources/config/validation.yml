@@ -63,20 +63,9 @@ Kurumi\UserBundle\Entity\Profile:
                 message: Profile owner must be specified
                 groups: [registration,admin]
         city:
-            - Valid: ~
-
-Kurumi\UserBundle\Entity\City:
-    properties:
-        geonameId:
+            #- Valid: ~
             - NotBlank:
                 message: Please enter your city
-                groups: [registration]
-            - Kurumi\UserBundle\Validator\GeonameId:
-                message: Invalid city specified
-                groups: [registration]
-            - MaxLength:
-                limit: 24
-                message: Geoname ID specified is too long
                 groups: [registration]
 
 #Kurumi\UserBundle\Entity\Role:

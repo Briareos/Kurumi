@@ -1,5 +1,5 @@
 {
-    "hash": "f70387c3ae3405ed0e72fc15de102bbe",
+    "hash": "1aebece91bf301110d217bc359fcb418",
     "packages": [
         {
             "package": "beberlei/DoctrineExtensions",
@@ -9,31 +9,37 @@
             "package": "briareos/acl-bundle",
             "version": "dev-master",
             "source-reference": "master",
-            "commit-date": "1342283480"
+            "commit-date": "1342302832"
+        },
+        {
+            "package": "briareos/ajax-bundle",
+            "version": "dev-master",
+            "source-reference": "master",
+            "commit-date": "1342987827"
         },
         {
             "package": "briareos/chat-bundle",
             "version": "dev-master",
             "source-reference": "master",
-            "commit-date": "1341393274"
+            "commit-date": "1342729576"
+        },
+        {
+            "package": "briareos/geo-bundle",
+            "version": "dev-master",
+            "source-reference": "master",
+            "commit-date": "1342653356"
         },
         {
             "package": "briareos/nodejs-bundle",
             "version": "dev-master",
             "source-reference": "master",
-            "commit-date": "1341393289"
+            "commit-date": "1342729600"
         },
         {
             "package": "doctrine/common",
-            "version": "dev-master",
-            "alias-pretty-version": "2.3.x-dev",
-            "alias-version": "2.3.9999999.9999999-dev"
-        },
-        {
-            "package": "doctrine/common",
-            "version": "dev-master",
-            "source-reference": "ee3aeae972386d761d8358bab3d67e246f4261ba",
-            "commit-date": "1342078708"
+            "version": "2.3.x-dev",
+            "source-reference": "b0ed9cc35ec28b7cd23d3d001e6fd4c7b5092926",
+            "commit-date": "1343082138"
         },
         {
             "package": "doctrine/data-fixtures",
@@ -43,15 +49,9 @@
         },
         {
             "package": "doctrine/dbal",
-            "version": "dev-master",
-            "alias-pretty-version": "2.3.x-dev",
-            "alias-version": "2.3.9999999.9999999-dev"
-        },
-        {
-            "package": "doctrine/dbal",
-            "version": "dev-master",
-            "source-reference": "00ac50c0e721b1dcbcc4924938ab648e28feb4cf",
-            "commit-date": "1341891672"
+            "version": "2.3.x-dev",
+            "source-reference": "3d426e5b3957790b97008c341ac6e53e08a50503",
+            "commit-date": "1343082205"
         },
         {
             "package": "doctrine/doctrine-bundle",
@@ -62,8 +62,8 @@
         {
             "package": "doctrine/doctrine-bundle",
             "version": "dev-master",
-            "source-reference": "c9ea46d1f0c48bb88bb87b44214fe44e03c0c692",
-            "commit-date": "1341405737"
+            "source-reference": "62134e6a8dd3f330131ee6a970f0cee1d7760c1d",
+            "commit-date": "1343203511"
         },
         {
             "package": "doctrine/doctrine-fixtures-bundle",
@@ -73,15 +73,15 @@
         },
         {
             "package": "doctrine/orm",
-            "version": "dev-master",
-            "alias-pretty-version": "2.3.x-dev",
-            "alias-version": "2.3.9999999.9999999-dev"
+            "version": "2.3.x-dev",
+            "source-reference": "2389f77d915230974146621cff2b18c59f0c2298",
+            "commit-date": "1343238851"
         },
         {
-            "package": "doctrine/orm",
+            "package": "doctrine/spatial",
             "version": "dev-master",
-            "source-reference": "e0455b5550a27f5a6231c1f3b093092bb4c97bab",
-            "commit-date": "1342078181"
+            "source-reference": "master",
+            "commit-date": "1342652809"
         },
         {
             "package": "elao/web-profiler-extra-bundle",
@@ -92,20 +92,20 @@
         {
             "package": "facebook/php-sdk",
             "version": "dev-master",
-            "source-reference": "21321ffe121f62f7f7ff1068c42e693f07be912c",
-            "commit-date": "1341949782"
+            "source-reference": "5e14dc3729ba52bd4ee188ffc202611250b2e8f8",
+            "commit-date": "1342487814"
         },
         {
             "package": "friendsofsymfony/facebook-bundle",
             "version": "dev-master",
-            "source-reference": "9e034fd63bd52708f87f711957038c913796cfb3",
-            "commit-date": "1341503818"
+            "source-reference": "2492024a5778f82bc24c96e6022aedf3be0df65b",
+            "commit-date": "1342339065"
         },
         {
             "package": "gedmo/doctrine-extensions",
             "version": "dev-master",
-            "source-reference": "e73090d10ff612fa3492045af67d95987dbedac5",
-            "commit-date": "1342286029"
+            "source-reference": "9898253452a37733d278af6fc595b059327c4218",
+            "commit-date": "1342872222"
         },
         {
             "package": "imagine/Imagine",
@@ -160,8 +160,8 @@
         {
             "package": "kriswallsmith/assetic",
             "version": "dev-master",
-            "source-reference": "d6f89a3170c5280ad554347dc113eb25fdf00ad7",
-            "commit-date": "1339515714"
+            "source-reference": "c518a48ddc26af898191410cc35f7f30aaed448e",
+            "commit-date": "1343084248"
         },
         {
             "package": "kriswallsmith/buzz",
@@ -180,10 +180,28 @@
             "version": "1.1.0"
         },
         {
+            "package": "mopa/bootstrap-bundle",
+            "version": "dev-master",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "mopa/bootstrap-bundle",
+            "version": "dev-master",
+            "source-reference": "d5dd68b0c796a3ae81cb8ab8a249f39e1a57a4d0",
+            "commit-date": "1343250288"
+        },
+        {
+            "package": "mopa/composer-bridge",
+            "version": "dev-master",
+            "source-reference": "84b8bf537163b4470f14d02554a0e9eb5d300172",
+            "commit-date": "1337596733"
+        },
+        {
             "package": "sensio/distribution-bundle",
             "version": "dev-master",
-            "source-reference": "77323c97860fc2f73d988b2020ae414faebed153",
-            "commit-date": "1342159333"
+            "source-reference": "5886adae1613c0a72fbb95259a83ae798e86c0d3",
+            "commit-date": "1342347850"
         },
         {
             "package": "sensio/framework-extra-bundle",
@@ -194,8 +212,8 @@
         {
             "package": "sensio/framework-extra-bundle",
             "version": "dev-master",
-            "source-reference": "e9ac8f1a911ed29e30296c7f1549f53d4c94eddf",
-            "commit-date": "1342084432"
+            "source-reference": "998f5edbffcc422ebd74dab093d9a35d96e3edf6",
+            "commit-date": "1343247216"
         },
         {
             "package": "sensio/generator-bundle",
@@ -212,20 +230,20 @@
         {
             "package": "sonata-project/admin-bundle",
             "version": "dev-master",
-            "source-reference": "8ebc06ce4bfd632acd11022093a90225e10534a1",
-            "commit-date": "1342045725"
+            "source-reference": "7018d7cf861cc5814142343939de06cfeadd8065",
+            "commit-date": "1342939739"
         },
         {
             "package": "sonata-project/block-bundle",
             "version": "dev-master",
-            "source-reference": "40b435dab9db1f6bf1f311af1635712924a0f361",
-            "commit-date": "1340007353"
+            "source-reference": "60909960a33575cd9c31c5263b4e284de5526736",
+            "commit-date": "1342902255"
         },
         {
             "package": "sonata-project/cache-bundle",
             "version": "dev-master",
-            "source-reference": "5b966e7350636750df7e45920acb30946415ba6d",
-            "commit-date": "1335863548"
+            "source-reference": "921309636b5f062c78bfde2c7dcdda2d820f0a4e",
+            "commit-date": "1342907451"
         },
         {
             "package": "sonata-project/doctrine-extensions",
@@ -236,8 +254,8 @@
         {
             "package": "sonata-project/doctrine-orm-admin-bundle",
             "version": "dev-master",
-            "source-reference": "e196f0ef78235aa969a767690fb17f24ede4970e",
-            "commit-date": "1341785038"
+            "source-reference": "c3fd475f4e9de8f5738a6c7379de8469e7cf1b2a",
+            "commit-date": "1343150907"
         },
         {
             "package": "sonata-project/easy-extends-bundle",
@@ -266,8 +284,8 @@
         {
             "package": "sonata-project/media-bundle",
             "version": "dev-master",
-            "source-reference": "4c2290eb3e56da80273e6f0be4c4c4ee0cc3ef55",
-            "commit-date": "1341787232"
+            "source-reference": "a9ea8400ea78c336d2b44ca55b0087812ee4b124",
+            "commit-date": "1343134478"
         },
         {
             "package": "sonata-project/notification-bundle",
@@ -278,8 +296,8 @@
         {
             "package": "stof/doctrine-extensions-bundle",
             "version": "dev-master",
-            "source-reference": "36356b158b74cb68f96dc0b657e8732422b9d5dd",
-            "commit-date": "1341954345"
+            "source-reference": "f31a0861de08b6594f09430a4cbaf0618e5e11ad",
+            "commit-date": "1343029923"
         },
         {
             "package": "swiftmailer/swiftmailer",
@@ -302,8 +320,8 @@
         {
             "package": "symfony/assetic-bundle",
             "version": "dev-master",
-            "source-reference": "ed933dcfa45f00b6bc6d7727007403f3ff429e5a",
-            "commit-date": "1342126277"
+            "source-reference": "a5daf7ca4588f88105c808de9a28ba1e66bfa082",
+            "commit-date": "1343161458"
         },
         {
             "package": "symfony/monolog-bundle",
@@ -314,7 +332,7 @@
         {
             "package": "symfony/monolog-bundle",
             "version": "dev-master",
-            "source-reference": "v2.1.0-BETA2",
+            "source-reference": "v2.1.0-BETA4",
             "commit-date": "1341078487"
         },
         {
@@ -326,8 +344,8 @@
         {
             "package": "symfony/swiftmailer-bundle",
             "version": "dev-master",
-            "source-reference": "v2.1.0-BETA2",
-            "commit-date": "1341509614"
+            "source-reference": "v2.1.0-BETA4",
+            "commit-date": "1342684512"
         },
         {
             "package": "symfony/symfony",
@@ -338,8 +356,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "36d12dde5b050363d9bf0548b98c44cd622669d3",
-            "commit-date": "1342282240"
+            "source-reference": "c7bc4791c45861b0efc1d661e211f229cb4c05d9",
+            "commit-date": "1343249662"
         },
         {
             "package": "twig/extensions",
@@ -356,8 +374,8 @@
         {
             "package": "twig/twig",
             "version": "dev-master",
-            "source-reference": "17e2c36a58c4b17a58a3befa783d16ac19776df5",
-            "commit-date": "1342275003"
+            "source-reference": "657de7bdeb680815e0df95f63da9f81e1533d2ea",
+            "commit-date": "1342953178"
         },
         {
             "package": "willdurand/geocoder",
@@ -366,8 +384,8 @@
         {
             "package": "willdurand/geocoder-bundle",
             "version": "dev-master",
-            "source-reference": "843f316a11b5af4847c70ef79527d30407403a6e",
-            "commit-date": "1333271030"
+            "source-reference": "b37c374ed3e6a4dc4b7b1a327cf15640f51129f7",
+            "commit-date": "1342516292"
         },
         {
             "package": "zendframework/zend-cache",
@@ -413,6 +431,10 @@
         "briareos/chat-bundle": 20,
         "briareos/acl-bundle": 20,
         "elao/web-profiler-extra-bundle": 20,
-        "willdurand/geocoder-bundle": 20
+        "willdurand/geocoder-bundle": 20,
+        "doctrine/spatial": 20,
+        "briareos/geo-bundle": 20,
+        "briareos/ajax-bundle": 20,
+        "mopa/bootstrap-bundle": 20
     }
 }

@@ -4,6 +4,7 @@ namespace Kurumi\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Kurumi\UserBundle\Form\Type\CityType;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
@@ -40,12 +41,12 @@ class RegisterProfileType extends AbstractType
         ));
     }
 
-    public function getDefaultOptions()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'data_class' => 'Kurumi\UserBundle\Entity\Profile',
             'validation_groups' => array('registration'),
-        );
+        ));
     }
 
 

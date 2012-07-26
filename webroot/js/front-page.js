@@ -39,6 +39,4 @@ $(document).ready(function () {
         }
     });
 
-    timezone = window.jstz.determine_timezone();
-    $('#user_register_timezone').val(timezone.name());
 });

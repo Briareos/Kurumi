@@ -9,7 +9,6 @@ parameters:
     geoname.lookup_paremeters: []
     city_manager.class: Kurumi\UserBundle\Entity\CityManager
     user_manager.class: Kurumi\UserBundle\Entity\UserManager
-    user_manager.user_class: Kurumi\UserBundle\Entity\User
 
 services:
     # Form types #
@@ -44,7 +43,7 @@ services:
         arguments: [@doctrine.orm.entity_manager, @geoname_lookup]
     user_manager:
         class: %user_manager.class%
-        arguments: [@doctrine.orm.entity_manager, @security.encoder_factory, %user_manager.user_class%]
+        arguments: [ @security.encoder_factory ]
     # Register/login users via Facebook OAuth #
     facebook.user:
         class: Kurumi\UserBundle\Security\User\Provider\FacebookProvider
@@ -67,3 +66,9 @@ services:
         class: Kurumi\UserBundle\Admin\PermissionContainer
         tags:
             - { name: security.permission_container }
+    user_manager.listener:
+        class: Kurumi\UserBundle\EventListener\UserListener
+        arguments: [ @user_manager ]
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }

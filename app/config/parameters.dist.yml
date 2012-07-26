@@ -4,7 +4,7 @@ parameters:
     database_port:     ~
     database_name:     symfony
     database_user:     root
-    database_password: ''
+    database_password:
 
     mailer_transport:  smtp
     mailer_host:       localhost
@@ -12,4 +12,4 @@ parameters:
     mailer_password:   ~
 
     locale:            en
-    secret:            f3e95ca881afee3132e9a0d1df4683b3
+    secret:            CHANGE_THIS

@@ -35,17 +35,6 @@ class UserAdmin extends Admin
         $this->userManager = $userManager;
     }
 
-
-    public function prePersist($user)
-    {
-        $this->userManager->updatePassword($user);
-    }
-
-    public function preUpdate($user)
-    {
-        $this->userManager->updatePassword($user);
-    }
-
     public function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper

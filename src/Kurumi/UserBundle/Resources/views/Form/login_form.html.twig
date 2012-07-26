@@ -1,28 +1,19 @@
-<form id="user_login" action="{{ path("login_check") }}" method="post" class="clearfix" data-ajax="login">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
-    <div class="form-element email">
-        <label for="user_login_email">{{ 'form.login.email'|trans }}</label>
-        <input class="text" tabindex="1" id="user_login_email" type="email" name="_username" required="required" />
-    </div>
-    <div class="form-element password">
-        <label for="user_login_password">{{ 'form.login.password'|trans }}</label>
-        <input class="text" tabindex="2" id="user_login_password" type="password" name="_password" required="required" />
-    </div>
-    <div class="form-element log-in">
-        <button tabindex="4" type="submit" id="_submit">{{ 'form.login.log_in'|trans }}</button>
-    </div>
-    <div class="login-error">
-        <div class="error">
-            <div class="error-text"></div>
+<form id="user_login" action="{{ path('login_check') }}" method="post" class="login-form">
+    <div class="row-fluid">
+        <div class="span5">
+            <label for="login-email" class="control-label">{{ 'form.login.email'|trans }}</label>
+            <input tabindex="1" id="login-email" type="email" class="input-block-level"  name="_username" required="required">
+            <label><input tabindex="3" type="checkbox" checked="checked" name="_remember_me"> {{ 'form.login.remember_me'|trans }}</label>
         </div>
-        <div class="arrow"></div>
-    </div>
-    <div class="form-element remember-me">
-        <label for="user_login_remember_me">
-            <input tabindex="3" type="checkbox" id="user_login_remember_me" name="_remember_me" checked="checked" /> {{ 'form.login.remember_me'|trans }}
-        </label>
-    </div>
-    <div class="form-element forgot-password">
-        <a tabindex="5" href="{{ path('login') }}">{{ 'form.login.forgot_password'|trans }}</a>
+        <div class="span4">
+            <label for="login-password" class="control-label">{{ 'form.login.password'|trans }}</label>
+            <input tabindex="2" id="login-password" type="password" class="input-block-level" name="_password" required="required">
+            <a tabindex="5" href="{{ path('login') }}">{{ 'form.login.forgot_password'|trans }}</a>
+        </div>
+        <div class="span3">
+            <label>&nbsp</label>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+            <button tabindex="4" class="btn btn-primary input-block-level">{{ 'form.login.log_in'|trans }}</button>
+        </div>
     </div>
 </form>
