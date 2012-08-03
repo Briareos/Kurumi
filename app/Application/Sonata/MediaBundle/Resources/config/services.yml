@@ -1,0 +1,5 @@
+services:
+    application_sonata_media_bundle.permission_container:
+        class: Application\Sonata\MediaBundle\Admin\PermissionContainer
+        tags:
+            - { name: security.permission_container }

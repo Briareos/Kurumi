@@ -10,15 +10,14 @@ use Kurumi\UserBundle\Entity\Profile;
  *
  * @ORM\Table(name="city")
  * @ORM\Entity(repositoryClass="Kurumi\UserBundle\Entity\CityRepository")
- * @ORM\HasLifecycleCallbacks()
  */
 class City
 {
     /**
      * @var integer $id
      *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
@@ -52,20 +51,6 @@ class City
     private $countryCode;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="continentCode", type="string", length=2)
-     */
-    private $continentCode;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="geonameId", type="integer")
-     */
-    private $geonameId;
-
-    /**
      * @var float $latitude
      *
      * @ORM\Column(name="latitude", type="decimal", scale=7)
@@ -82,11 +67,9 @@ class City
     /**
      * @var Profile
      *
-     * @ORM\OneToMany(targetEntity="Profile", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="Kurumi\UserBundle\Entity\Profile", mappedBy="city")
      */
     private $profiles;
-
-    private $data;
 
 
     public function __construct()
@@ -107,6 +90,7 @@ class City
     /**
      * Set name
      *
+     * @param $name
      * @param string $name
      */
     public function setName($name)
@@ -125,28 +109,9 @@ class City
     }
 
     /**
-     * Set county
-     *
-     * @param string $county
-     */
-    public function setCounty($county)
-    {
-        $this->county = $county;
-    }
-
-    /**
-     * Get county
-     *
-     * @return string
-     */
-    public function getCounty()
-    {
-        return $this->county;
-    }
-
-    /**
      * Set state
      *
+     * @param $state
      * @param string $state
      */
     public function setState($state)
@@ -167,6 +132,7 @@ class City
     /**
      * Set countryCode
      *
+     * @param $countryCode
      * @param string $countryCode
      */
     public function setCountryCode($countryCode)
@@ -187,6 +153,7 @@ class City
     /**
      * Set latitude
      *
+     * @param $latitude
      * @param float $latitude
      */
     public function setLatitude($latitude)
@@ -207,6 +174,7 @@ class City
     /**
      * Set longitude
      *
+     * @param $longitude
      * @param float $longitude
      */
     public function setLongitude($longitude)
@@ -225,91 +193,13 @@ class City
     }
 
     /**
-     * @ORM\PrePersist
-     */
-    public function selfLookup() {
-        if(!$this->data) {
-            throw new \Exception('City object can\'t be persisted if no data is present.');
-        }
-        if(empty($this->data->geonameId)) {
-            throw new \Exception('Invalid data passed to City object, parameter \'geonameId\' not found.');
-        }
-        $this->setGeonameId($this->data->geonameId);
-        $this->setName($this->data->name);
-        if($this->data->countryCode == 'US') {
-            $this->setState($this->data->adminName1);
-        }
-        $this->setCountryName($this->data->countryName);
-        $this->setCountryCode($this->data->countryCode);
-        $this->setContinentCode($this->data->continentCode);
-
-        $this->setLatitude($this->data->lat);
-        $this->setLongitude($this->data->lng);
-    }
-
-    /**
-     * Add profiles
-     *
-     * @param Kurumi\UserBundle\Entity\Profile $profiles
-     */
-    public function addProfile(\Kurumi\UserBundle\Entity\Profile $profiles)
-    {
-        $this->profiles[] = $profiles;
-    }
-
-    /**
      * Get profiles
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getProfiles()
     {
         return $this->profiles;
-    }
-
-    /**
-     * @param int $geonameId
-     */
-    public function setGeonameId($geonameId)
-    {
-        if($this->id) {
-            throw new \Exception('City objects, once created, are read-only.');
-        }
-        $this->geonameId = $geonameId;
-    }
-
-    /**
-     * @return int
-     */
-    public function getGeonameId()
-    {
-        return $this->geonameId;
-    }
-
-    public function setData($data)
-    {
-        $this->data = $data;
-    }
-
-    public function getData()
-    {
-        return $this->data;
-    }
-
-    /**
-     * @param string $continentCode
-     */
-    public function setContinentCode($continentCode)
-    {
-        $this->continentCode = $continentCode;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContinentCode()
-    {
-        return $this->continentCode;
     }
 
     /**
@@ -328,13 +218,4 @@ class City
         return $this->countryName;
     }
 
-    /**
-     * Remove profiles
-     *
-     * @param Kurumi\UserBundle\Entity\Profile $profiles
-     */
-    public function removeProfile(\Kurumi\UserBundle\Entity\Profile $profiles)
-    {
-        $this->profiles->removeElement($profiles);
-    }
 }

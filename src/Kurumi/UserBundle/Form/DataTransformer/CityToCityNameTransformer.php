@@ -5,14 +5,22 @@ namespace Kurumi\UserBundle\Form\DataTransformer;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
-use Kurumi\UserBundle\Entity\City;
+use Doctrine\ORM\EntityManager;
 
 class CityToCityNameTransformer implements DataTransformerInterface
 {
 
-    public function __construct()
-    {
+    private $cityClass;
 
+    private $repository;
+
+    private $appid;
+
+    public function __construct(EntityManager $em, $cityClass, $appid)
+    {
+        $this->cityClass = $cityClass;
+        $this->repository = $em->getRepository($this->cityClass);
+        $this->appid = $appid;
     }
 
     /**
@@ -45,22 +53,18 @@ class CityToCityNameTransformer implements DataTransformerInterface
      */
     function transform($value)
     {
-        if (null === $value) {
-            return null;
+        if (!$value instanceof $this->cityClass) {
+            return $value;
         }
 
-        if (!$value instanceof City) {
-            throw new UnexpectedTypeException($value, 'Kurumi\UserBundle\Entity\City');
-        }
-
-        /** @val $value City */
-        if (!$value->getId()) {
+        /** @var $value \Kurumi\UserBundle\Entity\City */
+        if (!$value->getName() || !$value->getCountryName()) {
             return null;
         }
-        if ($value->getCountryCode === 'US') {
+        if ($value->getCountryCode() === 'US' || $value->getCountryCode() === 'CA') {
             return sprintf('%s, %s, %s', $value->getName(), $value->getState(), $value->getCountryCode());
         } else {
-            return sprintf('%s, %s', $value->getName(), $value->getCountry());
+            return sprintf('%s, %s', $value->getName(), $value->getCountryName());
         }
     }
 
@@ -91,8 +95,53 @@ class CityToCityNameTransformer implements DataTransformerInterface
      */
     function reverseTransform($value)
     {
-        return new City();
-        // TODO: Implement reverseTransform() method.
+        if (null === $value) {
+            return new $this->cityClass();
+        }
+
+        try {
+            $callback = sprintf('http://where.yahooapis.com/geocode?flags=PG&appid=%s&location=%s', urlencode($this->appid), urlencode($value));
+            $ch = curl_init($callback);
+            curl_setopt_array($ch, array(
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_CONNECTTIMEOUT => 2,
+                CURLOPT_TIMEOUT => 2,
+            ));
+            $location = unserialize(curl_exec($ch));
+            if (!isset($location['ResultSet']['Result'][0])) {
+                return null;
+            }
+            $result = $location['ResultSet']['Result'][0];
+
+            /** @var $city \Kurumi\UserBundle\Entity\City */
+            $city = new $this->cityClass();
+            if ($result['quality'] < 39) {
+                return null;
+            }
+            $city->setLatitude($result['latitude']);
+            $city->setLongitude($result['longitude']);
+            $city->setCountryCode($result['level0code']);
+            $city->setCountryName($result['level0']);
+            if ($result['level4'] !== '') {
+                $city->setName($result['level4']);
+            } else {
+                $city->setName($result['level3']);
+            }
+            if ($result['level0code'] === 'US' || $result['level0code'] === 'CA') {
+                $city->setState($result['level1']);
+            }
+            if ($existingCity = $this->repository->findOneBy(array(
+                'latitude' => $city->getLatitude(),
+                'longitude' => $city->getLongitude(),
+            ))
+            ) {
+                return $existingCity;
+            }
+            return $city;
+        } catch (\Exception $e) {
+            throw $e;
+            return null;
+        }
     }
 
 

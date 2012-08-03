@@ -1,11 +1,3 @@
-admin:
-    gender.unspecified: - Unspecified -
-    label:
-        users: Users
-        profiles: Profiles
-
-sonata.admin.label.acl_roles: Roles
-
 page:
     front:
         title: Kurumi - Meet new people in your area
@@ -26,12 +18,17 @@ form:
     register:
         email: Your e-mail address:
         password: Choose your password:
-        birthday: Your birthday:
+        birthday:
+            label: Your birthday:
+            day: Day:
+            month: Month:
+            year: Year:
         name: Your name or nickname:
         gender:
             label: I am
-            male: male
-            female: female
+            empty: Your sex:
+            male: Male
+            female: Female
         city: Your city:
         submit: Continue
     user_picture:

@@ -5,11 +5,19 @@ namespace Kurumi\UserBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Form\FormView;
+use Symfony\Component\Form\FormInterface;
 use Kurumi\UserBundle\Form\Type\CityType;
-use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
 class RegisterProfileType extends AbstractType
 {
+    private $cityToCityNameTransformer;
+
+    public function __construct($cityToCityNameTransformer)
+    {
+        $this->cityToCityNameTransformer = $cityToCityNameTransformer;
+    }
+
     /**
      * Returns the name of this type.
      *
@@ -31,13 +39,8 @@ class RegisterProfileType extends AbstractType
             'years' => range(date('Y'), date('Y') - 100),
         ));
         $builder->add('gender', 'gender', array(
-            'expanded' => true,
-            //'index_strategy' => ChoiceList::COPY_CHOICE,
-            //'value_strategy' => ChoiceList::COPY_CHOICE,
         ));
-        $builder->add('city', new CityType(), array(
-            'data' => $options['data']->getCity(),
-            'error_bubbling' => false,
+        $builder->add('city', new CityType($this->cityToCityNameTransformer), array(
         ));
     }
 

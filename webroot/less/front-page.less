@@ -30,6 +30,16 @@
         .register-header {
             margin: 0;
         }
+
+        .help-inline {
+            background: @black;
+            background: rgba(0, 0, 0, 0.7);
+            .border-radius(3px);
+            padding-top: 2px;
+            padding-bottom: 2px;
+            padding-right: 5px;
+            margin-left: 10px;
+        }
     }
 }
 
@@ -46,7 +56,7 @@
 }
 
 .footer-wrapper {
-    background: white;
+    background: @white;
     border-top: 3px solid @orange;
     padding-top: 14px;
     padding-bottom: 28px;
@@ -75,6 +85,12 @@
     text-shadow: rgba(0, 0, 0, .6) 0 1px 1px;
 }
 
+.control-group.error > label,
+.control-group.error .help-block,
+.control-group.error .help-inline {
+    color: @white;
+}
+
 .icon-male {
     background: url(../images/icon-male.png);
 }
@@ -83,8 +99,8 @@
     background: url(../images/icon-female.png);
 }
 
-.label-male {
-    color: #006bd5 !important;
+#user_register_profile_gender_0 {
+    color: @blueDark !important;
     text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75) !important;
 }
 
@@ -96,7 +112,7 @@
 .meet-message {
     font-size: 44px;
     line-height: 48px;
-    color: white;
+    color: @white;
     text-shadow: rgba(0, 0, 0, .5) 0 2px 2px;
     margin-top: 60%;
 }

@@ -14,6 +14,7 @@ webroot/php_errors.log
 app/cache/
 app/logs/
 app/config/parameters.yml
+app/Resources/geoip/GeoLiteCity.dat
 
 build/
 vendor/

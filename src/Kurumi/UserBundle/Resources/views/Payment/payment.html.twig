@@ -1,0 +1,26 @@
+{% if app.request.isXmlHttpRequest %}
+<div>
+    <div class="modal-header">
+        <h3>Top up with {{ site_name }}</h3>
+    </div>
+    <div class="modal-body">
+        <h4>Select a payment method</h4>
+
+        <p>
+            Lorem ipsum dolor sit amet.
+        </p>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#">Fortumo</a></li>
+            <li><a href="#">PayPal</a></li>
+        </ul>
+        <div>
+            <p>
+                Send an SMS to XXX and you'll get a cake.
+            </p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" type="button" data-dismiss="modal">Cancel</button>
+    </div>
+</div>
+{% endif %}

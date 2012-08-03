@@ -1,8 +1,37 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: Fox
- * Date: 7/28/12
- * Time: 9:26 AM
- * To change this template use File | Settings | File Templates.
- */
+
+namespace Application\Sonata\MediaBundle\Admin;
+
+use Briareos\AclBundle\Security\Authorization\PermissionContainerInterface;
+
+class PermissionContainer implements PermissionContainerInterface
+{
+    public function getPermissions()
+    {
+        return array(
+            'admin' => array(
+                '__children' => array(
+                    'applicationsonatamediabundle_media' => array(
+                        'weight' => 11,
+                        '__children' => array(
+                            'create' => array(),
+                            'list' => array(),
+                            'edit' => array(),
+                            'delete' => array(),
+                        ),
+                    ),
+                    'applicationsonatamediabundle_gallery' => array(
+                        'weight' => 12,
+                        '__children' => array(
+                            'create' => array(),
+                            'list' => array(),
+                            'edit' => array(),
+                            'delete' => array(),
+                        ),
+                    ),
+                ),
+            ),
+        );
+    }
+
+}

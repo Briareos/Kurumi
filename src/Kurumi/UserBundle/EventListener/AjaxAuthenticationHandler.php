@@ -11,6 +11,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerI
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 class AjaxAuthenticationHandler implements AuthenticationSuccessHandlerInterface, AuthenticationFailureHandlerInterface
 {
@@ -46,18 +47,13 @@ class AjaxAuthenticationHandler implements AuthenticationSuccessHandlerInterface
     function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         if ($request->isXmlHttpRequest()) {
-            $result = array('success' => false);
-            if ($request->request->get('_username', false)) {
-                if (isset($this->messages[$exception->getMessage()])) {
-                    $result['message'] = $this->messages[$exception->getMessage()];
-                } else {
-                    $result['message'] = $exception->getMessage();
-                }
-            } else {
-                $result['message'] = 'USERNAME_EMPTY';
-            }
-            $response = new Response(json_encode($result));
-            $response->headers->set('Content-Type', 'application/json');
+            $result = array();
+            $result['modal'] = array(
+                'body' => (string)$exception,
+            );
+            $response = new Response(json_encode($result), 200, array(
+                'Content-Type' => 'application/json',
+            ));
         } else {
             $response = new RedirectResponse($this->router->generate('front'));
         }
@@ -77,9 +73,13 @@ class AjaxAuthenticationHandler implements AuthenticationSuccessHandlerInterface
     function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
         if ($request->isXmlHttpRequest()) {
-            $result = array('success' => true);
-            $response = new Response(json_encode($result));
-            $response->headers->set('Content-Type', 'application/json');
+            $result = array();
+            $result['location'] = array(
+                'url' => $this->router->generate('front'),
+            );
+            $response = new Response(json_encode($result), 200, array(
+                'Content-Type' => 'application/json',
+            ));
         } else {
             $response = new RedirectResponse($this->router->generate('front'));
         }

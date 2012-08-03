@@ -4,7 +4,6 @@ namespace Kurumi\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -13,7 +12,9 @@ class LoginController extends Controller
 
     /**
      * @Route("/login", name="login")
-     * @Template()
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function loginAction(Request $request)
     {
@@ -24,13 +25,9 @@ class LoginController extends Controller
 
         $lastUsername = $session->get(SecurityContext::LAST_USERNAME);
 
-        $csrfToken = $this->container->get('form.csrf_provider')->generateCsrfToken('authenticate');
-
-        return array(
-            'last_username' => $lastUsername,
+        return $this->render('UserBundle:Login:login.html.twig', array(
             'error' => $error,
-            'csrf_token' => $csrfToken,
-        );
+        ));
     }
 
     /**

@@ -5,9 +5,9 @@
 
             <div class="divider-vertical pull-left"></div>
             <ul class="nav">
-                <li><a href="{{ path('play') }}"><i class="icon-star icon-white"></i> Play</a></li>
-                <li><a href="{{ path('search') }}"><i class="icon-globe icon-white"></i> Search</a></li>
-                <li class="{% if active == 'home' ? 'active' : '' %}"><a href="{{ path('front') }}"><i class="icon-home icon-white"></i> Profile</a></li>
+                <li class="{{ active == 'play' ? 'active' : '' }}"><a data-ajax href="{{ path('play') }}"><i class="icon-star icon-white"></i> Play</a></li>
+                <li class="{{ active == 'search' ? 'active' : '' }}"><a data-ajax href="{{ path('search') }}"><i class="icon-globe icon-white"></i> Search</a></li>
+                <li class="{{ active == 'home' ? 'active' : '' }}"><a data-ajax href="{{ path('front') }}"><i class="icon-home icon-white"></i> Profile</a></li>
             </ul>
 
             <div class="btn-group pull-right">

@@ -15,7 +15,7 @@ class UserManager
 
     public function updatePassword(User $user)
     {
-        if ($user->getPlainPassword()) {
+        if ($user->getPlainPassword() !== null) {
             /** @var $encoder \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface */
             $encoder = $this->encoderFactory->getEncoder($user);
             $user->setPassword($encoder->encodePassword($user->getPlainPassword(), $user->getSalt()));

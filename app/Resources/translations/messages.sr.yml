@@ -14,15 +14,22 @@ form:
         password: Твоја лозинка:
         log_in: Пријави ме
         remember_me: Упамти ме
-        forgot_password: Заборавио сам лозинку
+        forgot_password: Заборављена лозинка?
     register:
         email: Твоја и-мејл адреса:
         password: Изабери своју лозинку:
-        birthday: Твој датум рођења:
+        birthday:
+            label: Твој датум рођења:
+            day: Дан:
+            month: Месец:
+            year: Година:
         name: Твоје име или надимак:
         gender:
             label: Ја сам
-            male: мушко
-            female: женско
-        city: label: Твој град:
-        submit: Наставак
+            empty: Твој пол:
+            male: Мушко
+            female: Женско
+        city: Твој град:
+        submit: Даље
+    user_picture:
+        title: Нека те сви примете!

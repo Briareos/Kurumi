@@ -2,12 +2,8 @@ parameters:
     # relative to cwd, which is set to /web
     geoip.class: Kurumi\UserBundle\Util\GeoIp
     geoip.location: %kernel.root_dir%/Resources/geoip
-    geoname.class: Kurumi\UserBundle\Util\GeonameLookup
-    geoname.cache_id: geoname_lookup
-    geoname.cache_prefix: geoname
-    geoname.lookup_url: "http://www.geonames.org/getJSON"
-    geoname.lookup_paremeters: []
-    city_manager.class: Kurumi\UserBundle\Entity\CityManager
+    city_to_city_name_transformer.class: Kurumi\UserBundle\Form\DataTransformer\CityToCityNameTransformer
+    city_to_city_name_transformer.appid: "dj0yJmk9RWFOMjBObHVHcGRDJmQ9WVdrOVFrOVNPWFZ6TkhNbWNHbzlNVE0wTlRJeE1qUTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD0zMA--"
     user_manager.class: Kurumi\UserBundle\Entity\UserManager
 
 services:
@@ -21,26 +17,12 @@ services:
         tags:
             - { name: form.type, alias: gender }
 
-    # Geoname and GeoIP services #
-    geoname_lookup:
-        class: %geoname.class%
-        arguments: [%geoname.lookup_url%, %geoname.lookup_paremeters%]
-        calls:
-            - [ setCacheManager, [ @knp_zend_cache.manager, %geoname.cache_id%, %geoname.cache_prefix% ] ]
-            - [ setLogger, [ @logger ] ]
-    geoip:
-        class: %geoip.class%
-        arguments: [%geoip.location%, @kernel]
-    geoip.twig.extension:
-        class: Kurumi\UserBundle\Twig\Extension\GeoIp
-        arguments: [@geoip]
-        tags:
-            - { name: twig.extension }
-
-    # Entity managers #
-    city_manager:
-        class: %city_manager.class%
-        arguments: [@doctrine.orm.entity_manager, @geoname_lookup]
+    city_to_city_name_transformer:
+        class: %city_to_city_name_transformer.class%
+        arguments:
+            - @doctrine.orm.entity_manager
+            - Kurumi\UserBundle\Entity\City
+            - %city_to_city_name_transformer.appid%
     user_manager:
         class: %user_manager.class%
         arguments: [ @security.encoder_factory ]

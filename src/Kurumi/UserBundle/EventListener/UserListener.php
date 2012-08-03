@@ -27,8 +27,6 @@ class UserListener
         if ($entity instanceof User) {
             /** @var $entity User */
             $this->userManager->updatePassword($entity);
-            $args->getEntityManager()->persist($entity);
-            $args->getEntityManager()->flush($entity);
         }
     }
 }

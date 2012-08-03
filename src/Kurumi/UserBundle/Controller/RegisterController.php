@@ -22,27 +22,17 @@ class RegisterController extends Controller
     public function registerAction(Request $request)
     {
         $user = new User();
-        $defaultProfile = new Profile();
-        $user->setProfile($defaultProfile);
-        $defaultCity = new City();
-        $defaultCity->setName("Modrica");
-        $defaultCity->setCountryName("Bosnia and Herzegovina");
-        $defaultProfile->setCity($defaultCity);
+        $cityToCityNameTransformer = $this->get('city_to_city_name_transformer');
 
-        $form = $this->createForm(new RegisterFormType(), $user);
+        $form = $this->createForm(new RegisterFormType($cityToCityNameTransformer), $user);
 
         if ($request->isMethod('POST')) {
             $form->bind($request);
             if ($form->isValid()) {
                 /** @var $em \Doctrine\ORM\EntityManager */
                 $em = $this->getDoctrine()->getManager();
-                /** @var $cityManager \Kurumi\UserBundle\Entity\CityManager */
-                $cityManager = $this->get('city_manager');
-                $city = $cityManager->manageCity($user->getProfile()->getCity());
-                if (!$city->getId()) {
-                    $em->persist($city);
-                } else {
-                    $user->getProfile()->setCity($city);
+                if ($user->getProfile()->getCity() !== null) {
+                    $em->persist($user->getProfile()->getCity());
                 }
                 $em->persist($user->getProfile());
                 $em->persist($user);
@@ -53,15 +43,19 @@ class RegisterController extends Controller
 
         if ($request->isXmlHttpRequest()) {
             if ($form->isBound() && $form->isValid()) {
-                $data['success'] = true;
+                $data['location'] = array(
+                    'url' => $this->generateUrl('front'),
+                    'replace' => true,
+                );
             } elseif ($form->isBound()) {
                 $data['form'] = array(
                     'id' => $form->getName(),
-                    'body' => $this->renderView('UserBundle:For:register_form.html.twig', array('form' => $form->createView())),
-                    'success' => false,
+                    'body' => $this->renderView('UserBundle:Form:register_form.html.twig', array('form' => $form->createView())),
                 );
             } else {
-                // @TODO implement GET request for the form?
+                $data['modal'] = array(
+                    'body' => $this->renderView('UserBundle:Form:register_form.html.twig', array('form' => $form->createView())),
+                );
             }
             return new Response(json_encode($data), 200, array(
                 'Content-Type' => 'application/json',

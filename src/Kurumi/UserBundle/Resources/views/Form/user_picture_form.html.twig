@@ -1,8 +1,13 @@
-<div data-width="600" data-title="{{ 'form.user_picture.title'|trans }}">
+{% if app.request.isXmlHttpRequest %}
+<form id="{{ form.vars.id }}" action="{{ path('upload_picture') }}" method="post" {{ form_enctype(form) }} data-ajax
+      class="modal-form">
 
-    <form id="{{ form.vars.id }}" action="{{ path('upload_picture') }}" method="post" {{ form_enctype(form) }}
-          data-ajax="userPicture">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>{{ 'form.user_picture.title'|trans }}</h3>
+    </div>
 
+    <div class="modal-body">
         {% if user.picture %}
         <p class="description">
             Your current picture
@@ -15,11 +20,12 @@
         {% endif %}
 
         {{ form_rest(form) }}
+    </div>
 
-        {% if(app.request.isXmlHttpRequest) %}
-        <button type="submit">Upload</button>
-        {% endif %}
+    <div class="modal-footer">
+        <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </div>
 
-    </form>
-
-</div>
+</form>
+{% endif %}

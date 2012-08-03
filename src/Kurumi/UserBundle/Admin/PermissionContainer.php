@@ -12,6 +12,7 @@ class PermissionContainer implements PermissionContainerInterface
             'admin' => array(
                 '__children' => array(
                     'userbundle_user' => array(
+                        'weight' => 1,
                         '__children' => array(
                             'create' => array(),
                             'list' => array(),
@@ -20,6 +21,7 @@ class PermissionContainer implements PermissionContainerInterface
                         ),
                     ),
                     'userbundle_profile' => array(
+                        'weight' => 2,
                         '__children' => array(
                             'create' => array(),
                             'list' => array(),

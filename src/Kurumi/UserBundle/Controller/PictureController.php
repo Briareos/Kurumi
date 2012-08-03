@@ -16,6 +16,7 @@ class PictureController extends Controller
      */
     public function uploadPictureAction()
     {
+        /** @var $user \Kurumi\UserBundle\Entity\User */
         $user = $this->getUser();
         $request = $this->getRequest();
 
@@ -23,7 +24,7 @@ class PictureController extends Controller
 
         if ($request->isMethod('POST')) {
 
-            $form->bindRequest($request);
+            $form->bind($request);
 
             if ($form->isValid()) {
                 /** @var $em \Doctrine\ORM\EntityManager */
@@ -39,19 +40,23 @@ class PictureController extends Controller
 
         if ($request->isXmlHttpRequest()) {
             if ($form->isBound() && $form->isValid()) {
-                return $this->redirect($this->generateUrl('upload_picture'));
-            } elseif ($form->isBound()) {
-                $data['form'] = array(
-                    'id' => $form->getName(),
+                $data['modal'] = array(
                     'body' => $this->renderView('UserBundle:Form:user_picture_form.html.twig', array(
                         'form' => $form->createView(),
                         'user' => $user,
                         'picture' => $user->getPicture(),
                     )),
-                    'success' => false,
+                );
+            } elseif ($form->isBound()) {
+                $data['form'] = array(
+                    'body' => $this->renderView('UserBundle:Form:user_picture_form.html.twig', array(
+                        'form' => $form->createView(),
+                        'user' => $user,
+                        'picture' => $user->getPicture(),
+                    )),
                 );
             } else {
-                $data['dialog'] = array(
+                $data['modal'] = array(
                     'body' => $this->renderView('UserBundle:Form:user_picture_form.html.twig', array(
                         'form' => $form->createView(),
                         'user' => $user,

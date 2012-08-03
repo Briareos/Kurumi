@@ -6,7 +6,7 @@
     <title>{{ 'page.front.title'|trans }}</title>
 
     {# jQuery #}
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
 
     {# Used JavaScripts #}
     {% javascripts
@@ -14,8 +14,8 @@
       'bootstrap/js/bootstrap-dropdown.js'
       'bootstrap/js/bootstrap-button.js'
       'bootstrap/js/bootstrap-modal.js'
-      'bundles/briareosajax/js/jquery.form.js'
-      'bundles/briareosajax/js/ajax.js'
+      '@BriareosAjaxBundle/Resources/public/js/jquery.form.js'
+      '@BriareosAjaxBundle/Resources/public/js/ajax.js'
       filter='?yui_js'
       output='js-compiled/front-page.js'
      %}
@@ -41,16 +41,16 @@
                 <h4 class="slogan">{{ 'page.front.motto'|trans }}</h4>
 
                 <div class="meet-message">
-                    {% if geoip is empty or geoip.city is empty %}
+                    {% if geocoded is empty or geocoded.city is empty %}
                     {{ 'page.front.meet_your_area'|trans }}
                     {% else %}
-                    {{ 'page.front.meet_your_city'|trans({'%city%':geoip.city}) }}
+                    {{ 'page.front.meet_your_city'|trans({'%city%':geocoded.city}) }}
                     {% endif %}
                 </div>
             </div>
             <div class="span7">
                 <div class="btn-group pull-right">
-                    <a href="" data-toggle="dropdown"
+                    <a data-toggle="dropdown"
                        class="btn dropdown-toggle">{{ lunetics_languageName(lunetics_getLocaleLanguage()) }} <span
                             class="caret"></span></a>
                     <ul class="dropdown-menu nav">
@@ -75,7 +75,7 @@
                 <div class="register-form-container well">
                     <h3 class="register-header">{{ 'page.front.first_time'|trans }} {{ 'page.front.join_now'|trans }}</h3>
 
-                    {% include 'UserBundle:Form:register_form.html.twig' with {form:form_register} %}
+                    {% include 'UserBundle:Form:register_form.html.twig' with {'form':form_register} %}
                 </div>
             </div>
         </div>
@@ -112,7 +112,7 @@
                         <img src="/images/icon-new-people.png" class="pull-left">
                         <h4 class="title">The rest is up to you</h4>
 
-                        <p>{{ site_name }}is for everyone, so come on in and join the fun!</p>
+                        <p>{{ site_name }} is for everyone, so come on in and join the fun!</p>
                     </div>
                 </div>
             </div>

@@ -1,29 +1,9 @@
-{% block _user_register_profile_birthday_widget %}
-{% spaceless %}
-{% if widget == 'single_text' %}
-{{ block('form_widget_simple') }}
-{% else %}
-<div {{ block('widget_container_attributes') }}>
-    {{ date_pattern|replace({
-                '{{ year }}':  form_widget(form.year, {attr:{class:'input-small'} }),
-                '{{ month }}': form_widget(form.month, {attr:{class:'input-small'} }),
-                '{{ day }}':   form_widget(form.day, {attr:{class:'input-small'} }),
-            })|raw }}
-</div>
-{% endif %}
-{% endspaceless %}
-{% endblock _user_register_profile_birthday_widget %}
+{% extends 'MopaBootstrapBundle:Form:fields.html.twig' %}
 
-{% block _user_register_profile_gender_widget %}
-{% spaceless %}
-<div class="input-prepend input-append">
-    <div class="add-on">{{ form_widget(form['0']) }}</div>
-    {{ form_label(form['0'],'form.register.gender.male',{label_attr:{class:'btn label-male'}}) }}
-    {{ form_label(form['1'],'form.register.gender.female',{label_attr:{class:'btn label-female'}}) }}
-    <div class="add-on">{{ form_widget(form['1']) }}</div>
-</div>
-{% endspaceless %}
-{% endblock _user_register_profile_gender_widget %}
+
+{% block label_asterisk %}
+{% endblock label_asterisk %}
+
 
 {% block _user_register_timezone_widget %}
 {{ form_widget(form) }}
@@ -36,7 +16,7 @@
         };
         if (typeof window.jstz === 'undefined') {
             $.ajax({
-                url:"{{ asset('js/jstz.min.js') }}",
+                url:"{{ asset('bundles/user/js/jstz.min.js') }}",
                 datType:"script",
                 success:registerTimezone
             });
@@ -49,6 +29,7 @@
 {% endblock _user_register_timezone_widget %}
 
 {% block _user_register_profile_city_widget %}
+{% set attr = attr|merge({autocomplete:'off'}) %}
 {{ form_widget(form) }}
 {% spaceless %}
 <script>
@@ -69,8 +50,8 @@
                     mapped = {};
                     $.each(data.geonames,
                             function (i, item) {
-                                if (item.countryCode === "US") {
-                                    item.label = item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", US";
+                                if (item.countryCode === "US" || item.countryCode === "CA") {
+                                    item.label = item.name + (item.adminName1 ? ", " + item.adminName1 : "") + ", " + item.countryCode;
                                 } else {
                                     item.label = item.name + ", " + item.countryName;
                                 }

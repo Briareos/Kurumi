@@ -2,6 +2,9 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
+parameters:
+    user.firewall_name: main
+
 framework:
     #esi:             ~
     translator:      { fallback: %locale% }
@@ -34,7 +37,6 @@ twig:
     strict_variables: %kernel.debug%
     form:
         resources:
-            - "::fields.html.twig"
             - "BriareosAclBundle::fields.html.twig"
     exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
     globals:
@@ -296,7 +298,4 @@ sonata_intl:
     timezone:
         # default timezone used as fallback
         default: Europe/Belgrade
-
-user:
-    firewall_name: main
 

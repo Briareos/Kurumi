@@ -1,8 +1,22 @@
 <?php
-/**
- * Created by JetBrains PhpStorm.
- * User: Fox
- * Date: 7/28/12
- * Time: 9:29 AM
- * To change this template use File | Settings | File Templates.
- */
+
+namespace Application\Sonata\MediaBundle\DependencyInjection;
+
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
+
+
+class Configuration implements ConfigurationInterface
+{
+    /**
+     * Generates the configuration tree builder.
+     *
+     * @return \Symfony\Component\Config\Definition\Builder\TreeBuilder The tree builder
+     */
+    public function getConfigTreeBuilder()
+    {
+        $treeBuilder = new TreeBuilder();
+        return $treeBuilder;
+    }
+
+}

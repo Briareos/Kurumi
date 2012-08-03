@@ -24,7 +24,7 @@
         "sensio/framework-extra-bundle":"2.1.x-dev",
         "sensio/generator-bundle":"2.1.x-dev",
         "jms/security-extra-bundle":"1.1.0",
-        "jms/di-extra-bundle":"1.0.1",
+        "jms/di-extra-bundle":"dev-master",
         "lunetics/locale-bundle":"dev-2.1-compat",
         "knplabs/knp-zend-cache-bundle":"0.1",
         "friendsofsymfony/facebook-bundle":"dev-master",
@@ -44,12 +44,13 @@
         "briareos/chat-bundle":"dev-master",
         "briareos/acl-bundle":"dev-master",
         "elao/web-profiler-extra-bundle":"dev-master",
-        "willdurand/geocoder":"1.0.7",
+        "willdurand/geocoder":"dev-master",
         "willdurand/geocoder-bundle":"dev-master",
         "doctrine/spatial":"dev-master",
         "briareos/geo-bundle":"dev-master",
         "briareos/ajax-bundle":"dev-master",
-        "mopa/bootstrap-bundle":"dev-master"
+        "mopa/bootstrap-bundle":"dev-master",
+        "friendsofsymfony/user-bundle":"dev-master"
     },
     "repositories":[
         {

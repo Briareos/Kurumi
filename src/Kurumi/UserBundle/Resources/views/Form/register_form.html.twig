@@ -1,15 +1,15 @@
 {% form_theme form 'UserBundle:Form:register_form_theme.html.twig' %}
 
-<form novalidate id="{{ form.vars.id }}" class="register-form"
+<form id="{{ form.vars.id }}" class="register-form"
       action="{{ path('register') }}" {{ form_enctype(form) }}
       method="post" data-ajax>
 
-    {{ form_row(form.email, {label:'form.register.email'|trans,attr:{class:'input-xlarge', autocomplete:'off'}})}}
-    {{ form_row(form.plainPassword, {label:'form.register.password'|trans({'%site_name%':site_name}), attr:{class:'input-xlarge'} }) }}
-    {{ form_row(form.profile.birthday, {label:'form.register.birthday'|trans}) }}
-    {{ form_row(form.name, {label:'form.register.name'|trans, attr:{class:'input-xlarge'} }) }}
-    {{ form_row(form.profile.gender, {label:'form.register.gender.label'|trans}) }}
-    {{ form_row(form.profile.city, {label:'form.register.city'|trans, attr:{class:'input-xlarge'} }) }}
+    {{ form_row(form.email, {attr:{class:'input-xlarge', autocomplete:'off'}})}}
+    {{ form_row(form.plainPassword, {attr:{class:'input-xlarge'} }) }}
+    {{ form_row(form.profile.birthday, {}) }}
+    {{ form_row(form.name, {attr:{class:'input-xlarge'} }) }}
+    {{ form_row(form.profile.gender, {}) }}
+    {{ form_row(form.profile.city, {attr:{class:'input-xlarge'} }) }}
 
     {{ form_rest(form) }}
 

@@ -9,54 +9,50 @@ jms_security_extra:
         disable_acl:            true    # Uses the core ACL component http://symfony.com/doc/current/cookbook/security/acl.html
     method_access_control: []
 
+services:
+    authentication_handler:
+        class: Kurumi\UserBundle\EventListener\AjaxAuthenticationHandler
+        arguments: [ @router ]
+
 security:
     encoders:
         Kurumi\UserBundle\Entity\User: sha512
 
-    role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
-
     providers:
         default_database:
             entity: { class: UserBundle:User, property: email }
-        facebook_provider:
-            id: facebook_provider
 
     firewalls:
         main:
-            pattern:    ^/
+            pattern: ^/
             form_login:
-                check_path: /login_check
-                login_path: /login
-                csrf_provider: form.csrf_provider
-            #fos_facebook:
-            #    check_path: /facebook_check
-            #    app_url: "http://apps.facebook.com/appName/"
-            #    server_url: "http://localhost/facebookApp/"
+                username_parameter: email
+                password_parameter: password
+                csrf_parameter:     _token
+                intention:          authenticate
+                post_only:          true
+                check_path:         /login_check
+                login_path:         /login
+                csrf_provider:      form.csrf_provider
             logout:
-                path:           /logout
-                target:         /
-                csrf_parameter: token
-                csrf_provider:  form.csrf_provider
-                #intention: logout
-                handlers:       [fos_facebook.logout_handler]
+                path:               /logout
+                target:             /
+                csrf_parameter:     _token
+                csrf_provider:      form.csrf_provider
             anonymous: ~
             remember_me:
                 key:      %secret%
                 lifetime: 86400
                 path:     /
                 domain:   ~ # Defaults to the current domain from $_SERVER
-            #http_basic:
-            #    realm: "Secured Demo Area"
+                remember_me_parameter: remember_me
 
     access_control:
         - { path: ^/,               roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
-        - { path: ^/login,          roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
         - { path: ^/login_check,    roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
         - { path: ^/logout,         roles: [IS_AUTHENTICATED_REMEMBERED] }
         - { path: ^/facebook_check, roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
-        - { path: ^/admin/.*,       roles: [ROLE_SUPER_ADMIN] }
+        - { path: ^/admin/,         roles: [administrator] }
         #- { path: ^/secured/.*, role: [IS_AUTHENTICATED_FULLY] } # This is the route secured with fos_facebook
         #- { path: ^/.*, role: [IS_AUTHENTICATED_ANONYMOUSLY] }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

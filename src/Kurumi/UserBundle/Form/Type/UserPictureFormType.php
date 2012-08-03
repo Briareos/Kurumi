@@ -4,6 +4,7 @@ namespace Kurumi\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Kurumi\UserBundle\Entity\User;
 use Kurumi\UserBundle\Entity\Profile;
 use Kurumi\UserBundle\Entity\City;
@@ -23,16 +24,15 @@ class UserPictureFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('picture', 'sonata_media_type', array(
-            'data' => $options['data']->getPicture(),
             'provider' => 'sonata.media.provider.image',
+            'context' => 'user_picture',
         ));
     }
 
-    public function getDefaultOptions()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'data_class' => 'Kurumi\UserBundle\Entity\User',
-            'context' => 'user_picture',
-        );
+        ));
     }
 }

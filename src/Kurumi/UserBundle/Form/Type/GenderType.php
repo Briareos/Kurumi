@@ -14,7 +14,8 @@ class GenderType extends AbstractType
             'choices' => array(
                 1 => 'Male',
                 2 => 'Female',
-            )
+            ),
+            'empty_value' => "Gender"
         ));
     }
 

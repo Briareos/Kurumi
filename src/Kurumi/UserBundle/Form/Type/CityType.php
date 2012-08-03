@@ -9,6 +9,13 @@ use Kurumi\UserBundle\Form\DataTransformer\CityToCityNameTransformer;
 
 class CityType extends AbstractType
 {
+    private $cityToCityNameTransformer;
+
+    public function __construct($cityToCityNameTransformer)
+    {
+        $this->cityToCityNameTransformer = $cityToCityNameTransformer;
+    }
+
     /**
      * Returns the name of this type.
      *
@@ -26,14 +33,13 @@ class CityType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->addViewTransformer(new CityToCityNameTransformer());
+        $builder->addModelTransformer($this->cityToCityNameTransformer);
     }
 
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Kurumi\UserBundle\Entity\City',
             'validation_groups' => array('registration'),
         ));
     }
