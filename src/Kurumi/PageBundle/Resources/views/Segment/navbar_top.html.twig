@@ -1,0 +1,29 @@
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand pull-left">{{ site_name }}</a>
+
+            <div class="divider-vertical pull-left"></div>
+            <ul class="nav">
+                <li><a href="{{ path('play') }}"><i class="icon-star icon-white"></i> Play</a></li>
+                <li><a href="{{ path('search') }}"><i class="icon-globe icon-white"></i> Search</a></li>
+                <li class="{% if active == 'home' ? 'active' : '' %}"><a href="{{ path('front') }}"><i class="icon-home icon-white"></i> Profile</a></li>
+            </ul>
+
+            <div class="btn-group pull-right">
+                <a class="btn dropdown-toggle" data-toggle="dropdown"><i
+                        class="icon-user"></i> {{ user.name }} <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">My profile</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{{ logout_url('main') }}">Log out</a></li>
+                </ul>
+            </div>
+            <div class="divider-vertical pull-right"></div>
+            <p class="navbar-text pull-right">
+                <a href="{{ path('payment') }}" data-ajax class="label label-info">0 credits</a>
+            </p>
+        </div>
+    </div>
+</div>
