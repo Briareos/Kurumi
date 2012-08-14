@@ -2,3 +2,7 @@ admin:
     group:
         users: Users & profiles
         media: Media info
+    label:
+        users: Users
+        profiles: Profiles
+        acl_roles: Roles

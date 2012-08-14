@@ -50,7 +50,10 @@
         "briareos/geo-bundle":"dev-master",
         "briareos/ajax-bundle":"dev-master",
         "mopa/bootstrap-bundle":"dev-master",
-        "friendsofsymfony/user-bundle":"dev-master"
+        "friendsofsymfony/user-bundle":"dev-master",
+        "liip/imagine-bundle":"dev-master",
+        "imagine/imagine":"v0.2.8",
+        "EHER/PHPUnit":"1.6"
     },
     "repositories":[
         {
@@ -198,12 +201,14 @@
         "post-install-cmd":[
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ],
         "post-update-cmd":[
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets"
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ]
     },
     "config":{

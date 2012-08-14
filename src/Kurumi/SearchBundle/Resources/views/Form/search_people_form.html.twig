@@ -1,0 +1,6 @@
+<form id="{{ form.vars.id }}" method="get" {{ form_enctype(form) }}>
+    {{ form_row(form.gender) }}
+    {{ form_row(form.city) }}
+
+    {{ form_rest(form) }}
+</form>

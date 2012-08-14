@@ -1,23 +1,22 @@
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <a class="brand pull-left">{{ site_name }}</a>
+            <a class="brand">{{ site_name }}</a>
 
-            <div class="divider-vertical pull-left"></div>
             <ul class="nav">
-                <li class="{{ active == 'play' ? 'active' : '' }}"><a data-ajax href="{{ path('play') }}"><i class="icon-star icon-white"></i> Play</a></li>
-                <li class="{{ active == 'search' ? 'active' : '' }}"><a data-ajax href="{{ path('search') }}"><i class="icon-globe icon-white"></i> Search</a></li>
-                <li class="{{ active == 'home' ? 'active' : '' }}"><a data-ajax href="{{ path('front') }}"><i class="icon-home icon-white"></i> Profile</a></li>
+                <li class="{{ active == 'play' ? 'active' : '' }}"><a data-ajax href="{{ path('play') }}"><i class="icon-star"></i> Play</a></li>
+                <li class="{{ active == 'search' ? 'active' : '' }}"><a data-ajax href="{{ path('search') }}"><i class="icon-globe"></i> Search</a></li>
+                <li class="{{ active == 'home' ? 'active' : '' }}"><a data-ajax href="{{ path('front') }}"><i class="icon-home"></i> Profile</a></li>
             </ul>
 
             <div class="btn-group pull-right">
                 <a class="btn dropdown-toggle" data-toggle="dropdown"><i
                         class="icon-user"></i> {{ user.name }} <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">My profile</a></li>
+                    <li><a href="{{ path('edit_account') }}" data-ajax>{% media user_picture(user), 'thumbnail' with {'title':''} %} Edit profile</a></li>
                     <li><a href="#">Settings</a></li>
                     <li class="divider"></li>
-                    <li><a href="{{ logout_url('main') }}">Log out</a></li>
+                    <li><a href="{{ logout_url(main_firewall_name) }}" data-ajax>Log out</a></li>
                 </ul>
             </div>
             <div class="divider-vertical pull-right"></div>

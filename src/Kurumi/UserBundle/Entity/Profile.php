@@ -32,7 +32,7 @@ class Profile
     private $birthday;
 
     /**
-     * @var smallint $gender
+     * @var int $gender
      *
      * @ORM\Column(name="gender", type="smallint", nullable=true)
      */
@@ -55,7 +55,7 @@ class Profile
     /**
      * @var City
      *
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="profiles")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="profiles", cascade={"persist"})
      * @ORM\JoinColumn(name="city_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $city;
@@ -63,14 +63,14 @@ class Profile
     /**
      * @var User
      *
-     * @ORM\OneToOne(targetEntity="User", inversedBy="profile", cascade={"remove"})
+     * @ORM\OneToOne(targetEntity="User", inversedBy="profile")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
      *
      */
     private $user;
 
     /**
-     * @var DateTime $created
+     * @var \DateTime $created
      *
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
@@ -78,7 +78,7 @@ class Profile
     private $created;
 
     /**
-     * @var DateTime
+     * @var \DateTime
      *
      * @ORM\Column(name="updated", type="datetime")
      * @Gedmo\Timestampable(on="update")
@@ -98,7 +98,7 @@ class Profile
     /**
      * Set birthday
      *
-     * @param date $birthday
+     * @param \DoctrineExtensions\Types\Date $birthday
      */
     public function setBirthday($birthday)
     {
@@ -108,7 +108,7 @@ class Profile
     /**
      * Get birthday
      *
-     * @return date
+     * @return \DoctrineExtensions\Types\Date
      */
     public function getBirthday()
     {
@@ -118,7 +118,7 @@ class Profile
     /**
      * Set gender
      *
-     * @param smallint $gender
+     * @param int $gender
      */
     public function setGender($gender)
     {
@@ -128,7 +128,7 @@ class Profile
     /**
      * Get gender
      *
-     * @return smallint
+     * @return int
      */
     public function getGender()
     {
@@ -226,7 +226,7 @@ class Profile
     /**
      * Set created
      *
-     * @param datetime $created
+     * @param \DateTime $created
      * @return Profile
      */
     public function setCreated($created)
@@ -238,7 +238,7 @@ class Profile
     /**
      * Get created
      *
-     * @return datetime
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -255,7 +255,7 @@ class Profile
     }
 
     /**
-     * @param \Kurumi\UserBundle\Entity\DateTime $updated
+     * @param \DateTime $updated
      */
     public function setUpdated($updated)
     {
@@ -263,7 +263,7 @@ class Profile
     }
 
     /**
-     * @return \Kurumi\UserBundle\Entity\DateTime
+     * @return \DateTime
      */
     public function getUpdated()
     {

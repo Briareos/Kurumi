@@ -1,22 +1,22 @@
-{% extends '::home.html.twig' %}
+{% extends '::base.html.twig' %}
 
 {% block title %}{{ user.name }} | Home{% endblock %}
 
-
 {% block body %}
 
-{% include 'PageBundle:Segment:navbar_top.html.twig' with {'active':'home'} %}
+    {% include 'PageBundle:Segment:navbar_top.html.twig' with {'active':'home'} %}
+    {% include '::chat.html.twig' with {'nodejs_auth_token':nodejs_auth_token} %}
 
-<div class="main container">
-    <a href="{{ path('upload_picture') }}" data-ajax="">Set your photo!</a>
+    <div class="main container">
+        <a href="{{ path('upload_user_picture') }}" data-ajax>Set your photo!</a>
 
-    <div class="row">
-        <div id="c1" class="span6" style="position: relative; height: 500px">
+        <div class="row">
+            <div class="span6">
 
-        </div>
-        <div id="c2" class="span6" style="position: relative; height: 500px">
+            </div>
+            <div class="span6">
 
+            </div>
         </div>
     </div>
-</div>
 {% endblock body %}

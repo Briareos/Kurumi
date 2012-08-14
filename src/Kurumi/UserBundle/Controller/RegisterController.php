@@ -12,6 +12,7 @@ use Kurumi\UserBundle\Entity\City;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\HttpFoundation\Response;
+use Briareos\AjaxBundle\Ajax;
 
 class RegisterController extends Controller
 {
@@ -26,15 +27,11 @@ class RegisterController extends Controller
 
         $form = $this->createForm(new RegisterFormType($cityToCityNameTransformer), $user);
 
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod('post')) {
             $form->bind($request);
             if ($form->isValid()) {
                 /** @var $em \Doctrine\ORM\EntityManager */
                 $em = $this->getDoctrine()->getManager();
-                if ($user->getProfile()->getCity() !== null) {
-                    $em->persist($user->getProfile()->getCity());
-                }
-                $em->persist($user->getProfile());
                 $em->persist($user);
                 $em->flush();
                 $this->authenticateUser($user);
@@ -42,24 +39,15 @@ class RegisterController extends Controller
         }
 
         if ($request->isXmlHttpRequest()) {
+            $commands = array();
             if ($form->isBound() && $form->isValid()) {
-                $data['location'] = array(
-                    'url' => $this->generateUrl('front'),
-                    'replace' => true,
-                );
+                return $this->redirect($this->get('router')->generate('front'));
             } elseif ($form->isBound()) {
-                $data['form'] = array(
-                    'id' => $form->getName(),
-                    'body' => $this->renderView('UserBundle:Form:register_form.html.twig', array('form' => $form->createView())),
-                );
+                $commands[] = new Ajax\Command\Form($this->renderView('UserBundle:Form:register_form.html.twig', array('form' => $form->createView())));
             } else {
-                $data['modal'] = array(
-                    'body' => $this->renderView('UserBundle:Form:register_form.html.twig', array('form' => $form->createView())),
-                );
+                $commands[] = new Ajax\Command\Modal($this->renderView('UserBundle:Form:register_form.html.twig', array('form' => $form->createView())));
             }
-            return new Response(json_encode($data), 200, array(
-                'Content-Type' => 'application/json',
-            ));
+            return new Ajax\Response($commands);
         } else {
             if ($form->isBound() && $form->isValid()) {
                 return $this->redirect($this->generateUrl('front'));
@@ -73,7 +61,7 @@ class RegisterController extends Controller
 
     private function authenticateUser(UserInterface $user)
     {
-        $providerKey = $this->container->getParameter('user.firewall_name');
+        $providerKey = $this->container->getParameter('main_firewall_name');
         $token = new UsernamePasswordToken($user, null, $providerKey, $user->getRoles());
         $this->get('security.context')->setToken($token);
     }

@@ -2,19 +2,19 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
-parameters:
-    user.firewall_name: main
-
 framework:
     #esi:             ~
     translator:      { fallback: %locale% }
     secret:          %secret%
-    router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: %kernel.debug%
     form:            true
     csrf_protection: true
     validation:      { enable_annotations: false }
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
     default_locale:  %locale%
+    trust_proxy_headers: false
     session:
         storage_id:         session.storage.native
         handler_id:         session.handler.native_file
@@ -26,11 +26,6 @@ framework:
         cookie_httponly:    true
         save_path:          %kernel.cache_dir%/sessions
 
-services:
-    facebook_provider:
-        class: Kurumi\UserBundle\Security\User\Provider\FacebookProvider
-        arguments: [@fos_facebook.api, @doctrine.orm.entity_manager, @validator]
-
 # Twig Configuration
 twig:
     debug:            %kernel.debug%
@@ -41,6 +36,7 @@ twig:
     exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
     globals:
         site_name:  Kurumi
+        main_firewall_name: %main_firewall_name%
 
 # Assetic Configuration
 assetic:
@@ -76,7 +72,6 @@ doctrine:
                 user:     %database_user%
                 password: %database_password%
                 charset:  UTF8
-
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: false
@@ -270,6 +265,9 @@ sonata_doctrine_orm_admin:
 sonata_media:
     default_context: default
     db_driver: doctrine_orm # or doctrine_mongodb
+    providers:
+        image:
+            thumbnail:  sonata.media.thumbnail.liip_imagine
     contexts:
         default:  # the default context is mandatory
             providers:
@@ -277,22 +275,51 @@ sonata_media:
                 - sonata.media.provider.youtube
                 - sonata.media.provider.image
                 - sonata.media.provider.file
-
-            formats: ~
+            formats: []
         user_picture:
             providers:
                 - sonata.media.provider.image
             formats:
-                small: { width: 32, height: 32, quality: 70 }
-                medium: { width: 100, height: 100, quality: 70 }
+                thumbnail:
+                    width: 32
+                    height: 32
+                medium:
+                    width: 200
+                    height: 300
     cdn:
         server:
+            #path: ''
             path: /uploads/media # http://media.sonata-project.org/
 
     filesystem:
         local:
             directory:  %kernel.root_dir%/../webroot/uploads/media
             create:     false
+
+liip_imagine:
+    driver:             gd
+    web_root:           %kernel.root_dir%/../webroot
+    data_root:          %kernel.root_dir%/../webroot
+    cache_prefix:       /media/cache
+    cache:              web_path
+    data_loader:        filesystem
+    controller_action:  SonataMediaBundle:Media:liipImagineFilter
+    filter_sets:
+        admin:
+            quality: 100
+            format: jpg
+            filters:
+                thumbnail: { size: [160, 120], mode: inset }
+        user_picture_thumbnail:
+            quality: 90
+            format: jpg
+            filters:
+                thumbnail: { size: [32, 32], mode: outbound }
+        user_picture_medium:
+            quality: 80
+            format: jpg
+            filters:
+                thumbnail: { size: [200, 300], mode: inset }
 
 sonata_intl:
     timezone:

@@ -39,6 +39,7 @@ class AppKernel extends Kernel
             new Sonata\IntlBundle\SonataIntlBundle(),
             new Bazinga\Bundle\GeocoderBundle\BazingaGeocoderBundle(),
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
 
             new Kurumi\UserBundle\UserBundle(),
             new Kurumi\PageBundle\PageBundle(),
@@ -47,6 +48,7 @@ class AppKernel extends Kernel
             new Briareos\AclBundle\BriareosAclBundle(),
             new Briareos\GeoBundle\BriareosGeoBundle(),
             new Briareos\AjaxBundle\BriareosAjaxBundle(),
+            new Kurumi\SearchBundle\SearchBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

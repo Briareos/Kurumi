@@ -1,12 +1,14 @@
-{% extends '::home.html.twig' %}
+{% extends '::base.html.twig' %}
 
-{% block title%}Play with people near you{% endblock %}
+{% block title %}Play with people near you{% endblock %}
 
 {% block body %}
 
-{% include 'PageBundle:Segment:navbar_top.html.twig' with {'active':'play'} %}
-<div class="main container">
-    I want to play a game.
-</div>
+    {% include 'PageBundle:Segment:navbar_top.html.twig' with {'active':'play'} %}
+    {% include '::chat.html.twig' with {'nodejs_auth_token':nodejs_auth_token} %}
+
+    <div class="main container">
+        I want to play a game.
+    </div>
 
 {% endblock %}

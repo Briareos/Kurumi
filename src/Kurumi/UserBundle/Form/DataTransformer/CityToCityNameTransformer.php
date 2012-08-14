@@ -96,7 +96,7 @@ class CityToCityNameTransformer implements DataTransformerInterface
     function reverseTransform($value)
     {
         if (null === $value) {
-            return new $this->cityClass();
+            return null;
         }
 
         try {

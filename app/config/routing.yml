@@ -1,6 +1,11 @@
 front:
     pattern: /
 
+SearchBundle:
+    resource: "@SearchBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 PageBundle:
     resource: "@PageBundle/Controller/"
     type:     annotation
@@ -28,6 +33,11 @@ LuneticsLocaleBundle:
 admin:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
     prefix: /admin
+
+_liip_imagine:
+    resource: .
+    type: imagine
+    prefix: ''
 
 _sonata_admin:
     resource: .

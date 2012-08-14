@@ -1,6 +1,6 @@
 {% form_theme form 'UserBundle:Form:register_form_theme.html.twig' %}
 
-<form id="{{ form.vars.id }}" class="register-form"
+<form novalidate id="{{ form.vars.id }}" class="register-form"
       action="{{ path('register') }}" {{ form_enctype(form) }}
       method="post" data-ajax>
 

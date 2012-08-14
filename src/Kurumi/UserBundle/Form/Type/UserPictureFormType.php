@@ -21,18 +21,19 @@ class UserPictureFormType extends AbstractType
         return 'user_picture';
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $builder->add('picture', 'sonata_media_type', array(
+        $resolver->setDefaults(array(
+            'data_class' => 'Application\Sonata\MediaBundle\Entity\Media',
             'provider' => 'sonata.media.provider.image',
             'context' => 'user_picture',
         ));
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function getParent()
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Kurumi\UserBundle\Entity\User',
-        ));
+        return 'sonata_media_type';
     }
+
+
 }

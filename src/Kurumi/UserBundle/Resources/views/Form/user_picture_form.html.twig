@@ -1,5 +1,6 @@
 {% if app.request.isXmlHttpRequest %}
-<form id="{{ form.vars.id }}" action="{{ path('upload_picture') }}" method="post" {{ form_enctype(form) }} data-ajax
+<form novalidate id="{{ form.vars.id }}" action="{{ path('upload_user_picture') }}" method="post" {{ form_enctype(form) }}
+      data-ajax
       class="modal-form">
 
     <div class="modal-header">
@@ -8,24 +9,92 @@
     </div>
 
     <div class="modal-body">
+
+        {% for type, messages in app.session.flashbag.all() %}
+        <div class="alert alert-{{ type }}">
+            <ul class="alert-messages">
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+
+        {% if form.binaryContent.vars.errors %}
+        <div class="alert alert-error">
+            <ul class="alert-messages">
+                {% for error in form.binaryContent.vars.errors %}
+                <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
         {% if user.picture %}
-        <p class="description">
-            Your current picture
+        <p>
+            Your current picture:
         </p>
-        {% thumbnail user.picture, 'medium' with {title:''} %}
+
+        <p>
+            {% thumbnail user.picture, 'medium' with {title:''} %}
+        </p>
+
+        <p>
+            <a href="{{ path('delete_user_picture', {'token':csrf_token('delete_user_picture')}) }}" data-ajax class="btn btn-mini btn-danger">Delete this picture</a>
+        </p>
         {% else %}
-        <p class="description">
+        <p>
             Add a picture so {{ site_name }} members can see who you are!
+
         </p>
+        {% endif %}
+
+        <div id="{{ form.binaryContent.vars.id }}-container">
+            {{ form_widget(form.binaryContent, {attr:{style:'display:none'}}) }}
+            <div class="input-append">
+                <input id="{{ form.binaryContent.vars.id }}-text" class="input-large" type="text" readonly="readonly">
+                <button type="button" id="{{ form.binaryContent.vars.id }}-button" class="btn">{% if user.picture %}Browse for a new picture{% else %}Browse for picture{% endif %}</button>
+            </div>
+            <script>
+                $(function () {
+                    if (window.userPictureFormBinded !== true) {
+                        window.userPictureFormBinded = true;
+                        var $context = $('body');
+                        $context.on('click', '#{{ form.binaryContent.vars.id }}-button', function () {
+                            $('input#{{ form.binaryContent.vars.id }}', $context).click()
+                        });
+                        $context.on('change', 'input#{{ form.binaryContent.vars.id }}', function () {
+                            $('#{{ form.binaryContent.vars.id }}-text').val($(this).val());
+                            $(this.form).submit();
+                        });
+                    }
+                });
+            </script>
+        </div>
+
+        {% if user.picture is empty %}
+        <div class="alert alert-info">
+            <i class="icon-exclamation-sign"></i> Please note that you - and only you - must be clearly visible. Your age and gender need to match your profile photo. It must <strong>not</strong> contain any nudity.
+        </div>
         {% endif %}
 
         {{ form_rest(form) }}
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn" data-dismiss="modal">Cancel</button>
-        <button type="submit" class="btn btn-primary">Upload</button>
+        {% if user.picture %}
+        <button type="button" class="btn btn-success" data-dismiss="modal">Yep, that's me!</button>
+        <button type="submit" class="btn btn-primary" data-loading-text="Uploading your new picture...">Upload new
+            picture
+        </button>
+        {% else %}
+        <button type="button" class="btn" data-dismiss="modal">I'll do it later</button>
+        <button type="submit" class="btn btn-primary" data-loading-text="Uploading your picture...">Upload picture
+        </button>
+        {% endif %}
     </div>
 
 </form>
+{% else %}
+
 {% endif %}

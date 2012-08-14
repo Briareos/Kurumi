@@ -3,8 +3,7 @@ parameters:
     geoip.class: Kurumi\UserBundle\Util\GeoIp
     geoip.location: %kernel.root_dir%/Resources/geoip
     city_to_city_name_transformer.class: Kurumi\UserBundle\Form\DataTransformer\CityToCityNameTransformer
-    city_to_city_name_transformer.appid: "dj0yJmk9RWFOMjBObHVHcGRDJmQ9WVdrOVFrOVNPWFZ6TkhNbWNHbzlNVE0wTlRJeE1qUTJNZy0tJnM9Y29uc3VtZXJzZWNyZXQmeD0zMA--"
-    user_manager.class: Kurumi\UserBundle\Entity\UserManager
+    city_to_city_name_transformer.appid: %yahoo_appid%
 
 services:
     # Form types #
@@ -16,7 +15,16 @@ services:
         class: Kurumi\UserBundle\Form\Type\GenderType
         tags:
             - { name: form.type, alias: gender }
-
+    form.type.city:
+        class: Kurumi\UserBundle\Form\Type\CityType
+        arguments:
+            - @city_to_city_name_transformer
+        tags:
+            - { name: form.type, alias: city }
+    form.type.birthday:
+        class: Kurumi\UserBundle\Form\Type\BirthdayType
+        tags:
+            - { name: form.type, alias: birthday }
     city_to_city_name_transformer:
         class: %city_to_city_name_transformer.class%
         arguments:
@@ -24,7 +32,7 @@ services:
             - Kurumi\UserBundle\Entity\City
             - %city_to_city_name_transformer.appid%
     user_manager:
-        class: %user_manager.class%
+        class: Kurumi\UserBundle\Entity\UserManager
         arguments: [ @security.encoder_factory ]
     # Register/login users via Facebook OAuth #
     facebook.user:
@@ -54,3 +62,16 @@ services:
         tags:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
+    user_picture_provider:
+        class: Kurumi\UserBundle\User\PictureProvider
+        arguments:
+            - @doctrine.orm.default_entity_manager
+            - Application\Sonata\MediaBundle\Entity\Media
+            - none: %genderless_picture_ids%
+              male: %male_picture_ids%
+              female: %female_picture_ids%
+    twig.extension.user_picture_provider:
+        class: Kurumi\UserBundle\Twig\Extension\UserPictureProvider
+        arguments: [@user_picture_provider]
+        tags:
+            - { name: twig.extension }

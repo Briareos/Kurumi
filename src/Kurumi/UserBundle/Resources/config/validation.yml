@@ -52,6 +52,9 @@ Kurumi\UserBundle\Entity\Profile:
                 type: \DateTime
                 message: the fuck, man...
                 groups: [registration]
+            - Kurumi\UserBundle\Validator\MinAge:
+                limit: 16
+                groups: [registration]
         gender:
             - NotBlank:
                 message: Please indicate your gender
@@ -64,9 +67,6 @@ Kurumi\UserBundle\Entity\Profile:
                 groups: [registration,admin]
         city:
             - Valid: ~
-            #- NotBlank:
-            #    message: Please enter your city
-            #    groups: [registration]
 
 Kurumi\UserBundle\Entity\City:
     properties:
@@ -75,3 +75,15 @@ Kurumi\UserBundle\Entity\City:
                 message: Please enter your city
                 groups: [registration]
 
+Application\Sonata\MediaBundle\Entity\Media:
+    properties:
+        binaryContent:
+            - Image:
+                mimeTypes:
+                    - image/jpeg
+                    - image/png
+                minWidth: 32
+                minHeight: 32
+                mimeTypesMessage: You must provide a valid picture in .jpg or .png format.
+            - NotBlank:
+                message: You must select a picture to upload.

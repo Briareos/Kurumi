@@ -4,19 +4,18 @@ namespace Kurumi\PageBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Response;
 use JMS\DiExtraBundle\Annotation as DI;
+use Briareos\AjaxBundle\Ajax;
 
 class PlayController extends Controller
 {
 
     /**
-     * @DI\Inject("twig")
+     * @DI\Inject("templating.ajax")
      *
-     * @var \Twig_Environment
+     * @var \Briareos\AjaxBundle\Twig\AjaxEngine
      */
-    private $twig;
-
+    private $ajax;
 
     /**
      * @Route("/play", name="play")
@@ -24,20 +23,18 @@ class PlayController extends Controller
     public function playAction()
     {
         $user = $this->getUser();
+        /** @var $nodejsAuthenticator \Briareos\NodejsBundle\Nodejs\Authenticator */
+        $nodejsAuthenticator = $this->get('nodejs.authenticator');
+        $nodejsAuthenticator->authenticate($this->getRequest()->getSession(), $user);
         $templateFile = 'PageBundle:Play:play_page.html.twig';
         $templateParams = array(
             'user' => $user,
+            'nodejs_auth_token' => $nodejsAuthenticator->generateAuthToken($this->getRequest()->getSession(), $user),
         );
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $data = array();
-            $template = $this->twig->loadTemplate($templateFile);
-            $data['page'] = array(
-                'title' => $template->renderBlock('title', $templateParams),
-                'body' => $template->renderBlock('body', $templateParams),
-            );
-            return new Response(json_encode($data), 200, array(
-                'Content-Type' => 'application/json',
-            ));
+            $commands = array();
+            $commands[] = new Ajax\Command\Page($this->ajax->renderBlock($templateFile, 'title', $templateParams), $this->ajax->renderBlock($templateFile, 'body', $templateParams));
+            return new Ajax\Response($commands);
         } else {
             return $this->render($templateFile, $templateParams);
         }

@@ -1,22 +1,104 @@
 <!DOCTYPE html>
 <html>
 <head>
-    {# Required on all pages #}
-    <meta charset="UTF-8">
-    <title>{{ 'page.front.title'|trans }}</title>
+    <meta charset="utf-8">
+    <title>{{ block('title') }}</title>
 
     {# jQuery #}
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    {{ block('javascripts') }}
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
 
+    {% if 0 %}
+    {# Used JavaScripts #}
+    {% javascripts
+    'bootstrap/js/bootstrap-button.js'
+    'bootstrap/js/bootstrap-dropdown.js'
+    'bootstrap/js/bootstrap-modal.js'
+    'bootstrap/js/bootstrap-typeahead.js'
+    filter='?yui_js'
+    output='js-compiled/bootstrap.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {% else %}
+    <script src="{{ asset('bootstrap/js/bootstrap-button.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-dropdown.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-modal.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-typeahead.js') }}"></script>
+    {% endif %}
+    {% if 0 %}
+    {% javascripts
+    '@BriareosAjaxBundle/Resources/public/js/jquery.form.js'
+    '@BriareosAjaxBundle/Resources/public/js/jquery.history.js'
+    '@BriareosAjaxBundle/Resources/public/js/ajax.js'
+    filter='?yui_js'
+    output = 'js-compiled/ajax.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {% else %}
+    <script src="{{ asset('bundles/briareosajax/js/jquery.form.js') }}"></script>
+    <script src="{{ asset('bundles/briareosajax/js/jquery.history.js') }}"></script>
+    <script src="{{ asset('bundles/briareosajax/js/ajax.js') }}"></script>
+    {% endif %}
     {# Twitter bootstrap #}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="//symfony.servehttp.com:1337/bootstrap/less/bootstrap.less">
     <link rel="stylesheet" href="//symfony.servehttp.com:1337/bootstrap/less/responsive.less">
-    {{ block('stylesheets') }}
+
+    {# Page style #}
+
+    <link rel="stylesheet" href="//symfony.servehttp.com:1337/less/style.less">
+
+    {# Nodejs and chat #}
+    {% if 0 %}
+    {% javascripts
+    '@BriareosNodejsBundle/Resources/public/js/nodejs.js'
+    '@BriareosChatBundle/Resources/public/js/chat.js'
+    filter = '?yui_js'
+    output = 'js-compiled/chat.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {% else %}
+    <script src="{{ asset('bundles/briareosnodejs/js/nodejs.js') }}"></script>
+    <script src="{{ asset('bundles/briareoschat/js/chat.js') }}"></script>
+    {% endif %}
+    <script type="text/javascript" src="//{{ nodejs.host }}:{{ nodejs.port }}{{ nodejs.resource }}/socket.io.js"></script>
+    <link rel="stylesheet" href="{{ asset('bundles/briareoschat/css/chat.css') }}">
+    <script type="text/javascript">
+        {% import 'BriareosChatBundle:Chat:chat_template.html.twig' as chat %}
+        $(document).ready(function () {
+            window.NodejsSettings = {
+                secure:false,
+                host:'{{ nodejs.host }}',
+                port:{{ nodejs.port }},
+                resource:'{{ nodejs.resource }}',
+                connectTimeout:{{ nodejs.connect_timeout }},
+                contentTokens:''
+            };
+
+            window.ChatSettings = {
+                container:'body',
+                tpl:{
+                    status:'{{ chat.status() }}',
+                    user:'{{ chat.user() }}',
+                    window:'{{ chat.window() }}',
+                    message:'{{ chat.message() }}',
+                    messages:'{{ chat.messages() }}',
+                    chat:'{{ chat.chat() }}'
+                },
+                url:{
+                    cache:'{{ path('briareos_chat_cache') }}',
+                    activate:'{{ path('briareos_chat_activate') }}',
+                    close:'{{ path('briareos_chat_close') }}',
+                    send:'{{ path('briareos_chat_send') }}',
+                    ping:'{{ path('briareos_chat_ping') }}'
+                }
+            };
+        });
+    </script>
 
 </head>
 <body>
-{% block body %}{% endblock %}
+<div id="body">
+    {{ block('body') }}
+</div>
 </body>
 </html>

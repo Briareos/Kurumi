@@ -60,7 +60,7 @@ class LoadAclRoles extends AbstractFixture implements OrderedFixtureInterface, C
      */
     function getOrder()
     {
-        return 0;
+        return 1;
     }
 
 

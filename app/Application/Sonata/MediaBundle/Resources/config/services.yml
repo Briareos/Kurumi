@@ -1,3 +1,6 @@
+parameters:
+    sonata.media.provider.image.class: Application\Sonata\MediaBundle\Provider\ImageProvider
+
 services:
     application_sonata_media_bundle.permission_container:
         class: Application\Sonata\MediaBundle\Admin\PermissionContainer

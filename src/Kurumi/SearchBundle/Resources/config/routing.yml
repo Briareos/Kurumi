@@ -1,0 +1,3 @@
+SearchBundle_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: SearchBundle:Default:index }

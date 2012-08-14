@@ -5,6 +5,7 @@ namespace Kurumi\PageBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Briareos\AjaxBundle\Ajax;
 
 class PaymentController extends Controller
 {
@@ -21,13 +22,9 @@ class PaymentController extends Controller
         $defaultPayment = 'fortumo';
 
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $data = array();
-            $data['modal'] = array(
-                'body' => $this->renderView('UserBundle:Payment:payment.html.twig', array()),
-            );
-            return new Response(json_encode($data), 200, array(
-                'Content-Type' => 'application/json',
-            ));
+            $commands = array();
+            $commands[] = new Ajax\Command\Modal($this->renderView('UserBundle:Payment:payment.html.twig', array()));
+            return new Ajax\Response($commands);
         }
     }
 

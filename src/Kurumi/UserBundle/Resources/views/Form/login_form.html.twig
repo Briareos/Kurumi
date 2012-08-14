@@ -1,5 +1,10 @@
-<form id="user_login" action="{{ path('login_check') }}" method="post" class="login-form" data-ajax>
+<form novalidate id="user_login" action="{{ path('login_check') }}" method="post" class="login-form" data-ajax>
     <div class="row-fluid">
+        {% if login_error is not empty %}
+        <p class="alert alert-error">
+            {{ login_error.message }}
+        </p>
+        {% endif %}
         <div class="span5">
             <label for="login-email" class="control-label">{{ 'form.login.email'|trans }}</label>
             <input tabindex="1" id="login-email" type="email" class="input-block-level"  name="email" required="required">

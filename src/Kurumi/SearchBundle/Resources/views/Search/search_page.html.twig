@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Search people near you{% endblock %}
+
+{% block body %}
+
+{% include 'PageBundle:Segment:navbar_top.html.twig' with {'active':'search'} %}
+{% include '::chat.html.twig' with {'nodejs_auth_token':nodejs_auth_token} %}
+
+<div class="main container">
+    <div class="well">
+        {% include 'SearchBundle:Form:search_people_form.html.twig' with {'form':form}%}
+    </div>
+
+
+    Where is everyone?
+</div>
+
+{% endblock %}

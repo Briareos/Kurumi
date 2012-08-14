@@ -13,13 +13,6 @@ use Kurumi\UserBundle\Entity\City;
 
 class RegisterFormType extends AbstractType
 {
-    private $cityToCityNameTransformer;
-
-    public function __construct($cityToCityNameTransformer)
-    {
-        $this->cityToCityNameTransformer = $cityToCityNameTransformer;
-    }
-
     /**
      * Returns the name of this type.
      *
@@ -38,7 +31,7 @@ class RegisterFormType extends AbstractType
         ));
         $builder->add('name', 'text', array(
         ));
-        $builder->add('profile', new RegisterProfileType($this->cityToCityNameTransformer), array(
+        $builder->add('profile', new RegisterProfileType(), array(
         ));
         $builder->add('timezone', 'detect_timezone', array(
         ));

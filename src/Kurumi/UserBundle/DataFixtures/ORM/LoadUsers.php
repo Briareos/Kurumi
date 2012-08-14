@@ -65,7 +65,7 @@ class LoadUsers extends AbstractFixture implements OrderedFixtureInterface, Cont
      */
     function getOrder()
     {
-        return 1;
+        return 2;
     }
 
 

@@ -4,38 +4,38 @@ namespace Kurumi\PageBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Briareos\AjaxBundle\Ajax\AjaxResponse;
 use JMS\DiExtraBundle\Annotation as DI;
-use Briareos\AjaxBundle\Ajax\Command\AjaxCommandPage;
-use Briareos\AjaxBundle\Ajax\Command\AjaxCommandState;
+use Briareos\AjaxBundle\Ajax;
 
 class HomeController extends Controller
 {
 
     /**
-     * @DI\Inject("twig")
+     * @DI\Inject("templating.ajax")
      *
-     * @var \Twig_Environment
+     * @var \Briareos\AjaxBundle\Twig\AjaxEngine
      */
-    private $twig;
+    private $ajax;
 
     /**
      * @Route("/home", name="home_page")
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function homeAction()
     {
         $user = $this->getUser();
+        /** @var $nodejsAuthenticator \Briareos\NodejsBundle\Nodejs\Authenticator */
+        $nodejsAuthenticator = $this->get('nodejs.authenticator');
+        $nodejsAuthenticator->authenticate($this->getRequest()->getSession(), $user);
         $templateFile = 'PageBundle:Home:home_page.html.twig';
         $templateParams = array(
             'user' => $user,
+            'nodejs_auth_token' => $nodejsAuthenticator->generateAuthToken($this->getRequest()->getSession(), $user),
         );
+
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $template = $this->twig->loadTemplate($templateFile);
-            $commands[] = new AjaxCommandPage($template->renderBlock('title', $templateParams), $template->renderBlock('body', $templateParams));
-            $commands[] = new AjaxCommandState(array('uri' => $this->get('router')->generate('home_page')));
-            return new AjaxResponse($commands);
+            $commands = array();
+            $commands[] = new Ajax\Command\Page($this->ajax->renderBlock($templateFile, 'title', $templateParams), $this->ajax->renderBlock($templateFile, 'body', $templateParams));
+            return new Ajax\Response($commands);
         } else {
             return $this->render($templateFile, $templateParams);
         }

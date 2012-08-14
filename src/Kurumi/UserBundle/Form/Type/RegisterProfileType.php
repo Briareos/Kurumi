@@ -11,13 +11,6 @@ use Kurumi\UserBundle\Form\Type\CityType;
 
 class RegisterProfileType extends AbstractType
 {
-    private $cityToCityNameTransformer;
-
-    public function __construct($cityToCityNameTransformer)
-    {
-        $this->cityToCityNameTransformer = $cityToCityNameTransformer;
-    }
-
     /**
      * Returns the name of this type.
      *
@@ -30,17 +23,10 @@ class RegisterProfileType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('birthday', 'birthday', array(
-            'empty_value' => array(
-                'year' => 'Year',
-                'month' => 'Month',
-                'day' => 'Day'
-            ),
-            'years' => range(date('Y'), date('Y') - 100),
-        ));
+        $builder->add('birthday', 'birthday');
         $builder->add('gender', 'gender', array(
         ));
-        $builder->add('city', new CityType($this->cityToCityNameTransformer), array(
+        $builder->add('city', 'city', array(
         ));
     }
 

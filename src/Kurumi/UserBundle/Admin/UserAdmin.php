@@ -9,8 +9,10 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\EntityRepository;
 use Kurumi\UserBundle\Entity\User;
 use Kurumi\UserBundle\Entity\UserManager;
+use Briareos\AclBundle\Entity\AclRole;
 
 class UserAdmin extends Admin
 {
@@ -78,6 +80,13 @@ class UserAdmin extends Admin
             'property' => 'name',
             'expanded' => true,
             'required' => false,
+            'query_builder' => function(EntityRepository $er)
+            {
+                $qb = $er->createQueryBuilder('r');
+                // Exclude built-in roles.
+                $qb->where($qb->expr()->neq('r.internalRole', AclRole::AUTHENTICATED_USER), $qb->expr()->neq('r.internalRole', AclRole::ANONYMOUS_USER));
+                return $qb;
+            }
         ))
             ->end()
             ->with("Profile")

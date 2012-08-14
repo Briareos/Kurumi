@@ -55,6 +55,9 @@ class ProfileAdmin extends Admin
             'required' => false,
             'empty_value' => $this->trans('admin.gender.unspecified'),
         ))
+            ->add('city', 'city', array(
+            'required' => false,
+        ))
             ->add('user', 'sonata_type_model', array(
         ))
             ->end();

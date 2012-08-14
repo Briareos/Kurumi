@@ -82,7 +82,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     /**
      * @var Profile
      *
-     * @ORM\OneToOne(targetEntity="Profile", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="Profile", mappedBy="user", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $profile;
 

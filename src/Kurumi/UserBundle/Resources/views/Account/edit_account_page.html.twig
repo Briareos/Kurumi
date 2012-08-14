@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Edit profile - {{ user.name }}{% endblock %}
+
+{% block body %}
+
+{% include 'PageBundle:Segment:navbar_top.html.twig' with {'active':'edit_profile'} %}
+{% include '::chat.html.twig' with {'nodejs_auth_token':nodejs_auth_token} %}
+
+<div id="edit-account" class="main container">
+        <div class="page-header">
+            <h1>Settings</h1>
+        </div>
+    <div class="row">
+        <div class="span3">
+            <ul class="nav nav-tabs nav-stacked">
+                <li class="active"><a href="#"><i class="icon-chevron-right"></i>Overview</a></li>
+                <li><a href="#"><i class="icon-chevron-right"></i>Edit name</a></li>
+                <li><a href="#"><i class="icon-chevron-right"></i>Change password</a></li>
+                <li><a href="#"><i class="icon-chevron-right"></i>Change profile picture</a></li>
+            </ul>
+        </div>
+        <div class="span9">
+
+            {% include 'PageBundle::flash_messages.html.twig' with {'messages':app.session.flashbag.all()} %}
+
+            <fieldset class="form-horizontal">
+                <legend>Account info</legend>
+                {% include 'UserBundle:Form:edit_user_form.html.twig' with {'form':edit_user_form} %}
+            </fieldset>
+
+            <fieldset class="form-horizontal">
+                <legend>Profile info</legend>
+                {% include 'UserBundle:Form:edit_profile_form.html.twig' with {'form':edit_profile_form} %}
+            </fieldset>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

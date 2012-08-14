@@ -5,13 +5,13 @@ namespace Kurumi\UserBundle\Form\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Kurumi\UserBundle\Form\DataTransformer\CityToCityNameTransformer;
+use Symfony\Component\Form\DataTransformerInterface;
 
 class CityType extends AbstractType
 {
     private $cityToCityNameTransformer;
 
-    public function __construct($cityToCityNameTransformer)
+    public function __construct(DataTransformerInterface $cityToCityNameTransformer)
     {
         $this->cityToCityNameTransformer = $cityToCityNameTransformer;
     }

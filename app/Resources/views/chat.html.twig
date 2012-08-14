@@ -1,0 +1,39 @@
+<script type="text/javascript">
+    // <!--
+    $(document).ready(function () {
+        {% if nodejs_auth_token is not empty %}
+        if (typeof window.LocalNodejs === 'undefined') {
+            var LocalNodejs = new Nodejs('{{ nodejs_auth_token }}', window.NodejsSettings);
+            window.LocalNodejs = LocalNodejs;
+            if (typeof window.LocalChat === 'undefined') {
+                LocalNodejs.connectionSetupHandlers.chat = {
+                    connect:function () {
+                        var LocalChat = new Chat(window.LocalNodejs, window.ChatSettings);
+                        window.LocalChat = LocalChat;
+                        LocalChat.initialize();
+                    }
+                };
+            }
+            LocalNodejs.connect();
+        }
+        {% else %}
+        if (typeof window.LocalChat !== 'undefined') {
+            window.LocalChat.unload();
+            try {
+                delete window.LocalChat;
+            } catch (e) {
+                window.LocalChat = undefined;
+            }
+        }
+        if (typeof window.LocalNodejs !== 'undefined') {
+            window.LocalNodejs.disconnect();
+            try {
+                delete window.LocalNodejs;
+            } catch (e) {
+                window.LocalNodejs = undefined;
+            }
+        }
+        {% endif %}
+    });
+    // -->
+</script>
