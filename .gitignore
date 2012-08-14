@@ -6,6 +6,7 @@ certs/
 
 webroot/bundles/
 webroot/uploads/
+webroot/media/
 webroot/bootstrap/
 webroot/css-compiled/
 webroot/js-compiled/
