@@ -1,0 +1,7 @@
+<ul class="nav nav-tabs nav-stacked">
+    <li class="{{ active == 'account_overview' ? 'active' : '' }}"><a href="{{ path('account_overview') }}"><i class="icon-chevron-right pull-right"></i>Account overview</a></li>
+    <li class="{{ active == 'account_edit_name' ? 'active' : '' }}"><a href="#"><i class="icon-chevron-right pull-right"></i>Change name</a></li>
+    <li class="{{ active == 'account_edit_name' ? 'active' : '' }}"><a href="#"><i class="icon-chevron-right pull-right"></i>Change e-mail address</a></li>
+    <li class="{{ active == 'account_edit_password' ? 'active' : '' }}"><a href="#"><i class="icon-chevron-right pull-right"></i>{{ user.password is empty ? 'Set your password'|trans : 'Update your password'|trans }}</a></li>
+    <li class="{{ active == 'account_edit_picture' ? 'active' : '' }}"><a href="#"><i class="icon-chevron-right pull-right"></i>{{ user.picture is empty ? 'Set your profile picture' : 'Change profile picture'|trans }}</a></li>
+</ul>

@@ -28,7 +28,6 @@ class PictureController extends Controller
     private $session;
 
     /**
-     * @Route("/upload-picture", name="upload_user_picture")
      */
     public function uploadPictureAction()
     {

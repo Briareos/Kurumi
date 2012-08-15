@@ -1,0 +1,33 @@
+{% extends 'UserBundle:Account:edit_account_page.html.twig' %}
+
+{% block content %}
+<div class="row">
+    <div class="span3">
+        {% include 'UserBundle:Account:edit_account_sidebar.html.twig' with {'active':'account_overview'} %}
+    </div>
+    <div class="span9">
+
+        {% include 'PageBundle::flash_messages.html.twig' with {'messages':app.session.flashbag.all()} %}
+
+        <fieldset>
+            <legend>Your account info</legend>
+            <dl>
+                <dt>Name <a href="#" class="label label-info" data-ajax>Edit</a></dt>
+                <dd>{{ user.name }}</dd>
+                <dt>E-mail address <a href="#" class="label label-info" data-ajax>Edit</a></dt>
+                <dd>{{ user.email }}</dd>
+                <dt>Password <a href="#" class="label label-info" data-ajax>Edit</a></dt>
+                <dd>{% if user.password is empty %}<em>Not set</em>{% else %}**********{% endif %}</dd>
+            </dl>
+        </fieldset>
+        <fieldset>
+            <legend>Your profile picture <a href="#" class="label label-info" data-ajax>Edit</a></legend>
+            {% if user.picture is empty%}
+            <em>Not set</em>
+            {% else %}
+            {% media user.picture, 'medium' with {'title':''} %}
+            {% endif %}
+        </fieldset>
+    </div>
+</div>
+{% endblock %}

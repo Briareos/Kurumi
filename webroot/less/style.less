@@ -160,3 +160,30 @@
 .alert .alert-messages {
     margin: 0 0 0 15px;
 }
+
+#edit-account {
+    .nav.nav-tabs.nav-stacked li {
+        a {
+            .icon-chevron-right {
+                float: right;
+                margin-top: 2px;
+                margin-right: -6px;
+                .opacity(25);
+            }
+            &:hover .icon-chevron-right {
+                .opacity(50);
+            }
+        }
+        &.active a {
+            background: @linkColor;
+            color: @white;
+            .icon-chevron-right {
+                .opacity(75);
+            }
+            &:hover .icon-chevron-right {
+                .opacity(50);
+            }
+        }
+    }
+}
+
