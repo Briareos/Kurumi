@@ -5,10 +5,9 @@
 {% block body %}
 
     {% include 'PageBundle:Segment:navbar_top.html.twig' with {'active':'home'} %}
-    {% include '::chat.html.twig' with {'nodejs_auth_token':nodejs_auth_token} %}
 
     <div class="main container">
-        <a href="{{ path('upload_user_picture') }}" data-ajax>Set your photo!</a>
+        <a href="{{ path('account_edit_picture', {'modal':1}) }}" data-ajax>Set your photo!</a>
 
         <div class="row">
             <div class="span6">

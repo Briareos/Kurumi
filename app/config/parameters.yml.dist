@@ -1,15 +1,29 @@
 parameters:
-    database_driver:   pdo_mysql
-    database_host:     localhost
-    database_port:     ~
-    database_name:     symfony
-    database_user:     root
+    database_driver:    pdo_mysql
+    database_host:      localhost
+    database_port:      ~
+    database_name:      symfony
+    database_user:      root
     database_password:
 
-    mailer_transport:  smtp
-    mailer_host:       localhost
-    mailer_user:       ~
-    mailer_password:   ~
+    mailer_transport:   smtp
+    mailer_host:        localhost
+    mailer_user:        ~
+    mailer_password:    ~
 
-    locale:            en
-    secret:            CHANGE_THIS
+    locale:             en
+    secret:             ~
+
+    main_firewall_name: main
+
+    yahoo_api_key:      ~
+
+    rabbit_mq_host:     localhost
+    rabbit_mq_port:     5672
+    rabbit_mq_user:     guest
+    rabbit_mq_password: guest
+    rabbit_mq_vhost:    /
+
+    unknown_avatar_gallery_id:  ~
+    male_avatar_gallery_id:     ~
+    female_avatar_gallery_id:   ~

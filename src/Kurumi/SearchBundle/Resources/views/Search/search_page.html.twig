@@ -5,15 +5,27 @@
 {% block body %}
 
 {% include 'PageBundle:Segment:navbar_top.html.twig' with {'active':'search'} %}
-{% include '::chat.html.twig' with {'nodejs_auth_token':nodejs_auth_token} %}
 
 <div class="main container">
-    <div class="well">
-        {% include 'SearchBundle:Form:search_people_form.html.twig' with {'form':form}%}
+
+    {% include 'PageBundle::flash_messages.html.twig' with {'messages':app.session.flashbag.all()} %}
+
+    <div class="row-fluid">
+        <div class="span12 well well-small">
+            {% include 'SearchBundle:Form:search_people_form.html.twig' with {'form':form}%}
+        </div>
     </div>
 
-
+    {% if results %}
+    {% for result in results %}
+    <div>
+    {{ result.user.name }}
+    </div>
+    {% endfor %}
+    {% else %}
     Where is everyone?
+    {% endif %}
+Total {{ total_results }}
 </div>
 
 {% endblock %}

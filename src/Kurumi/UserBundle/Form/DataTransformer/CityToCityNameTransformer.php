@@ -3,6 +3,7 @@
 namespace Kurumi\UserBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
+use Kurumi\UserBundle\City\CityFinderInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Doctrine\ORM\EntityManager;
@@ -14,13 +15,13 @@ class CityToCityNameTransformer implements DataTransformerInterface
 
     private $repository;
 
-    private $appid;
+    private $cityFinder;
 
-    public function __construct(EntityManager $em, $cityClass, $appid)
+    public function __construct(EntityManager $em, $cityClass, CityFinderInterface $cityFinder)
     {
         $this->cityClass = $cityClass;
         $this->repository = $em->getRepository($this->cityClass);
-        $this->appid = $appid;
+        $this->cityFinder = $cityFinder;
     }
 
     /**
@@ -100,36 +101,12 @@ class CityToCityNameTransformer implements DataTransformerInterface
         }
 
         try {
-            $callback = sprintf('http://where.yahooapis.com/geocode?flags=PG&appid=%s&location=%s', urlencode($this->appid), urlencode($value));
-            $ch = curl_init($callback);
-            curl_setopt_array($ch, array(
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_CONNECTTIMEOUT => 2,
-                CURLOPT_TIMEOUT => 2,
-            ));
-            $location = unserialize(curl_exec($ch));
-            if (!isset($location['ResultSet']['Result'][0])) {
-                return null;
-            }
-            $result = $location['ResultSet']['Result'][0];
-
             /** @var $city \Kurumi\UserBundle\Entity\City */
-            $city = new $this->cityClass();
-            if ($result['quality'] < 39) {
+            $city = $this->cityFinder->find($this->cityClass, $value);
+            if (!$city) {
                 return null;
             }
-            $city->setLatitude($result['latitude']);
-            $city->setLongitude($result['longitude']);
-            $city->setCountryCode($result['level0code']);
-            $city->setCountryName($result['level0']);
-            if ($result['level4'] !== '') {
-                $city->setName($result['level4']);
-            } else {
-                $city->setName($result['level3']);
-            }
-            if ($result['level0code'] === 'US' || $result['level0code'] === 'CA') {
-                $city->setState($result['level1']);
-            }
+
             if ($existingCity = $this->repository->findOneBy(array(
                 'latitude' => $city->getLatitude(),
                 'longitude' => $city->getLongitude(),
@@ -140,7 +117,6 @@ class CityToCityNameTransformer implements DataTransformerInterface
             return $city;
         } catch (\Exception $e) {
             throw $e;
-            return null;
         }
     }
 

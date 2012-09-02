@@ -1,9 +1,13 @@
 {% for type, type_messages in messages %}
-<div class="alert alert-{{ type }}">
+<div class="flash-messages alert alert-{{ type }}">
+    {% if type_messages|length > 1 %}
     <ul class="alert-messages">
         {% for message in type_messages %}
-        <li>{{ message }}</li>
+        <li>{{ message|trans }}</li>
         {% endfor %}
     </ul>
+    {% else %}
+    {{ type_messages.0|trans }}
+    {% endif %}
 </div>
 {% endfor %}

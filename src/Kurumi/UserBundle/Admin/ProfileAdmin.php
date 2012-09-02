@@ -34,6 +34,11 @@ class ProfileAdmin extends Admin
     public function configureFormFields(FormMapper $formMapper)
     {
         $profile = $this->getSubject();
+        $userQuery = $this
+            ->getModelManager()
+            ->getEntityManager($this->getClass())
+            ->createQuery('Select p From UserBundle:Profile p Where p.user Is Null Order By p.id Asc');
+
         $formMapper
             ->with("General")
             ->add('firstName', null, array(
@@ -42,14 +47,8 @@ class ProfileAdmin extends Admin
             ->add('lastName', null, array(
             'required' => false,
         ))
-            ->add('birthday', null, array(
+            ->add('birthday', 'birthday', array(
             'required' => false,
-            'empty_value' => array(
-                'year' => '-',
-                'month' => '-',
-                'day' => '-'
-            ),
-            'years' => range(date('Y'), date('Y') - 100),
         ))
             ->add('gender', 'gender', array(
             'required' => false,

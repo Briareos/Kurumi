@@ -9,6 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Kurumi\UserBundle\Entity\UserManager;
 use Kurumi\UserBundle\Entity\User;
+use Faker;
 
 class LoadUsers extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
@@ -35,13 +36,18 @@ class LoadUsers extends AbstractFixture implements OrderedFixtureInterface, Cont
         $admin->setName("Fox");
         $admin->addAclRole($administratorRole);
         $manager->persist($admin);
+        $this->addReference('user_admin', $admin);
 
-        $user1 = new User();
-        $user1->setEmail("gmefox@live.com");
-        $user1->setPlainPassword("metalfox");
-        $user1->setTimezone('Europe/Belgrade');
-        $user1->setName("Gray");
-        $manager->persist($user1);
+        for ($i = 1; $i <= 5000; $i++) {
+            $faker = Faker\Factory::create();
+            $user = new User();
+            $user->setEmail(rand(1, 9999) . $faker->email);
+            $user->setPlainPassword("metalfox");
+            $user->setTimezone('Europe/Belgrade');
+            $user->setName($faker->userName);
+            $manager->persist($user);
+            $this->addReference(sprintf('user_%s', $i), $user);
+        }
 
         $manager->flush();
     }

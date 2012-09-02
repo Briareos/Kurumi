@@ -53,7 +53,7 @@ class LoadGalleryHasMedias extends AbstractFixture implements OrderedFixtureInte
      */
     function getOrder()
     {
-        return 5;
+        return 7;
     }
 
 }

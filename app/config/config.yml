@@ -85,6 +85,12 @@ doctrine:
         dql:
             string_functions:
                 FindInSet: DoctrineExtensions\Query\Mysql\FindInSet
+            numeric_functions:
+                DEGREES: DoctrineExtensions\Query\Mysql\Degrees
+                ACOS: DoctrineExtensions\Query\Mysql\Acos
+                SIN: DoctrineExtensions\Query\Mysql\Sin
+                RADIANS: DoctrineExtensions\Query\Mysql\Radians
+                COS: DoctrineExtensions\Query\Mysql\Cos
         resolve_target_entities:
             Briareos\NodejsBundle\Entity\NodejsSubjectInterface: Kurumi\UserBundle\Entity\User
             Briareos\ChatBundle\Entity\ChatSubjectInterface: Kurumi\UserBundle\Entity\User
@@ -326,3 +332,30 @@ sonata_intl:
         # default timezone used as fallback
         default: Europe/Belgrade
 
+bazinga_geocoder:
+    providers:
+        yahoo:
+            api_key: %yahoo_api_key%
+            locale:  %locale%
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:      'localhost'
+            port:      5672
+            user:      'guest'
+            password:  'guest'
+            vhost:     '/'
+    producers:
+    consumers:
+
+knp_paginator:
+    page_range: 5                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: MopaBootstrapBundle:Pagination:sliding.html.twig     # sliding pagination controls template
+        sortable: MopaBootstrapBundle:Pagination:sortable_link.html.twig # sort link template

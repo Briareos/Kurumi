@@ -40,6 +40,8 @@ class AppKernel extends Kernel
             new Bazinga\Bundle\GeocoderBundle\BazingaGeocoderBundle(),
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
+            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 
             new Kurumi\UserBundle\UserBundle(),
             new Kurumi\PageBundle\PageBundle(),

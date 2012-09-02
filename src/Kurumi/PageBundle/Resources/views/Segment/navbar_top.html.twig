@@ -1,4 +1,4 @@
-<div class="navbar navbar-fixed-top">
+<div class="navbar navbar-static-top">
     <div class="navbar-inner">
         <div class="container">
             <a class="brand">{{ site_name }}</a>
@@ -10,19 +10,28 @@
             </ul>
 
             <div class="btn-group pull-right">
-                <a class="btn dropdown-toggle" data-toggle="dropdown"><i
-                        class="icon-user"></i> {{ user.name }} <span class="caret"></span></a>
+                <a class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{ path('edit_account') }}" data-ajax>{% media user_picture(user), 'thumbnail' with {'title':''} %} Edit profile</a></li>
-                    <li><a href="#">Settings</a></li>
+                    <li id="account-edit">
+                        <a href="{{ path('account_overview') }}" data-ajax>
+                            {% media user_picture(user), 'thumbnail' with {'title':'','class':'user-picture'} %}
+                            <div class="summary">
+                                <div class="user-name">{{ user.name }}</div>
+                                <small class="link">Account settings</small>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="" data-ajax>Privacy settings</a></li>
+                    <li><a href="" data-ajax>Notifications</a></li>
                     <li class="divider"></li>
                     <li><a href="{{ logout_url(main_firewall_name) }}" data-ajax>Log out</a></li>
                 </ul>
             </div>
             <div class="divider-vertical pull-right"></div>
-            <p class="navbar-text pull-right">
-                <a href="{{ path('payment') }}" data-ajax><span class="badge badge-info">0</span> credits</a>
-            </p>
+            <div class=" pull-right">
+                <a id="buy-credits-top" class=" btn btn-mini" href="{{ path('payment') }}" data-ajax><span class="badge badge-info">0</span> credits</a>
+            </div>
         </div>
     </div>
 </div>

@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Edit profile - {{ user.name }}{% endblock %}
+
+{% block body %}
+
+{% include 'PageBundle:Segment:navbar_top.html.twig' with {'active':'edit_profile'} %}
+
+<div id="edit-account" class="main container">
+    <div class="page-header">
+        <h1>Account settings</h1>
+    </div>
+
+    <div data-pjax-container="edit_account">
+        {{ block('edit_account') }}
+    </div>
+
+</div>
+
+{% endblock %}

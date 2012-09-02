@@ -1,6 +1,28 @@
-<form id="{{ form.vars.id }}" method="get" {{ form_enctype(form) }}>
-    {{ form_row(form.gender) }}
-    {{ form_row(form.city) }}
+<form id="{{ form.vars.id }}" method="post" {{ form_enctype(form) }} action="{{ path('search') }}" data-ajax>
 
+    <div class="row-fluid">
+        <div class="span3">
+            {{ form_row(form.lookingFor, {'attr':{'class':'input-medium'}}) }}
+        </div>
+        <div class="span3">
+            {{ form_row(form.lookingInCity, {'attr':{'class':'input-medium'}}) }}
+        </div>
+        <div class="span3">
+            {{ form_label(form.lookingAgedFrom, "Aged between:") }}
+            <div>
+            {{ form_widget(form.lookingAgedFrom, {'attr':{'class':'input-mini'}}) }}
+            &
+            {{ form_widget(form.lookingAgedTo, {'attr':{'class':'input-mini'}}) }}
+            </div>
+            <div>
+                {{ form_errors(form.lookingAgedFrom) }}
+                {{ form_errors(form.lookingAgedTo) }}
+            </div>
+        </div>
+        <div class="span3">
+            <label>&nbsp;</label>
+            <button type="submit" class="btn btn-primary input-block-level">Apply</button>
+        </div>
+    </div>
     {{ form_rest(form) }}
 </form>

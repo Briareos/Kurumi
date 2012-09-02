@@ -22,8 +22,8 @@ class PaymentController extends Controller
         $defaultPayment = 'fortumo';
 
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $commands = array();
-            $commands[] = new Ajax\Command\Modal($this->renderView('UserBundle:Payment:payment.html.twig', array()));
+            $commands = new Ajax\CommandContainer();
+            $commands->add(new Ajax\Command\Modal($this->renderView('UserBundle:Payment:payment.html.twig', array())));
             return new Ajax\Response($commands);
         }
     }

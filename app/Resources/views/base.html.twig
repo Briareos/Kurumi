@@ -5,6 +5,16 @@
     <title>{{ block('title') }}</title>
 
     {# jQuery #}
+
+
+
+
+
+
+
+
+
+
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
 
     {% if 0 %}
@@ -39,11 +49,30 @@
     <script src="{{ asset('bundles/briareosajax/js/ajax.js') }}"></script>
     {% endif %}
     {# Twitter bootstrap #}
+
+
+
+
+
+
+
+
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="//symfony.servehttp.com:1337/bootstrap/less/bootstrap.less">
     <link rel="stylesheet" href="//symfony.servehttp.com:1337/bootstrap/less/responsive.less">
 
     {# Page style #}
+
+
+
+
+
+
+
+
+
 
     <link rel="stylesheet" href="//symfony.servehttp.com:1337/less/style.less">
 
@@ -94,10 +123,18 @@
             };
         });
     </script>
+    <script src="{{ asset('js/core.js') }}"></script>
+    <script>
+        $(function () {
+            $.each({{ javascript_settings()|json_encode|raw }}, function (index, eventSettings) {
+                window.setSettings(eventSettings.name, eventSettings.settings, $('body'));
+            });
+        });
+    </script>
 
 </head>
 <body>
-<div id="body">
+<div data-pjax-container="body">
     {{ block('body') }}
 </div>
 </body>

@@ -10,9 +10,9 @@
     "require":{
         "php":">=5.3.2",
         "symfony/symfony":"2.1.x-dev",
-        "doctrine/common":"2.3.x-dev",
-        "doctrine/orm":"2.3.x-dev",
-        "doctrine/dbal":"2.3.x-dev",
+        "doctrine/common":"2.2.2",
+        "doctrine/orm":"2.2.3",
+        "doctrine/dbal":"2.2",
         "doctrine/doctrine-bundle":"1.0.x-dev",
         "doctrine/doctrine-fixtures-bundle":"dev-master",
         "twig/extensions":"dev-master",
@@ -20,19 +20,18 @@
         "swiftmailer/swiftmailer":"4.2.x-dev",
         "symfony/swiftmailer-bundle":"2.1.x-dev",
         "symfony/monolog-bundle":"2.1.x-dev",
-        "sensio/distribution-bundle":"dev-master",
+        "sensio/distribution-bundle":"2.1.x-dev",
         "sensio/framework-extra-bundle":"2.1.x-dev",
         "sensio/generator-bundle":"2.1.x-dev",
         "jms/security-extra-bundle":"1.1.0",
-        "jms/di-extra-bundle":"dev-master",
+        "jms/di-extra-bundle":"1.1.x-dev",
         "lunetics/locale-bundle":"dev-2.1-compat",
-        "knplabs/knp-zend-cache-bundle":"0.1",
         "friendsofsymfony/facebook-bundle":"dev-master",
         "facebook/php-sdk":"dev-master",
         "stof/doctrine-extensions-bundle":"dev-master",
         "sonata-project/admin-bundle":"dev-master",
         "sonata-project/doctrine-orm-admin-bundle":"dev-master",
-        "sonata-project/media-bundle":"dev-master",
+        "sonata-project/media-bundle":"dev-fixes",
         "sonata-project/intl-bundle":"dev-master",
         "sonata-project/easy-extends-bundle":"dev-master",
         "knplabs/gaufrette":"dev-master",
@@ -53,40 +52,15 @@
         "friendsofsymfony/user-bundle":"dev-master",
         "liip/imagine-bundle":"dev-master",
         "imagine/imagine":"v0.2.8",
-        "EHER/PHPUnit":"1.6"
+        "EHER/PHPUnit":"1.6",
+        "oldsound/rabbitmq-bundle":"dev-master",
+        "fzaninotto/faker":"v1.0.0",
+        "zendframework/zend-paginator":"2.0.*"
     },
     "repositories":[
         {
-            "type":"package",
-            "package":{
-                "name":"zendframework/zend-cache",
-                "version":"2.0.0-beta1",
-                "dist":{
-                    "url":"http://packages.zendframework.com/get/Zend_Cache-2.0.0beta1.tgz",
-                    "type":"pear"
-                },
-                "autoload":{
-                    "psr-0":{
-                        "Zend\\Cache":"php/"
-                    }
-                }
-            }
-        },
-        {
-            "type":"package",
-            "package":{
-                "name":"zendframework/zend-filter",
-                "version":"2.0.0-beta1",
-                "dist":{
-                    "url":"http://packages.zendframework.com/get/Zend_Filter-2.0.0beta1.tgz",
-                    "type":"pear"
-                },
-                "autoload":{
-                    "psr-0":{
-                        "Zend\\Filter":"php/"
-                    }
-                }
-            }
+            "type":"composer",
+            "url":"http://packages.zendframework.com/"
         },
         {
             "type":"package",
@@ -190,6 +164,24 @@
                 },
                 "source":{
                     "url":"git://github.com/Briareos/doctrine-spatial.git",
+                    "type":"git",
+                    "reference":"master"
+                }
+            }
+        },
+        {
+            "type":"package",
+            "package":{
+                "name":"sonata-project/media-bundle",
+                "version":"dev-fixes",
+                "autoload":{
+                    "psr-0":{
+                        "Sonata\\MediaBundle":""
+                    }
+                },
+                "target-dir":"Sonata/MediaBundle",
+                "source":{
+                    "url":"git://github.com/Briareos/SonataMediaBundle.git",
                     "type":"git",
                     "reference":"master"
                 }

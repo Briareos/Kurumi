@@ -3,7 +3,7 @@ parameters:
     geoip.class: Kurumi\UserBundle\Util\GeoIp
     geoip.location: %kernel.root_dir%/Resources/geoip
     city_to_city_name_transformer.class: Kurumi\UserBundle\Form\DataTransformer\CityToCityNameTransformer
-    city_to_city_name_transformer.appid: %yahoo_appid%
+    city_finder.class: Kurumi\UserBundle\City\YahooCityFinder
 
 services:
     # Form types #
@@ -25,12 +25,15 @@ services:
         class: Kurumi\UserBundle\Form\Type\BirthdayType
         tags:
             - { name: form.type, alias: birthday }
+    city_finder:
+        class: %city_finder.class%
+        arguments: [ %yahoo_api_key% ]
     city_to_city_name_transformer:
         class: %city_to_city_name_transformer.class%
         arguments:
             - @doctrine.orm.entity_manager
             - Kurumi\UserBundle\Entity\City
-            - %city_to_city_name_transformer.appid%
+            - @city_finder
     user_manager:
         class: Kurumi\UserBundle\Entity\UserManager
         arguments: [ @security.encoder_factory ]
@@ -66,12 +69,17 @@ services:
         class: Kurumi\UserBundle\User\PictureProvider
         arguments:
             - @doctrine.orm.default_entity_manager
-            - Application\Sonata\MediaBundle\Entity\Media
-            - none: %genderless_picture_ids%
-              male: %male_picture_ids%
-              female: %female_picture_ids%
+            - Application\Sonata\MediaBundle\Entity\Gallery
+            - unknown: %unknown_avatar_gallery_id%
+              male: %male_avatar_gallery_id%
+              female: %female_avatar_gallery_id%
     twig.extension.user_picture_provider:
         class: Kurumi\UserBundle\Twig\Extension\UserPictureProvider
         arguments: [@user_picture_provider]
         tags:
             - { name: twig.extension }
+    kernel.listener.nodejs_authenticator:
+            class: Kurumi\UserBundle\EventListener\NodejsAuthenticationListener
+            arguments: [ @nodejs.authenticator, @security.context, @javascript_settings_container ]
+            tags:
+                - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

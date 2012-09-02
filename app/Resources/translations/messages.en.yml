@@ -33,4 +33,10 @@ form:
         submit: Continue
     user_picture:
         title: Get seen by everyone!
-
+    search:
+        looking_for: Looking for:
+        looking_in_city: Around:
+        looking_aged:
+            label: Aged between:
+            no_from: Any
+            no_to: Any

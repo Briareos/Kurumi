@@ -27,6 +27,7 @@ class UserPictureFormType extends AbstractType
             'data_class' => 'Application\Sonata\MediaBundle\Entity\Media',
             'provider' => 'sonata.media.provider.image',
             'context' => 'user_picture',
+            'validation_groups' => array('edit_picture'),
         ));
     }
 

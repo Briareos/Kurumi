@@ -86,6 +86,36 @@ class Profile
     private $updated;
 
     /**
+     * @var integer $lookingFor
+     *
+     * @ORM\Column(name="lookingFor", type="smallint", nullable=true)
+     */
+    private $lookingFor;
+
+    /**
+     * @var City $lookingInCity
+     *
+     * @ORM\ManyToOne(targetEntity="City", cascade={"persist"})
+     * @ORM\JoinColumn(name="lookingInCity_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $lookingInCity;
+
+    /**
+     * @var integer|null $lookingAgedFrom
+     *
+     * @ORM\Column(name="lookingAgedFrom", type="smallint", nullable=true)
+     */
+    private $lookingAgedFrom;
+
+    /**
+     * @var integer|null $lookingAgedTo
+     *
+     * @ORM\Column(name="lookingAgedTo", type="smallint", nullable=true)
+     */
+    private $lookingAgedTo;
+
+
+    /**
      * Get id
      *
      * @return integer
@@ -268,5 +298,69 @@ class Profile
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLookingFor()
+    {
+        return $this->lookingFor;
+    }
+
+    /**
+     * @param int $lookingFor
+     */
+    public function setLookingFor($lookingFor)
+    {
+        $this->lookingFor = $lookingFor;
+    }
+
+    /**
+     * @return \Kurumi\UserBundle\Entity\City
+     */
+    public function getLookingInCity()
+    {
+        return $this->lookingInCity;
+    }
+
+    /**
+     * @param \Kurumi\UserBundle\Entity\City $lookingInCity
+     */
+    public function setLookingInCity($lookingInCity)
+    {
+        $this->lookingInCity = $lookingInCity;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getLookingAgedFrom()
+    {
+        return $this->lookingAgedFrom;
+    }
+
+    /**
+     * @param int|null $lookingAgedFrom
+     */
+    public function setLookingAgedFrom($lookingAgedFrom)
+    {
+        $this->lookingAgedFrom = $lookingAgedFrom;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getLookingAgedTo()
+    {
+        return $this->lookingAgedTo;
+    }
+
+    /**
+     * @param int|null $lookingAgedTo
+     */
+    public function setLookingAgedTo($lookingAgedTo)
+    {
+        $this->lookingAgedTo = $lookingAgedTo;
     }
 }

@@ -1,0 +1,15 @@
+<form id="{{ form.vars.id }}" novalidate action="{{ path('account_edit_email') }}" {{ form_enctype(form) }} method="post" data-ajax>
+
+    {{ form_errors(form) }}
+
+    {{ form_row(form.currentPassword) }}
+
+    {{ form_row(form.email) }}
+
+    {{ form_rest(form) }}
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Change e-mail</button>
+        <a class="btn" href="{{ path('account_overview') }}" data-ajax>Cancel</a>
+    </div>
+</form>

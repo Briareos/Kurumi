@@ -18,23 +18,26 @@ class HomeController extends Controller
     private $ajax;
 
     /**
+     * @DI\Inject("router")
+     *
+     * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
+     */
+    private $router;
+
+    /**
      * @Route("/home", name="home_page")
      */
     public function homeAction()
     {
         $user = $this->getUser();
-        /** @var $nodejsAuthenticator \Briareos\NodejsBundle\Nodejs\Authenticator */
-        $nodejsAuthenticator = $this->get('nodejs.authenticator');
-        $nodejsAuthenticator->authenticate($this->getRequest()->getSession(), $user);
         $templateFile = 'PageBundle:Home:home_page.html.twig';
         $templateParams = array(
             'user' => $user,
-            'nodejs_auth_token' => $nodejsAuthenticator->generateAuthToken($this->getRequest()->getSession(), $user),
         );
 
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $commands = array();
-            $commands[] = new Ajax\Command\Page($this->ajax->renderBlock($templateFile, 'title', $templateParams), $this->ajax->renderBlock($templateFile, 'body', $templateParams));
+            $commands = new Ajax\CommandContainer();
+            $commands->add(new Ajax\Command\Page($this->ajax->renderBlock($templateFile, 'title', $templateParams), $this->ajax->renderBlock($templateFile, 'body', $templateParams), $this->router->generate('front')));
             return new Ajax\Response($commands);
         } else {
             return $this->render($templateFile, $templateParams);

@@ -1,0 +1,56 @@
+{% extends 'UserBundle:Account:page.html.twig' %}
+
+{% block edit_account %}
+<div class="row">
+    <div class="span3">
+        {% include 'UserBundle:Account:sidebar.html.twig' with {'active':'account_overview'} %}
+    </div>
+    <div class="span9">
+
+        {% include 'PageBundle::flash_messages.html.twig' with {'messages':app.session.flashbag.all()} %}
+
+        <fieldset>
+            <legend>Your account info</legend>
+            <dl>
+                <dt>Name</dt>
+                <dd>{{ user.name }} <a href="{{ path('account_edit_name') }}" class="btn btn-mini" data-ajax>Edit</a></dd>
+                <dt>E-mail address</dt>
+                <dd>{{ user.email }} <a href="{{ path('account_edit_email') }}" class="btn btn-mini" data-ajax>Edit</a></dd>
+                <dt>Password</dt>
+                <dd>{% if user.password is empty %}<em>Not set</em>{% else %}**********{% endif %} <a href="{{ path('account_edit_password') }}" class="btn btn-mini" data-ajax>Edit</a></dd>
+            </dl>
+        </fieldset>
+        {% if user.profile %}
+        <fieldset>
+            <legend>Your profile info</legend>
+            <dl>
+                <dt>Gender</dt>
+                <dd>{% if user.profile.gender %}
+                    {% if user.profile.gender == 1 %}
+                    Male
+                    {% else %}
+                    Female
+                    {% endif %}
+                    {% else %}
+                    <em>Not set</em>
+                    {% endif %}</dd>
+                <dt>Birthday</dt>
+                <dd>{% if user.profile.birthday %}
+                    {{ user.profile.birthday|date('j F Y') }}
+                    {% else %}
+                    <em>Not set</em>
+                    {% endif %}</dd>
+            </dl>
+        </fieldset>
+        {% endif %}
+        <fieldset>
+            <legend>Your profile picture <a href="{{ path('account_edit_picture') }}" class="btn btn-mini" data-ajax>Edit</a></legend>
+            {% if user.picture is empty%}
+            <em>Not set</em>
+            {% else %}
+            {% media user.picture, 'medium' with {'title':''} %}
+            {% endif %}
+        </fieldset>
+    </div>
+</div>
+{% endblock %}

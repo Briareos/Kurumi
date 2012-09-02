@@ -3,29 +3,39 @@ Kurumi\UserBundle\Entity\User:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: [email]
             message: User with specified email address already exists
-            groups: [registration,admin]
+            groups: [registration,admin,edit_email]
     properties:
         email:
             - NotBlank:
                 message: Please enter an e-mail address
                 groups: [registration,admin]
+            - NotBlank:
+                message: Please enter a new e-mail address.
+                groups: [edit_email]
             - Email:
                 message: The email entered is invalid
-                groups: [registration,admin]
+                groups: [registration,admin,edit_email]
         name:
             - NotBlank:
                 message: Please enter your first name or nickname
-                groups: [registration,admin]
+                groups: [registration,admin,edit_name]
             - MinLength:
                 limit: 3
-                groups: [registration,admin]
+                groups: [registration,admin,edit_name]
             - MaxLength:
                 limit: 24
-                groups: [registration,admin]
+                groups: [registration,admin,edit_name]
+        currentPassword:
+            - Symfony\Component\Security\Core\Validator\Constraint\UserPassword:
+                message: The password entered is invalid.
+                groups: [edit_email,edit_password]
         plainPassword:
             - NotBlank:
-                message: Please enter a password
+                message: Please enter a password.
                 groups: [registration]
+            - NotBlank:
+                message: Please enter your new password.
+                groups: [set_password,edit_password]
         timezone:
             - Kurumi\UserBundle\Validator\Timezone:
                 groups: [registration,admin]
@@ -63,8 +73,18 @@ Kurumi\UserBundle\Entity\Profile:
         lastName: []
         user:
             - NotBlank:
-                message: Profile owner must be specified
+                message: Profile owner must be specified.
                 groups: [registration,admin]
+        lookingFor:
+            - NotBlank:
+                message: Please specify a gender you're interested in.
+                groups: [search]
+        lookingInCity:
+            - Valid: ~
+            - NotBlank:
+                groups: [search]
+        lookingAgedFrom:
+        lookingAgedTo:
         city:
             - Valid: ~
 
@@ -85,5 +105,7 @@ Application\Sonata\MediaBundle\Entity\Media:
                 minWidth: 32
                 minHeight: 32
                 mimeTypesMessage: You must provide a valid picture in .jpg or .png format.
+                groups: [edit_picture]
             - NotBlank:
                 message: You must select a picture to upload.
+                groups: [edit_picture]

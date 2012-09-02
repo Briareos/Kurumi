@@ -89,7 +89,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     /**
      * @var Media
      *
-     * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media")
+     * @ORM\OneToOne(targetEntity="Application\Sonata\MediaBundle\Entity\Media", cascade={"persist", "remove"})
      * @ORM\JoinColumn(name="picture_id", onDelete="SET NULL")
      */
     private $picture;
@@ -111,6 +111,13 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
      * )
      */
     private $aclRoles;
+
+    /**
+     * Used only during form validation, when the user is required to enter his current password to validate a form.
+     *
+     * @var null|string
+     */
+    private $currentPassword;
 
 
     public function __construct()
@@ -361,7 +368,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     /**
      * Set picture
      *
-     * @param \Application\Sonata\MediaBundle\Entity\Media $picture
+     * @param \Application\Sonata\MediaBundle\Entity\Media|null $picture
      * @return User
      */
     public function setPicture(\Application\Sonata\MediaBundle\Entity\Media $picture = null)
@@ -426,5 +433,21 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     public function __toString()
     {
         return $this->getUsername();
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCurrentPassword()
+    {
+        return $this->currentPassword;
+    }
+
+    /**
+     * @param null|string $currentPassword
+     */
+    public function setCurrentPassword($currentPassword)
+    {
+        $this->currentPassword = $currentPassword;
     }
 }

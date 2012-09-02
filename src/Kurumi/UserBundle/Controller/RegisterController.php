@@ -13,9 +13,31 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\HttpFoundation\Response;
 use Briareos\AjaxBundle\Ajax;
+use JMS\DiExtraBundle\Annotation as DI;
 
 class RegisterController extends Controller
 {
+
+    /**
+     * @DI\Inject("router")
+     *
+     * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
+     */
+    private $router;
+
+    /**
+     * @DI\Inject("doctrine.orm.default_entity_manager")
+     *
+     * @var \Doctrine\ORM\EntityManager
+     */
+    private $em;
+
+    /**
+     * @DI\Inject("security.context")
+     *
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface
+     */
+    private $securityContext;
 
     /**
      * @Route("/register", name="register")
@@ -23,29 +45,26 @@ class RegisterController extends Controller
     public function registerAction(Request $request)
     {
         $user = new User();
-        $cityToCityNameTransformer = $this->get('city_to_city_name_transformer');
 
-        $form = $this->createForm(new RegisterFormType($cityToCityNameTransformer), $user);
+        $form = $this->createForm(new RegisterFormType(), $user);
 
         if ($request->isMethod('post')) {
             $form->bind($request);
             if ($form->isValid()) {
-                /** @var $em \Doctrine\ORM\EntityManager */
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($user);
-                $em->flush();
+                $this->em->persist($user);
+                $this->em->flush();
                 $this->authenticateUser($user);
             }
         }
 
         if ($request->isXmlHttpRequest()) {
-            $commands = array();
+            $commands = new Ajax\CommandContainer();
             if ($form->isBound() && $form->isValid()) {
-                return $this->redirect($this->get('router')->generate('front'));
+                return $this->redirect($this->router->generate('front'));
             } elseif ($form->isBound()) {
-                $commands[] = new Ajax\Command\Form($this->renderView('UserBundle:Form:register_form.html.twig', array('form' => $form->createView())));
+                $commands->add(new Ajax\Command\Form($this->renderView('UserBundle:Form:register_form.html.twig', array('form' => $form->createView()))));
             } else {
-                $commands[] = new Ajax\Command\Modal($this->renderView('UserBundle:Form:register_form.html.twig', array('form' => $form->createView())));
+                $commands->add(new Ajax\Command\Modal($this->renderView('UserBundle:Form:register_form.html.twig', array('form' => $form->createView()))));
             }
             return new Ajax\Response($commands);
         } else {
@@ -63,7 +82,7 @@ class RegisterController extends Controller
     {
         $providerKey = $this->container->getParameter('main_firewall_name');
         $token = new UsernamePasswordToken($user, null, $providerKey, $user->getRoles());
-        $this->get('security.context')->setToken($token);
+        $this->securityContext->setToken($token);
     }
 
     /**

@@ -23,6 +23,13 @@ class FrontController extends Controller
     private $ajax;
 
     /**
+     * @DI\Inject("router")
+     *
+     * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
+     */
+    private $router;
+
+    /**
      * @Route("/front", name="front_page")
      *
      * @return \Symfony\Component\HttpFoundation\Response
@@ -55,12 +62,11 @@ class FrontController extends Controller
             'login_error' => $loginError,
             'form_register' => $registerForm->createView(),
             'geocoded' => $geocoded,
-            'nodejs_auth_token' => false,
         );
 
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $commands = array();
-            $commands[] = new Ajax\Command\Page($this->ajax->renderBlock($templateFile, 'title', $templateParams), $this->ajax->renderBlock($templateFile, 'body', $templateParams));
+            $commands = new Ajax\CommandContainer();
+            $commands->add(new Ajax\Command\Page($this->ajax->renderBlock($templateFile, 'title', $templateParams), $this->ajax->renderBlock($templateFile, 'body', $templateParams), $this->router->generate('front')));
             return new Ajax\Response($commands);
         } else {
             return $this->render($templateFile, $templateParams);

@@ -60,17 +60,17 @@ class PictureController extends Controller
         $templateParams = array(
             'form' => $form->createView(),
             'user' => $user,
-            'picture' => $user->getPicture(),
         );
 
         if ($request->isXmlHttpRequest()) {
-            $commands = array();
+            $commands = new Ajax\CommandContainer();
+            $modalTemplateFile = 'UserBundle:Form:edit_user_picture_modal_form.html.twig';
             if ($form->isBound() && $form->isValid()) {
-                $commands[] = new Ajax\Command\Modal($this->renderView('UserBundle:Form:user_picture_form.html.twig', $templateParams));
+                $commands->add(new Ajax\Command\Modal($this->renderView($modalTemplateFile, $templateParams)));
             } elseif ($form->isBound()) {
-                $commands[] = new Ajax\Command\Form($this->renderView('UserBundle:Form:user_picture_form.html.twig', $templateParams));
+                $commands->add(new Ajax\Command\Form($this->renderView($modalTemplateFile, $templateParams)));
             } else {
-                $commands[] = new Ajax\Command\Modal($this->renderView('UserBundle:Form:user_picture_form.html.twig', $templateParams));
+                $commands->add(new Ajax\Command\Modal($this->renderView($modalTemplateFile, $templateParams)));
             }
             return new Ajax\Response($commands);
         } else {
