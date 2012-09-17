@@ -1,0 +1,13 @@
+{% spaceless %}
+    <div class="btn-group">
+        <a class="btn dropdown-toggle" data-toggle="dropdown">
+            {{ locales[current_locale].locale_target_language }}
+            <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            {% for locale in locales %}
+                <li class="{{ locale.locale == current_locale ? 'active' : '' }}"><a href="{{ locale.link }}" data-ajax title="{{ locale.locale_current_language }}">{{ locale.locale_target_language }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endspaceless %}

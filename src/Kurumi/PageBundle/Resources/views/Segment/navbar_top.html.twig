@@ -1,4 +1,4 @@
-<div class="navbar navbar-static-top">
+<div><div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
             <a class="brand">{{ site_name }}</a>
@@ -25,6 +25,8 @@
                     <li><a href="" data-ajax>Privacy settings</a></li>
                     <li><a href="" data-ajax>Notifications</a></li>
                     <li class="divider"></li>
+                    <li><a href="{{ path('info_faq') }}" data-ajax>Help</a></li>
+                    <li class="divider"></li>
                     <li><a href="{{ logout_url(main_firewall_name) }}" data-ajax>Log out</a></li>
                 </ul>
             </div>
@@ -34,4 +36,4 @@
             </div>
         </div>
     </div>
-</div>
+</div></div>

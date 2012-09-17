@@ -1,6 +1,6 @@
 <?php
 
-namespace Kurumi\PageBundle\Controller;
+namespace Kurumi\PlayBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -30,7 +30,7 @@ class PlayController extends Controller
     public function playAction()
     {
         $user = $this->getUser();
-        $templateFile = 'PageBundle:Play:play_page.html.twig';
+        $templateFile = 'PlayBundle:Play:play_page.html.twig';
         $templateParams = array(
             'user' => $user,
         );

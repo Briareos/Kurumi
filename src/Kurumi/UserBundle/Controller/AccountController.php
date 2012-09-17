@@ -3,7 +3,9 @@
 namespace Kurumi\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Kurumi\UserBundle\Form\Type\FillProfileFormType;
 use Briareos\NodejsBundle\Nodejs\Message;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Kurumi\UserBundle\Form\Type\UserPasswordFormType;
 use Kurumi\UserBundle\Form\Type\UserEmailFormType;
 use JMS\DiExtraBundle\Annotation as DI;
@@ -18,14 +20,19 @@ use Kurumi\UserBundle\Form\Type\UserPictureFormType;
 
 class AccountController extends Controller
 {
-    use Ajax\PjaxTrait;
-
     /**
      * @DI\Inject("templating.ajax")
      *
      * @var \Briareos\AjaxBundle\Twig\AjaxEngine
      */
     private $ajax;
+
+    /**
+     * @DI\Inject("templating.ajax.helper")
+     *
+     * @var \Briareos\AjaxBundle\Ajax\Helper
+     */
+    private $ajaxHelper;
 
     /**
      * @DI\Inject("doctrine.orm.default_entity_manager")
@@ -67,22 +74,16 @@ class AccountController extends Controller
      */
     public function overviewAction()
     {
-        $templateName = 'UserBundle:Account:overview.html.twig';
+        $templateFile = 'UserBundle:Account:overview.html.twig';
         $templateParams = array(
             'user' => $this->getUser(),
         );
 
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $commands = new Ajax\CommandContainer();
-            $pjax = $this->getPjaxContainers();
-            if (in_array('edit_account', $pjax)) {
-                $commands->add(new Ajax\Command\Page($this->ajax->renderBlock($templateName, 'title', $templateParams), $this->ajax->renderBlock($templateName, 'edit_account', $templateParams), $this->router->generate('account_overview'), 'edit_account'));
-            } else {
-                $commands->add(new Ajax\Command\Page($this->ajax->renderBlock($templateName, 'title', $templateParams), $this->ajax->renderBlock($templateName, 'body', $templateParams), $this->router->generate('account_overview')));
-            }
-            return new Ajax\Response($commands);
+            $url = $this->router->generate('account_overview');
+            return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, 'edit_account');
         } else {
-            return $this->render($templateName, $templateParams);
+            return $this->render($templateFile, $templateParams);
         }
     }
 
@@ -112,22 +113,16 @@ class AccountController extends Controller
             'form' => $userNameForm->createView(),
         );
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $commands = new Ajax\CommandContainer();
-            $pjax = $this->getPjaxContainers();
             if ($userNameForm->isBound()) {
                 if ($userNameForm->isValid()) {
-                    return $this->redirect($this->router->generate('account_overview', $this->getPjaxParameters()));
+                    return $this->redirect($this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters()));
                 } else {
-                    $commands->add(new Ajax\Command\Form($this->renderView('UserBundle:Form:edit_user_name_form.html.twig', $templateParams)));
+                    return $this->ajaxHelper->renderAjaxForm('UserBundle:Form:edit_user_name_form.html.twig', $templateParams);
                 }
             } else {
-                if (in_array('edit_account', $pjax)) {
-                    $commands->add(new Ajax\Command\Page($this->ajax->renderBlock($templateFile, 'title', $templateParams), $this->ajax->renderBlock($templateFile, 'edit_account', $templateParams), $this->router->generate('account_edit_name'), 'edit_account'));
-                } else {
-                    $commands->add(new Ajax\Command\Page($this->ajax->renderBlock($templateFile, 'title', $templateParams), $this->ajax->renderBlock($templateFile, 'body', $templateParams), $this->router->generate('account_edit_name')));
-                }
+                $url = $this->router->generate('account_edit_name');
+                return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, 'edit_account');
             }
-            return new Ajax\Response($commands);
         } else {
             return $this->render($templateFile, $templateParams);
         }
@@ -160,24 +155,16 @@ class AccountController extends Controller
         );
 
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $commands = new Ajax\CommandContainer();
-            $pjax = $this->getPjaxContainers();
-            if ($editEmailForm->isBound() && $editEmailForm->isValid()) {
-                return $this->redirect($this->router->generate('account_overview', $this->getPjaxParameters()));
-            } elseif ($editEmailForm->isBound()) {
-                $commands->add(new Ajax\Command\Form($this->renderView('UserBundle:Form:edit_user_email_form.html.twig', $templateParams)));
-            } else {
-                $ajaxRoute = $this->router->generate('account_edit_email');
-                $ajaxTitle = $this->ajax->renderBlock($templateFile, 'title', $templateParams);
-                if (in_array('edit_account', $pjax)) {
-                    $pjaxContainer = 'edit_account';
+            if ($editEmailForm->isBound()) {
+                if ($editEmailForm->isValid()) {
+                    return $this->redirect($this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters()));
                 } else {
-                    $pjaxContainer = 'body';
+                    return $this->ajaxHelper->renderAjaxForm('UserBundle:Form:edit_user_email_form.html.twig', $templateParams);
                 }
-                $ajaxBody = $this->ajax->renderBlock($templateFile, $pjaxContainer, $templateParams);
-                $commands->add(new Ajax\Command\Page($ajaxTitle, $ajaxBody, $ajaxRoute, $pjaxContainer));
+            } else {
+                $url = $this->router->generate('account_edit_email');
+                return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, 'edit_account');
             }
-            return new Ajax\Response($commands);
         } else {
             return $this->render($templateFile, $templateParams);
         }
@@ -210,24 +197,16 @@ class AccountController extends Controller
         );
 
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $commands = new Ajax\CommandContainer();
-            $pjax = $this->getPjaxContainers();
-            if ($editPasswordForm->isBound() && $editPasswordForm->isValid()) {
-                return $this->redirect($this->router->generate('account_overview', $this->getPjaxParameters()));
-            } elseif ($editPasswordForm->isBound()) {
-                $commands->add(new Ajax\Command\Form($this->renderView('UserBundle:Form:edit_user_password_form.html.twig', $templateParams)));
-            } else {
-                $ajaxRoute = $this->router->generate('account_edit_password');
-                $ajaxTitle = $this->ajax->renderBlock($templateFile, 'title', $templateParams);
-                if (in_array('edit_account', $pjax)) {
-                    $pjaxContainer = 'edit_account';
+            if ($editPasswordForm->isBound()) {
+                if ($editPasswordForm->isValid()) {
+                    return $this->redirect($this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters()));
                 } else {
-                    $pjaxContainer = 'body';
+                    return $this->ajaxHelper->renderAjaxForm('UserBundle:Form:edit_user_password_form.html.twig', $templateParams);
                 }
-                $ajaxBody = $this->ajax->renderBlock($templateFile, $pjaxContainer, $templateParams);
-                $commands->add(new Ajax\Command\Page($ajaxTitle, $ajaxBody, $ajaxRoute, $pjaxContainer));
+            } else {
+                $url = $this->router->generate('account_edit_password');
+                return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, 'edit_account');
             }
-            return new Ajax\Response($commands);
         } else {
             return $this->render($templateFile, $templateParams);
         }
@@ -275,32 +254,29 @@ class AccountController extends Controller
         );
 
         if ($request->isXmlHttpRequest()) {
-            $commands = new Ajax\CommandContainer();
             if ($this->getRequest()->query->getInt('modal', 0)) {
                 $modalTemplateFile = 'UserBundle:Form:edit_user_picture_modal_form.html.twig';
-                if ($userPictureForm->isBound() && $userPictureForm->isValid()) {
-                    $commands->add(new Ajax\Command\Modal($this->renderView($modalTemplateFile, $templateParams)));
-                } elseif ($userPictureForm->isBound()) {
-                    $commands->add(new Ajax\Command\Form($this->renderView($modalTemplateFile, $templateParams)));
+                if ($userPictureForm->isBound()) {
+                    if ($userPictureForm->isValid()) {
+                        return $this->ajaxHelper->renderModal($modalTemplateFile, $templateParams);
+                    } elseif ($userPictureForm->isBound()) {
+                        return $this->ajaxHelper->renderAjaxForm($modalTemplateFile, $templateParams);
+                    }
                 } else {
-                    $commands->add(new Ajax\Command\Modal($this->renderView($modalTemplateFile, $templateParams)));
+                    return $this->ajaxHelper->renderModal($modalTemplateFile, $templateParams);
                 }
             } else {
-                $pjax = $this->getPjaxContainers();
-                if ($userPictureForm->isBound() && $userPictureForm->isValid()) {
-                    return $this->redirect($this->router->generate('account_overview', $this->getPjaxParameters()));
-                } elseif ($userPictureForm->isBound()) {
-                    $commands->add(new Ajax\Command\Form($this->renderView('UserBundle:Form:edit_user_picture_form.html.twig', $templateParams)));
-                } else {
-                    // Form is not submitted.
-                    if (in_array('edit_account', $pjax)) {
-                        $commands->add(new Ajax\Command\Page($this->ajax->renderBlock($templateFile, 'title', $templateParams), $this->ajax->renderBlock($templateFile, 'edit_account', $templateParams), $this->router->generate('account_edit_picture'), 'edit_account'));
-                    } else {
-                        $commands->add(new Ajax\Command\Page($this->ajax->renderBlock($templateFile, 'title', $templateParams), $this->ajax->renderBlock($templateFile, 'body', $templateParams), $this->router->generate('account_edit_picture')));
+                if ($userPictureForm->isBound()) {
+                    if ($userPictureForm->isValid()) {
+                        return $this->redirect($this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters()));
+                    } elseif ($userPictureForm->isBound()) {
+                        return $this->ajaxHelper->renderAjaxForm('UserBundle:Form:edit_user_picture_form.html.twig', $templateParams);
                     }
+                } else {
+                    $url = $this->router->generate('account_edit_picture');
+                    return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, 'edit_account');
                 }
             }
-            return new Ajax\Response($commands);
         } else {
             // Not an ajax request.
             if ($userPictureForm->isBound() && $userPictureForm->isValid()) {
@@ -329,5 +305,63 @@ class AccountController extends Controller
             $this->session->getFlashBag()->set('success', "Your picture was deleted.");
         }
         return $this->editPictureAction();
+    }
+
+    /**
+     * @Route("/account/fill", name="account_fill", defaults={"id"=null})
+     * @Secure(roles="IS_AUTHENTICATED_REMEMBERED")
+     */
+    public function fillAction($route, $id = null)
+    {
+        /** @var $user User */
+        $user = $this->getUser();
+        if ($user->getProfile() === null) {
+            $this->session->getFlashBag()->add('warning', "You don't have a profile. If you would like to create one, please fill in the form below.");
+            $profile = new Profile();
+            $user->setProfile($profile);
+        } else {
+            //$this->session->getFlashBag()->add('warning', "Your profile is incomplete. Please fill in the information below.");
+        }
+
+
+        $createProfileForm = $this->createForm(new FillProfileFormType(), $user->getProfile());
+
+        if ($this->getRequest()->isMethod('post')) {
+            $createProfileForm->bind($this->getRequest());
+            if ($createProfileForm->isValid()) {
+                $this->em->persist($user);
+                $this->em->flush();
+                $this->session->getFlashBag()->add('success', "Your profile is ready. Good luck!");
+            }
+        }
+
+        $activeRoute = $route;
+        if ($activeRoute === 'profile' && in_array($id, array(null, $user->getId()))) {
+            $route = 'front';
+            $activeRoute = 'home';
+        }
+
+        $templateFile = 'UserBundle:Account:fill_profile_page.html.twig';
+        $templateParams = array(
+            'user' => $user,
+            'form' => $createProfileForm->createView(),
+            'active' => $activeRoute,
+            'route' => $route,
+        );
+
+        if ($createProfileForm->isBound() && $createProfileForm->isValid()) {
+            return $this->redirect($this->router->generate($route, $this->ajaxHelper->getPjaxParameters()));
+        }
+
+        if ($this->getRequest()->isXmlHttpRequest()) {
+            if ($createProfileForm->isBound()) {
+                return $this->ajaxHelper->renderAjaxForm('UserBundle:Form:fill_profile_form.html.twig', $templateParams);
+            } else {
+                $url = $this->router->generate($route);
+                return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url);
+            }
+        } else {
+            return $this->render($templateFile, $templateParams);
+        }
     }
 }

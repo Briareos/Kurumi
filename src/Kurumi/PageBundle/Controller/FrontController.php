@@ -54,12 +54,21 @@ class FrontController extends Controller
         $registerForm = $this->createForm(new RegisterFormType(), $defaultUser);
 
         $session = $this->getRequest()->getSession();
-        $loginError = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-        $session->remove(SecurityContext::AUTHENTICATION_ERROR);
+        $loginError = null;
+        $lastUsername = null;
+
+        if ($session && $session->has(SecurityContext::AUTHENTICATION_ERROR)) {
+            $loginError = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
+        }
+        if($session && $session->has(SecurityContext::LAST_USERNAME)){
+            $lastUsername = $session->get(SecurityContext::LAST_USERNAME);
+        }
 
         $templateFile = 'PageBundle:Front:front_page.html.twig';
         $templateParams = array(
             'login_error' => $loginError,
+            'last_username' => $lastUsername,
             'form_register' => $registerForm->createView(),
             'geocoded' => $geocoded,
         );

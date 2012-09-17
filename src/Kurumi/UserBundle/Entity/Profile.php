@@ -93,14 +93,6 @@ class Profile
     private $lookingFor;
 
     /**
-     * @var City $lookingInCity
-     *
-     * @ORM\ManyToOne(targetEntity="City", cascade={"persist"})
-     * @ORM\JoinColumn(name="lookingInCity_id", referencedColumnName="id", onDelete="SET NULL")
-     */
-    private $lookingInCity;
-
-    /**
      * @var integer|null $lookingAgedFrom
      *
      * @ORM\Column(name="lookingAgedFrom", type="smallint", nullable=true)
@@ -138,7 +130,7 @@ class Profile
     /**
      * Get birthday
      *
-     * @return \DoctrineExtensions\Types\Date
+     * @return \DateTime
      */
     public function getBirthday()
     {
@@ -216,7 +208,7 @@ class Profile
     /**
      * Set city
      *
-     * @param Kurumi\UserBundle\Entity\City $city
+     * @param City $city
      */
     public function setCity($city)
     {
@@ -226,7 +218,7 @@ class Profile
     /**
      * Get city
      *
-     * @return Kurumi\UserBundle\Entity\City
+     * @return City
      */
     public function getCity()
     {
@@ -236,7 +228,7 @@ class Profile
     /**
      * Set user
      *
-     * @param Kurumi\UserBundle\Entity\User $user
+     * @param User $user
      */
     public function setUser($user)
     {
@@ -246,7 +238,7 @@ class Profile
     /**
      * Get user
      *
-     * @return Kurumi\UserBundle\Entity\User
+     * @return User
      */
     public function getUser()
     {
@@ -317,22 +309,6 @@ class Profile
     }
 
     /**
-     * @return \Kurumi\UserBundle\Entity\City
-     */
-    public function getLookingInCity()
-    {
-        return $this->lookingInCity;
-    }
-
-    /**
-     * @param \Kurumi\UserBundle\Entity\City $lookingInCity
-     */
-    public function setLookingInCity($lookingInCity)
-    {
-        $this->lookingInCity = $lookingInCity;
-    }
-
-    /**
      * @return int|null
      */
     public function getLookingAgedFrom()
@@ -362,5 +338,15 @@ class Profile
     public function setLookingAgedTo($lookingAgedTo)
     {
         $this->lookingAgedTo = $lookingAgedTo;
+    }
+
+    public function getAge()
+    {
+        if (!$this->getBirthday() instanceof \DateTime) {
+            return null;
+        }
+        return $this->getBirthday()
+            ->diff(new \DateTime('now', $this->getBirthday()->getTimezone()))
+            ->y;
     }
 }

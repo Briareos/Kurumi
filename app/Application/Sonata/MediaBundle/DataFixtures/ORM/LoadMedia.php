@@ -27,7 +27,6 @@ class LoadMedia extends AbstractFixture implements OrderedFixtureInterface, Cont
      */
     function load(ObjectManager $manager)
     {
-        $avatarFinder = new Finder();
 
         $genders = array(
             'unknown' => __DIR__ . '/../../Resources/avatar/unknown/',
@@ -36,6 +35,7 @@ class LoadMedia extends AbstractFixture implements OrderedFixtureInterface, Cont
         );
 
         foreach ($genders as $genderName => $avatarDirectory) {
+            $avatarFinder = new Finder();
             $i = 0;
             /** @var $avatarFile \Symfony\Component\Finder\SplFileInfo */
             foreach ($avatarFinder->in($avatarDirectory)->files() as $avatarFile) {

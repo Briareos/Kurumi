@@ -39,6 +39,8 @@ Kurumi\UserBundle\Entity\User:
         timezone:
             - Kurumi\UserBundle\Validator\Timezone:
                 groups: [registration,admin]
+        locale:
+            - Locale: ~
         profile:
             - Valid: ~
         picture:
@@ -79,14 +81,13 @@ Kurumi\UserBundle\Entity\Profile:
             - NotBlank:
                 message: Please specify a gender you're interested in.
                 groups: [search]
-        lookingInCity:
-            - Valid: ~
-            - NotBlank:
-                groups: [search]
         lookingAgedFrom:
         lookingAgedTo:
         city:
             - Valid: ~
+            - NotBlank:
+                groups: [search]
+                message: You didn't specify a city we recognize.
 
 Kurumi\UserBundle\Entity\City:
     properties:

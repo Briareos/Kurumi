@@ -3,6 +3,7 @@
 namespace Kurumi\PageBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Kurumi\UserBundle\Controller\ProfileController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use JMS\DiExtraBundle\Annotation as DI;
 use Briareos\AjaxBundle\Ajax;

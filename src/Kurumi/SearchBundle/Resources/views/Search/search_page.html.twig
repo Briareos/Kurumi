@@ -16,16 +16,81 @@
         </div>
     </div>
 
-    {% if results %}
-    {% for result in results %}
-    <div>
-    {{ result.user.name }}
+    <div class="row-fluid">
+        {% if results %}
+        {% for result in results %}
+        {% if loop.index % 4 == 1 %}
+        <ul class="thumbnails">
+            {% endif %}
+            <li class="span3">
+                <div class="thumbnail">
+                    <a href="{{ path('profile', {'id':result.user.id}) }}" data-ajax>
+                        {% media user_picture(result.user), 'search' with {'title':'','class':'user-picture'} %}
+                    </a>
+
+                    <div class="caption">
+                        <h5>{{ result.user.name }} <span class="label">{{ result.user.profile.age }}</span>
+                            <small class="">{{ result.user.profile.city.name }}</small>
+                        </h5>
+                        {# <p>{{ user_search_info(result.user) }}</p> #}
+                        <a href="{{ path('profile', {'id':result.user.id}) }}" data-ajax class="btn btn-primary btn-small">Profile</a>
+
+                        <div class="btn-group pull-right">
+
+                            <a href="#" data-ajax class="btn btn-small"><i class="icon-camera"></i> Photos</a>
+                            <button class="btn dropdown-toggle btn-small" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Profile photos <span class="badge badge-info">1</span></a></li>
+                                <li><a href="#">Public photos <span class="badge">12</span></a></li>
+                                <li><a href="#">Private photos <span class="badge badge-important">6</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {% if loop.index % 4 == 0 or loop.last %}
+        </ul>
+        {% endif %}
+        {% endfor %}
+        <div class="pagination">
+            <ul>
+                {% if paginator.previous is defined %}
+                <li><a data-ajax href="{{ path('search', {'page':paginator.previous}) }}">«</a></li>
+                {% else %}
+                <li class="disabled"><a>«</a></li>
+                {% endif %}
+
+                {% if paginator.first < paginator.firstPageInRange %}
+                <li><a data-ajax href="{{ path('search', {'page':paginator.first}) }}">{{ paginator.first }}</a></li>
+                <li class="disabled"><a>…</a></li>
+                {% endif %}
+
+                {% for pageNumber in paginator.pagesInRange %}
+                {% if pageNumber == paginator.current %}
+                <li class="active"><a data-ajax href="{{ path('search', {'page':pageNumber}) }}">{{ pageNumber }}</a></li>
+                {% else %}
+                <li><a data-ajax href="{{ path('search', {'page':pageNumber}) }}">{{ pageNumber }}</a></li>
+                {% endif %}
+                {% endfor %}
+
+                {% if paginator.last > paginator.lastPageInRange %}
+                {# <li class="disabled"><a>…</a></li> #}
+                {# <li><a data-ajax href="{{ path('search', {'page':paginator.last}) }}">{{ paginator.last }}</a></li> #}
+                {% endif %}
+
+                {% if paginator.next is defined %}
+                <li><a data-ajax href="{{ path('search', {'page':paginator.next}) }}">»</a></li>
+                {% else %}
+                <li class="disabled"><a>»</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        {% else %}
+        Where is everyone?
+        {% endif %}
     </div>
-    {% endfor %}
-    {% else %}
-    Where is everyone?
-    {% endif %}
-Total {{ total_results }}
 </div>
 
 {% endblock %}

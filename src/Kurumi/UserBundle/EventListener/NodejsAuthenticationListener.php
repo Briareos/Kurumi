@@ -3,6 +3,7 @@
 namespace Kurumi\UserBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Briareos\AjaxBundle\Javascript\JavascriptSettings;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContextInterface;
@@ -29,6 +30,9 @@ class NodejsAuthenticationListener
 
     public function onKernelRequest(GetResponseEvent $event)
     {
+        if ($event->getRequestType() !== HttpKernelInterface::MASTER_REQUEST) {
+            return;
+        }
         $nodejsAuthToken = $this->getNodejsAuthToken($event->getRequest());
         $this->javascriptSettingsContainer->addJavascriptSettings(new JavascriptSettings('nodejs_authenticate', array(
             'nodejs_auth_token' => $nodejsAuthToken,

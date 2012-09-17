@@ -21,25 +21,7 @@
                     </div>
                 </div>
                 <div class="span7">
-                    <div class="btn-group pull-right">
-                        <a data-toggle="dropdown" class="btn dropdown-toggle">
-                            {{ lunetics_languageName(lunetics_getLocaleLanguage()) }}
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu nav">
-                            {#<li class="nav-header">Possible guess</li>#}
-                            {#<li><a href>Српски</a></li>#}
-                            {#<li class="divider"></li>#}
-                            {% for locale_id in lunetics_availableLocales %}
-                            {% if locale_id == lunetics_getLocaleLanguage() %}
-                            <li class="active {{ locale_id }}"><a>{{ lunetics_languageName(locale_id) }}</a></li>
-                            {% else %}
-                            <li class="{{ locale_id }}"><a data-ajax href="{{ path('LuneticsLocaleBundle_localeswitch', {_locale: locale_id}) }}">{{ lunetics_languageName(locale_id) }}</a></li>
-                            {% endif %}
-                            {% endfor %}
-                        </ul>
-                    </div>
-
+                    {{ locale_switcher() }}
                     <h3 class="login-header">{{ 'page.front.log_in'|trans }}</h3>
                     {% include 'UserBundle:Form:login_form.html.twig' %}
 

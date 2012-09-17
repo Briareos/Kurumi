@@ -23,7 +23,6 @@ class AppKernel extends Kernel
 
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
-            new Knp\Bundle\ZendCacheBundle\KnpZendCacheBundle(),
             new FOS\FacebookBundle\FOSFacebookBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
@@ -41,7 +40,6 @@ class AppKernel extends Kernel
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
-            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
 
             new Kurumi\UserBundle\UserBundle(),
             new Kurumi\PageBundle\PageBundle(),
@@ -51,6 +49,7 @@ class AppKernel extends Kernel
             new Briareos\GeoBundle\BriareosGeoBundle(),
             new Briareos\AjaxBundle\BriareosAjaxBundle(),
             new Kurumi\SearchBundle\SearchBundle(),
+            new Kurumi\PlayBundle\PlayBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

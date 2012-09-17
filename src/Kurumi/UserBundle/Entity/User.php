@@ -58,6 +58,13 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     private $timezone;
 
     /**
+     * @var string $locale
+     *
+     * @ORM\Column(name="locale", type="string", length=10, nullable=true)
+     */
+    private $locale;
+
+    /**
      * @var string $salt
      *
      * @ORM\Column(name="salt", type="string", length=255)
@@ -72,12 +79,20 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     private $name;
 
     /**
-     * @var \DateTime $created
+     * @var \DateTime $createdAt
      *
      * @ORM\Column(name="createdAt", type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
     private $createdAt;
+
+    /**
+     * @var \DateTime $updatedAt
+     *
+     * @ORM\Column(name="updatedAt", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updatedAt;
 
     /**
      * @var Profile
@@ -113,6 +128,20 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     private $aclRoles;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="lastActiveAt", type="datetime", nullable=true)
+     */
+    private $lastActiveAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="lastLoginAt", type="datetime", nullable=true)
+     */
+    private $lastLoginAt;
+
+    /**
      * Used only during form validation, when the user is required to enter his current password to validate a form.
      *
      * @var null|string
@@ -122,7 +151,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
 
     public function __construct()
     {
-        $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        $this->salt = $this->generateSalt();
         $this->password = null;
         $this->timezone = null;
         $this->aclRoles = new ArrayCollection();
@@ -136,6 +165,11 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     public function getId()
     {
         return $this->id;
+    }
+
+    public static function generateSalt()
+    {
+        return base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
     }
 
     /**
@@ -264,6 +298,9 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
      */
     public function setPlainPassword($plainPassword)
     {
+        if ($plainPassword !== null) {
+            $this->setUpdatedAt(new \DateTime());
+        }
         $this->plainPassword = $plainPassword;
     }
 
@@ -287,7 +324,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     /**
      * Set profile
      *
-     * @param Kurumi\UserBundle\Entity\Profile|null $profile
+     * @param Profile|null $profile
      */
     public function setProfile(Profile $profile = null)
     {
@@ -301,7 +338,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     /**
      * Get profile
      *
-     * @return Kurumi\UserBundle\Entity\Profile|null
+     * @return Profile|null
      */
     public function getProfile()
     {
@@ -449,5 +486,69 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     public function setCurrentPassword($currentPassword)
     {
         $this->currentPassword = $currentPassword;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getLastActiveAt()
+    {
+        return $this->lastActiveAt;
+    }
+
+    /**
+     * @param \DateTime $lastActiveAt
+     */
+    public function setLastActiveAt(\DateTime $lastActiveAt = null)
+    {
+        $this->lastActiveAt = $lastActiveAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastLoginAt()
+    {
+        return $this->lastLoginAt;
+    }
+
+    /**
+     * @param \DateTime $lastLoginAt
+     */
+    public function setLastLoginAt(\DateTime $lastLoginAt = null)
+    {
+        $this->lastLoginAt = $lastLoginAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+
+    /**
+     * @param string $locale
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 }

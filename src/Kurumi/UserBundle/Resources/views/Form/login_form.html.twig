@@ -8,7 +8,7 @@
     <div class="row-fluid">
         <div class="span5">
             <label for="login-email" class="control-label">{{ 'form.login.email'|trans }}</label>
-            <input tabindex="1" id="login-email" type="email" class="input-block-level" name="email" required="required">
+            <input tabindex="1" value="{{ last_username }}" id="login-email" type="email" class="input-block-level" name="email" required="required">
             <label><input tabindex="3" type="checkbox" checked="checked" name="remember_me"> {{ 'form.login.remember_me'|trans }}</label>
         </div>
         <div class="span4">

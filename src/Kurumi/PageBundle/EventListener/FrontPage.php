@@ -10,7 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class FrontPage {
+class FrontPage
+{
 
     /**
      * @var Request
@@ -32,24 +33,26 @@ class FrontPage {
      */
     protected $dispatcher;
 
-    public function __construct(Request $request, Router $router, SecurityContext $security, EventDispatcher $dispatcher) {
+    public function __construct(Request $request, Router $router, SecurityContext $security, EventDispatcher $dispatcher)
+    {
         $this->request = $request;
         $this->router = $router;
         $this->security = $security;
         $this->dispatcher = $dispatcher;
     }
 
-    public function onKernelRequest(GetResponseEvent $event) {
+    public function onKernelRequest(GetResponseEvent $event)
+    {
         $currentRouteName = $this->request->get('_route');
-        if($currentRouteName == 'front') {
-            if($this->security->getToken()->getUser() instanceof UserInterface) {
-                $newRouteName = 'home_page';
+        if ($currentRouteName == 'front') {
+            if ($this->security->getToken()->getUser() instanceof UserInterface) {
+                $newRouteName = 'profile';
             } else {
                 $newRouteName = 'front_page';
             }
             $controller = $this->router->getRouteCollection()->get($newRouteName)->getDefault('_controller');
             $this->request->attributes->set('_controller', $controller);
-        } elseif($currentRouteName == 'home_page' || $currentRouteName == 'front_page') {
+        } elseif ($currentRouteName == 'home_page' || $currentRouteName == 'front_page') {
             $newRouteUrl = $this->router->generate('front');
             $response = new RedirectResponse($newRouteUrl);
             $event->setResponse($response);

@@ -5,25 +5,39 @@
     <div class="span3">
         {% include 'UserBundle:Account:sidebar.html.twig' with {'active':'account_overview'} %}
     </div>
-    <div class="span9">
+    <div class="span4">
 
         {% include 'PageBundle::flash_messages.html.twig' with {'messages':app.session.flashbag.all()} %}
 
         <fieldset>
             <legend>Your account info</legend>
-            <dl>
+            <dl class="dl-horizontal">
                 <dt>Name</dt>
                 <dd>{{ user.name }} <a href="{{ path('account_edit_name') }}" class="btn btn-mini" data-ajax>Edit</a></dd>
                 <dt>E-mail address</dt>
                 <dd>{{ user.email }} <a href="{{ path('account_edit_email') }}" class="btn btn-mini" data-ajax>Edit</a></dd>
                 <dt>Password</dt>
                 <dd>{% if user.password is empty %}<em>Not set</em>{% else %}**********{% endif %} <a href="{{ path('account_edit_password') }}" class="btn btn-mini" data-ajax>Edit</a></dd>
+                <dt>Timezone</dt>
+                <dd>{% if user.timezone is empty %}<em>Not set</em>{% else %}{{ user.timezone }}{% endif %}</dd>
+                <dt>Language</dt>
+                <dd>{% if user.locale is empty %}<em>Not set</em>{% else %}{{ user.locale }}{% endif %}</dd>
             </dl>
+        </fieldset>
+    </div>
+    <div class="span5">
+        <fieldset>
+            <legend>Your profile picture <a href="{{ path('account_edit_picture') }}" class="btn btn-mini" data-ajax>Edit</a></legend>
+            {% if user.picture is empty%}
+            <em>Not set</em>
+            {% else %}
+            {% media user.picture, 'profile' with {'title':''} %}
+            {% endif %}
         </fieldset>
         {% if user.profile %}
         <fieldset>
             <legend>Your profile info</legend>
-            <dl>
+            <dl class="dl-horizontal">
                 <dt>Gender</dt>
                 <dd>{% if user.profile.gender %}
                     {% if user.profile.gender == 1 %}
@@ -36,21 +50,13 @@
                     {% endif %}</dd>
                 <dt>Birthday</dt>
                 <dd>{% if user.profile.birthday %}
-                    {{ user.profile.birthday|date('j F Y') }}
+                    {{ user.profile.birthday|format_date(null, app.request.locale ) }}
                     {% else %}
                     <em>Not set</em>
                     {% endif %}</dd>
             </dl>
         </fieldset>
         {% endif %}
-        <fieldset>
-            <legend>Your profile picture <a href="{{ path('account_edit_picture') }}" class="btn btn-mini" data-ajax>Edit</a></legend>
-            {% if user.picture is empty%}
-            <em>Not set</em>
-            {% else %}
-            {% media user.picture, 'medium' with {'title':''} %}
-            {% endif %}
-        </fieldset>
     </div>
 </div>
 {% endblock %}

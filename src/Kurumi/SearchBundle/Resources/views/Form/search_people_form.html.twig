@@ -1,11 +1,11 @@
-<form id="{{ form.vars.id }}" method="post" {{ form_enctype(form) }} action="{{ path('search') }}" data-ajax>
+<form novalidate id="{{ form.vars.id }}" method="post" {{ form_enctype(form) }} action="{{ path('search_form') }}" data-ajax>
 
     <div class="row-fluid">
         <div class="span3">
             {{ form_row(form.lookingFor, {'attr':{'class':'input-medium'}}) }}
         </div>
         <div class="span3">
-            {{ form_row(form.lookingInCity, {'attr':{'class':'input-medium'}}) }}
+            {{ form_row(form.city, {'attr':{'class':'input-medium'}}) }}
         </div>
         <div class="span3">
             {{ form_label(form.lookingAgedFrom, "Aged between:") }}

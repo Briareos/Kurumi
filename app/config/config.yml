@@ -113,69 +113,25 @@ swiftmailer:
     spool:     { type: memory }
 
 lunetics_locale:
-    # Sets the Languages which are allowed
-    allowed_languages:
-        - en
-        - sr
-
-    # Options for the Change Language Twig Extension
-    change_language:
-        # Show The Language in their native Language (e.g. Deutsch / English / Français )
-        # Default setting is set to false
-        show_foreign_languagenames: true
-
-        # Force Uppercase of the Languagenames
-        # Default setting is set to false
-        show_first_uppercase: true
-
-        # Adds an additional block / title ( Sprache ändern / Change Language / Changer la langue )
-        # Default setting is set to false
-        show_languagetitle: true
-
-    switch_router:
-
-        # Redirect to referrer after changing the language
-        # Default setting is set to true
-        use_referrer: true
-
-        # Redirect to a custom Route after changing the language.
-        # use_referrer must be set to false
-        redirect_to_route: "front"
-
-        # Redirect to a custom url after changing the language.
-        # use_refferer must be set to false and redirect_to_route not be set
-        redirect_to_url: "/"
-
-knp_zend_cache:
-    templates:
-        geoname:
-            frontend:
-                name: Core
-                options:
-                    lifetime: 7200
-                    automatic_serialization: true
-            backend:
-                name: Memcached
-                options:
-                    servers:
-                        host: 127.0.0.1
-                        port: 11211
-                        persistent: true
-                        weight: 1
-                        timeout: 1
-                        retry_interval: 15
-                        status: true
-                        failure_callback: null
-                    compression: false
-                    compatability: false
+    allowed_locales:
+        - en_US
+        - sr_Cyrl
+    guessing_order:
+        - router
+        - cookie
+        - browser
+    cookie:
+        set_on_detection: true
+    switcher:
+        template: ::language_switcher.html.twig
 
 fos_facebook:
     file:   %kernel.root_dir%/../vendor/facebook/php-sdk/src/base_facebook.php
-    alias:  facebook
-    app_id: 326357144092347
-    secret: 4198e2354cde2ea66dd34aef1bbe5784
-    cookie: true
-    permissions: [email, user_birthday, user_location]
+    alias:  %facebook_alias%
+    app_id: %facebook_app_id%
+    secret: %facebook_secret%
+    cookie: %facebook_cookie%
+    permissions: %facebook_permissions%
 
 sonata_block:
     default_contexts: [cms]
@@ -270,7 +226,7 @@ sonata_doctrine_orm_admin:
 
 sonata_media:
     default_context: default
-    db_driver: doctrine_orm # or doctrine_mongodb
+    db_driver: doctrine_orm
     providers:
         image:
             thumbnail:  sonata.media.thumbnail.liip_imagine
@@ -289,9 +245,12 @@ sonata_media:
                 thumbnail:
                     width: 32
                     height: 32
-                medium:
-                    width: 200
-                    height: 300
+                search:
+                    width: 260
+                    height: 180
+                profile:
+                    width: 260
+                    height: 420
     cdn:
         server:
             #path: ''
@@ -321,11 +280,16 @@ liip_imagine:
             format: jpg
             filters:
                 thumbnail: { size: [32, 32], mode: outbound }
-        user_picture_medium:
+        user_picture_search:
             quality: 80
             format: jpg
             filters:
-                thumbnail: { size: [200, 300], mode: inset }
+                thumbnail: { size: [260, 180], mode: outbound }
+        user_picture_profile:
+            quality: 80
+            format: jpg
+            filters:
+                thumbnail: { size: [260, 420], mode: inset }
 
 sonata_intl:
     timezone:
@@ -349,13 +313,3 @@ old_sound_rabbit_mq:
     producers:
     consumers:
 
-knp_paginator:
-    page_range: 5                      # default page range used in pagination control
-    default_options:
-        page_name: page                # page query parameter name
-        sort_field_name: sort          # sort field query parameter name
-        sort_direction_name: direction # sort direction query parameter name
-        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
-    template:
-        pagination: MopaBootstrapBundle:Pagination:sliding.html.twig     # sliding pagination controls template
-        sortable: MopaBootstrapBundle:Pagination:sortable_link.html.twig # sort link template
