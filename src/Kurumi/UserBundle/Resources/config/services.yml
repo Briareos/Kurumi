@@ -73,16 +73,18 @@ services:
             - unknown: %unknown_avatar_gallery_id%
               male: %male_avatar_gallery_id%
               female: %female_avatar_gallery_id%
-    user_search_info_provider:
-        class: Kurumi\UserBundle\User\SearchInfoProvider
-    twig.extension.user_search_info_provider:
-        class: Kurumi\UserBundle\Twig\Extension\UserSearchInfoProvider
-        arguments: [ @user_search_info_provider ]
+            - @sonata.media.pool
+            - user_picture_thumbnail
+    user_profile_info_provider:
+        class: Kurumi\UserBundle\User\ProfileInfoProvider
+    twig.extension.user_profile_info_provider:
+        class: Kurumi\UserBundle\Twig\Extension\UserProfileInfoProvider
+        arguments: [ @user_profile_info_provider ]
         tags:
             - { name: twig.extension }
     twig.extension.user_picture_provider:
         class: Kurumi\UserBundle\Twig\Extension\UserPictureProvider
-        arguments: [@user_picture_provider]
+        arguments: [ @user_picture_provider ]
         tags:
             - { name: twig.extension }
     kernel.listener.nodejs_authenticator:

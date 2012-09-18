@@ -1,6 +1,6 @@
 <form novalidate id="user_login" action="{{ path('login_check') }}" method="post" class="login-form" data-ajax>
     {% if login_error is not empty %}
-    <p class="alert alert-error">
+    <p class="alert alert-error form-messages">
         {{ login_error.message }}
     </p>
     {% endif %}

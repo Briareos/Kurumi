@@ -20,6 +20,13 @@ class ProfileController extends Controller
     private $ajax;
 
     /**
+     * @DI\Inject("templating.ajax.helper")
+     *
+     * @var \Briareos\AjaxBundle\Ajax\Helper
+     */
+    private $ajaxHelper;
+
+    /**
      * @DI\Inject("router")
      *
      * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
@@ -38,20 +45,17 @@ class ProfileController extends Controller
         if ($subject === null) {
             $subject = $user;
         }
-        $own = $user->getId() === $subject->getId();
+        $ownProfile = $user->getId() === $subject->getId();
 
         $templateFile = 'UserBundle:Profile:view.html.twig';
         $templateParams = array(
             'user' => $user,
             'subject' => $subject,
-            'own' => $own,
+            'own_profile' => $ownProfile,
         );
 
         if ($this->getRequest()->isXmlHttpRequest()) {
-
-            $commands = new Ajax\CommandContainer();
-            $commands->add(new Ajax\Command\Page($this->ajax->renderBlock($templateFile, 'title', $templateParams), $this->ajax->renderBlock($templateFile, 'body', $templateParams), $this->router->generate('front')));
-            return new Ajax\Response($commands);
+            return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $this->router->generate('front'));
         } else {
             return $this->render($templateFile, $templateParams);
         }

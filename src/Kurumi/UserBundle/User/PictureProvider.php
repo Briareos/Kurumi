@@ -3,15 +3,25 @@
 namespace Kurumi\UserBundle\User;
 
 use Doctrine\ORM\EntityManager;
+use Sonata\MediaBundle\Provider\Pool;
+use Briareos\ChatBundle\Entity\ChatSubjectInterface;
 use Sonata\MediaBundle\Model\MediaInterface;
 use Kurumi\UserBundle\Entity\User;
+use Briareos\ChatBundle\Subject\PictureProviderInterface;
 
-class PictureProvider
+class PictureProvider implements PictureProviderInterface
 {
     private $pictures = array();
 
-    public function __construct(EntityManager $em, $className, array $galleries)
+    private $mediaService;
+
+    private $subjectPictureFormat;
+
+    public function __construct(EntityManager $em, $className, array $galleries, Pool $mediaService, $subjectPictureFormat)
     {
+        $this->mediaService = $mediaService;
+        $this->subjectPictureFormat = $subjectPictureFormat;
+
         $repository = $em->getRepository($className);
 
         $qb = $em->createQueryBuilder();
@@ -32,6 +42,28 @@ class PictureProvider
                 $this->addPicture($genderId, $galleryHasMedia->getMedia());
             }
         }
+    }
+
+    public function getSubjectPicture(ChatSubjectInterface $subject)
+    {
+        /** @var $subject User */
+        $media = $this->getPicture($subject);
+
+        $provider = $this->mediaService->getProvider($media->getProviderName());
+
+        $format = $provider->getFormatName($media, $this->subjectPictureFormat);
+
+        return $provider->generatePublicUrl($media, $format);
+        /*
+         * @see \Sonata\MediaBundle\Twig\Extension\MediaExtension
+         *
+        $options['src'] = $provider->generatePublicUrl($media, $format);
+
+        return $this->render($provider->getTemplate('helper_thumbnail'), array(
+            'media'    => $media,
+            'options'  => $options,
+        ));
+        */
     }
 
     public function getPicture(User $user)

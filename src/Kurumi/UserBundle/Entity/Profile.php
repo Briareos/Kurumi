@@ -3,9 +3,11 @@
 namespace Kurumi\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Kurumi\UserBundle\Entity\City;
 use Kurumi\UserBundle\Entity\User;
+use Kurumi\UserBundle\Entity\ProfileGallery;
 
 /**
  * Kurumi\UserBundle\Entity\Profile
@@ -16,7 +18,7 @@ use Kurumi\UserBundle\Entity\User;
 class Profile
 {
     /**
-     * @var integer $id
+     * @var integer
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -25,21 +27,21 @@ class Profile
     private $id;
 
     /**
-     * @var \DateTime $birthday
+     * @var \DateTime
      *
      * @ORM\Column(name="birthday", type="date", nullable=true)
      */
     private $birthday;
 
     /**
-     * @var int $gender
+     * @var int
      *
      * @ORM\Column(name="gender", type="smallint", nullable=true)
      */
     private $gender;
 
     /**
-     * @var string $firstName
+     * @var string
      *
      * @ORM\Column(name="firstName", type="string", length=255, nullable=true)
      */
@@ -70,7 +72,14 @@ class Profile
     private $user;
 
     /**
-     * @var \DateTime $created
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="ProfileGallery", mappedBy="profile")
+     */
+    private $profileGalleries;
+
+    /**
+     * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
@@ -86,26 +95,31 @@ class Profile
     private $updated;
 
     /**
-     * @var integer $lookingFor
+     * @var integer
      *
      * @ORM\Column(name="lookingFor", type="smallint", nullable=true)
      */
     private $lookingFor;
 
     /**
-     * @var integer|null $lookingAgedFrom
+     * @var integer|null
      *
      * @ORM\Column(name="lookingAgedFrom", type="smallint", nullable=true)
      */
     private $lookingAgedFrom;
 
     /**
-     * @var integer|null $lookingAgedTo
+     * @var integer|null
      *
      * @ORM\Column(name="lookingAgedTo", type="smallint", nullable=true)
      */
     private $lookingAgedTo;
 
+
+    public function __construct()
+    {
+        $this->profileGalleries = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -348,5 +362,21 @@ class Profile
         return $this->getBirthday()
             ->diff(new \DateTime('now', $this->getBirthday()->getTimezone()))
             ->y;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getProfileGalleries()
+    {
+        return $this->profileGalleries;
+    }
+
+    /**
+     * @param \Doctrine\Common\Collections\ArrayCollection $profileGalleries
+     */
+    public function setProfileGalleries($profileGalleries)
+    {
+        $this->profileGalleries = $profileGalleries;
     }
 }

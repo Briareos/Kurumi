@@ -123,7 +123,7 @@ lunetics_locale:
     cookie:
         set_on_detection: true
     switcher:
-        template: ::language_switcher.html.twig
+        template: ::locale_switcher.html.twig
 
 fos_facebook:
     file:   %kernel.root_dir%/../vendor/facebook/php-sdk/src/base_facebook.php
@@ -313,3 +313,5 @@ old_sound_rabbit_mq:
     producers:
     consumers:
 
+briareos_chat:
+    picture_provider: user_picture_provider

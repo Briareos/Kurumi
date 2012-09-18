@@ -1,0 +1,21 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    {% include 'PageBundle:Segment:navbar_top.html.twig' with {'active': own_profile ? 'home' : ''} %}
+    <div class="main container">
+        <h1>
+            {{ subject.name }}
+            <small>
+                {% if subject.profile.age %}
+                    {{ subject.profile.age }}
+                {% endif %}
+                {% if subject.profile.city %}
+                    , {{ subject.profile.city.name }}
+                {% endif %}
+            </small>
+        </h1>
+        <div class="row">
+            <div c
+        </div>
+    </div>
+{% endblock %}
