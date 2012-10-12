@@ -27,7 +27,7 @@ class UserProfileInfoProvider extends \Twig_Extension
     public function getGlobals()
     {
         return array(
-            'profile_info' => new $this->profileInfoProvider,
+            'profile_info' => $this->profileInfoProvider,
         );
     }
 }

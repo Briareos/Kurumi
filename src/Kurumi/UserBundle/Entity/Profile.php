@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Kurumi\UserBundle\Entity\City;
 use Kurumi\UserBundle\Entity\User;
-use Kurumi\UserBundle\Entity\ProfileGallery;
+use Application\Sonata\MediaBundle\Entity\Gallery;
 
 /**
  * Kurumi\UserBundle\Entity\Profile
@@ -72,13 +72,6 @@ class Profile
     private $user;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="ProfileGallery", mappedBy="profile")
-     */
-    private $profileGalleries;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime")
@@ -115,10 +108,33 @@ class Profile
      */
     private $lookingAgedTo;
 
+    /**
+     * @var Gallery
+     *
+     * @ORM\OneToOne(targetEntity="\Application\Sonata\MediaBundle\Entity\Gallery")
+     * @ORM\JoinColumn(name="galleryProfile_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $galleryProfile;
+
+    /**
+     * @var Gallery
+     *
+     * @ORM\OneToOne(targetEntity="\Application\Sonata\MediaBundle\Entity\Gallery")
+     * @ORM\JoinColumn(name="galleryPublic_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $galleryPublic;
+
+    /**
+     * @var Gallery
+     *
+     * @ORM\OneToOne(targetEntity="\Application\Sonata\MediaBundle\Entity\Gallery")
+     * @ORM\JoinColumn(name="galleryPrivate_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $galleryPrivate;
+
 
     public function __construct()
     {
-        $this->profileGalleries = new ArrayCollection();
     }
 
     /**
@@ -365,18 +381,51 @@ class Profile
     }
 
     /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
+     * @return \Application\Sonata\MediaBundle\Entity\Gallery
      */
-    public function getProfileGalleries()
+    public function getGalleryProfile()
     {
-        return $this->profileGalleries;
+        return $this->galleryProfile;
     }
 
     /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $profileGalleries
+     * @param \Application\Sonata\MediaBundle\Entity\Gallery $galleryProfile
      */
-    public function setProfileGalleries($profileGalleries)
+    public function setGalleryProfile(Gallery $galleryProfile = null)
     {
-        $this->profileGalleries = $profileGalleries;
+        $this->galleryProfile = $galleryProfile;
     }
+
+    /**
+     * @return \Application\Sonata\MediaBundle\Entity\Gallery
+     */
+    public function getGalleryPublic()
+    {
+        return $this->galleryPublic;
+    }
+
+    /**
+     * @param \Application\Sonata\MediaBundle\Entity\Gallery $galleryPublic
+     */
+    public function setGalleryPublic(Gallery $galleryPublic = null)
+    {
+        $this->galleryPublic = $galleryPublic;
+    }
+
+    /**
+     * @return \Application\Sonata\MediaBundle\Entity\Gallery
+     */
+    public function getGalleryPrivate()
+    {
+        return $this->galleryPrivate;
+    }
+
+    /**
+     * @param \Application\Sonata\MediaBundle\Entity\Gallery $galleryPrivate
+     */
+    public function setGalleryPrivate(Gallery $galleryPrivate = null)
+    {
+        $this->galleryPrivate = $galleryPrivate;
+    }
+
 }

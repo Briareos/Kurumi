@@ -106,7 +106,7 @@ Application\Sonata\MediaBundle\Entity\Media:
                 minWidth: 32
                 minHeight: 32
                 mimeTypesMessage: You must provide a valid picture in .jpg or .png format.
-                groups: [edit_picture]
+                groups: [user_picture]
             - NotBlank:
                 message: You must select a picture to upload.
-                groups: [edit_picture]
+                groups: [user_picture,profile_photo]

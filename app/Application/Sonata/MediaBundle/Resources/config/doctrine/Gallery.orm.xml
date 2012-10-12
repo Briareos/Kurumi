@@ -17,8 +17,5 @@
             <generator strategy="AUTO"/>
         </id>
 
-        <one-to-one field="profileGalleries" target-entity="Kurumi\UserBundle\Entity\ProfileGallery" mapped-by="gallery">
-        </one-to-one>
-
     </entity>
 </doctrine-mapping>

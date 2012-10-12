@@ -1,57 +1,8 @@
-{% extends '::base.html.twig' %}
+{% extends 'UserBundle:Profile:page.html.twig' %}
 
-{% block body %}
-
-    {% include 'PageBundle:Segment:navbar_top.html.twig' with {'active': (own_profile ? 'home' : false)} %}
-
-    <div class="container main">
-        <h1>
-            {{ subject.name }}
-            <small>
-                {% if subject.profile.age %}
-                    {{ subject.profile.age }}
-                {% endif %}
-                {% if subject.profile.city %}
-                    , {{ subject.profile.city.name }}
-                {% endif %}
-            </small>
-        </h1>
-        <div class="row">
-            <div class="span9">
-                <div class="row-fluid">
-                    <div class="span4">
-                        {% media user_picture(subject), 'profile' with {'class':'img-polaroid','title':''} %}
-                    </div>
-                    <div class="span8">
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a>Profile</a></li>
-                            {% if own_profile or profile_info.hasPhotos(subject.profile) %}
-                                <li><a href="{{ path('profile_photos',{'id':subject.id}) }}">Photos</a></li>
-                            {% else %}
-                                <li class="disabled"><a>Photos</a></li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="span3">
-                <ul class="nav nav-tabs nav-stacked">
-                    <li><a data-ajax href="#">Recent visitors <span class="badge pull-right"">2</span>
-                        <div class="clearfix"></div>
-                    </a></li>
-                    <li><a data-ajax href="#">Who likes me <span class="badge pull-right"">2</span>
-                        <div class="clearfix"></div>
-                    </a></li>
-                    <li><a data-ajax href="#">Who I like <span class="badge-empty pull-right">0</span>
-
-                        <div class="clearfix"></div>
-                    </a></li>
-                    <li><a data-ajax href="#">Mutual attractions <span class="badge pull-right"">2</span>
-                        <div class="clearfix"></div>
-                    </a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
+{% block profile_page %}
+    {% include 'UserBundle:Profile:tabs.html.twig' %}
+    <p>
+        {{ profile_info.getSearchInfo(subject.profile) }}
+    </p>
 {% endblock %}
