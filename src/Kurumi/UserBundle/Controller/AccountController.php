@@ -97,6 +97,8 @@ class AccountController extends Controller
                 $this->em->persist($user);
                 $this->em->flush();
                 $this->session->getFlashBag()->add('success', "Your name was successfully changed.");
+
+                return $this->redirect($this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters()));
             }
         }
 
@@ -107,11 +109,7 @@ class AccountController extends Controller
         );
         if ($this->getRequest()->isXmlHttpRequest()) {
             if ($userNameForm->isBound()) {
-                if ($userNameForm->isValid()) {
-                    return $this->redirect($this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters()));
-                } else {
-                    return $this->ajaxHelper->renderAjaxForm('UserBundle:Form:edit_user_name_form.html.twig', $templateParams);
-                }
+                return $this->ajaxHelper->renderAjaxForm('UserBundle:Form:edit_user_name_form.html.twig', $templateParams);
             } else {
                 $url = $this->router->generate('account_edit_name');
                 return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, 'edit_account');
@@ -138,6 +136,8 @@ class AccountController extends Controller
                 $this->em->persist($user);
                 $this->em->flush();
                 $this->session->getFlashBag()->add('success', "Your email has been updated.");
+
+                return $this->redirect($this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters()));
             }
         }
 
@@ -149,11 +149,7 @@ class AccountController extends Controller
 
         if ($this->getRequest()->isXmlHttpRequest()) {
             if ($editEmailForm->isBound()) {
-                if ($editEmailForm->isValid()) {
-                    return $this->redirect($this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters()));
-                } else {
-                    return $this->ajaxHelper->renderAjaxForm('UserBundle:Form:edit_user_email_form.html.twig', $templateParams);
-                }
+                return $this->ajaxHelper->renderAjaxForm('UserBundle:Form:edit_user_email_form.html.twig', $templateParams);
             } else {
                 $url = $this->router->generate('account_edit_email');
                 return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, 'edit_account');
@@ -180,6 +176,8 @@ class AccountController extends Controller
                 $this->em->persist($user);
                 $this->em->flush();
                 $this->session->getFlashBag()->add('success', "Your password has been updated.");
+
+                return $this->redirect($this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters()));
             }
         }
 
@@ -191,11 +189,7 @@ class AccountController extends Controller
 
         if ($this->getRequest()->isXmlHttpRequest()) {
             if ($editPasswordForm->isBound()) {
-                if ($editPasswordForm->isValid()) {
-                    return $this->redirect($this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters()));
-                } else {
-                    return $this->ajaxHelper->renderAjaxForm('UserBundle:Form:edit_user_password_form.html.twig', $templateParams);
-                }
+                return $this->ajaxHelper->renderAjaxForm('UserBundle:Form:edit_user_password_form.html.twig', $templateParams);
             } else {
                 $url = $this->router->generate('account_edit_password');
                 return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, 'edit_account');
@@ -234,9 +228,13 @@ class AccountController extends Controller
                     $em->remove($oldPicture);
                     $this->session->getFlashBag()->add('success', "Your profile picture has been updated.");
                 }
+                /*
+                 * @TODO implement asynchronous user picture refresh
                 $pictureChangedMessage = new Message('pictureChanged');
                 $pictureChangedMessage->setChannel(sprintf('user_%s', $user->getId()));
                 $this->nodejsDispatcher->dispatch($pictureChangedMessage);
+                */
+
             }
         }
 
@@ -271,7 +269,6 @@ class AccountController extends Controller
                 }
             }
         } else {
-            // Not an ajax request.
             if ($userPictureForm->isBound() && $userPictureForm->isValid()) {
                 return $this->redirect($this->generateUrl('account_edit_picture'));
             } else {
@@ -313,7 +310,7 @@ class AccountController extends Controller
             $profile = new Profile();
             $user->setProfile($profile);
         } else {
-            //$this->session->getFlashBag()->add('warning', "Your profile is incomplete. Please fill in the information below.");
+            $this->session->getFlashBag()->add('warning', "Your profile is incomplete. Please fill in the information below.");
         }
 
 
@@ -334,6 +331,10 @@ class AccountController extends Controller
             $activeRoute = 'home';
         }
 
+        if ($createProfileForm->isBound() && $createProfileForm->isValid()) {
+            return $this->redirect($this->router->generate($route, $this->ajaxHelper->getPjaxParameters()));
+        }
+
         $templateFile = 'UserBundle:Account:fill_profile_page.html.twig';
         $templateParams = array(
             'user' => $user,
@@ -341,10 +342,6 @@ class AccountController extends Controller
             'active' => $activeRoute,
             'route' => $route,
         );
-
-        if ($createProfileForm->isBound() && $createProfileForm->isValid()) {
-            return $this->redirect($this->router->generate($route, $this->ajaxHelper->getPjaxParameters()));
-        }
 
         if ($this->getRequest()->isXmlHttpRequest()) {
             if ($createProfileForm->isBound()) {
