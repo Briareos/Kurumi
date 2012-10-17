@@ -3,6 +3,7 @@
 namespace Kurumi\UserBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
+use Kurumi\UserBundle\Entity\City;
 use Kurumi\UserBundle\City\CityFinderInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 use Symfony\Component\Form\Exception\TransformationFailedException;
@@ -101,8 +102,7 @@ class CityToCityNameTransformer implements DataTransformerInterface
         }
 
         try {
-            /** @var $city \Kurumi\UserBundle\Entity\City */
-            $city = $this->cityFinder->find($this->cityClass, $value);
+            $city = $this->cityFinder->find(new City(), $value);
             if (!$city) {
                 return null;
             }

@@ -3,6 +3,8 @@
 namespace Kurumi\UserBundle\City;
 
 use Kurumi\UserBundle\City\CityFinderInterface;
+use Kurumi\UserBundle\Entity\CityInterface;
+use Kurumi\UserBundle\Entity\City;
 
 class YahooCityFinder implements CityFinderInterface
 {
@@ -34,20 +36,17 @@ class YahooCityFinder implements CityFinderInterface
     }
 
     /**
-     * @param $cityClass
+     * @param City
      * @param $name
      *
      * @return \Kurumi\UserBundle\Entity\City|null
      */
-    public function find($cityClass, $name)
+    public function find(CityInterface $city, $name)
     {
         $result = $this->lookup($name);
         if($result === null) {
             return null;
         }
-
-        /** @var $city \Kurumi\UserBundle\Entity\City */
-        $city = new $cityClass();
 
         $city->setLatitude($result['latitude']);
         $city->setLongitude($result['longitude']);

@@ -35,7 +35,7 @@ twig:
             - "BriareosAclBundle::fields.html.twig"
     exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
     globals:
-        site_name:  Kurumi
+        site_name:          Kurumi
         main_firewall_name: %main_firewall_name%
 
 # Assetic Configuration
@@ -45,7 +45,7 @@ assetic:
     bundles:
         - PageBundle
         - UserBundle
-    read_from: %kernel.root_dir%/../webroot
+    read_from: %kernel.root_dir%/../web
     node: "C:/Program Files (x86)/nodejs/node.exe"
     java: "C:/Program Files (x86)/Java/jre7/bin/java.exe"
     filters:
@@ -258,13 +258,13 @@ sonata_media:
 
     filesystem:
         local:
-            directory:  %kernel.root_dir%/../webroot/uploads/media
+            directory:  %kernel.root_dir%/../web/uploads/media
             create:     false
 
 liip_imagine:
     driver:             gd
-    web_root:           %kernel.root_dir%/../webroot
-    data_root:          %kernel.root_dir%/../webroot
+    web_root:           %kernel.root_dir%/../web
+    data_root:          %kernel.root_dir%/../web
     cache_prefix:       /media/cache
     cache:              web_path
     data_loader:        filesystem
@@ -313,5 +313,17 @@ old_sound_rabbit_mq:
     producers:
     consumers:
 
+briareos_nodejs:
+    dispatcher:
+        secure: false
+        host: symfony.servehttp.com
+        port: 8080
+        resource: /socket.io
+        service_key: kurumi2012
+        connect_timeout: 5000
+    authenticator:
+        lifetime: 900
+
 briareos_chat:
     picture_provider: user_picture_provider
+

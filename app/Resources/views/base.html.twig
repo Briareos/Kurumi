@@ -4,85 +4,50 @@
     <meta charset="utf-8">
     <title>{{ block('title') }}</title>
 
+    {# Pjax IE fix#}
+    <script type="text/javascript">
+
+    </script>
+
     {# jQuery #}
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
 
+    {# Bootstrap JS #}
     <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
-    {% if 0 %}
-    {% javascripts
-    '@BriareosAjaxBundle/Resources/public/js/jquery.form.js'
-    '@BriareosAjaxBundle/Resources/public/js/jquery.history.js'
-    '@BriareosAjaxBundle/Resources/public/js/ajax.js'
-    filter='?yui_js'
-    output = 'js-compiled/ajax.js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-    {% else %}
+
+    {# Ajax JS #}
     <script src="{{ asset('bundles/briareosajax/js/jquery.form.js') }}"></script>
     <script src="{{ asset('bundles/briareosajax/js/jquery.history.js') }}"></script>
     <script src="{{ asset('bundles/briareosajax/js/ajax.js') }}"></script>
-    {% endif %}
-    {# Twitter bootstrap #}
+
+    {# Bootstrap CSS #}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css">
-    {# Page style #}
-    <link rel="stylesheet" href="//symfony.servehttp.com:1337/less/style.less">
-    {# Nodejs and chat #}
-    {% if 0 %}
-    {% javascripts
-    '@BriareosNodejsBundle/Resources/public/js/nodejs.js'
-    '@BriareosChatBundle/Resources/public/js/chat.js'
-    filter = '?yui_js'
-    output = 'js-compiled/chat.js' %}
-    <script type="text/javascript" src="{{ asset_url }}"></script>
-    {% endjavascripts %}
-    {% else %}
+
+    {# Nodejs and chat CSS #}
     <script src="{{ asset('bundles/briareosnodejs/js/nodejs.js') }}"></script>
     <script src="{{ asset('bundles/briareoschat/js/chat.js') }}"></script>
-    {% endif %}
-    <script type="text/javascript" src="//{{ nodejs.host }}:{{ nodejs.port }}{{ nodejs.resource }}/socket.io.js"></script>
-    <link rel="stylesheet" href="{{ asset('bundles/briareoschat/css/chat.css') }}">
-    <script type="text/javascript">
-        {% import 'BriareosChatBundle:Chat:chat_template.html.twig' as chat %}
-        $(document).ready(function () {
-            window.NodejsSettings = {
-                secure:false,
-                host:'{{ nodejs.host }}',
-                port:{{ nodejs.port }},
-                resource:'{{ nodejs.resource }}',
-                connectTimeout:{{ nodejs.connect_timeout }},
-                contentTokens:''
-            };
 
-            window.ChatSettings = {
-                container:'body',
-                tpl:{
-                    status:'{{ chat.status() }}',
-                    user:'{{ chat.user() }}',
-                    window:'{{ chat.window() }}',
-                    message:'{{ chat.message() }}',
-                    messages:'{{ chat.messages() }}',
-                    chat:'{{ chat.chat() }}'
-                },
-                url:{
-                    cache:'{{ path('briareos_chat_cache') }}',
-                    activate:'{{ path('briareos_chat_activate') }}',
-                    close:'{{ path('briareos_chat_close') }}',
-                    send:'{{ path('briareos_chat_send') }}',
-                    ping:'{{ path('briareos_chat_ping') }}'
-                }
-            };
-        });
-    </script>
+    {# Page CSS #}
+    <link rel="stylesheet" href="//symfony.servehttp.com:1337/less/style.less">
+
+    {# Socket.IO #}
+    <script type="text/javascript" src="//{{ nodejs.host }}:{{ nodejs.port }}{{ nodejs.resource }}/socket.io.js"></script>
+
+    {# Chat CSS #}
+    <link rel="stylesheet" href="{{ asset('bundles/briareoschat/css/chat.css') }}">
+
+    {# Page JS #}
     <script src="{{ asset('js/core.js') }}"></script>
+
+    {# JS settings loader #}
     <script>
         $(function () {
-            $.each({{ javascript_settings()|json_encode|raw }}, function (index, eventSettings) {
-                window.setSettings(eventSettings.name, eventSettings.settings, $('body'));
+            $.each({{ javascript_settings()|json_encode|raw }}, function (index, javascriptSettings) {
+                window.setSettings(javascriptSettings.name, javascriptSettings.settings, $('body'));
             });
         });
     </script>
-
 </head>
 <body>
 <div data-pjax-container="body">

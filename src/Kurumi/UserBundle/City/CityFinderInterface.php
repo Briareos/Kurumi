@@ -2,9 +2,14 @@
 
 namespace Kurumi\UserBundle\City;
 
+use Kurumi\UserBundle\Entity\CityInterface;
+
 interface CityFinderInterface
 {
-    public function lookup($name);
-
-    public function find($cityClass, $name);
+    /**
+     * @param $city
+     * @param $name
+     * @return CityInterface|null
+     */
+    public function find(CityInterface $city, $name);
 }

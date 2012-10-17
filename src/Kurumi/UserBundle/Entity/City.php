@@ -4,6 +4,7 @@ namespace Kurumi\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kurumi\UserBundle\Entity\Profile;
+use Kurumi\UserBundle\Entity\CityInterface;
 
 /**
  * Kurumi\UserBundle\Entity\City
@@ -11,7 +12,7 @@ use Kurumi\UserBundle\Entity\Profile;
  * @ORM\Table(name="city")
  * @ORM\Entity(repositoryClass="Kurumi\UserBundle\Entity\CityRepository")
  */
-class City
+class City implements CityInterface
 {
     /**
      * @var integer $id

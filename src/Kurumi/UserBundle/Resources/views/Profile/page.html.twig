@@ -20,7 +20,9 @@
             <div class="span9">
                 <div class="row-fluid">
                     <div class="span4">
+                        <a href="{{ path('account_edit_picture') }}" data-ajax data-modal>
                         {% media user_picture(subject), 'profile' with {'class':'img-polaroid','title':''} %}
+                        </a>
                     </div>
                     <div class="span8">
                         <div data-pjax-container="profile_page">

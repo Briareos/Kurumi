@@ -16,11 +16,11 @@ use JMS\DiExtraBundle\Annotation as DI;
 class FrontController extends Controller
 {
     /**
-     * @DI\Inject("templating.ajax")
+     * @DI\Inject("templating.ajax.helper")
      *
-     * @var \Briareos\AjaxBundle\Twig\AjaxEngine
+     * @var \Briareos\AjaxBundle\Ajax\Helper
      */
-    private $ajax;
+    private $ajaxHelper;
 
     /**
      * @DI\Inject("router")
@@ -61,7 +61,7 @@ class FrontController extends Controller
             $loginError = $session->get(SecurityContext::AUTHENTICATION_ERROR);
             $session->remove(SecurityContext::AUTHENTICATION_ERROR);
         }
-        if($session && $session->has(SecurityContext::LAST_USERNAME)){
+        if ($session && $session->has(SecurityContext::LAST_USERNAME)) {
             $lastUsername = $session->get(SecurityContext::LAST_USERNAME);
         }
 
@@ -74,9 +74,11 @@ class FrontController extends Controller
         );
 
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $commands = new Ajax\CommandContainer();
-            $commands->add(new Ajax\Command\Page($this->ajax->renderBlock($templateFile, 'title', $templateParams), $this->ajax->renderBlock($templateFile, 'body', $templateParams), $this->router->generate('front')));
-            return new Ajax\Response($commands);
+            if ($loginError) {
+                return $this->ajaxHelper->renderAjaxForm('UserBundle:Form:login_form.html.twig', $templateParams);
+            } else {
+                return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $this->router->generate('front'));
+            }
         } else {
             return $this->render($templateFile, $templateParams);
         }

@@ -18,6 +18,9 @@ security:
             entity: { class: UserBundle:User, property: email }
 
     firewalls:
+        nodejs:
+            pattern: ^/nodejs/message
+            security: false
         main:
             pattern: ^/
             form_login:
@@ -43,8 +46,7 @@ security:
                 remember_me_parameter: remember_me
 
     access_control:
-        - { path: ^/,               roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
-        - { path: ^/login_check$,    roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
-        - { path: ^/logout$,         roles: [IS_AUTHENTICATED_REMEMBERED] }
-        - { path: ^/admin/,         roles: [administrator] }
-        - { path: ^/nodejs/message/,    roles: [IS_AUTHENTICATED_ANONYMOUSLY]    ip: 94.189.205.1 }
+        - { path: ^/,                   roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
+        - { path: ^/login_check$,       roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
+        - { path: ^/logout$,            roles: [IS_AUTHENTICATED_REMEMBERED] }
+        - { path: ^/admin/,             roles: [administrator] }

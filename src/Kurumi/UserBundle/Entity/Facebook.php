@@ -24,14 +24,14 @@ class Facebook
     private $id;
 
     /**
-     * @var bigint $facebookId
+     * @var string $facebookId
      *
-     * @ORM\Column(name="facebookId", type="bigint")
+     * @ORM\Column(name="facebookId", type="string", length=255)
      */
     private $facebookId;
 
     /**
-     * @var datetime $created
+     * @var \DateTime $created
      *
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
@@ -42,7 +42,7 @@ class Facebook
      * @var User
      *
      * @ORM\OneToOne(targetEntity="User", inversedBy="facebook")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *
      */
     private $user;
@@ -60,7 +60,7 @@ class Facebook
     /**
      * Set facebookId
      *
-     * @param bigint $facebookId
+     * @param string $facebookId
      * @return Facebook
      */
     public function setFacebookId($facebookId)
@@ -72,7 +72,7 @@ class Facebook
     /**
      * Get facebookId
      *
-     * @return bigint 
+     * @return string
      */
     public function getFacebookId()
     {
@@ -82,7 +82,7 @@ class Facebook
     /**
      * Set created
      *
-     * @param datetime $created
+     * @param \DateTime $created
      * @return Facebook
      */
     public function setCreated($created)
@@ -94,7 +94,7 @@ class Facebook
     /**
      * Get created
      *
-     * @return datetime 
+     * @return \DateTime
      */
     public function getCreated()
     {
@@ -104,7 +104,7 @@ class Facebook
     /**
      * Set user
      *
-     * @param Kurumi\UserBundle\Entity\User $user
+     * @param \Kurumi\UserBundle\Entity\User $user
      * @return Facebook
      */
     public function setUser(\Kurumi\UserBundle\Entity\User $user = null)
@@ -116,7 +116,7 @@ class Facebook
     /**
      * Get user
      *
-     * @return Kurumi\UserBundle\Entity\User 
+     * @return \Kurumi\UserBundle\Entity\User
      */
     public function getUser()
     {

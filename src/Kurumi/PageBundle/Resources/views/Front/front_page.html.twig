@@ -12,6 +12,28 @@
                         <img src="http://symfony.servehttp.com/images/logo.png" height="57"/>
                         <h4 class="slogan">{{ 'page.front.motto'|trans }}</h4>
 
+                        <div class="btn-group connect-with">
+                            <a href="{{ path('facebook_connect') }}" data-oauth data-loader="#oauth-loader" class="btn btn-primary">Connect with <span class="connect-facebook">Facebook</span></a>
+                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                or… <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><span class="connect-yahoo"></span> Yahoo!</a></li>
+                                <li><a href="#"><span class="connect-google"></span> Google</a></li>
+                                <li><a href="#"><span class="connect-msn"></span> MSN</a></li>
+                            </ul>
+                        </div>
+
+                        <div id="oauth-loader" class="hide">
+                            <p class="white-text">
+                                Logging you in, please wait...
+                            </p>
+
+                            <div class="progress progress-striped active">
+                                <div class="bar" style="width: 50%;"></div>
+                            </div>
+                        </div>
+
                         <div class="meet-message">
                             {% if geocoded is empty or geocoded.city is empty %}
                                 {{ 'page.front.meet_your_area'|trans }}
@@ -25,6 +47,7 @@
                             {{ locale_switcher() }}
                         </div>
                         <h3 class="login-header">{{ 'page.front.log_in'|trans }}</h3>
+
                         {% include 'UserBundle:Form:login_form.html.twig' %}
 
                         <div class="register-form-container well">

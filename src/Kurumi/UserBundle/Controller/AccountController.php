@@ -21,13 +21,6 @@ use Kurumi\UserBundle\Form\Type\UserPictureFormType;
 class AccountController extends Controller
 {
     /**
-     * @DI\Inject("templating.ajax")
-     *
-     * @var \Briareos\AjaxBundle\Twig\AjaxEngine
-     */
-    private $ajax;
-
-    /**
      * @DI\Inject("templating.ajax.helper")
      *
      * @var \Briareos\AjaxBundle\Ajax\Helper
@@ -254,7 +247,7 @@ class AccountController extends Controller
         );
 
         if ($request->isXmlHttpRequest()) {
-            if ($this->getRequest()->query->getInt('modal', 0)) {
+            if ($this->ajaxHelper->isModal()) {
                 $modalTemplateFile = 'UserBundle:Form:edit_user_picture_modal_form.html.twig';
                 if ($userPictureForm->isBound()) {
                     if ($userPictureForm->isValid()) {

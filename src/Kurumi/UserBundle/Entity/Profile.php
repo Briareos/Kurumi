@@ -17,6 +17,10 @@ use Application\Sonata\MediaBundle\Entity\Gallery;
  */
 class Profile
 {
+    const GENDER_MALE = 1;
+
+    const GENDER_FEMALE = 2;
+
     /**
      * @var integer
      *

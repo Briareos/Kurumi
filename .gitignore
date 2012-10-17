@@ -3,14 +3,15 @@
 .idea/
 cgi-bin/
 certs/
+webroot/
 
-webroot/bundles/
-webroot/uploads/
-webroot/media/
-webroot/bootstrap/
-webroot/css-compiled/
-webroot/js-compiled/
-webroot/php_errors.log
+web/bundles/
+web/uploads/
+web/media/
+web/bootstrap/
+web/css-compiled/
+web/js-compiled/
+web/php_errors.log
 
 app/cache/
 app/logs/
