@@ -80,8 +80,7 @@ class UserAdmin extends Admin
             'property' => 'name',
             'expanded' => true,
             'required' => false,
-            'query_builder' => function(EntityRepository $er)
-            {
+            'query_builder' => function (EntityRepository $er) {
                 $qb = $er->createQueryBuilder('r');
                 // Exclude built-in roles.
                 $qb->where($qb->expr()->neq('r.internalRole', AclRole::AUTHENTICATED_USER), $qb->expr()->neq('r.internalRole', AclRole::ANONYMOUS_USER));
@@ -90,8 +89,7 @@ class UserAdmin extends Admin
         ))
             ->end()
             ->with("Profile")
-            ->add('profile', null, array(
-        ), array(
+            ->add('profile', null, array(), array(
             'edit' => 'list',
         ))->end();
     }
@@ -103,6 +101,9 @@ class UserAdmin extends Admin
             ->add('name')
             ->add('profile', null, array(
             'template' => 'UserBundle:CRUD:list_profile.html.twig',
+        ))
+            ->add('oauth', null, array(
+            'template'=>'UserBundle:CRUD:list_oauth.html.twig'
         ))
             ->add('_actions', 'actions', array(
             'actions' => array(

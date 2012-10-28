@@ -1,7 +1,23 @@
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /connect
+
+login_check_facebook:
+    pattern: /login/check-facebook
+
+login_check_google:
+    pattern: /login/check-google
+
+login_check_windows_live:
+    pattern: /login/check-windows_live
+
+login_check_yahoo:
+    pattern: /login/check-yahoo
+
 play:
     resource: "@PlayBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /connect
 
 front:
     pattern: /

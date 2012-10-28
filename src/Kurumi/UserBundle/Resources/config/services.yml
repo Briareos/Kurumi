@@ -37,11 +37,6 @@ services:
     user_manager:
         class: Kurumi\UserBundle\Entity\UserManager
         arguments: [ @security.encoder_factory ]
-    # Register/login users via Facebook OAuth #
-    facebook.user:
-        class: Kurumi\UserBundle\Security\User\Provider\FacebookProvider
-        arguments: [@fos_facebook.api, @doctrine.orm.entity_manager, @validator]
-
     # Sonata Admin Bundle services #
     sonata.admin.user:
         class: Kurumi\UserBundle\Admin\UserAdmin
@@ -114,15 +109,21 @@ services:
         arguments: [ @security.context, @router ]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: -32 }
-    facebook:
-        class: Facebook
+    oauth.login.user_provider:
+        class: Kurumi\UserBundle\OAuth\Login\UserProvider
         arguments:
             -
-                appId: %facebook_app_id%
-                secret: %facebook_secret%
-                fileUpload: true
-    oauth.provider.facebook:
-        class: Kurumi\UserBundle\OAuth\FacebookProvider
-        arguments:
-            - @facebook
-            - [email]
+                login_facebook: @oauth.login.user_provider.facebook
+                login_google: @oauth.login.user_provider.google
+            - @doctrine.orm.default_entity_manager
+            - @service_container # must be used to prevent circular reference to @security.context *shrug*
+    oauth.login.user_provider.abstract:
+        class: Kurumi\UserBundle\OAuth\Login\AbstractUserProvider
+        calls:
+            - [ setEntityManager, [ @doctrine.orm.default_entity_manager ] ]
+    oauth.login.user_provider.facebook:
+        class: Kurumi\UserBundle\OAuth\Login\FacebookUserProvider
+        parent: oauth.login.user_provider.abstract
+    oauth.login.user_provider.google:
+        class: Kurumi\UserBundle\OAuth\Login\GoogleUserProvider
+        parent: oauth.login.user_provider.abstract

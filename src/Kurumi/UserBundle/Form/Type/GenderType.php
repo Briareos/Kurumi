@@ -1,6 +1,6 @@
 <?php
 
-namespace Kurumi\ UserBundle\Form\Type;
+namespace Kurumi\UserBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;

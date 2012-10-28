@@ -7,7 +7,7 @@ webroot/
 
 web/bundles/
 web/uploads/
-web/media/
+web/media/cache/
 web/bootstrap/
 web/css-compiled/
 web/js-compiled/

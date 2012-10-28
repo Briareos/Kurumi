@@ -8,7 +8,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Kurumi\UserBundle\Entity\Profile;
-use Kurumi\UserBundle\Entity\Facebook;
 use Application\Sonata\MediaBundle\Entity\Media;
 use Briareos\ChatBundle\Entity\ChatSubjectInterface;
 use Briareos\AclBundle\Entity\AclSubjectInterface;
@@ -110,11 +109,11 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     private $picture;
 
     /**
-     * @var Facebook
+     * @var OAuth
      *
-     * @ORM\OneToOne(targetEntity="Facebook", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="OAuth", mappedBy="user", orphanRemoval=true)
      */
-    private $facebook;
+    private $oauth;
 
     /**
      * @var ArrayCollection
@@ -154,6 +153,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
         $this->salt = $this->generateSalt();
         $this->password = null;
         $this->timezone = null;
+        $this->oauth = new ArrayCollection();
         $this->aclRoles = new ArrayCollection();
     }
 
@@ -346,23 +346,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     }
 
     /**
-     * @return \Kurumi\UserBundle\Entity\Facebook|null
-     */
-    public function getFacebook()
-    {
-        return $this->facebook;
-    }
-
-    /**
-     * @param \Kurumi\UserBundle\Entity\Facebook|null $facebook
-     */
-    public function setFacebook(Facebook $facebook = null)
-    {
-        $this->facebook = $facebook;
-        return $this;
-    }
-
-    /**
      * Set createdAt
      *
      * @param \DateTime $createdAt
@@ -550,5 +533,21 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
+    }
+
+    /**
+     * @return \Kurumi\UserBundle\Entity\OauthEntityInterface
+     */
+    public function getOauth()
+    {
+        return $this->oauth;
+    }
+
+    /**
+     * @param \Kurumi\UserBundle\Entity\OauthEntityInterface $oauth
+     */
+    public function setOauth($oauth)
+    {
+        $this->oauth = $oauth;
     }
 }

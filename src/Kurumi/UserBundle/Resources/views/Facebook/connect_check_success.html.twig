@@ -3,10 +3,10 @@
 {% block body %}
 <script type="text/javascript">
     if(window.opener) {
-        window.opener.OAuthCallback('{{ path('facebook_connect_finalize') }}');
+        window.opener.OAuthCallback('{{ path('oauth_facebook_finalize') }}');
         self.close();
     } else {
-        window.location.href = '{{ path('facebook_connect_finalize') }}';
+        window.location.href = '{{ path('oauth_facebook_finalize') }}';
     }
 </script>
 {% endblock %}

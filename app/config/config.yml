@@ -125,14 +125,6 @@ lunetics_locale:
     switcher:
         template: ::locale_switcher.html.twig
 
-fos_facebook:
-    file:   %kernel.root_dir%/../vendor/facebook/php-sdk/src/base_facebook.php
-    alias:  %facebook_alias%
-    app_id: %facebook_app_id%
-    secret: %facebook_secret%
-    cookie: %facebook_cookie%
-    permissions: %facebook_permissions%
-
 sonata_block:
     default_contexts: [cms]
     blocks:
@@ -327,3 +319,30 @@ briareos_nodejs:
 briareos_chat:
     picture_provider: user_picture_provider
 
+hwi_oauth:
+    firewall_name: main
+    resource_owners:
+        login_facebook:
+            type:           facebook
+            client_id:      %facebook_client_id%
+            client_secret:  %facebook_secret%
+            scope:          "email,user_birthday,user_location"
+        login_google:
+            type:           google
+            client_id:      %google_client_id%
+            client_secret:  %google_secret%
+            scope:          "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+        login_yahoo:
+            type:           yahoo
+            client_id:      %yahoo_client_id%
+            client_secret:  %yahoo_secret%
+        login_windows_live:
+            type:           windows_live
+            client_id:      %windows_live_client_id%
+            client_secret:  %windows_live_secret%
+            scope:          "wl.basic,wl.birthday"
+    http_client:
+        timeout:       5
+        verify_peer:   false
+        ignore_errors: false
+        max_redirects: 5

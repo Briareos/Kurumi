@@ -50,7 +50,7 @@ $(function () {
     $context.on('click', 'a[data-oauth]', function (event) {
         var $link = $(this);
         var OAuthWindow;
-        if ($link.data('oauth_window') !== undefined) {
+        if ($link.data('oauth_window')) {
             OAuthWindow = $link.data('oauth_window');
             OAuthWindow.focus();
         } else {
@@ -60,7 +60,7 @@ $(function () {
         var watchClose = setInterval(function () {
             if (OAuthWindow.closed) {
                 clearTimeout(watchClose);
-                $link.data('oauth_window', undefined);
+                $link.data('oauth_window', false);
             }
         }, 200);
         window.OAuthCallback = function (url) {

@@ -23,7 +23,6 @@ class AppKernel extends Kernel
 
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
-            new FOS\FacebookBundle\FOSFacebookBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
 
             new Sonata\AdminBundle\SonataAdminBundle(),
@@ -40,6 +39,7 @@ class AppKernel extends Kernel
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
 
             new Kurumi\UserBundle\UserBundle(),
             new Kurumi\PageBundle\PageBundle(),

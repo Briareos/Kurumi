@@ -67,10 +67,8 @@ class SearchController extends Controller
         $qb->addSelect('u As user');
         $qb->addSelect('p'); // User.Profile
         $qb->addSelect('c'); // User.Profile.City
-        $qb->addSelect('f'); // User.Facebook
         $qb->innerJoin('u.profile', 'p');
         $qb->innerJoin('p.city', 'c');
-        $qb->leftJoin('u.facebook', 'f');
         $qb->where($qb->expr()->neq('u.id', $user->getId())); // Exclude current user.
 
         // Show only users that have no age preference, or the current user falls into it.

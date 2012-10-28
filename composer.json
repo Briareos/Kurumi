@@ -23,8 +23,6 @@
         "jms/security-extra-bundle":"1.2.*",
         "jms/di-extra-bundle":"1.1.*",
         "lunetics/locale-bundle":"2.1.*",
-        "friendsofsymfony/facebook-bundle":"dev-master",
-        "facebook/php-sdk":"dev-master",
         "stof/doctrine-extensions-bundle":"dev-master",
         "sonata-project/admin-bundle":"dev-master",
         "sonata-project/doctrine-orm-admin-bundle":"dev-master",
@@ -52,13 +50,13 @@
         "imagine/imagine":"0.3.0",
         "oldsound/rabbitmq-bundle":"dev-master",
         "fzaninotto/faker":"v1.0.0",
-        "zendframework/zend-paginator":"2.0.*",
+        "zendframework/zend-paginator":"2.0.3",
         "hwi/oauth-bundle":"dev-master"
     },
     "repositories":[
         {
-            "type":"composer",
-            "url":"http://packages.zendframework.com/"
+            "type": "composer",
+            "url": "http://packages.zendframework.com/"
         },
         {
             "type":"package",

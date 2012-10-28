@@ -23,6 +23,15 @@ security:
             security: false
         main:
             pattern: ^/
+            oauth:
+                login_path:             /
+                failure_path:           /oauth/failure
+                default_target_path:    /oauth/success
+                resource_owners:
+                    login_facebook:     /login/check-facebook
+                    login_google:       /login/check-google
+                oauth_user_provider:
+                    service: oauth.login.user_provider
             form_login:
                 username_parameter: email
                 password_parameter: password

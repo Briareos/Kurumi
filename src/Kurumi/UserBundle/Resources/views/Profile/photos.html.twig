@@ -1,6 +1,9 @@
 {% extends 'UserBundle:Profile:page.html.twig' %}
 
 {% block profile_page %}
+
+    {% include 'PageBundle::flash_messages.html.twig' with {'messages':app.session.flashbag.all()} %}
+
     {% include 'UserBundle:Profile:tabs.html.twig' %}
     <fieldset>
         <legend>

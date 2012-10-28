@@ -9,10 +9,10 @@ use Kurumi\UserBundle\Entity\User;
 /**
  * Kurumi\UserBundle\Entity\Facebook
  *
- * @ORM\Table(name="facebook")
+ * @ORM\Table(name="oauth")
  * @ORM\Entity
  */
-class Facebook
+class OAuth
 {
     /**
      * @var integer $id
@@ -24,11 +24,18 @@ class Facebook
     private $id;
 
     /**
-     * @var string $facebookId
+     * @var string
      *
-     * @ORM\Column(name="facebookId", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $facebookId;
+    private $name;
+
+    /**
+     * @var string $oauthId
+     *
+     * @ORM\Column(name="oauthId", type="string", length=255)
+     */
+    private $oauthId;
 
     /**
      * @var \DateTime $created
@@ -41,11 +48,18 @@ class Facebook
     /**
      * @var User
      *
-     * @ORM\OneToOne(targetEntity="User", inversedBy="facebook")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="oauth")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *
      */
     private $user;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
 
     /**
      * Get id
@@ -58,25 +72,25 @@ class Facebook
     }
 
     /**
-     * Set facebookId
+     * Set Facebook ID
      *
-     * @param string $facebookId
+     * @param string $oauthId
      * @return Facebook
      */
-    public function setFacebookId($facebookId)
+    public function setOauthId($oauthId)
     {
-        $this->facebookId = $facebookId;
+        $this->oauthId = $oauthId;
         return $this;
     }
 
     /**
-     * Get facebookId
+     * Get Facebook ID
      *
      * @return string
      */
-    public function getFacebookId()
+    public function getOauthId()
     {
-        return $this->facebookId;
+        return $this->oauthId;
     }
 
     /**
@@ -107,7 +121,7 @@ class Facebook
      * @param \Kurumi\UserBundle\Entity\User $user
      * @return Facebook
      */
-    public function setUser(\Kurumi\UserBundle\Entity\User $user = null)
+    public function setUser(\Kurumi\UserBundle\Entity\User $user)
     {
         $this->user = $user;
         return $this;
@@ -122,4 +136,38 @@ class Facebook
     {
         return $this->user;
     }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+
 }
