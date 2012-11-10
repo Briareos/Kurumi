@@ -115,15 +115,20 @@ services:
             -
                 login_facebook: @oauth.login.user_provider.facebook
                 login_google: @oauth.login.user_provider.google
+                login_windows_live: @oauth.login.user_provider.windows_live
             - @doctrine.orm.default_entity_manager
             - @service_container # must be used to prevent circular reference to @security.context *shrug*
     oauth.login.user_provider.abstract:
         class: Kurumi\UserBundle\OAuth\Login\AbstractUserProvider
         calls:
             - [ setEntityManager, [ @doctrine.orm.default_entity_manager ] ]
+            - [ setCityFinder, [ @city_finder ] ]
     oauth.login.user_provider.facebook:
         class: Kurumi\UserBundle\OAuth\Login\FacebookUserProvider
         parent: oauth.login.user_provider.abstract
     oauth.login.user_provider.google:
         class: Kurumi\UserBundle\OAuth\Login\GoogleUserProvider
+        parent: oauth.login.user_provider.abstract
+    oauth.login.user_provider.windows_live:
+        class: Kurumi\UserBundle\OAuth\Login\WindowsLiveUserProvider
         parent: oauth.login.user_provider.abstract

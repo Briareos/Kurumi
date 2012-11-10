@@ -33,20 +33,20 @@ class FacebookUserProvider extends AbstractUserProvider
         }
     }
 
-    public function fillProfileInfo(Profile $profile, UserResponseInterface $response)
+    public function fillProfileInfo(Profile $profile, UserResponseInterface $info)
     {
-        if (!empty($response['birthday'])) {
-            $birthday = \DateTime::createFromFormat('m/d/Y', $response['birthday']);
+        if (!empty($info['birthday'])) {
+            $birthday = \DateTime::createFromFormat('m/d/Y', $info['birthday']);
             $profile->setBirthday($birthday);
         }
-        if (!empty($response['first_name'])) {
-            $profile->setFirstName($response['first_name']);
+        if (!empty($info['first_name'])) {
+            $profile->setFirstName($info['first_name']);
         }
-        if (!empty($response['last_name'])) {
-            $profile->setLastName($response['last_name']);
+        if (!empty($info['last_name'])) {
+            $profile->setLastName($info['last_name']);
         }
-        if (!empty($response['gender'])) {
-            if ($response['gender'] === 'male') {
+        if (!empty($info['gender'])) {
+            if ($info['gender'] === 'male') {
                 $profile->setGender(Profile::GENDER_MALE);
             } else {
                 $profile->setGender(Profile::GENDER_FEMALE);

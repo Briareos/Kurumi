@@ -15,7 +15,7 @@ class WindowsLiveUserProvider extends AbstractUserProvider
 
     public function getUserEmailByResponse(UserResponseInterface $response)
     {
-        return $response->getResponse()['email'];
+        return $response->getResponse()['emails']['account'];
     }
 
     public function getOAuthIdByResponse(UserResponseInterface $response)
@@ -25,28 +25,30 @@ class WindowsLiveUserProvider extends AbstractUserProvider
 
     public function fillUserInfo(User $user, UserResponseInterface $response)
     {
-        $user->setEmail($response['email']);
-        if (!empty($response['given_name'])) {
-            $user->setName($response['given_name']);
+        $info = $response->getResponse();
+        $user->setEmail($info['emails']['account']);
+        if (!empty($info['first_name'])) {
+            $user->setName($info['first_name']);
         } else {
-            $user->setName($response['name']);
+            $user->setName($info['name']);
         }
     }
 
     public function fillProfileInfo(Profile $profile, UserResponseInterface $response)
     {
-        if (!empty($response['birthday'])) {
-            $birthday = \DateTime::createFromFormat('m/d/Y', $response['birthday']);
+        $info = $response->getResponse();
+        if (!empty($info['birthday_day']) && !empty($info['birthday_month']) && !empty($info['birthday_year'])) {
+            $birthday = \DateTime::createFromFormat('m/d/Y', sprintf('%s/%s/%s', $info['birthday_month'], $info['birthday_day'], $info['birthday_year']));
             $profile->setBirthday($birthday);
         }
-        if (!empty($response['given_name'])) {
-            $profile->setFirstName($response['given_name']);
+        if (!empty($info['first_name'])) {
+            $profile->setFirstName($info['first_name']);
         }
-        if (!empty($response['family_name'])) {
-            $profile->setLastName($response['family_name']);
+        if (!empty($info['last_name'])) {
+            $profile->setLastName($info['last_name']);
         }
-        if (!empty($response['gender'])) {
-            if ($response['gender'] === 'male') {
+        if (!empty($info['gender'])) {
+            if ($info['gender'] === 'male') {
                 $profile->setGender(Profile::GENDER_MALE);
             } else {
                 $profile->setGender(Profile::GENDER_FEMALE);
@@ -61,6 +63,6 @@ class WindowsLiveUserProvider extends AbstractUserProvider
 
     public function isVerifiedEmail(UserResponseInterface $response)
     {
-        return $response->getResponse()['verified_email'];
+        return true;
     }
 }

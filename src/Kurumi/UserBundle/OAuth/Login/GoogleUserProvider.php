@@ -25,28 +25,30 @@ class GoogleUserProvider extends AbstractUserProvider
 
     public function fillUserInfo(User $user, UserResponseInterface $response)
     {
-        $user->setEmail($response['email']);
-        if (!empty($response['given_name'])) {
-            $user->setName($response['given_name']);
+        $info = $response->getResponse();
+        $user->setEmail($info['email']);
+        if (!empty($info['given_name'])) {
+            $user->setName($info['given_name']);
         } else {
-            $user->setName($response['name']);
+            $user->setName($info['name']);
         }
     }
 
-    public function fillProfileInfo(Profile $profile, UserResponseInterface $response)
+    public function fillProfileInfo(Profile $profile, UserResponseInterface $info)
     {
-        if (!empty($response['birthday'])) {
-            $birthday = \DateTime::createFromFormat('m/d/Y', $response['birthday']);
+        $info = $info->getResponse();
+        if (!empty($info['birthday'])) {
+            $birthday = \DateTime::createFromFormat('m/d/Y', $info['birthday']);
             $profile->setBirthday($birthday);
         }
-        if (!empty($response['given_name'])) {
-            $profile->setFirstName($response['given_name']);
+        if (!empty($info['given_name'])) {
+            $profile->setFirstName($info['given_name']);
         }
-        if (!empty($response['family_name'])) {
-            $profile->setLastName($response['family_name']);
+        if (!empty($info['family_name'])) {
+            $profile->setLastName($info['family_name']);
         }
-        if (!empty($response['gender'])) {
-            if ($response['gender'] === 'male') {
+        if (!empty($info['gender'])) {
+            if ($info['gender'] === 'male') {
                 $profile->setGender(Profile::GENDER_MALE);
             } else {
                 $profile->setGender(Profile::GENDER_FEMALE);

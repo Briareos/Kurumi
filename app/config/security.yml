@@ -30,6 +30,7 @@ security:
                 resource_owners:
                     login_facebook:     /login/check-facebook
                     login_google:       /login/check-google
+                    login_windows_live: /login/check-windows_live
                 oauth_user_provider:
                     service: oauth.login.user_provider
             form_login:

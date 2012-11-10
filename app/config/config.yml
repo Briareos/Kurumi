@@ -332,15 +332,15 @@ hwi_oauth:
             client_id:      %google_client_id%
             client_secret:  %google_secret%
             scope:          "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
-        login_yahoo:
-            type:           yahoo
-            client_id:      %yahoo_client_id%
-            client_secret:  %yahoo_secret%
+        #login_yahoo:
+        #    type:           yahoo
+        #    client_id:      %yahoo_client_id%
+        #    client_secret:  %yahoo_secret%
         login_windows_live:
             type:           windows_live
             client_id:      %windows_live_client_id%
             client_secret:  %windows_live_secret%
-            scope:          "wl.basic,wl.birthday"
+            scope:          "wl.emails,wl.basic,wl.birthday"
     http_client:
         timeout:       5
         verify_peer:   false

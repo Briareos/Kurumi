@@ -3,6 +3,7 @@
 namespace Kurumi\UserBundle\OAuth\Login;
 
 use Doctrine\ORM\EntityManager;
+use Kurumi\UserBundle\Entity\City;
 use Kurumi\UserBundle\City\CityFinderInterface;
 use Kurumi\UserBundle\Entity\OAuth;
 use Kurumi\UserBundle\Entity\Profile;
@@ -63,7 +64,7 @@ abstract class AbstractUserProvider
     {
         $oauth = new OAuth();
         $oauth->setUser($user);
-        $oauth->setEmail($response->getResponse()['email']);
+        $oauth->setEmail($this->getUserEmailByResponse($response));
         $oauth->setName($this->getName());
         $oauth->setOauthId($this->getOAuthIdByResponse($response));
         $this->em->persist($oauth);
