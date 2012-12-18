@@ -1,28 +1,21 @@
-.settings/
-.buildpath
 .idea/
-cgi-bin/
 certs/
 webroot/
 
 web/bundles/
 web/uploads/
-web/media/cache/
+web/media/
 web/bootstrap/
 web/css-compiled/
 web/js-compiled/
 web/php_errors.log
+vendor/
 
 app/cache/
 app/logs/
 app/config/parameters.yml
 app/Resources/geoip/GeoLiteCity.dat
 
-build/
-vendor/
-
-src/Briareos/
 
 app/bootstrap.php.cache
 app/config/parameters.yml
-composer.phar

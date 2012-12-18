@@ -1,21 +1,21 @@
 jms_security_extra:
     secure_all_services:    false
     expressions:            false
-    enable_iddqd_attribute: false
+    enable_iddqd_attribute: true
     cache_dir:              %kernel.cache_dir%/jms_security
     voters:
-        disable_authenticated:  false   # Enables 3 basic permission checks, IS_AUTHENTICATED_(ANONYMOUS|REMEMBERED|FULLY)
+        disable_authenticated:  false    # Enables 3 basic permission checks, IS_AUTHENTICATED_(ANONYMOUS|REMEMBERED|FULLY)
         disable_role:           true    # Checks against the array of roles given by UserInterface::getRoles()
         disable_acl:            true    # Uses the core ACL component http://symfony.com/doc/current/cookbook/security/acl.html
     method_access_control: []
 
 security:
     encoders:
-        Kurumi\UserBundle\Entity\User: sha512
+        Kurumi\MainBundle\Entity\User: sha512
 
     providers:
         default_database:
-            entity: { class: UserBundle:User, property: email }
+            entity: { class: KurumiMainBundle:User, property: email }
 
     firewalls:
         nodejs:
@@ -32,7 +32,7 @@ security:
                     login_google:       /login/check-google
                     login_windows_live: /login/check-windows_live
                 oauth_user_provider:
-                    service: oauth.login.user_provider
+                    service: oauth.login.user.provider
             form_login:
                 username_parameter: email
                 password_parameter: password
@@ -56,7 +56,6 @@ security:
                 remember_me_parameter: remember_me
 
     access_control:
-        - { path: ^/,                   roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
-        - { path: ^/login_check$,       roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
-        - { path: ^/logout$,            roles: [IS_AUTHENTICATED_REMEMBERED] }
+        - { path: ^/login_check$,       roles: [anonymous_user] }
+        - { path: ^/logout$,            roles: [authenticated_user] }
         - { path: ^/admin/,             roles: [administrator] }

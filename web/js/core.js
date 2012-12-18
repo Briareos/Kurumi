@@ -47,28 +47,48 @@ $(function () {
         }
     });
 
+    $.fn.attach = function () {
+        $('.fileupload', $(this)).fileupload()
+    };
+
+    $context.attach();
+
     $context.on('click', 'a[data-oauth]', function (event) {
         var $link = $(this);
-        var OAuthWindow;
-        if ($link.data('oauth_window')) {
-            OAuthWindow = $link.data('oauth_window');
-            OAuthWindow.focus();
-        } else {
-            OAuthWindow = window.open($link.attr('href'), 'OAuthWindow', 'width=1000,height=550');
-            $link.data('oauth_window', OAuthWindow);
-        }
+        $link.ajaxLoader('start', 'slide');
+        $link.ajaxLoader('bar', {
+            width:'33%'
+        });
+        var OAuthWindow = window.open($link.attr('href'), 'OAuthWindow', 'width=1000,height=550');
         var watchClose = setInterval(function () {
             if (OAuthWindow.closed) {
                 clearTimeout(watchClose);
-                $link.data('oauth_window', false);
+                if (OAuthenticating) {
+                    $link.ajaxLoader('bar', {
+                        width:'100%'
+                    });
+                } else {
+                    $link.ajaxLoader('stop');
+                    $link.ajaxLoader('bar', {
+                        width:'0%'
+                    });
+                }
             }
         }, 200);
-        window.OAuthCallback = function (url) {
-            $.ajax({
-                context:$link,
-                url:url
-            });
-        };
+        var OAuthenticating = false;
+        window.OAuthCallback = function (data) {
+            if (data.status === 'success') {
+                OAuthenticating = true;
+                $.ajax({
+                    url:data.url,
+                    complete:function (jqXHR, textStatus) {
+                        $link.ajaxLoader('stop');
+                        OAuthenticating = false;
+                    }
+                });
+            }
+        }
         return false;
     });
+
 });

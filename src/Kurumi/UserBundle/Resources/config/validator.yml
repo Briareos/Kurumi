@@ -1,5 +1,0 @@
-services:
-    validator.timezone:
-        class: Kurumi\UserBundle\Validator\TimezoneValidator
-        tags:
-            - { name: validator.constraint_validator, alias: validator.timezone }

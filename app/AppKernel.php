@@ -31,30 +31,22 @@ class AppKernel extends Kernel
             new Sonata\CacheBundle\SonataCacheBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
-            new Sonata\MediaBundle\SonataMediaBundle(),
-            new Sonata\EasyExtendsBundle\SonataEasyExtendsBundle(),
-            new Application\Sonata\MediaBundle\ApplicationSonataMediaBundle(),
             new Sonata\IntlBundle\SonataIntlBundle(),
             new Bazinga\Bundle\GeocoderBundle\BazingaGeocoderBundle(),
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
-            new Liip\ImagineBundle\LiipImagineBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
 
-            new Kurumi\UserBundle\UserBundle(),
-            new Kurumi\PageBundle\PageBundle(),
             new Briareos\NodejsBundle\BriareosNodejsBundle(),
             new Briareos\ChatBundle\BriareosChatBundle(),
-            new Briareos\AclBundle\BriareosAclBundle(),
-            new Briareos\GeoBundle\BriareosGeoBundle(),
             new Briareos\AjaxBundle\BriareosAjaxBundle(),
-            new Kurumi\SearchBundle\SearchBundle(),
-            new Kurumi\PlayBundle\PlayBundle(),
+            new Kurumi\MainBundle\KurumiMainBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
-            $bundles[] = new Elao\WebProfilerExtraBundle\WebProfilerExtraBundle();
+            //$bundles[] = new Elao\WebProfilerExtraBundle\WebProfilerExtraBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
         }

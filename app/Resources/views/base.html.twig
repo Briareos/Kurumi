@@ -10,10 +10,23 @@
     </script>
 
     {# jQuery #}
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
     {# Bootstrap JS #}
-    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-typeahead.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-transition.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-tooltip.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-tab.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-scrollspy.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-popover.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-modal.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-dropdown.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-collapse.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-carousel.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-button.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-alert.js') }}"></script>
+    <script src="{{ asset('bootstrap/js/bootstrap-affix.js') }}"></script>
+    <script src="{{ asset('bundles/user/js/bootstrap-fileupload.js') }}"></script>
 
     {# Ajax JS #}
     <script src="{{ asset('bundles/briareosajax/js/jquery.form.js') }}"></script>
@@ -22,20 +35,23 @@
 
     {# Bootstrap CSS #}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css">
+    <link rel="stylesheet" href="//kurumi.servehttp.com:1337/bootstrap/less/bootstrap.less">
+    <link rel="stylesheet" href="//kurumi.servehttp.com:1337/bootstrap/less/responsive.less">
 
     {# Nodejs and chat CSS #}
     <script src="{{ asset('bundles/briareosnodejs/js/nodejs.js') }}"></script>
     <script src="{{ asset('bundles/briareoschat/js/chat.js') }}"></script>
 
     {# Page CSS #}
-    <link rel="stylesheet" href="//symfony.servehttp.com:1337/less/style.less">
+    <link rel="stylesheet" href="//kurumi.servehttp.com:1337/less/style.less">
 
     {# Socket.IO #}
-    <script type="text/javascript" src="//{{ nodejs.host }}:{{ nodejs.port }}{{ nodejs.resource }}/socket.io.js"></script>
+    <script src="{{ socket_io_resource() }}"></script>
 
     {# Chat CSS #}
     <link rel="stylesheet" href="{{ asset('bundles/briareoschat/css/chat.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('bundles/user/css/bootstrap-fileupload.css') }}">
 
     {# Page JS #}
     <script src="{{ asset('js/core.js') }}"></script>

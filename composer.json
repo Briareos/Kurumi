@@ -2,18 +2,15 @@
     "name":"symfony/framework-standard-edition",
     "autoload":{
         "psr-0":{
-            "":"src/",
-            "Application":"app/"
+            "":"src/"
         }
     },
-    "minimum-stability":"dev",
     "require":{
         "php":">=5.3.2",
-        "symfony/symfony":"2.1.*",
+        "symfony/symfony":"2.1.4",
         "doctrine/orm":">=2.2.3,<2.4-dev",
         "doctrine/doctrine-bundle":"1.0.*",
-        "doctrine/doctrine-fixtures-bundle":"dev-master",
-        "twig/extensions":"1.0.*",
+        "twig/extensions":"1.0.*@dev",
         "symfony/assetic-bundle":"2.1.*",
         "symfony/swiftmailer-bundle":"2.1.*",
         "symfony/monolog-bundle":"2.1.*",
@@ -22,41 +19,37 @@
         "sensio/generator-bundle":"2.1.*",
         "jms/security-extra-bundle":"1.2.*",
         "jms/di-extra-bundle":"1.1.*",
+        "kriswallsmith/assetic":"1.1.*@dev",
         "lunetics/locale-bundle":"2.1.*",
+        "doctrine/doctrine-fixtures-bundle":"dev-master",
         "stof/doctrine-extensions-bundle":"dev-master",
         "sonata-project/admin-bundle":"dev-master",
         "sonata-project/doctrine-orm-admin-bundle":"dev-master",
-        "sonata-project/media-bundle":"dev-fixes",
         "sonata-project/intl-bundle":"dev-master",
-        "sonata-project/easy-extends-bundle":"dev-master",
         "sonata-project/cache-bundle":"dev-master",
         "knplabs/gaufrette":"dev-master",
         "kriswallsmith/buzz":"v0.7",
         "beberlei/DoctrineExtensions":"v0.1",
         "knplabs/knp-menu":"v1.1.2",
         "knplabs/knp-menu-bundle":"v1.1.0",
-        "elao/web-profiler-extra-bundle":"dev-master",
         "willdurand/geocoder":"1.0.*",
         "willdurand/geocoder-bundle":"dev-master",
-        "doctrine/spatial":"dev-master",
         "briareos/nodejs-bundle":"dev-master",
         "briareos/chat-bundle":"dev-master",
-        "briareos/acl-bundle":"dev-master",
-        "briareos/geo-bundle":"dev-master",
         "briareos/ajax-bundle":"dev-master",
         "mopa/bootstrap-bundle":"dev-master",
-        "friendsofsymfony/user-bundle":"dev-master",
-        "liip/imagine-bundle":"dev-master",
-        "imagine/imagine":"0.3.0",
+        "avalanche123/imagine-bundle":"2.1.*",
+        "imagine/imagine":"0.4.1",
         "oldsound/rabbitmq-bundle":"dev-master",
-        "fzaninotto/faker":"v1.0.0",
-        "zendframework/zend-paginator":"2.0.3",
-        "hwi/oauth-bundle":"dev-master"
+        "fzaninotto/faker":"1.0.0",
+        "zendframework/zend-paginator":"2.0.*",
+        "hwi/oauth-bundle":"dev-master",
+        "doctrine/migrations":"dev-master"
     },
     "repositories":[
         {
-            "type": "composer",
-            "url": "http://packages.zendframework.com/"
+            "type":"composer",
+            "url":"http://packages.zendframework.com/"
         },
         {
             "type":"package",
@@ -97,42 +90,6 @@
         {
             "type":"package",
             "package":{
-                "name":"briareos/acl-bundle",
-                "version":"dev-master",
-                "autoload":{
-                    "psr-0":{
-                        "Briareos\\AclBundle":""
-                    }
-                },
-                "target-dir":"Briareos/AclBundle",
-                "source":{
-                    "url":"git@github.com:Briareos/BriareosAclBundle.git",
-                    "type":"git",
-                    "reference":"master"
-                }
-            }
-        },
-        {
-            "type":"package",
-            "package":{
-                "name":"briareos/geo-bundle",
-                "version":"dev-master",
-                "autoload":{
-                    "psr-0":{
-                        "Briareos\\GeoBundle":""
-                    }
-                },
-                "target-dir":"Briareos/GeoBundle",
-                "source":{
-                    "url":"git@github.com:Briareos/BriareosGeoBundle.git",
-                    "type":"git",
-                    "reference":"master"
-                }
-            }
-        },
-        {
-            "type":"package",
-            "package":{
                 "name":"briareos/ajax-bundle",
                 "version":"dev-master",
                 "autoload":{
@@ -143,41 +100,6 @@
                 "target-dir":"Briareos/AjaxBundle",
                 "source":{
                     "url":"git@github.com:Briareos/BriareosAjaxBundle.git",
-                    "type":"git",
-                    "reference":"master"
-                }
-            }
-        },
-        {
-            "type":"package",
-            "package":{
-                "name":"doctrine/spatial",
-                "version":"dev-master",
-                "autoload":{
-                    "psr-0":{
-                        "Doctrine\\Spatial":"src/"
-                    }
-                },
-                "source":{
-                    "url":"git://github.com/Briareos/doctrine-spatial.git",
-                    "type":"git",
-                    "reference":"master"
-                }
-            }
-        },
-        {
-            "type":"package",
-            "package":{
-                "name":"sonata-project/media-bundle",
-                "version":"dev-fixes",
-                "autoload":{
-                    "psr-0":{
-                        "Sonata\\MediaBundle":""
-                    }
-                },
-                "target-dir":"Sonata/MediaBundle",
-                "source":{
-                    "url":"git://github.com/Briareos/SonataMediaBundle.git",
                     "type":"git",
                     "reference":"master"
                 }
@@ -201,6 +123,7 @@
     "config":{
         "bin-dir":"bin"
     },
+    "minimum-stability":"dev",
     "extra":{
         "symfony-app-dir":"app",
         "symfony-web-dir":"web"

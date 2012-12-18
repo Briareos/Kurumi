@@ -1,3 +1,12 @@
+front:
+    pattern: /
+
+kurumi_main:
+    resource: "@KurumiMainBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+# OAuth start
 hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
     prefix:   /connect
@@ -13,29 +22,7 @@ login_check_windows_live:
 
 login_check_yahoo:
     pattern: /login/check-yahoo
-
-play:
-    resource: "@PlayBundle/Controller/"
-    type:     annotation
-    prefix:   /connect
-
-front:
-    pattern: /
-
-SearchBundle:
-    resource: "@SearchBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-PageBundle:
-    resource: "@PageBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-UserBundle:
-    resource: "@UserBundle/Controller/"
-    type:     annotation
-    prefix:   /
+# OAuth end
 
 BriareosNodejsBundle:
     resource: "@BriareosNodejsBundle/Controller/"
@@ -55,20 +42,12 @@ admin:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
     prefix: /admin
 
-_liip_imagine:
-    resource: .
-    type: imagine
-    prefix: ''
-
 _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin
 
-gallery:
-    resource: "@SonataMediaBundle/Resources/config/routing/gallery.xml"
-    prefix: /media/gallery
+_imagine:
+    resource: .
+    type:     imagine
 
-media:
-    resource: "@SonataMediaBundle/Resources/config/routing/media.xml"
-    prefix: /media

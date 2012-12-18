@@ -14,7 +14,6 @@ framework:
     validation:      { enable_annotations: false }
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
     default_locale:  %locale%
-    trust_proxy_headers: false
     session:
         storage_id:         session.storage.native
         handler_id:         session.handler.native_file
@@ -32,7 +31,6 @@ twig:
     strict_variables: %kernel.debug%
     form:
         resources:
-            - "BriareosAclBundle::fields.html.twig"
     exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
     globals:
         site_name:          Kurumi
@@ -43,10 +41,9 @@ assetic:
     debug:          %kernel.debug%
     use_controller: false
     bundles:
-        - PageBundle
-        - UserBundle
+        - KurumiMainBundle
     read_from: %kernel.root_dir%/../web
-    node: "C:/Program Files (x86)/nodejs/node.exe"
+    node: "C:/Program Files/nodejs/node.exe"
     java: "C:/Program Files (x86)/Java/jre7/bin/java.exe"
     filters:
         cssrewrite: ~
@@ -55,9 +52,9 @@ assetic:
         yui_js:
             jar: "C:/Users/Fox/Programs/yuicompressor-2.4.7/build/yuicompressor-2.4.7.jar"
         less:
-            node: "C:/Program Files (x86)/nodejs/node.exe"
+            node: "C:/Program Files/nodejs/node.exe"
             node_paths:
-                - "C:/Program Files (x86)/nodejs/node_module"
+                - "C:/node_modules"
 
 # Doctrine Configuration
 doctrine:
@@ -76,12 +73,9 @@ doctrine:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: false
         mappings:
-            UserBundle: ~
-            SonataMediaBundle: ~
-            ApplicationSonataMediaBundle: ~
+            KurumiMainBundle: ~
             BriareosNodejsBundle: ~
             BriareosChatBundle: ~
-            BriareosAclBundle: ~
         dql:
             string_functions:
                 FindInSet: DoctrineExtensions\Query\Mysql\FindInSet
@@ -92,9 +86,8 @@ doctrine:
                 RADIANS: DoctrineExtensions\Query\Mysql\Radians
                 COS: DoctrineExtensions\Query\Mysql\Cos
         resolve_target_entities:
-            Briareos\NodejsBundle\Entity\NodejsSubjectInterface: Kurumi\UserBundle\Entity\User
-            Briareos\ChatBundle\Entity\ChatSubjectInterface: Kurumi\UserBundle\Entity\User
-            Briareos\AclBundle\Entity\AclSubjectInterface: Kurumi\UserBundle\Entity\User
+            Briareos\NodejsBundle\Entity\NodejsSubjectInterface: Kurumi\MainBundle\Entity\User
+            Briareos\ChatBundle\Entity\ChatSubjectInterface: Kurumi\MainBundle\Entity\User
 
 
 stof_doctrine_extensions:
@@ -147,7 +140,7 @@ sonata_admin:
     title:      Project Kurumi
     title_logo: /bundles/sonataadmin/logo_title.png
     security:
-        handler: sonata.admin.security.handler.briareos_acl
+        #handler: sonata.admin.security.handler.briareos_acl
     templates:
         # default global templates
         layout:  SonataAdminBundle::standard_layout.html.twig
@@ -173,9 +166,6 @@ sonata_admin:
                 items:
                     - sonata.admin.user
                     - sonata.admin.profile
-                    - sonata.admin.briareos_acl.acl_role_admin
-            sonata_media:
-                label: admin.group.media
 
 sonata_doctrine_orm_admin:
     # default value is null, so doctrine uses the value defined in the configuration
@@ -216,72 +206,29 @@ sonata_doctrine_orm_admin:
                 integer:    SonataAdminBundle:CRUD:base_show_field.html.twig
                 decimal:    SonataAdminBundle:CRUD:base_show_field.html.twig
 
-sonata_media:
-    default_context: default
-    db_driver: doctrine_orm
-    providers:
-        image:
-            thumbnail:  sonata.media.thumbnail.liip_imagine
-    contexts:
-        default:  # the default context is mandatory
-            providers:
-                - sonata.media.provider.dailymotion
-                - sonata.media.provider.youtube
-                - sonata.media.provider.image
-                - sonata.media.provider.file
-            formats: []
-        user_picture:
-            providers:
-                - sonata.media.provider.image
-            formats:
-                thumbnail:
-                    width: 32
-                    height: 32
-                search:
-                    width: 260
-                    height: 180
-                profile:
-                    width: 260
-                    height: 420
-    cdn:
-        server:
-            #path: ''
-            path: /uploads/media # http://media.sonata-project.org/
-
-    filesystem:
-        local:
-            directory:  %kernel.root_dir%/../web/uploads/media
-            create:     false
-
-liip_imagine:
-    driver:             gd
-    web_root:           %kernel.root_dir%/../web
-    data_root:          %kernel.root_dir%/../web
-    cache_prefix:       /media/cache
-    cache:              web_path
-    data_loader:        filesystem
-    controller_action:  SonataMediaBundle:Media:liipImagineFilter
-    filter_sets:
-        admin:
-            quality: 100
-            format: jpg
-            filters:
-                thumbnail: { size: [160, 120], mode: inset }
+avalanche_imagine:
+    driver:         gd
+    source_root:    %kernel.root_dir%/../web
+    web_root:       %kernel.root_dir%/../web
+    cache_prefix:   media/cache
+    filters:
         user_picture_thumbnail:
-            quality: 90
-            format: jpg
-            filters:
-                thumbnail: { size: [32, 32], mode: outbound }
+            type:   thumbnail
+            options:
+                size: [32, 32]
+                mode: outbound
+                quality:
+                format:
         user_picture_search:
-            quality: 80
-            format: jpg
-            filters:
-                thumbnail: { size: [260, 180], mode: outbound }
+            type:   thumbnail
+            options:
+                size: [260, 180]
+                mode: outbound
         user_picture_profile:
-            quality: 80
-            format: jpg
-            filters:
-                thumbnail: { size: [260, 420], mode: inset }
+            type:   thumbnail
+            options:
+                size: [260, 420]
+                mode: inset
 
 sonata_intl:
     timezone:
@@ -308,7 +255,7 @@ old_sound_rabbit_mq:
 briareos_nodejs:
     dispatcher:
         secure: false
-        host: symfony.servehttp.com
+        host: kurumi.servehttp.com
         port: 8080
         resource: /socket.io
         service_key: kurumi2012
@@ -317,7 +264,7 @@ briareos_nodejs:
         lifetime: 900
 
 briareos_chat:
-    picture_provider: user_picture_provider
+    picture_provider: user.picture.provider
 
 hwi_oauth:
     firewall_name: main
@@ -346,3 +293,4 @@ hwi_oauth:
         verify_peer:   false
         ignore_errors: false
         max_redirects: 5
+
