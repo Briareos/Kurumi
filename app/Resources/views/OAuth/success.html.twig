@@ -1,0 +1,15 @@
+{% extends ':OAuth:base.html.twig' %}
+
+{% block body %}
+    <script>
+        if (window.opener) {
+            window.opener.OAuthCallback({
+                status:'success',
+                url:'{{ path('front') }}'
+            });
+            self.close();
+        } else {
+            window.location.href = '{{ path('front') }}';
+        }
+    </script>
+{% endblock %}

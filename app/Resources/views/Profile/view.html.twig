@@ -1,0 +1,13 @@
+{% extends ':Profile:layout.html.twig' %}
+
+{% block title %}{{ user.name }}{% endblock %}
+
+{% block profile_page %}
+
+    {% include '::flash_messages.html.twig' with {'messages':app.session.flashbag.all()} %}
+
+    {% include ':Profile:tabs.html.twig' %}
+    <p>
+        {{ profile_info.getSearchInfo(subject.profile) }}
+    </p>
+{% endblock %}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="Kurumi\MainBundle\Entity\OAuth" table="oauth">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="name" type="string" column="name" length="255" precision="0" scale="0" nullable="false"/>
+    <field name="oauthId" type="string" column="oauthId" length="255" precision="0" scale="0" nullable="false"/>
+    <field name="created" type="datetime" column="created" precision="0" scale="0" nullable="false"/>
+    <field name="email" type="string" column="email" length="255" precision="0" scale="0" nullable="false"/>
+    <many-to-one field="user" target-entity="Kurumi\MainBundle\Entity\User" inversed-by="oauth">
+      <join-columns>
+        <join-column name="user_id" referenced-column-name="id" on-delete="CASCADE" nullable=""/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

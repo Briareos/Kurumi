@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+{% include ':Segment:navbar_top.html.twig' with {'active':active} %}
+
+<div class="container main">
+    {% include '::flash_messages.html.twig' with {'messages':app.session.flashbag.all()} %}
+
+    <h1>Add some details</h1>
+
+    <p>Add these last important details to allow the best people to meet up with you on {{ site_name }}:</p>
+
+    {% include ':Form:fill_profile.html.twig' %}
+</div>
+{% endblock %}

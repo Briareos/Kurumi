@@ -1,0 +1,30 @@
+{% extends ':Info:layout.html.twig' %}
+
+{% block title %}Frequently asked questions (FAQ){% endblock %}
+
+{% block info_page %}
+<div class="row">
+    <div class="span3">
+        {% include ':Info:sidebar.html.twig' with {'active':'info_faq'} %}
+    </div>
+
+    <div class="span9">
+        <h3>General info</h3>
+        <p>What is {{ site_name }}? What do I do here? Where am I? We will tackle all these deep questions in this section.</p>
+        <div class="accordion" id="accordion">
+            {% for faq in faqs %}
+            <div class="accordion-group">
+                <div class="accordion-heading">
+                    <a href="#accordion-{{ loop.index }}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion">{{ faq.question|raw }}</a>
+                </div>
+                <div id="accordion-{{ loop.index }}" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        {{ faq.answer|raw }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

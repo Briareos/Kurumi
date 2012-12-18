@@ -1,0 +1,15 @@
+{% set messages = messages|default(app.session.flashbag.all()) %}
+
+{% for type, type_messages in messages %}
+    <div class="flash-messages alert alert-{{ type }}">
+        {% if type_messages|length > 1 %}
+            <ul class="alert-messages">
+                {% for message in type_messages %}
+                    <li>{{ message|trans }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {{ type_messages.0|trans }}
+        {% endif %}
+    </div>
+{% endfor %}

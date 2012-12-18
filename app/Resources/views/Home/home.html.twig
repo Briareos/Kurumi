@@ -1,0 +1,21 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ user.name }} | Home{% endblock %}
+
+{% block body %}
+
+    {% include ':Segment:navbar_top.html.twig' with {'active':'home'} %}
+
+    <div class="main container">
+        <a href="{{ path('account_edit_picture', {'modal':1}) }}" data-ajax>Set your photo!</a>
+
+        <div class="row">
+            <div class="span6">
+
+            </div>
+            <div class="span6">
+
+            </div>
+        </div>
+    </div>
+{% endblock body %}

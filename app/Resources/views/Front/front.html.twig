@@ -1,0 +1,114 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'page.front.title'|trans }}{% endblock %}
+
+{% block body %}
+    <div id="front-page">
+        <div class="container-wrapper">
+            <div class="container main">
+                <div class="row">
+                    <div class="span5">
+                        <h1 class="hide">Kurumi</h1>
+                        <img src="{{ asset('/images/logo.png') }}" height="57"/>
+                        <h4 class="slogan">{{ 'page.front.motto'|trans }}</h4>
+
+                        <div class="btn-group oauth-dropdown">
+                            <a href="{{ path('hwi_oauth_service_redirect',{'service':'login_facebook'}) }}" data-oauth data-loader="#oauth-loader" data-effect="slide" class="btn btn-primary">Connect with <span class="oauth-facebook">Facebook</span></a>
+                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                or… <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ path('hwi_oauth_service_redirect',{'service':'login_google'}) }}" data-oauth data-loader="#oauth-loader" data-effect="slide"><span class="oauth oauth-google"></span> Google</a></li>
+                                {# <li><a href="{{ path('hwi_oauth_service_redirect',{'service':'login_yahoo'}) }}" data-oauth data-loader="#oauth-loader" data-effect="slide"><span class="oauth oauth-yahoo"></span> Yahoo!</a></li> #}
+                                <li><a href="{{ path('hwi_oauth_service_redirect',{'service':'login_windows_live'}) }}" data-oauth data-loader="#oauth-loader" data-effect="slide"><span class="oauth oauth-msn"></span> Windows Live</a></li>
+                            </ul>
+                        </div>
+
+                        <div id="oauth-loader" class="hide">
+                            <p class="white-text">
+                                Logging you in...
+                            </p>
+
+                            <div class="progress progress-striped active">
+                                <div class="bar"></div>
+                            </div>
+                        </div>
+
+                        <div class="meet-message">
+                            {% if detected_city is empty %}
+                                {{ 'page.front.meet_your_area'|trans }}
+                            {% else %}
+                                {{ 'page.front.meet_your_city'|trans({'%city%':detected_city}) }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="span7">
+                        <div class="pull-right">
+                            {{ locale_switcher() }}
+                        </div>
+                        <h3 class="login-header">{{ 'page.front.log_in'|trans }}</h3>
+
+                        {% include ':Form:user_login_front.html.twig' %}
+
+                        <div class="register-form-container well">
+                            <h3 class="register-header">{{ 'page.front.first_time'|trans }} {{ 'page.front.join_now'|trans }}</h3>
+
+                            {% include ':Form:user_register.html.twig' with { 'form': form_register } %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-wrapper">
+                <div class="container">
+                    <div class="row">
+                        <div class="span3">
+                            <div class="row-fluid">
+                                <img src="/images/icon-happy.png" class="pull-left">
+                                <h4 class="title">Fun</h4>
+
+                                <p>Kurumi is all about having fun, playing games and visiting profiles.</p>
+                            </div>
+                        </div>
+                        <div class="span3">
+                            <div class="row-fluid">
+                                <img src="/images/icon-chat.png" class="pull-left">
+                                <h4 class="title">Chat</h4>
+
+                                <p>We promise you lots of people who are eager to have a chat.</p>
+                            </div>
+                        </div>
+                        <div class="span3">
+                            <div class="row-fluid">
+                                <img src="/images/icon-no-robots.png" class="pull-left">
+                                <h4 class="title">With real people</h4>
+
+                                <p>No fake profiles on Kurumi. You should feel safe and have lots of fun!</p>
+                            </div>
+                        </div>
+                        <div class="span3">
+                            <div class="row-fluid">
+                                <img src="/images/icon-new-people.png" class="pull-left">
+                                <h4 class="title">The rest is up to you</h4>
+
+                                <p>Kurumi is for everyone, so come on in and join the fun!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-wrapper">
+                <div class="container">
+                    <ul class="nav nav-pills">
+                        <li><img class="logo" src="/images/logo-gray.png" height="31" width="124"></li>
+                        <li><a href>About</a></li>
+                        <li><a href>Privacy</a></li>
+                        <li><a href>Terms of use</a></li>
+                        <li><a href>FAQ</a></li>
+                        <li><a href>Contact</a></li>
+                        <li class="pull-right"><span class="copyright">Copyright &copy; Silver Media Ltd.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,55 @@
+<form novalidate id="{{ form.vars.id }}" action="{{ path('account_edit_picture') }}" method="post" {{ form_enctype(form) }} data-ajax>
+
+    {{ form_errors(form) }}
+
+    {% if user.picture %}
+        <p>
+            Your current picture:
+        </p>
+
+        <p>
+            {% thumbnail user.picture, 'profile' with {title:''} %}
+        </p>
+
+    {% else %}
+        <p>
+            Add a picture so {{ site_name }} members can see who you are!
+
+        </p>
+    {% endif %}
+
+    <div class="fileupload {{ form.binaryContent.vars.value ? 'fileupload-exists' : 'fileupload-new' }}" data-provides="fileupload">
+        <div class="input-append">
+            <div class="uneditable-input span3">
+                <i class="icon-file fileupload-exists"></i>
+                <span class="fileupload-preview"></span>
+            </div>
+            <span class="btn btn-file">
+                <span class="fileupload-new">Select file</span>
+                <span class="fileupload-exists">Change</span>
+                {{ form_widget(form.binaryContent) }}
+        </span>
+            <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+        </div>
+    </div>
+
+
+    {% if user.picture is empty %}
+        <div class="alert alert-info">
+            <i class="icon-exclamation-sign"></i> Please note that you - and only you - must be clearly visible. Your age and gender need to match your profile photo. It must <strong>not</strong> contain any nudity.
+        </div>
+    {% endif %}
+
+    {{ form_rest(form) }}
+
+    <div class="form-actions">
+        {% if user.picture %}
+            <button type="submit" class="btn btn-primary" data-loading-text="Uploading your new picture...">Upload new picture</button>
+            <a href="{{ path('account_delete_picture', {'token':csrf_token('account_delete_picture')}) }}" data-ajax class="btn btn-danger">Delete this picture</a>
+        {% else %}
+            <button type="submit" class="btn btn-primary" data-loading-text="Uploading your picture...">Upload picture</button>
+        {% endif %}
+        <a class="btn" data-ajax href="{{ path('account_overview') }}">Cancel</a>
+    </div>
+
+</form>

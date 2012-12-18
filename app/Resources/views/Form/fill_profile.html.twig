@@ -1,0 +1,8 @@
+<form novalidate id="{{ form.vars.id }}" {{ form_enctype(form) }} action="{{ path(route) }}" data-ajax class="form-horizontal" method="post">
+
+    {{ form_rest(form) }}
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+</form>

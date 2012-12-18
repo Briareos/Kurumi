@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}{{ 'page.front.title'|trans }}{% endblock %}
+
+{% block body %}
+    <div id="register-page">
+        <div class="container">
+            {% include ':Form:user_register.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

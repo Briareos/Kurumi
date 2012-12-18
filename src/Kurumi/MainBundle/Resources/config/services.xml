@@ -1,0 +1,151 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <parameters>
+        <parameter key="stream_wrapper.public.class">Kurumi\MainBundle\StreamWrapper\PublicStreamWrapper</parameter>
+        <parameter key="stream_wrapper.private.class">Kurumi\MainBundle\StreamWrapper\PrivateStreamWrapper</parameter>
+        <parameter key="stream_wrapper.temporary.class">Kurumi\MainBundle\StreamWrapper\TemporaryStreamWrapper</parameter>
+    </parameters>
+    <services>
+        <!-- Form types -->
+        <service id="form.type.detect_timezone" class="Kurumi\MainBundle\Form\Type\DetectTimezoneType">
+            <tag name="form.type" alias="detect_timezone"/>
+        </service>
+        <service id="form.type.gender" class="Kurumi\MainBundle\Form\Type\GenderType">
+            <tag name="form.type" alias="gender"/>
+        </service>
+        <service id="form.type.city" class="Kurumi\MainBundle\Form\Type\CityType">
+            <argument type="service" id="form.transformer.city_to_city_name"/>
+            <tag name="form.type" alias="city"/>
+        </service>
+        <service id="form.type.birthday" class="Kurumi\MainBundle\Form\Type\BirthdayType">
+            <tag name="form.type" alias="birthday"/>
+        </service>
+        <!-- City finder -->
+        <service id="city.finder" class="Kurumi\MainBundle\CityFinder\YahooCityFinder">
+            <argument>%yahoo_api_key%</argument>
+        </service>
+        <!-- City to city name transformer -->
+        <service id="form.transformer.city_to_city_name" class="Kurumi\MainBundle\Form\DataTransformer\CityToCityNameTransformer">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument>Kurumi\MainBundle\Entity\City</argument>
+            <argument type="service" id="city.finder"/>
+        </service>
+        <!-- Managers -->
+        <service id="user.manager" class="Kurumi\MainBundle\Manager\UserManager">
+            <argument type="service" id="security.encoder_factory"/>
+        </service>
+        <!-- Sonata admin services -->
+        <service id="sonata.admin.user" class="Kurumi\MainBundle\Admin\UserAdmin">
+            <argument>null</argument>
+            <argument>Kurumi\MainBundle\Entity\User</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+            <tag name="sonata.admin" manager_type="orm" label="admin.label.users"/>
+            <call method="setUserManager">
+                <argument type="service" id="user.manager"/>
+            </call>
+        </service>
+        <service id="sonata.admin.profile" class="Kurumi\MainBundle\Admin\ProfileAdmin">
+            <argument>null</argument>
+            <argument>Kurumi\MainBundle\Entity\Profile</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+            <tag name="sonata.admin" manager_type="orm" label="admin.label.profiles"/>
+        </service>
+        <!-- Entity listeners -->
+        <service id="user.listener" class="Kurumi\MainBundle\EventListener\UserListener">
+            <argument type="service" id="user.manager"/>
+            <tag name="doctrine.event_listener" event="prePersist"/>
+            <tag name="doctrine.event_listener" event="preUpdate"/>
+        </service>
+        <!-- Info providers -->
+        <service id="user.picture.provider" class="Kurumi\MainBundle\InfoProvider\PictureProvider">
+            <argument>user_picture_thumbnail</argument>
+        </service>
+        <service id="profile.info.provider" class="Kurumi\MainBundle\InfoProvider\ProfileInfoProvider">
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
+        </service>
+        <!-- Twig extensions -->
+        <service id="twig.extension.profile.info.provider" class="Kurumi\MainBundle\Twig\Extension\UserProfileInfoProvider">
+            <argument type="service" id="profile.info.provider"/>
+            <tag name="twig.extension"/>
+        </service>
+        <service id="twig.extension.user.picture.provider" class="Kurumi\MainBundle\Twig\Extension\UserPictureProvider">
+            <argument type="service" id="user.picture.provider"/>
+            <tag name="twig.extension"/>
+        </service>
+        <!-- JavaScript settings -->
+        <service id="javascript_settings.nodejs_authenticate" class="Kurumi\MainBundle\Javascript\NodejsAuthenticationInjector">
+            <argument type="service" id="nodejs.authenticator"/>
+            <argument type="service" id="security.context"/>
+            <tag name="javascript_settings"/>
+        </service>
+        <service id="javascript_settings.nodejs" class="Kurumi\MainBundle\Javascript\NodejsSettingsInjector">
+            <argument type="service" id="nodejs.dispatcher"/>
+            <tag name="javascript_settings" priority="1"/>
+        </service>
+        <service id="javascript_settings.chat" class="Kurumi\MainBundle\Javascript\ChatSettingsInjector">
+            <argument>body</argument>
+            <argument>%chat.templates%</argument>
+            <argument>%chat.routes%</argument>
+            <argument type="service" id="templating"/>
+            <argument type="service" id="router"/>
+            <tag name="javascript_settings" priority="1"/>
+        </service>
+        <!-- Front page kernel listener -->
+        <service id="kernel.listener.front_page" class="Kurumi\MainBundle\EventListener\FrontPage" scope="request">
+            <argument type="service" id="request"/>
+            <argument type="service" id="router"/>
+            <argument type="service" id="security.context"/>
+            <argument type="service" id="event_dispatcher"/>
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="-10"/>
+        </service>
+        <!-- Account info kernel listener -->
+        <service id="kernel.listener.account_info" class="Kurumi\MainBundle\EventListener\AccountInfoListener">
+            <argument type="service" id="security.context"/>
+            <argument type="service" id="router"/>
+            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="-32"/>
+        </service>
+        <!-- OAuth services -->
+        <service id="oauth.login.user.provider" class="Kurumi\MainBundle\OAuth\Login\UserProvider">
+            <argument type="collection">
+                <argument key="login_facebook" type="service" id="oauth.login.user.provider.facebook"/>
+                <argument key="login_google" type="service" id="oauth.login.user.provider.google"/>
+                <argument key="login_windows_live" type="service" id="oauth.login.user.provider.windows_live"/>
+            </argument>
+            <argument type="service" id="doctrine.orm.default_entity_manager"/>
+            <!-- @service_container must be referenced to prevent circular reference to @security.context *shrug* -->
+            <argument type="service" id="service_container"/>
+        </service>
+        <service id="oauth.login.user.provider.abstract" class="Kurumi\MainBundle\OAuth\Login\AbstractUserProvider" abstract="true">
+            <call method="setEntityManager">
+                <argument type="service" id="doctrine.orm.default_entity_manager"/>
+            </call>
+            <call method="setCityFinder">
+                <argument type="service" id="city.finder"/>
+            </call>
+        </service>
+        <service id="oauth.login.user.provider.facebook" class="Kurumi\MainBundle\OAuth\Login\FacebookUserProvider" parent="oauth.login.user.provider.abstract">
+        </service>
+        <service id="oauth.login.user.provider.google" class="Kurumi\MainBundle\OAuth\Login\GoogleUserProvider" parent="oauth.login.user.provider.abstract">
+        </service>
+        <service id="oauth.login.user.provider.windows_live" class="Kurumi\MainBundle\OAuth\Login\WindowsLiveUserProvider" parent="oauth.login.user.provider.abstract">
+        </service>
+        <!-- Stream wrappers -->
+        <service id="stream_wrapper.manager" class="Kurumi\MainBundle\StreamWrapper\StreamWrapperManager">
+            <argument type="service" id="router"/>
+        </service>
+        <service id="stream_wrapper.abstract" class="Kurumi\MainBundle\StreamWrapper\AbstractLocalStreamWrapper" abstract="true">
+        </service>
+        <service id="stream_wrapper.public" class="%stream_wrapper.public.class%" parent="stream_wrapper.abstract">
+            <tag name="stream_wrapper" scheme="public" path="%kernel.root_dir%/../web/media/public" route="media_public"/>
+        </service>
+        <service id="stream_wrapper.private" class="%stream_wrapper.private.class%" parent="stream_wrapper.abstract">
+            <tag name="stream_wrapper" scheme="private" path="%kernel.root_dir%/../web/media/private" route="media_private"/>
+        </service>
+        <service id="stream_wrapper.temporary" class="%stream_wrapper.temporary.class%" parent="stream_wrapper.abstract">
+            <tag name="stream_wrapper" scheme="temporary" path="%kernel.root_dir%/../web/media/temporary" route="media_temporary"/>
+        </service>
+    </services>
+</container>

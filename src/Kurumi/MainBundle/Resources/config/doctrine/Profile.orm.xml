@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping
+        xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:gedmo="http://gediminasm.org/schemas/orm/doctrine-extensions-mapping"
+        xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity repository-class="Kurumi\MainBundle\Repository\ProfileRepository" name="Kurumi\MainBundle\Entity\Profile" table="profile">
+        <indexes>
+            <index columns="gender,lookingFor,lookingAgedFrom,lookingAgedTo"/>
+        </indexes>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="birthday" type="date" column="birthday" precision="0" scale="0" nullable="true"/>
+        <field name="gender" type="smallint" column="gender" precision="0" scale="0" nullable="true"/>
+        <field name="firstName" type="string" column="firstName" length="255" precision="0" scale="0" nullable="true"/>
+        <field name="lastName" type="string" column="lastName" length="255" precision="0" scale="0" nullable="true"/>
+        <field name="created" type="datetime" column="created" precision="0" scale="0" nullable="false">
+            <gedmo:timestampable on="create"/>
+        </field>
+        <field name="updated" type="datetime" column="updated" precision="0" scale="0" nullable="false">
+            <gedmo:timestampable on="update"/>
+        </field>
+        <field name="lookingFor" type="smallint" column="lookingFor" precision="0" scale="0" nullable="true"/>
+        <field name="lookingAgedFrom" type="smallint" column="lookingAgedFrom" precision="0" scale="0" nullable="true"/>
+        <field name="lookingAgedTo" type="smallint" column="lookingAgedTo" precision="0" scale="0" nullable="true"/>
+        <one-to-one field="user" target-entity="Kurumi\MainBundle\Entity\User" inversed-by="profile">
+            <join-columns>
+                <join-column name="user_id" referenced-column-name="id" nullable="false"/>
+            </join-columns>
+        </one-to-one>
+        <many-to-one field="city" target-entity="Kurumi\MainBundle\Entity\City" inversed-by="profiles">
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+            <join-columns>
+                <join-column name="city_id" referenced-column-name="id" on-delete="SET NULL" nullable="true"/>
+            </join-columns>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>
