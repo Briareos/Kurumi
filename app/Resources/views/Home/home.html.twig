@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    {% include ':Segment:navbar_top.html.twig' with {'active':'home'} %}
+    {% include ':Segment:navbar_top.html.twig' %}
 
     <div class="main container">
         <a href="{{ path('account_edit_picture', {'modal':1}) }}" data-ajax>Set your photo!</a>

@@ -2,10 +2,10 @@
 
 {% block body %}
 
-{% include ':Segment:navbar_top.html.twig' with {'active':active} %}
+{% include ':Segment:navbar_top.html.twig' %}
 
 <div class="container main">
-    {% include '::flash_messages.html.twig' with {'messages':app.session.flashbag.all()} %}
+    {% include '::flash_messages.html.twig' %}
 
     <h1>Add some details</h1>
 

@@ -1,6 +1,5 @@
 .idea/
 certs/
-webroot/
 
 web/bundles/
 web/uploads/
@@ -9,13 +8,12 @@ web/bootstrap/
 web/css-compiled/
 web/js-compiled/
 web/php_errors.log
+
 vendor/
 
 app/cache/
 app/logs/
-app/config/parameters.yml
-app/Resources/geoip/GeoLiteCity.dat
-
-
 app/bootstrap.php.cache
 app/config/parameters.yml
+
+

@@ -4,7 +4,7 @@
 
 {% block profile_page %}
 
-    {% include '::flash_messages.html.twig' with {'messages':app.session.flashbag.all()} %}
+    {% include '::flash_messages.html.twig' %}
 
     {% include ':Profile:tabs.html.twig' %}
     <p>

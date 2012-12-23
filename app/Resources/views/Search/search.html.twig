@@ -4,15 +4,15 @@
 
 {% block body %}
 
-    {% include ':Segment:navbar_top.html.twig' with {'active':'search'} %}
+    {% include ':Segment:navbar_top.html.twig' %}
 
     <div class="main container">
 
-        {% include '::flash_messages.html.twig' with {'messages':app.session.flashbag.all()} %}
+        {% include '::flash_messages.html.twig' %}
 
         <div class="row-fluid">
             <div class="span12 bevel">
-                {% include ':Form:search_people.html.twig' with {'form':form} %}
+                {% include ':Form:search_people.html.twig' %}
             </div>
         </div>
 

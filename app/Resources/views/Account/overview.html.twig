@@ -3,11 +3,11 @@
 {% block edit_account %}
     <div class="row">
         <div class="span3">
-            {% include ':Account:sidebar.html.twig' with {'active':'account_overview'} %}
+            {% include ':Account:sidebar.html.twig' %}
         </div>
         <div class="span4">
 
-            {% include '::flash_messages.html.twig' with {'messages':app.session.flashbag.all()} %}
+            {% include '::flash_messages.html.twig' %}
 
             <fieldset>
                 <legend>Your account info</legend>
