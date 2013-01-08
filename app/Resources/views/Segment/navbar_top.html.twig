@@ -1,40 +1,50 @@
-{% set active = current_route() %}
-<div><div class="navbar navbar-fixed-top">
-    <div class="navbar-inner">
-        <div class="container">
-            <a class="brand">{{ site_name }}</a>
+{% set route = app.request.attributes.get('_route') %}
+{% set route_params = app.request.attributes.get('_route_params') %}
+<div>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand">{{ site_name }}</a>
 
-            <ul class="nav">
-                <li class="{{ active == 'play' ? 'active' : '' }}"><a data-ajax href="{{ path('play') }}"><i class="icon-star"></i> Play</a></li>
-                <li class="{{ active == 'search' ? 'active' : '' }}"><a data-ajax href="{{ path('search') }}"><i class="icon-globe"></i> Search</a></li>
-                <li class="{{ active == 'home' ? 'active' : '' }}"><a data-ajax href="{{ path('front') }}"><i class="icon-home"></i> Profile</a></li>
-            </ul>
-
-            <div class="btn-group pull-right">
-                <a class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li id="account-edit">
-                        <a href="{{ path('account_overview') }}" data-ajax>
-                            {{ user_picture(user) }}
-                            <div class="summary">
-                                <div class="user-name">{{ user.name }}</div>
-                                <small class="link">Account settings</small>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li><a href="" data-ajax>Privacy settings</a></li>
-                    <li><a href="" data-ajax>Notifications</a></li>
-                    <li class="divider"></li>
-                    <li><a href="{{ path('info_faq') }}" data-ajax>Help</a></li>
-                    <li class="divider"></li>
-                    <li><a href="{{ logout_url(main_firewall_name) }}" data-ajax>Log out</a></li>
+                <ul class="nav">
+                    {% if app.user %}
+                        <li class="{{ route == 'play' ? 'active' : '' }}"><a data-ajax href="{{ path('play') }}"><i class="icon-star"></i> Play</a></li>
+                        <li class="{{ route == 'search' ? 'active' : '' }}"><a data-ajax href="{{ path('search') }}"><i class="icon-globe"></i> Search</a></li>
+                        <li class="{{ app.user and route in ['profile','profile_photos'] and route_params.id == app.user.profile.id ? 'active' : '' }}"><a data-ajax href="{{ path('profile', {'id':app.user.profile.id}) }}"><i class="icon-home"></i> Profile</a></li>
+                    {% else %}
+                        <li class="{{ route == 'register' ? 'active' }}"><a href="{{ path('register') }}">Join us now!</a></li>
+                    {% endif %}
                 </ul>
-            </div>
-            <div class="divider-vertical pull-right"></div>
-            <div class=" pull-right">
-                <a id="buy-credits-top" class=" btn btn-mini" href="{{ path('payment') }}" data-ajax><span class="badge badge-info">0</span> credits</a>
+
+                {% if app.user %}
+                    <div class="btn-group pull-right">
+                        <a class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li id="account-edit">
+                                <a href="{{ path('account_overview') }}" data-ajax>
+                                    {{ profile_picture(app.user.profile, 'thumbnail', {'class':'user-picture'}) }}
+                                    <div class="summary">
+                                        <div class="user-name">{{ app.user.name }}</div>
+                                        <small class="link">Account settings</small>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="" data-ajax>Privacy settings</a></li>
+                            <li><a href="" data-ajax>Notifications</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ path('info_faq') }}" data-ajax>Help</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ logout_url(main_firewall_name) }}" data-ajax>Log out</a></li>
+                        </ul>
+                    </div>
+                    <div class="divider-vertical pull-right"></div>
+                    <div class=" pull-right">
+                        <a id="buy-credits-top" class=" btn btn-mini" href="{{ path('payment') }}" data-ajax><span class="badge badge-info">0</span> credits</a>
+                    </div>
+                {% endif %}
+
             </div>
         </div>
     </div>
-</div></div>
+</div>

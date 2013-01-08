@@ -76,6 +76,7 @@ doctrine:
             KurumiMainBundle: ~
             BriareosNodejsBundle: ~
             BriareosChatBundle: ~
+            SpyTimelineBundle: ~
         dql:
             string_functions:
                 FindInSet: DoctrineExtensions\Query\Mysql\FindInSet
@@ -206,29 +207,54 @@ sonata_doctrine_orm_admin:
                 integer:    SonataAdminBundle:CRUD:base_show_field.html.twig
                 decimal:    SonataAdminBundle:CRUD:base_show_field.html.twig
 
-avalanche_imagine:
-    driver:         gd
-    source_root:    %kernel.root_dir%/../web
-    web_root:       %kernel.root_dir%/../web
-    cache_prefix:   media/cache
-    filters:
-        user_picture_thumbnail:
-            type:   thumbnail
-            options:
-                size: [32, 32]
-                mode: outbound
-                quality:
-                format:
-        user_picture_search:
-            type:   thumbnail
-            options:
-                size: [260, 180]
-                mode: outbound
-        user_picture_profile:
-            type:   thumbnail
-            options:
-                size: [260, 420]
-                mode: inset
+knp_gaufrette:
+    adapters:
+        picture_adapter:
+            local:
+                directory:  %kernel.root_dir%/../web/media/picture
+                create:     true
+    filesystems:
+        picture_filesystem:
+            adapter:        picture_adapter
+    stream_wrapper:
+        protocol:           gaufrette
+        filesystems:
+            picture:        picture_filesystem
+
+vich_uploader:
+    db_driver:  orm
+    gaufrette:  true
+    storage:    vich_uploader.storage.gaufrette
+    mappings:
+        picture:
+            uri_prefix:         /media/picture
+            upload_destination: picture_filesystem
+            namer:              picture.namer
+
+liip_imagine:
+    driver:               gd
+    web_root:             %kernel.root_dir%/../web
+    data_root:            %kernel.root_dir%/../web
+    cache_mkdir_mode:     0777
+    cache_prefix:         /media/cache
+    cache:                web_path
+    cache_clearer:        true
+    data_loader:          filesystem
+    controller_action:    liip_imagine.controller:filterAction
+    formats:              []
+    filter_sets:
+        search:
+            filters:
+                thumbnail: { size: [260, 180], mode: outbound }
+        thumbnail:
+            filters:
+                thumbnail: { size: [32, 32], mode: outbound }
+        profile:
+            filters:
+                thumbnail: { size: [260, 420], mode: inset }
+        timeline:
+            filters:
+                thumbnail: { size: [600, 120], mode: inset }
 
 sonata_intl:
     timezone:
@@ -244,11 +270,11 @@ bazinga_geocoder:
 old_sound_rabbit_mq:
     connections:
         default:
-            host:      'localhost'
-            port:      5672
-            user:      'guest'
-            password:  'guest'
-            vhost:     '/'
+            host:      %rabbit_mq_host%
+            port:      %rabbit_mq_port%
+            user:      %rabbit_mq_user%
+            password:  %rabbit_mq_password%
+            vhost:     %rabbit_mq_vhost%
     producers:
     consumers:
 
@@ -264,7 +290,7 @@ briareos_nodejs:
         lifetime: 900
 
 briareos_chat:
-    picture_provider: user.picture.provider
+    picture_provider: chat.subject.picture.provider
 
 hwi_oauth:
     firewall_name: main
@@ -294,3 +320,27 @@ hwi_oauth:
         ignore_errors: false
         max_redirects: 5
 
+spy_timeline:
+    drivers:
+        orm:
+            object_manager: doctrine.orm.entity_manager
+            classes:
+                query_builder: ~    # Spy\TimelineBundle\Driver\ORM\QueryBuilder\QueryBuilder
+                timeline:           Kurumi\MainBundle\Entity\Timeline
+                action:             Kurumi\MainBundle\Entity\Action
+                component:          Kurumi\MainBundle\Entity\Component
+                action_component:   Kurumi\MainBundle\Entity\ActionComponent
+    render:
+        resources:
+            - ":Timeline:components.html.twig"
+        path:     ":Timeline"
+        fallback: ":Timeline:default.html.twig"
+        i18n: #Do you want to use i18n when rendering ? if not, remove this not.
+            fallback: en
+    filters:
+        data_hydrator:
+            priority:           20
+            service:            spy_timeline.filter.data_hydrator
+            filter_unresolved:  true
+            locators:
+                - spy_timeline.filter.data_hydrator.locator.doctrine_orm

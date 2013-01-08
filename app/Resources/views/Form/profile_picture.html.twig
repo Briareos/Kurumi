@@ -2,13 +2,13 @@
 
     {{ form_errors(form) }}
 
-    {% if user.picture %}
+    {% if profile.picture %}
         <p>
             Your current picture:
         </p>
 
         <p>
-            {% thumbnail user.picture, 'profile' with {title:''} %}
+            {{ profile_picture(profile, 'profile') }}
         </p>
 
     {% else %}
@@ -18,7 +18,7 @@
         </p>
     {% endif %}
 
-    <div class="fileupload {{ form.binaryContent.vars.value ? 'fileupload-exists' : 'fileupload-new' }}" data-provides="fileupload">
+    <div class="fileupload {{ form.file.vars.value ? 'fileupload-exists' : 'fileupload-new' }}" data-provides="fileupload">
         <div class="input-append">
             <div class="uneditable-input span3">
                 <i class="icon-file fileupload-exists"></i>
@@ -27,14 +27,14 @@
             <span class="btn btn-file">
                 <span class="fileupload-new">Select file</span>
                 <span class="fileupload-exists">Change</span>
-                {{ form_widget(form.binaryContent) }}
+                {{ form_widget(form.file) }}
         </span>
             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
         </div>
     </div>
 
 
-    {% if user.picture is empty %}
+    {% if profile.picture is empty %}
         <div class="alert alert-info">
             <i class="icon-exclamation-sign"></i> Please note that you - and only you - must be clearly visible. Your age and gender need to match your profile photo. It must <strong>not</strong> contain any nudity.
         </div>
@@ -43,7 +43,7 @@
     {{ form_rest(form) }}
 
     <div class="form-actions">
-        {% if user.picture %}
+        {% if profile.picture %}
             <button type="submit" class="btn btn-primary" data-loading-text="Uploading your new picture...">Upload new picture</button>
             <a href="{{ path('account_delete_picture', {'token':csrf_token('account_delete_picture')}) }}" data-ajax class="btn btn-danger">Delete this picture</a>
         {% else %}

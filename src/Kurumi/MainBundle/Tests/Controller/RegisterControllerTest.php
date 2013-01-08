@@ -30,9 +30,6 @@ class RegisterControllerTest extends WebTestCase
         $this->assertTrue($crawler->filter('form#user_register')->count() > 0);
     }
 
-    /**
-     * @depends testFrontPageForGuestsHasLoginForm
-     */
     public function testFrontPageFailedLoginShowsErrors()
     {
         $crawler = $this->getFrontPageCrawler();

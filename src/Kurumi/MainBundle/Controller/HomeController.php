@@ -26,7 +26,7 @@ class HomeController extends Controller
     private $router;
 
     /**
-     * @Route("/home", name="home_page")
+     * @Route("/home", name="home")
      */
     public function homeAction()
     {

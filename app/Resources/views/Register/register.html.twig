@@ -3,9 +3,9 @@
 {% block title %}{{ 'page.front.title'|trans }}{% endblock %}
 
 {% block body %}
-    <div id="register-page">
-        <div class="container">
-            {% include ':Form:user_register.html.twig' %}
-        </div>
+    {% include ':Segment:navbar_top.html.twig' %}
+
+    <div class="main container">
+        {% include ':Form:user_register.html.twig' %}
     </div>
 {% endblock %}

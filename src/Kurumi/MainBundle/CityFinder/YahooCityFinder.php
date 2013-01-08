@@ -36,16 +36,13 @@ class YahooCityFinder implements CityFinderInterface
     }
 
     /**
-     * @param City
-     * @param $name
-     *
-     * @return \Kurumi\MainBundle\Entity\City|null
+     * {@inheritdoc}
      */
     public function find(City $city, $name)
     {
         $result = $this->lookup($name);
         if($result === null) {
-            return null;
+            throw new CityNotFoundException();
         }
 
         $city->setLatitude($result['latitude']);

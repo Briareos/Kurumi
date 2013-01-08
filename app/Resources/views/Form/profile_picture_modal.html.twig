@@ -1,0 +1,81 @@
+<form novalidate id="{{ form.vars.id }}" action="{{ path('account_edit_picture') }}" method="post" {{ form_enctype(form) }} data-ajax data-modal class="modal-form">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>{{ 'form.user_picture.title'|trans }}</h3>
+    </div>
+
+    <div class="modal-body">
+
+        {% include '::flash_messages.html.twig' %}
+
+        {% if profile.picture %}
+            <p>
+                Your current picture:
+            </p>
+
+            <p>
+                {{ profile_picture(profile, 'profile') }}
+            </p>
+
+            <p>
+                <a href="{{ path('account_delete_picture', {'token':csrf_token('account_delete_picture')}) }}" data-ajax data-modal class="btn btn-mini btn-danger">Delete this picture</a>
+            </p>
+        {% else %}
+            <p>
+                Add a picture so {{ site_name }} members can see who you are!
+            </p>
+        {% endif %}
+
+        <div class="fileupload {{ form.file.vars.value ? 'fileupload-exists' : 'fileupload-new' }}" data-provides="fileupload">
+            <div class="input-append">
+                <div class="uneditable-input span3">
+                    <i class="icon-file fileupload-exists"></i>
+                    <span class="fileupload-preview"></span>
+                </div>
+            <span class="btn btn-file">
+                <span class="fileupload-new">Select file</span>
+                <span class="fileupload-exists">Change</span>
+                {{ form_widget(form.file) }}
+        </span>
+                <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+            </div>
+        </div>
+
+        {% if form.file.vars.errors %}
+            <div class="alert alert-error">
+                <ul class="alert-messages">
+                    {% for error in form.file.vars.errors %}
+                        <li>{{ error.messageTemplate|trans(error.messageParameters, 'validators') }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if profile.picture is empty %}
+            <div class="alert alert-info">
+                <i class="icon-exclamation-sign"></i> Please note that you - and only you - must be clearly visible. Your age and gender need to match your profile photo. It must <strong>not</strong> contain any nudity.
+            </div>
+        {% endif %}
+
+        {{ form_rest(form) }}
+    </div>
+
+    <div class="modal-footer">
+        {% if profile.picture %}
+            <button type="button" class="btn btn-success" data-dismiss="modal">
+                Yep, that's me!
+            </button>
+            <button type="submit" class="btn btn-primary" data-loading-text="Uploading your new picture...">
+                Upload new picture
+            </button>
+        {% else %}
+            <button type="button" class="btn" data-dismiss="modal">I'll do it later</button>
+            <button type="submit" class="btn btn-primary" data-loading-text="Uploading your picture...">
+                Upload picture
+            </button>
+        {% endif %}
+    </div>
+
+</form>
+</div>

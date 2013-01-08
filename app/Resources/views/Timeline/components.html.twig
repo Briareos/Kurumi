@@ -1,0 +1,10 @@
+{% block _kurumi_mainbundle_entity_profile_subject_component %}
+    <a data-ajax href="{{ path('profile', {'id':value.id}) }}">{{ value.user.name }}</a>
+{% endblock %}
+
+{% block _kurumi_mainbundle_entity_picture_picture_component %}
+    <a data-ajax class="thumbnail" href="{{ path('profile_photo', {'profile_id':value.profile.id,'id':value.id}) }}">
+        {{ picture(value, 'timeline') }}
+    </a>
+{% endblock %}
+

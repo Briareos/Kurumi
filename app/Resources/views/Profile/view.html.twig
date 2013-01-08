@@ -1,13 +1,21 @@
 {% extends ':Profile:layout.html.twig' %}
 
-{% block title %}{{ user.name }}{% endblock %}
+{% block title %}{{ profile.user.name }}{% endblock %}
 
 {% block profile_page %}
 
     {% include '::flash_messages.html.twig' %}
 
     {% include ':Profile:tabs.html.twig' %}
+
     <p>
-        {{ profile_info.getSearchInfo(subject.profile) }}
+        {{ profile_info.getSearchInfo(profile) }}
     </p>
+
+    <hr>
+
+    {% for action in timeline %}
+        {{ timeline_render(action, ':Timeline:profile_picture_add.html.twig') }}
+
+    {% endfor %}
 {% endblock %}

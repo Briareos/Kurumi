@@ -4,15 +4,7 @@
     <meta charset="utf-8">
     <title>{{ block('title') }}</title>
 
-    {# Pjax IE fix#}
-    <script type="text/javascript">
-
-    </script>
-
-    {# jQuery #}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-
-    {# Bootstrap JS #}
     <script src="{{ asset('bootstrap/js/bootstrap-typeahead.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap-transition.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap-tooltip.js') }}"></script>
@@ -26,37 +18,25 @@
     <script src="{{ asset('bootstrap/js/bootstrap-button.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap-alert.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap-affix.js') }}"></script>
-    <script src="{{ asset('bundles/user/js/bootstrap-fileupload.js') }}"></script>
-
-    {# Ajax JS #}
     <script src="{{ asset('bundles/briareosajax/js/jquery.form.js') }}"></script>
     <script src="{{ asset('bundles/briareosajax/js/jquery.history.js') }}"></script>
     <script src="{{ asset('bundles/briareosajax/js/ajax.js') }}"></script>
+    <script src="{{ asset('bundles/briareosnodejs/js/nodejs.js') }}"></script>
+    <script src="{{ asset('bundles/briareoschat/js/chat.js') }}"></script>
+    <script src="{{ asset('bundles/kurumimain/js/bootstrap-fileupload.js') }}"></script>
+    <script src="{{ asset('bundles/kurumimain/js/bootstrap-modal.js') }}"></script>
+    <script src="{{ asset('bundles/kurumimain/js/bootstrap-modalmanager.js') }}"></script>
+    <script src="{{ socket_io_resource() }}"></script>
+    <script src="{{ asset('js/core.js') }}"></script>
 
-    {# Bootstrap CSS #}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="//kurumi.servehttp.com:1337/bootstrap/less/bootstrap.less">
     <link rel="stylesheet" href="//kurumi.servehttp.com:1337/bootstrap/less/responsive.less">
-
-    {# Nodejs and chat CSS #}
-    <script src="{{ asset('bundles/briareosnodejs/js/nodejs.js') }}"></script>
-    <script src="{{ asset('bundles/briareoschat/js/chat.js') }}"></script>
-
-    {# Page CSS #}
     <link rel="stylesheet" href="//kurumi.servehttp.com:1337/less/style.less">
-
-    {# Socket.IO #}
-    <script src="{{ socket_io_resource() }}"></script>
-
-    {# Chat CSS #}
     <link rel="stylesheet" href="{{ asset('bundles/briareoschat/css/chat.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/kurumimain/css/bootstrap-fileupload.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/kurumimain/css/bootstrap-modal.css') }}">
 
-    <link rel="stylesheet" href="{{ asset('bundles/user/css/bootstrap-fileupload.css') }}">
-
-    {# Page JS #}
-    <script src="{{ asset('js/core.js') }}"></script>
-
-    {# JS settings loader #}
     <script>
         $(function () {
             $.each({{ javascript_settings()|json_encode|raw }}, function (index, javascriptSettings) {
@@ -67,7 +47,9 @@
 </head>
 <body>
 <div data-pjax-container="body">
-    {{ block('body') }}
+    <div class="page-container">
+        {{ block('body') }}
+    </div>
 </div>
 </body>
 </html>

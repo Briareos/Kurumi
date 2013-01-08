@@ -1,5 +1,22 @@
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ app.php [QSA,L]
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ app.php [QSA,L]
+
+RewriteCond %{REQUEST_URI} ^/media/picture/private- [OR]
+RewriteCond %{REQUEST_URI} ^/media/cache/[a-z_]+/media/picture/private-
+RewriteRule ^(.*)$ app.php [QSA,L]
+
+<IfModule mod_expires.c>
+  # Enable expirations.
+  ExpiresActive On
+
+  # Cache all files for 2 weeks after access (A).
+  ExpiresDefault A1209600
+
+  <FilesMatch \.php$>
+    # Do not allow PHP scripts to be cached unless they explicitly send cache
+    # headers themselves.
+    ExpiresActive Off
+  </FilesMatch>
 </IfModule>

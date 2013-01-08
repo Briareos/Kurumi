@@ -13,7 +13,7 @@ class KurumiMainBundle extends Bundle
         if ($this->container->has('stream_wrapper.manager')) {
             /** @var $streamManager \Kurumi\MainBundle\StreamWrapper\StreamWrapperManager */
             $streamManager = $this->container->get('stream_wrapper.manager');
-            $streamManager->registerStreamWrappers();
+            //$streamManager->registerStreamWrappers();
         }
     }
 

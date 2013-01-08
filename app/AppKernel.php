@@ -16,15 +16,12 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
-
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Sonata\jQueryBundle\SonatajQueryBundle(),
@@ -36,17 +33,18 @@ class AppKernel extends Kernel
             new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
-            new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
-
+            new Liip\ImagineBundle\LiipImagineBundle(),
+            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
+            new Vich\UploaderBundle\VichUploaderBundle(),
             new Briareos\NodejsBundle\BriareosNodejsBundle(),
             new Briareos\ChatBundle\BriareosChatBundle(),
             new Briareos\AjaxBundle\BriareosAjaxBundle(),
+            new Spy\TimelineBundle\SpyTimelineBundle(),
             new Kurumi\MainBundle\KurumiMainBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
-            //$bundles[] = new Elao\WebProfilerExtraBundle\WebProfilerExtraBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
         }

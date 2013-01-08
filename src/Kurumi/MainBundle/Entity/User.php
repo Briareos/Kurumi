@@ -67,11 +67,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     private $profile;
 
     /**
-     * @var Picture
-     */
-    private $picture;
-
-    /**
      * @var ArrayCollection|OAuth[]
      */
     private $oauth;
@@ -252,17 +247,6 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
     public function isPasswordClear()
     {
         return (null === $this->password);
-    }
-
-    public function setPicture(Picture $picture = null)
-    {
-        $this->picture = $picture;
-
-    }
-
-    public function getPicture()
-    {
-        return $this->picture;
     }
 
     public function getChatName()

@@ -3,15 +3,19 @@
 namespace Kurumi\MainBundle\InfoProvider;
 
 use Kurumi\MainBundle\Entity\Profile;
+use Kurumi\MainBundle\Manager\ProfileCacheManager;
 use Doctrine\ORM\EntityManager;
 
 class ProfileInfoProvider
 {
     private $em;
 
-    public function __construct(EntityManager $em)
+    private $profileCacheManager;
+
+    public function __construct(EntityManager $em, ProfileCacheManager $profileCacheManager)
     {
         $this->em = $em;
+        $this->profileCacheManager = $profileCacheManager;
     }
 
     public function getSearchInfo(Profile $profile)
@@ -38,6 +42,7 @@ class ProfileInfoProvider
             $searchInfo .= ", near " . $city->getName();
         }
         $searchInfo .= ".";
+
         return $searchInfo;
     }
 
@@ -61,9 +66,13 @@ class ProfileInfoProvider
         return ($this->countPrivatePhotos($profile) > 0);
     }
 
+    public function getCache(Profile $profile) {
+        return $this->profileCacheManager->getCache($profile);
+    }
+
     public function countPhotos(Profile $profile)
     {
-        return 0;
+        return $this->getCache($profile)->getPictureCount();
     }
 
     public function countProfilePhotos(Profile $profile)
@@ -83,11 +92,6 @@ class ProfileInfoProvider
 
     public function getProfileGallery(Profile $profile)
     {
-        if ($profile->getGalleryProfile() === null) {
-            return null;
-        }
-        $gallery = $this->em->createQuery('Select g From SonataMediaBundle:Gallery g Inner Join g.galleryHasMedias gm Inner Join gm.media m Where g.id = :id')->setParameter('id', $profile->getGalleryProfile()->getId())->getSingleResult();
-        return $gallery;
     }
 
     public function isOnline(Profile $profile)
@@ -96,6 +100,7 @@ class ProfileInfoProvider
         if ($user->getLastActiveAt() > new \DateTime('-5 minute')) {
             return true;
         }
+
         return false;
     }
 }

@@ -10,8 +10,12 @@
             {% include '::flash_messages.html.twig' %}
 
             <fieldset>
-                <legend>Your picture! <small>Isn't here =(</small></legend>
-                {% include ':Form:user_picture.html.twig' %}
+                <legend>Your picture!
+                    {% if profile.picture is empty %}
+                        <small>Isn't here =(</small>
+                    {% endif %}
+                </legend>
+                {% include ':Form:profile_picture.html.twig' %}
             </fieldset>
         </div>
     </div>

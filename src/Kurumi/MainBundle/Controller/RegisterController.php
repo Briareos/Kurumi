@@ -64,7 +64,7 @@ class RegisterController extends Controller
             }
         }
 
-        $pageTemplateName = ':Page:Register:register.html.twig';
+        $pageTemplateName = ':Register:register.html.twig';
         $formTemplateName = ':Form:user_register.html.twig';
         $templateParams = [
             'form' => $form->createView(),

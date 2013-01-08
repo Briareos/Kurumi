@@ -1,57 +1,6 @@
 {
-    "hash": "96e0262ba9cef5d445df7ce551074cc2",
+    "hash": "bbbf49d439272018badffafdf4485316",
     "packages": [
-        {
-            "name": "avalanche123/imagine-bundle",
-            "version": "v2.1.2",
-            "target-dir": "Avalanche/Bundle/ImagineBundle",
-            "source": {
-                "type": "git",
-                "url": "git://github.com/avalanche123/AvalancheImagineBundle.git",
-                "reference": "v2.1.2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://github.com/avalanche123/AvalancheImagineBundle/archive/v2.1.2.zip",
-                "reference": "v2.1.2",
-                "shasum": ""
-            },
-            "require": {
-                "symfony/framework-bundle": "2.*",
-                "imagine/imagine": "v0.4.1"
-            },
-            "require-dev": {
-                "makasim/temp-file": "dev-master"
-            },
-            "suggest": {
-                "symfony/twig-bundle": "2.*"
-            },
-            "time": "2012-12-13 18:34:10",
-            "type": "symfony-bundle",
-            "installation-source": "dist",
-            "autoload": {
-                "psr-0": {
-                    "Avalanche\\Bundle\\ImagineBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Bulat Shakirzyanov",
-                    "email": "mallluhuct@gmail.com",
-                    "homepage": "http://avalanche123.com"
-                }
-            ],
-            "description": "Image manipulation using Imagine and Twig Filters.",
-            "homepage": "https://github.com/avalanche123/AvalancheImagineBundle",
-            "keywords": [
-                "image manipulation",
-                "imagine"
-            ]
-        },
         {
             "name": "beberlei/DoctrineExtensions",
             "version": "v0.1",
@@ -94,7 +43,7 @@
                     "Briareos\\AjaxBundle": ""
                 }
             },
-            "time": "2012-12-14 19:49:50"
+            "time": "2013-01-02 02:42:55"
         },
         {
             "name": "briareos/chat-bundle",
@@ -112,7 +61,7 @@
                     "Briareos\\ChatBundle": ""
                 }
             },
-            "time": "2012-12-14 19:31:07"
+            "time": "2013-01-02 02:43:37"
         },
         {
             "name": "briareos/nodejs-bundle",
@@ -130,7 +79,7 @@
                     "Briareos\\NodejsBundle": ""
                 }
             },
-            "time": "2012-12-14 19:30:51"
+            "time": "2013-01-02 02:43:55"
         },
         {
             "name": "doctrine/common",
@@ -258,19 +207,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal",
-                "reference": "00f9575d24a15931c2ccfafd888b3d1d0bb5bd03"
+                "reference": "cb3ec49cb4401bd1c8be6ba9671f651802586eaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/dbal/archive/00f9575d24a15931c2ccfafd888b3d1d0bb5bd03.zip",
-                "reference": "00f9575d24a15931c2ccfafd888b3d1d0bb5bd03",
+                "url": "https://github.com/doctrine/dbal/archive/cb3ec49cb4401bd1c8be6ba9671f651802586eaf.zip",
+                "reference": "cb3ec49cb4401bd1c8be6ba9671f651802586eaf",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2",
                 "doctrine/common": "2.3.*"
             },
-            "time": "2012-12-17 15:35:54",
+            "time": "2012-12-23 20:28:39",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -323,12 +272,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/doctrine/DoctrineBundle.git",
-                "reference": "2991d0dfa58a5583d9231c490750e29c45b0a6e9"
+                "reference": "f1ddf3753bb274df72765edd92807af29730d890"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/DoctrineBundle/archive/2991d0dfa58a5583d9231c490750e29c45b0a6e9.zip",
-                "reference": "2991d0dfa58a5583d9231c490750e29c45b0a6e9",
+                "url": "https://github.com/doctrine/DoctrineBundle/archive/f1ddf3753bb274df72765edd92807af29730d890.zip",
+                "reference": "f1ddf3753bb274df72765edd92807af29730d890",
                 "shasum": ""
             },
             "require": {
@@ -346,7 +295,7 @@
             "suggest": {
                 "doctrine/orm": "The Doctrine ORM integration is optional in the bundle."
             },
-            "time": "2012-12-11 09:53:45",
+            "time": "2013-01-02 10:22:46",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -445,12 +394,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/migrations",
-                "reference": "c1d875ce7d092dd1bc7508c3867b5c6b97431e43"
+                "reference": "e1f6efcd94993b493de5c6a413cbc327ea9c0caa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/migrations/archive/c1d875ce7d092dd1bc7508c3867b5c6b97431e43.zip",
-                "reference": "c1d875ce7d092dd1bc7508c3867b5c6b97431e43",
+                "url": "https://github.com/doctrine/migrations/archive/e1f6efcd94993b493de5c6a413cbc327ea9c0caa.zip",
+                "reference": "e1f6efcd94993b493de5c6a413cbc327ea9c0caa",
                 "shasum": ""
             },
             "require": {
@@ -464,7 +413,7 @@
             "suggest": {
                 "symfony/console": "to run the migration from the console"
             },
-            "time": "2012-10-19 10:37:24",
+            "time": "2012-12-27 16:39:29",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -500,12 +449,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/doctrine/doctrine2.git",
-                "reference": "6d898753065056d178039844d80569f74b8fe6c6"
+                "reference": "019094655b6606852a3e3231de93425d9913bac4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/doctrine/doctrine2/archive/6d898753065056d178039844d80569f74b8fe6c6.zip",
-                "reference": "6d898753065056d178039844d80569f74b8fe6c6",
+                "url": "https://github.com/doctrine/doctrine2/archive/019094655b6606852a3e3231de93425d9913bac4.zip",
+                "reference": "019094655b6606852a3e3231de93425d9913bac4",
                 "shasum": ""
             },
             "require": {
@@ -517,7 +466,7 @@
             "suggest": {
                 "symfony/yaml": "If you want to use YAML Metadata Mapping Driver"
             },
-            "time": "2012-12-16 12:00:27",
+            "time": "2012-12-24 10:18:12",
             "bin": [
                 "bin/doctrine",
                 "bin/doctrine.php"
@@ -597,12 +546,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/l3pp4rd/DoctrineExtensions.git",
-                "reference": "0cc2f18585020877c8f6b4f02bb90494ab9b2dba"
+                "reference": "v2.3.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/l3pp4rd/DoctrineExtensions/archive/0cc2f18585020877c8f6b4f02bb90494ab9b2dba.zip",
-                "reference": "0cc2f18585020877c8f6b4f02bb90494ab9b2dba",
+                "url": "https://github.com/l3pp4rd/DoctrineExtensions/archive/v2.3.3.zip",
+                "reference": "v2.3.3",
                 "shasum": ""
             },
             "require": {
@@ -739,16 +688,16 @@
         },
         {
             "name": "imagine/Imagine",
-            "version": "v0.4.1",
+            "version": "v0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/avalanche123/Imagine",
-                "reference": "v0.4.1"
+                "reference": "v0.4.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/avalanche123/Imagine/archive/v0.4.1.zip",
-                "reference": "v0.4.1",
+                "url": "https://github.com/avalanche123/Imagine/archive/v0.4.0.zip",
+                "reference": "v0.4.0",
                 "shasum": ""
             },
             "require": {
@@ -757,7 +706,7 @@
             "require-dev": {
                 "sami/sami": "dev-master"
             },
-            "time": "2012-12-13 18:31:18",
+            "time": "2012-11-21 15:08:19",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -791,22 +740,22 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/jdorn/sql-formatter.git",
-                "reference": "15ab7a899e33f42682f74804d340a6995711a0d4"
+                "reference": "7cc05be93fc352be9c551bf5a45c7b930f5d9e2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/jdorn/sql-formatter/archive/15ab7a899e33f42682f74804d340a6995711a0d4.zip",
-                "reference": "15ab7a899e33f42682f74804d340a6995711a0d4",
+                "url": "https://github.com/jdorn/sql-formatter/archive/7cc05be93fc352be9c551bf5a45c7b930f5d9e2a.zip",
+                "reference": "7cc05be93fc352be9c551bf5a45c7b930f5d9e2a",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2012-12-18 21:46:03",
+            "time": "2012-12-29 19:41:32",
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "installation-source": "source",
@@ -1045,12 +994,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/Gaufrette",
-                "reference": "ea337f13b957834c755c3d9ce246ae3c5309c86a"
+                "reference": "755b67d8b61ee94051d2bfd131bc98d47587e3d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/KnpLabs/Gaufrette/archive/ea337f13b957834c755c3d9ce246ae3c5309c86a.zip",
-                "reference": "ea337f13b957834c755c3d9ce246ae3c5309c86a",
+                "url": "https://github.com/KnpLabs/Gaufrette/archive/755b67d8b61ee94051d2bfd131bc98d47587e3d3.zip",
+                "reference": "755b67d8b61ee94051d2bfd131bc98d47587e3d3",
                 "shasum": ""
             },
             "require": {
@@ -1075,7 +1024,7 @@
                 "ext-zip": "to use the Zip adapter",
                 "ext-apc": "to use the APC adapter"
             },
-            "time": "2012-12-15 10:16:57",
+            "time": "2013-01-02 19:22:19",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1103,6 +1052,66 @@
                 }
             ],
             "description": "PHP5 library that provides a filesystem abstraction layer",
+            "homepage": "http://knplabs.com",
+            "keywords": [
+                "media",
+                "file",
+                "filesystem",
+                "abstraction"
+            ]
+        },
+        {
+            "name": "knplabs/knp-gaufrette-bundle",
+            "version": "dev-master",
+            "target-dir": "Knp/Bundle/GaufretteBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/KnpLabs/KnpGaufretteBundle",
+                "reference": "fe09a0cd034f1ff34b836dc4ca67e96b9fed18c6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/KnpLabs/KnpGaufretteBundle/archive/fe09a0cd034f1ff34b836dc4ca67e96b9fed18c6.zip",
+                "reference": "fe09a0cd034f1ff34b836dc4ca67e96b9fed18c6",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/framework-bundle": "2.*",
+                "knplabs/gaufrette": "0.2.*@dev"
+            },
+            "require-dev": {
+                "symfony/yaml": "2.*",
+                "symfony/console": "2.*"
+            },
+            "time": "2013-01-04 07:37:20",
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.2.x-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Knp\\Bundle\\GaufretteBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Antoine Hérault",
+                    "email": "antoine.herault@gmail.com",
+                    "homepage": "https://github.com/Herzult"
+                },
+                {
+                    "name": "The contributors",
+                    "homepage": "https://github.com/knplabs/KnpGaufretteBundle/contributors"
+                }
+            ],
+            "description": "Allows to easily use the Gaufrette library in a Symfony project",
             "homepage": "http://knplabs.com",
             "keywords": [
                 "media",
@@ -1186,12 +1195,12 @@
             "source": {
                 "type": "git",
                 "url": "http://github.com/kriswallsmith/assetic.git",
-                "reference": "8ca1861fbed58e2c6ffcca5c0a1726c40a10a77c"
+                "reference": "054ff76c4cc812c5a5d7e36af6d076ee8294ab7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/kriswallsmith/assetic/archive/8ca1861fbed58e2c6ffcca5c0a1726c40a10a77c.zip",
-                "reference": "8ca1861fbed58e2c6ffcca5c0a1726c40a10a77c",
+                "url": "https://github.com/kriswallsmith/assetic/archive/054ff76c4cc812c5a5d7e36af6d076ee8294ab7e.zip",
+                "reference": "054ff76c4cc812c5a5d7e36af6d076ee8294ab7e",
                 "shasum": ""
             },
             "require": {
@@ -1212,7 +1221,7 @@
                 "ptachoire/cssembed": "Assetic provides the integration with phpcssembed to embed data uris",
                 "leafo/scssphp-compass": "Assetic provides the integration with the SCSS compass plugin"
             },
-            "time": "2012-12-14 18:31:26",
+            "time": "2013-01-02 10:14:46",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1293,6 +1302,58 @@
             ]
         },
         {
+            "name": "liip/imagine-bundle",
+            "version": "dev-master",
+            "target-dir": "Liip/ImagineBundle",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/liip/LiipImagineBundle.git",
+                "reference": "f7d5e4db82066fcdd89151fbf30b2a3255e0fe1d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/liip/LiipImagineBundle/archive/f7d5e4db82066fcdd89151fbf30b2a3255e0fe1d.zip",
+                "reference": "f7d5e4db82066fcdd89151fbf30b2a3255e0fe1d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": ">=2.0.14,<2.3-dev",
+                "imagine/imagine": "<=0.4.0"
+            },
+            "require-dev": {
+                "twig/twig": ">=1.0,<2.0-dev",
+                "symfony/yaml": ">=2.0,<2.3-dev"
+            },
+            "suggest": {
+                "twig/twig": ">=1.0,<2.0-dev"
+            },
+            "time": "2012-12-22 17:26:12",
+            "type": "symfony-bundle",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Liip\\ImagineBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Liip and other contributors",
+                    "homepage": "https://github.com/liip/LiipImagineBundle/contributors"
+                }
+            ],
+            "description": "This Bundle assists in imagine manipulation using the imagine library",
+            "homepage": "http://liip.ch",
+            "keywords": [
+                "image",
+                "imagine"
+            ]
+        },
+        {
             "name": "lunetics/locale-bundle",
             "version": "2.1.x-dev",
             "target-dir": "Lunetics/LocaleBundle",
@@ -1352,16 +1413,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog",
-                "reference": "0df12342ef6c5efc748b27bb9ef92e1c95631058"
+                "reference": "d7375c380955372f3140fb897c1c824cdb53af2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/Seldaek/monolog/archive/0df12342ef6c5efc748b27bb9ef92e1c95631058.zip",
-                "reference": "0df12342ef6c5efc748b27bb9ef92e1c95631058",
+                "url": "https://github.com/Seldaek/monolog/archive/d7375c380955372f3140fb897c1c824cdb53af2b.zip",
+                "reference": "d7375c380955372f3140fb897c1c824cdb53af2b",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=5.3.0",
+                "psr/log": ">=1.0,<2.0"
             },
             "require-dev": {
                 "mlehner/gelf-php": "1.0.*"
@@ -1371,7 +1433,7 @@
                 "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
                 "ext-mongo": "Allow sending log messages to a MongoDB server"
             },
-            "time": "2012-12-14 11:27:44",
+            "time": "2013-01-04 16:29:53",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1559,24 +1621,63 @@
             ]
         },
         {
+            "name": "psr/log",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log",
+                "reference": "1.0.0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/php-fig/log/archive/1.0.0.zip",
+                "reference": "1.0.0",
+                "shasum": ""
+            },
+            "time": "2012-12-21 11:40:51",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Psr\\Log\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ]
+        },
+        {
             "name": "sensio/distribution-bundle",
             "version": "2.1.x-dev",
             "target-dir": "Sensio/Bundle/DistributionBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensio/SensioDistributionBundle",
-                "reference": "v2.1.4"
+                "reference": "781e1e585fc57cfaf37dc16275ebcaa19c8279b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sensio/SensioDistributionBundle/archive/v2.1.4.zip",
-                "reference": "v2.1.4",
+                "url": "https://github.com/sensio/SensioDistributionBundle/archive/781e1e585fc57cfaf37dc16275ebcaa19c8279b5.zip",
+                "reference": "781e1e585fc57cfaf37dc16275ebcaa19c8279b5",
                 "shasum": ""
             },
             "require": {
                 "symfony/framework-bundle": "2.1.*"
             },
-            "time": "2012-11-19 11:18:52",
+            "time": "2013-01-04 17:11:22",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -1612,19 +1713,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensio/SensioFrameworkExtraBundle",
-                "reference": "cee8fd6d0793c545b25023ed9af072e07e441782"
+                "reference": "f050aa93cb1aa780f668020dddd6333b5c5d95c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sensio/SensioFrameworkExtraBundle/archive/cee8fd6d0793c545b25023ed9af072e07e441782.zip",
-                "reference": "cee8fd6d0793c545b25023ed9af072e07e441782",
+                "url": "https://github.com/sensio/SensioFrameworkExtraBundle/archive/f050aa93cb1aa780f668020dddd6333b5c5d95c3.zip",
+                "reference": "f050aa93cb1aa780f668020dddd6333b5c5d95c3",
                 "shasum": ""
             },
             "require": {
                 "symfony/framework-bundle": "2.1.*",
                 "doctrine/common": ">=2.1,<2.4-dev"
             },
-            "time": "2012-12-18 17:19:01",
+            "time": "2013-01-04 17:06:26",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -1660,12 +1761,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensio/SensioGeneratorBundle",
-                "reference": "v2.1.4"
+                "reference": "74f519a1c4414d4a45dd12c9e86e29efb5a90b2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sensio/SensioGeneratorBundle/archive/v2.1.4.zip",
-                "reference": "v2.1.4",
+                "url": "https://github.com/sensio/SensioGeneratorBundle/archive/74f519a1c4414d4a45dd12c9e86e29efb5a90b2c.zip",
+                "reference": "74f519a1c4414d4a45dd12c9e86e29efb5a90b2c",
                 "shasum": ""
             },
             "require": {
@@ -1677,7 +1778,7 @@
                 "doctrine/orm": ">=2.1,<2.4-dev",
                 "twig/twig": ">=1.8,<2.0-dev"
             },
-            "time": "2012-11-19 16:10:57",
+            "time": "2013-01-04 17:09:08",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -1709,12 +1810,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/sonata-project/SonataAdminBundle.git",
-                "reference": "9b470e2782b72377565af912274fbc4601847a8c"
+                "reference": "03d1ca61910f0e98f01f26275aef5a508c4fe3a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sonata-project/SonataAdminBundle/archive/9b470e2782b72377565af912274fbc4601847a8c.zip",
-                "reference": "9b470e2782b72377565af912274fbc4601847a8c",
+                "url": "https://github.com/sonata-project/SonataAdminBundle/archive/03d1ca61910f0e98f01f26275aef5a508c4fe3a5.zip",
+                "reference": "03d1ca61910f0e98f01f26275aef5a508c4fe3a5",
                 "shasum": ""
             },
             "require": {
@@ -1739,7 +1840,7 @@
                 "sonata-project/doctrine-orm-admin-bundle": "dev-master",
                 "sonata-project/intl-bundle": "dev-master"
             },
-            "time": "2012-12-17 13:34:17",
+            "time": "2013-01-03 16:35:54",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -1778,12 +1879,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataBlockBundle",
-                "reference": "60b12fd035b8f2e68f1ead4800dd4e6253800028"
+                "reference": "92b2bfd445bc83a0fa7149ef760fa0d0f2587845"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sonata-project/SonataBlockBundle/archive/60b12fd035b8f2e68f1ead4800dd4e6253800028.zip",
-                "reference": "60b12fd035b8f2e68f1ead4800dd4e6253800028",
+                "url": "https://github.com/sonata-project/SonataBlockBundle/archive/92b2bfd445bc83a0fa7149ef760fa0d0f2587845.zip",
+                "reference": "92b2bfd445bc83a0fa7149ef760fa0d0f2587845",
                 "shasum": ""
             },
             "require": {
@@ -1798,7 +1899,7 @@
                 "sonata-project/admin-bundle": "dev-master",
                 "sonata-project/cache-bundle": "dev-master"
             },
-            "time": "2012-12-05 10:46:30",
+            "time": "2012-12-23 13:10:09",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -1835,12 +1936,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/SonataCacheBundle",
-                "reference": "d4060e0599f24b096885c7070c194e2c27598bc3"
+                "reference": "2d8e5f615bcfa3679f7e438c3250fcb1f82e5281"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sonata-project/SonataCacheBundle/archive/d4060e0599f24b096885c7070c194e2c27598bc3.zip",
-                "reference": "d4060e0599f24b096885c7070c194e2c27598bc3",
+                "url": "https://github.com/sonata-project/SonataCacheBundle/archive/2d8e5f615bcfa3679f7e438c3250fcb1f82e5281.zip",
+                "reference": "2d8e5f615bcfa3679f7e438c3250fcb1f82e5281",
                 "shasum": ""
             },
             "require": {
@@ -1860,7 +1961,7 @@
                 "ext-apc": "Caching with ext/apc",
                 "ext-memcached": "Caching with ext/memcached"
             },
-            "time": "2012-10-23 23:05:43",
+            "time": "2012-12-21 20:01:36",
             "type": "symfony-bundle",
             "installation-source": "source",
             "autoload": {
@@ -1868,6 +1969,7 @@
                     "Sonata\\CacheBundle": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1947,21 +2049,26 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sonata-project/exporter",
-                "reference": "a95d2edc789ffc83b87a2ba3b69c775d343ec9a0"
+                "reference": "1dde81f49c42fac827156c8eacf29c6809f572d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/sonata-project/exporter/archive/a95d2edc789ffc83b87a2ba3b69c775d343ec9a0.zip",
-                "reference": "a95d2edc789ffc83b87a2ba3b69c775d343ec9a0",
+                "url": "https://github.com/sonata-project/exporter/archive/1dde81f49c42fac827156c8eacf29c6809f572d4.zip",
+                "reference": "1dde81f49c42fac827156c8eacf29c6809f572d4",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
-            "suggest": {
-                "ext-curl": "*"
+            "require-dev": {
+                "php": ">=5.3.0",
+                "symfony/routing": "*"
             },
-            "time": "2012-12-14 12:45:51",
+            "suggest": {
+                "ext-curl": "*",
+                "symfony/routing": "*"
+            },
+            "time": "2012-12-27 17:01:27",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -2072,6 +2179,137 @@
                 }
             },
             "time": "2012-08-29 23:34:42"
+        },
+        {
+            "name": "stephpy/TimelineBundle",
+            "version": "dev-master",
+            "target-dir": "Spy/TimelineBundle",
+            "source": {
+                "type": "git",
+                "url": "git://github.com/stephpy/TimelineBundle.git",
+                "reference": "9dd1ffdaaf0883705702deebb50a9827155e0629"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/stephpy/TimelineBundle/archive/9dd1ffdaaf0883705702deebb50a9827155e0629.zip",
+                "reference": "9dd1ffdaaf0883705702deebb50a9827155e0629",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": ">=2.0,<2.3-dev",
+                "symfony/options-resolver": "*",
+                "stephpy/timeline": "1.0.*"
+            },
+            "replace": {
+                "stephpy/timelinebundle": "self.version"
+            },
+            "require-dev": {
+                "atoum/atoum-bundle": "dev-master",
+                "doctrine/orm": "2.*",
+                "symfony/console": "2.*"
+            },
+            "suggest": {
+                "symfony/console": "List spreads and deploy timelines via a command",
+                "snc/redis-bundle": "Use redis driver",
+                "doctrine/orm": "Use doctrine ORM driver",
+                "doctrine/mongodb-odm-bundle": "Use doctrine ODM driver"
+            },
+            "time": "2013-01-03 16:26:42",
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Spy\\TimelineBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Stéphane PY",
+                    "email": "py.stephane1@gmail.com"
+                },
+                {
+                    "name": "Community contributors",
+                    "homepage": "https://github.com/stephpy/TimelineBundle/contributors"
+                }
+            ],
+            "description": "Symfony2 bundle to make timeline",
+            "homepage": "https://github.com/stephpy/TimelineBundle",
+            "keywords": [
+                "symfony",
+                "bundle",
+                "timeline",
+                "notification"
+            ]
+        },
+        {
+            "name": "stephpy/timeline",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/stephpy/timeline",
+                "reference": "18c36c6e54d504face765e92029febc6f68792c6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/stephpy/timeline/archive/18c36c6e54d504face765e92029febc6f68792c6.zip",
+                "reference": "18c36c6e54d504face765e92029febc6f68792c6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/options-resolver": "*"
+            },
+            "require-dev": {
+                "atoum/atoum": "dev-master",
+                "pimple/pimple": "*",
+                "knplabs/knp-components": "1.*",
+                "symfony/event-dispatcher": "2.*"
+            },
+            "suggest": {
+                "predis/predis": "Redis PHP client library",
+                "pimple/pimple": "Use ServiceLocator",
+                "knplabs/knp-components": "Knp Paginator",
+                "ext-redis": "Redis C extension for PHP"
+            },
+            "time": "2012-12-31 14:55:45",
+            "type": "standalone",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Spy\\Timeline": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Community contributors",
+                    "homepage": "https://github.com/stephpy/timeline/contributors"
+                }
+            ],
+            "description": "Standalone library to make timeline",
+            "homepage": "https://github.com/stephpy/timeline",
+            "keywords": [
+                "timeline",
+                "standalone"
+            ]
         },
         {
             "name": "stof/doctrine-extensions-bundle",
@@ -2193,12 +2431,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/AsseticBundle",
-                "reference": "bd91880b53f86689f6638c9a28b8cc17792896e2"
+                "reference": "ee63ac8a700c75ca5daac908512cad8db4a08f1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/AsseticBundle/archive/bd91880b53f86689f6638c9a28b8cc17792896e2.zip",
-                "reference": "bd91880b53f86689f6638c9a28b8cc17792896e2",
+                "url": "https://github.com/symfony/AsseticBundle/archive/ee63ac8a700c75ca5daac908512cad8db4a08f1a.zip",
+                "reference": "ee63ac8a700c75ca5daac908512cad8db4a08f1a",
                 "shasum": ""
             },
             "require": {
@@ -2218,7 +2456,7 @@
             "suggest": {
                 "symfony/twig-bundle": ">=2.1.0,<2.3-dev"
             },
-            "time": "2012-12-14 18:38:42",
+            "time": "2012-12-31 12:59:19",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -2257,12 +2495,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/MonologBundle",
-                "reference": "51517152a608926ee6b40ed8cfbba1a708f0a14f"
+                "reference": "v2.1.5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/MonologBundle/zipball/51517152a608926ee6b40ed8cfbba1a708f0a14f",
-                "reference": "51517152a608926ee6b40ed8cfbba1a708f0a14f",
+                "url": "https://github.com/symfony/MonologBundle/archive/v2.1.5.zip",
+                "reference": "v2.1.5",
                 "shasum": ""
             },
             "require": {
@@ -2289,6 +2527,7 @@
                     "Symfony\\Bundle\\MonologBundle": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2312,12 +2551,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/SwiftmailerBundle",
-                "reference": "2393ba6d4f1b544349123e24a16bbc749bef9e55"
+                "reference": "2bf9cdefd8102e6409ec0762652cf81cb3b4c21a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/SwiftmailerBundle/zipball/2393ba6d4f1b544349123e24a16bbc749bef9e55",
-                "reference": "2393ba6d4f1b544349123e24a16bbc749bef9e55",
+                "url": "https://github.com/symfony/SwiftmailerBundle/archive/2bf9cdefd8102e6409ec0762652cf81cb3b4c21a.zip",
+                "reference": "2bf9cdefd8102e6409ec0762652cf81cb3b4c21a",
                 "shasum": ""
             },
             "require": {
@@ -2331,7 +2570,7 @@
                 "symfony/config": ">=2.1.0,<2.3-dev",
                 "symfony/yaml": ">=2.1.0,<2.3-dev"
             },
-            "time": "2012-10-17 04:18:11",
+            "time": "2013-01-04 17:04:29",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -2344,6 +2583,7 @@
                     "Symfony\\Bundle\\SwiftmailerBundle": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -2366,12 +2606,12 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/symfony/symfony.git",
-                "reference": "055daa99ac1417348e20281fd0fce62c4dd6dc6e"
+                "reference": "94aacec717d6fe549a72435ab911c44c9e5a9360"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/symfony/symfony/archive/055daa99ac1417348e20281fd0fce62c4dd6dc6e.zip",
-                "reference": "055daa99ac1417348e20281fd0fce62c4dd6dc6e",
+                "url": "https://github.com/symfony/symfony/archive/94aacec717d6fe549a72435ab911c44c9e5a9360.zip",
+                "reference": "94aacec717d6fe549a72435ab911c44c9e5a9360",
                 "shasum": ""
             },
             "require": {
@@ -2420,7 +2660,7 @@
                 "propel/propel1": "dev-master",
                 "monolog/monolog": "1.*"
             },
-            "time": "2012-12-19 13:27:19",
+            "time": "2013-01-04 21:46:41",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -2455,18 +2695,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig-extensions",
-                "reference": "d1990ffaca93302709d1306d50ae153adb169f49"
+                "reference": "5c2d515d4624bdd588226d688173cf0399a4d8cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Twig-extensions/archive/d1990ffaca93302709d1306d50ae153adb169f49.zip",
-                "reference": "d1990ffaca93302709d1306d50ae153adb169f49",
+                "url": "https://github.com/fabpot/Twig-extensions/archive/5c2d515d4624bdd588226d688173cf0399a4d8cf.zip",
+                "reference": "5c2d515d4624bdd588226d688173cf0399a4d8cf",
                 "shasum": ""
             },
             "require": {
                 "twig/twig": "1.*"
             },
-            "time": "2012-12-15 09:26:10",
+            "time": "2013-01-04 16:55:05",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2503,18 +2743,18 @@
             "source": {
                 "type": "git",
                 "url": "git://github.com/fabpot/Twig.git",
-                "reference": "f095f3a1777431412954e478f92e8a10cb7b6495"
+                "reference": "720b71a0b8b48bbefac8037d81d618f798356e7f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/fabpot/Twig/archive/f095f3a1777431412954e478f92e8a10cb7b6495.zip",
-                "reference": "f095f3a1777431412954e478f92e8a10cb7b6495",
+                "url": "https://github.com/fabpot/Twig/archive/720b71a0b8b48bbefac8037d81d618f798356e7f.zip",
+                "reference": "720b71a0b8b48bbefac8037d81d618f798356e7f",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2012-12-18 10:01:32",
+            "time": "2013-01-04 21:43:10",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -2545,6 +2785,65 @@
             "homepage": "http://twig.sensiolabs.org",
             "keywords": [
                 "templating"
+            ]
+        },
+        {
+            "name": "vich/uploader-bundle",
+            "version": "dev-master",
+            "target-dir": "Vich/UploaderBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dustin10/VichUploaderBundle",
+                "reference": "35f975c0aacbbe9ce0525989e2366b39f5a693bd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/dustin10/VichUploaderBundle/archive/35f975c0aacbbe9ce0525989e2366b39f5a693bd.zip",
+                "reference": "35f975c0aacbbe9ce0525989e2366b39f5a693bd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "symfony/framework-bundle": ">=2.0,<2.3-dev"
+            },
+            "require-dev": {
+                "twig/twig": "@stable",
+                "doctrine/orm": "@stable",
+                "doctrine/common": "@stable",
+                "doctrine/dbal": "@stable",
+                "doctrine/mongodb": "dev-master",
+                "doctrine/mongodb-odm": "dev-master",
+                "knplabs/knp-gaufrette-bundle": "0.2.*"
+            },
+            "suggest": {
+                "symfony/doctrine-bundle": "*",
+                "symfony/mongodb-odm-bundle": "*",
+                "knplabs/knp-gaufrette-bundle": "*"
+            },
+            "time": "2012-11-24 00:51:05",
+            "type": "symfony-bundle",
+            "installation-source": "source",
+            "autoload": {
+                "psr-0": {
+                    "Vich\\UploaderBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dustin Dobervich",
+                    "email": "ddobervich@gmail.com",
+                    "homepage": "http://www.dobervich.com"
+                }
+            ],
+            "description": "Ease file uploads attached to entities",
+            "homepage": "https://github.com/dustin10/VichUploaderBundle",
+            "keywords": [
+                "upload",
+                "file uploads"
             ]
         },
         {
@@ -2653,12 +2952,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/willdurand/BazingaGeocoderBundle",
-                "reference": "514840e3f788934bf9c3a5a0b093e492f828301a"
+                "reference": "1.1.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/willdurand/BazingaGeocoderBundle/archive/514840e3f788934bf9c3a5a0b093e492f828301a.zip",
-                "reference": "514840e3f788934bf9c3a5a0b093e492f828301a",
+                "url": "https://github.com/willdurand/BazingaGeocoderBundle/archive/1.1.3.zip",
+                "reference": "1.1.3",
                 "shasum": ""
             },
             "require": {
@@ -2669,7 +2968,7 @@
             "require-dev": {
                 "symfony/yaml": ">=2.1,<2.3-dev"
             },
-            "time": "2012-12-17 22:21:36",
+            "time": "2012-12-22 10:04:58",
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
@@ -2701,11 +3000,11 @@
         },
         {
             "name": "zendframework/zend-paginator",
-            "version": "2.0.5",
+            "version": "2.0.6",
             "target-dir": "Zend/Paginator",
             "dist": {
                 "type": "zip",
-                "url": "http://packages.zendframework.com/composer/Zend_Paginator-2.0.5.zip",
+                "url": "http://packages.zendframework.com/composer/Zend_Paginator-2.0.6.zip",
                 "reference": null,
                 "shasum": null
             },
@@ -2751,11 +3050,14 @@
         "sonata-project/intl-bundle": 20,
         "sonata-project/cache-bundle": 20,
         "knplabs/gaufrette": 20,
+        "knplabs/knp-gaufrette-bundle": 20,
+        "vich/uploader-bundle": 20,
         "willdurand/geocoder-bundle": 20,
         "briareos/nodejs-bundle": 20,
         "briareos/chat-bundle": 20,
         "briareos/ajax-bundle": 20,
         "mopa/bootstrap-bundle": 20,
+        "liip/imagine-bundle": 20,
         "oldsound/rabbitmq-bundle": 20,
         "hwi/oauth-bundle": 20,
         "doctrine/migrations": 20

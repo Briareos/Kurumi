@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity repository-class="Kurumi\MainBundle\Repository\PictureRepository" name="Kurumi\MainBundle\Entity\Picture" table="picture">
-    <id name="id" type="integer" column="id">
-      <generator strategy="AUTO"/>
-    </id>
-    <field name="fileName" type="string" column="fileName" length="255"/>
-    <field name="uri" type="string" column="uri" length="255"/>
-    <field name="fileMime" type="string" column="fileMime" length="255"/>
-    <field name="fileSize" type="integer" column="fileSize"/>
-    <field name="status" type="boolean" column="status"/>
-    <field name="createdAt" type="datetime" column="createdAt"/>
-  </entity>
+    <entity repository-class="Kurumi\MainBundle\Repository\PictureRepository" name="Kurumi\MainBundle\Entity\Picture" table="picture">
+        <indexes>
+            <index columns="pictureType"/>
+            <index columns="createdAt"/>
+            <index columns="temporary"/>
+        </indexes>
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="uri" type="string" column="uri" length="255"/>
+        <field name="fileName" type="string" column="fileName" length="255"/>
+        <field name="fileMime" type="string" column="fileMime" length="255"/>
+        <field name="fileSize" type="integer" column="fileSize"/>
+        <field name="temporary" type="boolean" column="temporary"/>
+        <field name="createdAt" type="datetime" column="createdAt"/>
+        <field name="pictureType" type="smallint" column="pictureType" nullable="true"/>
+        <many-to-one target-entity="Kurumi\MainBundle\Entity\Profile" field="profile" inversed-by="photos">
+            <join-column name="profile_id" nullable="false"/>
+        </many-to-one>
+    </entity>
 </doctrine-mapping>

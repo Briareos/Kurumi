@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity repository-class="Kurumi\MainBundle\Repository\ProfileCacheRepository" name="Kurumi\MainBundle\Entity\ProfileCache" table="profile_cache">
+        <id name="id" type="integer" column="id">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="profilePictureCount" type="integer" column="profilePictureCount" nullable="true"/>
+        <field name="publicPictureCount" type="integer" column="publicPictureCount" nullable="true"/>
+        <field name="privatePictureCount" type="integer" column="privatePictureCount" nullable="true"/>
+        <field name="pictureCount" type="integer" column="pictureCount" nullable="true"/>
+        <one-to-one field="profile" target-entity="Kurumi\MainBundle\Entity\Profile" inversed-by="cache" orphan-removal="true">
+            <join-column name="profile_id" on-delete="CASCADE" unique="true"/>
+        </one-to-one>
+    </entity>
+</doctrine-mapping>

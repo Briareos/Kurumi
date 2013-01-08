@@ -5,60 +5,60 @@ namespace Kurumi\MainBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kurumi\MainBundle\Entity\Picture;
 use Symfony\Component\HttpFoundation\Request;
-use Kurumi\MainBundle\Form\Type\FillProfileFormType;
 use Briareos\NodejsBundle\Nodejs\Message;
-use Kurumi\MainBundle\Form\Type\UserPasswordFormType;
-use Kurumi\MainBundle\Form\Type\UserEmailFormType;
-use JMS\DiExtraBundle\Annotation as DI;
+use JMS\DiExtraBundle\Annotation\Inject;
 use Kurumi\MainBundle\Entity\User;
 use Kurumi\MainBundle\Entity\Profile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Kurumi\MainBundle\Form\Type\UserNameFormType;
 use Briareos\AjaxBundle\Ajax;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use Kurumi\MainBundle\Form\Type\UserPictureFormType;
+use Kurumi\MainBundle\Form\Type\UserNameFormType;
+use Kurumi\MainBundle\Form\Type\FillProfileFormType;
+use Kurumi\MainBundle\Form\Type\UserPasswordFormType;
+use Kurumi\MainBundle\Form\Type\UserEmailFormType;
+use Kurumi\MainBundle\Form\Type\PictureFormType;
 
 class AccountController extends Controller
 {
     /**
-     * @DI\Inject("templating.ajax.helper")
-     *
      * @var \Briareos\AjaxBundle\Ajax\Helper
+     *
+     * @Inject("templating.ajax.helper")
      */
     private $ajaxHelper;
 
     /**
-     * @DI\Inject("doctrine.orm.default_entity_manager")
-     *
      * @var \Doctrine\ORM\EntityManager
+     *
+     * @Inject("doctrine.orm.default_entity_manager")
      */
     private $em;
 
     /**
-     * @DI\Inject("session")
-     *
      * @var \Symfony\Component\HttpFoundation\Session\Session
+     *
+     * @Inject("session")
      */
     private $session;
 
     /**
-     * @DI\Inject("router")
-     *
      * @var \Symfony\Component\Routing\Router
+     *
+     * @Inject("router")
      */
     private $router;
 
     /**
-     * @DI\Inject("form.csrf_provider")
-     *
      * @var \Symfony\Component\Form\Extension\Csrf\CsrfProvider\CsrfProviderInterface
+     *
+     * @Inject("form.csrf_provider")
      */
     private $csrfProvider;
 
     /**
-     * @DI\Inject("nodejs.dispatcher")
-     *
      * @var \Briareos\NodejsBundle\Nodejs\DispatcherInterface
+     *
+     * @Inject("nodejs.dispatcher")
      */
     private $nodejsDispatcher;
 
@@ -67,9 +67,13 @@ class AccountController extends Controller
      */
     public function overviewAction(Request $request)
     {
+        /** @var $user User */
+        $user = $this->getUser();
+        $profile = $user->getProfile();
+
         $templateFile = ':Account:overview.html.twig';
         $templateParams = array(
-            'user' => $this->getUser(),
+            'profile' => $profile,
         );
 
         if ($request->isXmlHttpRequest()) {
@@ -89,6 +93,7 @@ class AccountController extends Controller
     {
         /** @var $user \Kurumi\MainBundle\Entity\User */
         $user = $this->getUser();
+        $profile = $user->getProfile();
 
         $userNameForm = $this->createForm(new UserNameFormType(), $user);
 
@@ -106,7 +111,7 @@ class AccountController extends Controller
         $pageTemplate = ':Account:edit_name.html.twig';
         $formTemplate = ':Form:user_name.html.twig';
         $templateParams = array(
-            'user' => $this->getUser(),
+            'profile' => $profile,
             'form' => $userNameForm->createView(),
         );
         if ($request->isXmlHttpRequest()) {
@@ -130,6 +135,7 @@ class AccountController extends Controller
     {
         /** @var $user User */
         $user = $this->getUser();
+        $profile = $user->getProfile();
 
         $editEmailForm = $this->createForm(new UserEmailFormType(), $user);
 
@@ -147,7 +153,7 @@ class AccountController extends Controller
         $pageTemplate = ':Account:edit_email.html.twig';
         $formTemplate = ':Form:user_email.html.twig';
         $templateParams = array(
-            'user' => $this->getUser(),
+            'profile' => $profile,
             'form' => $editEmailForm->createView(),
         );
 
@@ -172,6 +178,7 @@ class AccountController extends Controller
     {
         /** @var $user User */
         $user = $this->getUser();
+        $profile = $user->getProfile();
 
         $editPasswordForm = $this->createForm(new UserPasswordFormType(), $user);
 
@@ -188,7 +195,7 @@ class AccountController extends Controller
 
         $templateFile = ':Account:edit_password.html.twig';
         $templateParams = array(
-            'user' => $this->getUser(),
+            'profile' => $profile,
             'form' => $editPasswordForm->createView(),
         );
 
@@ -212,24 +219,27 @@ class AccountController extends Controller
     {
         /** @var $user \Kurumi\MainBundle\Entity\User */
         $user = $this->getUser();
+        $profile = $user->getProfile();
         $newPicture = new Picture();
-        $oldPicture = $user->getPicture();
+        $newPicture->setPictureType(Picture::PROFILE_PICTURE);
+        $newPicture->setProfile($profile);
+        $oldPicture = $profile->getPicture();
 
-        $userPictureForm = $this->createForm(new UserPictureFormType(), $newPicture);
+        $profilePictureForm = $this->createForm(new PictureFormType(), $newPicture);
 
         if ($request->isMethod('post')) {
-            $userPictureForm->bind($request);
-            if ($userPictureForm->isValid()) {
+            $profilePictureForm->bind($request);
+            if ($profilePictureForm->isValid()) {
                 /** @var $em \Doctrine\ORM\EntityManager */
                 $em = $this->getDoctrine()->getManager();
-                $user->setPicture($newPicture);
+                $profile->setPicture($newPicture);
                 // Picture persist is cascaded.
-                $em->persist($user);
-                $em->flush();
+                $em->persist($profile);
                 if ($oldPicture === null) {
                     $this->session->getFlashBag()->add('success', "Your profile picture has been set.");
                 } else {
-                    $em->remove($oldPicture);
+                    // No need to remove the picture, let it stay in the album.
+                    // $em->remove($oldPicture);
                     $this->session->getFlashBag()->add('success', "Your profile picture has been updated.");
                 }
                 /*
@@ -238,35 +248,38 @@ class AccountController extends Controller
                 $pictureChangedMessage->setChannel(sprintf('user_%s', $user->getId()));
                 $this->nodejsDispatcher->dispatch($pictureChangedMessage);
                 */
-
+                $em->flush();
             }
         }
 
         $templateFile = ':Account:edit_picture.html.twig';
-        $formTemplate = ':Form:user_picture.html.twig';
-        $modalFormTemplate = ':Form:user_picture_modal.html.twig';
+        $modalTemplateFile = ':Account:edit_picture_modal.html.twig';
+        $formTemplateFile = ':Form:profile_picture.html.twig';
+        $modalFormTemplateFile = ':Form:profile_picture_modal.html.twig';
         $templateParams = array(
-            'user' => $this->getUser(),
-            'form' => $userPictureForm->createView(),
+            'profile' => $profile,
+            'form' => $profilePictureForm->createView(),
         );
 
         if ($request->isXmlHttpRequest()) {
             if ($this->ajaxHelper->isModal()) {
-                if ($userPictureForm->isBound()) {
-                    if ($userPictureForm->isValid()) {
-                        return $this->ajaxHelper->renderModal($modalFormTemplate, $templateParams);
-                    } elseif ($userPictureForm->isBound()) {
-                        return $this->ajaxHelper->renderAjaxForm($modalFormTemplate, $templateParams);
+                if ($profilePictureForm->isBound()) {
+                    if ($profilePictureForm->isValid()) {
+                        return $this->ajaxHelper->renderModal($modalTemplateFile, $templateParams);
+                    } elseif ($profilePictureForm->isBound()) {
+                        return $this->ajaxHelper->renderAjaxForm($modalFormTemplateFile, $templateParams);
                     }
                 } else {
-                    return $this->ajaxHelper->renderModal($modalFormTemplate, $templateParams);
+                    return $this->ajaxHelper->renderModal($modalTemplateFile, $templateParams);
                 }
             } else {
-                if ($userPictureForm->isBound()) {
-                    if ($userPictureForm->isValid()) {
-                        return $this->redirect($this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters()));
-                    } elseif ($userPictureForm->isBound()) {
-                        return $this->ajaxHelper->renderAjaxForm($formTemplate, $templateParams);
+                if ($profilePictureForm->isBound()) {
+                    if ($profilePictureForm->isValid()) {
+                        $url = $this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters());
+
+                        return $this->redirect($url);
+                    } elseif ($profilePictureForm->isBound()) {
+                        return $this->ajaxHelper->renderAjaxForm($formTemplateFile, $templateParams);
                     }
                 } else {
                     $url = $this->router->generate('account_edit_picture');
@@ -275,8 +288,10 @@ class AccountController extends Controller
                 }
             }
         } else {
-            if ($userPictureForm->isBound() && $userPictureForm->isValid()) {
-                return $this->redirect($this->generateUrl('account_edit_picture'));
+            if ($profilePictureForm->isBound() && $profilePictureForm->isValid()) {
+                $url = $this->generateUrl('account_overview');
+
+                return $this->redirect($url);
             } else {
                 return $this->render($templateFile, $templateParams);
             }
@@ -286,16 +301,25 @@ class AccountController extends Controller
     /**
      * @Route("/account/delete-picture/{token}", name="account_delete_picture")
      */
-    public function deletePictureAction($token, Request $request)
+    public function deletePictureAction($token, Request $request, $_route)
     {
         /** @var $user \Kurumi\MainBundle\Entity\User */
         $user = $this->getUser();
+        $profile = $user->getProfile();
+
         /** @var $picture Picture */
-        $picture = $user->getPicture();
-        if ($picture !== null && $this->csrfProvider->isCsrfTokenValid('account_delete_picture', $token)) {
+        $picture = $profile->getPicture();
+        if ($picture !== null && $this->csrfProvider->isCsrfTokenValid($_route, $token)) {
             /** @var $em \Doctrine\ORM\EntityManager */
             $em = $this->getDoctrine()->getManager();
-            $user->setPicture(null);
+            $profile->removePicture();
+
+            // Currently, Vich\UploaderBundle\Storage\AbstractStorage gets the uri property by using \ReflectionClass,
+            // which bypasses doctrine proxy lazy-loading. Calling any method but getId() would make sure the entity is fully loaded.
+            // @TODO find an alternative to force the lazy-loading of the doctrine proxy
+            $picture->getUri();
+
+            $em->persist($profile);
             $em->remove($picture);
             $em->flush();
             $this->session->getFlashBag()->set('success', "Your picture was deleted.");
@@ -312,7 +336,8 @@ class AccountController extends Controller
     {
         /** @var $user User */
         $user = $this->getUser();
-        if ($user->getProfile() === null) {
+        $profile = $user->getProfile();
+        if ($profile === null) {
             $this->session->getFlashBag()->add('warning', "You don't have a profile. If you would like to create one, please fill in the form below.");
             $profile = new Profile();
             $user->setProfile($profile);

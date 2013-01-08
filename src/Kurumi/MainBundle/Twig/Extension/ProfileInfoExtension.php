@@ -4,7 +4,7 @@ namespace Kurumi\MainBundle\Twig\Extension;
 
 use Kurumi\MainBundle\InfoProvider\ProfileInfoProvider;
 
-class UserProfileInfoProvider extends \Twig_Extension
+class ProfileInfoExtension extends \Twig_Extension
 {
     private $profileInfoProvider;
 
@@ -20,7 +20,7 @@ class UserProfileInfoProvider extends \Twig_Extension
      */
     function getName()
     {
-        return 'profile_info_provider';
+        return 'profile_info';
     }
 
     public function getGlobals()

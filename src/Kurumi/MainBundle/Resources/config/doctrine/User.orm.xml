@@ -27,15 +27,6 @@
                 <cascade-remove/>
             </cascade>
         </one-to-one>
-        <one-to-one field="picture" target-entity="Kurumi\MainBundle\Entity\Picture">
-            <cascade>
-                <cascade-persist/>
-                <cascade-remove/>
-            </cascade>
-            <join-columns>
-                <join-column name="picture_id" referenced-column-name="id" on-delete="SET NULL" nullable="true"/>
-            </join-columns>
-        </one-to-one>
         <one-to-many field="oauth" target-entity="Kurumi\MainBundle\Entity\OAuth" mapped-by="user" orphan-removal="true">
             <cascade>
                 <cascade-remove/>

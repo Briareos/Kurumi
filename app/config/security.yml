@@ -19,10 +19,10 @@ security:
 
     firewalls:
         nodejs:
-            pattern: ^/nodejs/message
+            pattern: ^/nodejs/message$
             security: false
         main:
-            pattern: ^/
+            pattern: ^.*
             oauth:
                 login_path:             /
                 failure_path:           /oauth/failure

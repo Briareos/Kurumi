@@ -13,34 +13,34 @@
                 <legend>Your account info</legend>
                 <dl class="dl-horizontal">
                     <dt>Name</dt>
-                    <dd>{{ user.name }} <a href="{{ path('account_edit_name') }}" class="btn btn-mini" data-ajax>Edit</a></dd>
+                    <dd>{{ profile.user.name }} <a href="{{ path('account_edit_name') }}" class="btn btn-mini" data-ajax>Edit</a></dd>
                     <dt>E-mail address</dt>
-                    <dd>{{ user.email }} <a href="{{ path('account_edit_email') }}" class="btn btn-mini" data-ajax>Edit</a></dd>
+                    <dd>{{ profile.user.email }} <a href="{{ path('account_edit_email') }}" class="btn btn-mini" data-ajax>Edit</a></dd>
                     <dt>Password</dt>
-                    <dd>{% if user.password is empty %}<em>Not set</em>{% else %}**********{% endif %} <a href="{{ path('account_edit_password') }}" class="btn btn-mini" data-ajax>Edit</a></dd>
+                    <dd>{% if profile.user.password is empty %}<em>Not set</em>{% else %}**********{% endif %} <a href="{{ path('account_edit_password') }}" class="btn btn-mini" data-ajax>Edit</a></dd>
                     <dt>Timezone</dt>
-                    <dd>{% if user.timezone is empty %}<em>Not set</em>{% else %}{{ user.timezone }}{% endif %}</dd>
+                    <dd>{% if profile.user.timezone is empty %}<em>Not set</em>{% else %}{{ profile.user.timezone }}{% endif %}</dd>
                     <dt>Language</dt>
-                    <dd>{% if user.locale is empty %}<em>Not set</em>{% else %}{{ user.locale }}{% endif %}</dd>
+                    <dd>{% if profile.user.locale is empty %}<em>Not set</em>{% else %}{{ profile.user.locale }}{% endif %}</dd>
                 </dl>
             </fieldset>
         </div>
         <div class="span5">
             <fieldset>
                 <legend>Your profile picture <a href="{{ path('account_edit_picture') }}" class="btn btn-mini" data-ajax>Edit</a></legend>
-                {% if user.picture is empty %}
+                {% if profile.picture is empty %}
                     <em>Not set</em>
                 {% else %}
-                    {{ user_picture(user.picture) }}
+                    {{ profile_picture(profile, 'profile') }}
                 {% endif %}
             </fieldset>
-            {% if user.profile %}
+            {% if profile %}
                 <fieldset>
                     <legend>Your profile info</legend>
                     <dl class="dl-horizontal">
                         <dt>Gender</dt>
-                        <dd>{% if user.profile.gender %}
-                            {% if user.profile.gender == 1 %}
+                        <dd>{% if profile.gender %}
+                            {% if profile.gender == 1 %}
                                 Male
                             {% else %}
                                 Female
@@ -49,8 +49,8 @@
                             <em>Not set</em>
                         {% endif %}</dd>
                         <dt>Birthday</dt>
-                        <dd>{% if user.profile.birthday %}
-                            {{ user.profile.birthday|format_date(null, app.request.locale ) }}
+                        <dd>{% if profile.birthday %}
+                            {{ profile.birthday|format_date(null, app.request.locale ) }}
                         {% else %}
                             <em>Not set</em>
                         {% endif %}</dd>

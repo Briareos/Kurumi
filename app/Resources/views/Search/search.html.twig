@@ -6,12 +6,12 @@
 
     {% include ':Segment:navbar_top.html.twig' %}
 
-    <div class="main container">
+    <div class="main container search-page">
 
         {% include '::flash_messages.html.twig' %}
 
         <div class="row-fluid">
-            <div class="span12 bevel">
+            <div class="span12 bevel search-form-container">
                 {% include ':Form:search_people.html.twig' %}
             </div>
         </div>
@@ -24,8 +24,8 @@
                     {% endif %}
                     <li class="span3">
                         <div class="thumbnail">
-                            <a href="{{ path('profile', {'id':result.user.id}) }}" data-ajax>
-                                {{ user_picture(result.user) }}
+                            <a href="{{ path('profile', {'id':result.user.profile.id}) }}" data-ajax>
+                                {{ profile_picture(result.user.profile, 'search') }}
                             </a>
 
                             <div class="caption">
@@ -34,20 +34,6 @@
                                         <small class="">{{ result.user.profile.city.name }}</small>
                                     {% endif %}
                                 </h5>
-                                <a href="{{ path('profile', {'id':result.user.id}) }}" data-ajax class="btn btn-primary btn-small">Profile</a>
-
-                                <div class="btn-group pull-right">
-
-                                    <a href="#" data-ajax class="btn btn-small"><i class="icon-camera"></i> Photos</a>
-                                    <button class="btn dropdown-toggle btn-small" data-toggle="dropdown">
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Profile photos <span class="badge badge-info">1</span></a></li>
-                                        <li><a href="#">Public photos <span class="badge">12</span></a></li>
-                                        <li><a href="#">Private photos <span class="badge badge-important">6</span></a></li>
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                     </li>

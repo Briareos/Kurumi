@@ -3,9 +3,10 @@
 namespace Kurumi\MainBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class UserPictureFormType extends AbstractType
+class PictureFormType extends AbstractType
 {
     /**
      * Returns the name of this type.
@@ -19,18 +20,24 @@ class UserPictureFormType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'Application\Sonata\MediaBundle\Entity\Media',
-            'provider' => 'sonata.media.provider.image',
-            'context' => 'user_picture',
-            'validation_groups' => 'user_picture',
-        ));
+        $resolver->setDefaults(
+            array()
+        );
     }
 
     public function getParent()
     {
-        return 'sonata_media_type';
+        return 'form';
     }
 
-
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(
+            'file',
+            'file',
+            array(
+                'by_reference' => false,
+            )
+        );
+    }
 }

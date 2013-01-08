@@ -3,6 +3,14 @@ $(function () {
     var $context = $('body');
     var undefined;
 
+    $context
+        .on('shown', '.modal', function () {
+            $context.addClass('modal-open')
+        })
+        .on('hidden', '.modal', function () {
+            $context.removeClass('modal-open')
+        });
+
     $context.bind('settings.default_nodejs', function (event, settings) {
         window.NodejsSettings = settings;
     });

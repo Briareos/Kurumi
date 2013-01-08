@@ -4,16 +4,16 @@
 
     {% include ':Segment:navbar_top.html.twig' %}
 
-    <div class="container main">
+    <div class="container main profile-page {{ own_profile ? 'profile-page-own' }}">
         <h1>
-            {{ subject.name }}
+            {{ profile.user.name }}
             <small>
-                {% if subject.profile.age %}
-                    {{ subject.profile.age }}
-                {% endif %}
-                {% if subject.profile.city %}
-                    , {{ subject.profile.city.name }}
-                {% endif %}
+                {%- if profile.age -%}
+                    {{ profile.age }}
+                {%- endif -%}
+                {%- if profile.city -%}
+                    , {{ profile.city.name }}
+                {%- endif -%}
             </small>
         </h1>
         <div class="row">
@@ -21,11 +21,11 @@
                 <div class="row-fluid">
                     <div class="span4">
                         <a href="{{ path('account_edit_picture') }}" data-ajax data-modal>
-                        {{ user_picture(user) }}
+                            {{ profile_picture(profile) }}
                         </a>
                     </div>
                     <div class="span8">
-                        <div data-pjax-container="profile_page">
+                        <div data-pjax-container="{{ pjax_container }}">
                             {% block profile_page %}{% endblock %}
                         </div>
                     </div>

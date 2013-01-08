@@ -3,75 +3,90 @@
 namespace Kurumi\MainBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Kurumi\MainBundle\Entity\User;
 use Kurumi\MainBundle\Form\Type\ProfilePhotoFormType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Kurumi\MainBundle\Entity\User;
+use Kurumi\MainBundle\Entity\Profile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use JMS\DiExtraBundle\Annotation as DI;
-use Briareos\AjaxBundle\Ajax;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use JMS\SecurityExtraBundle\Annotation\SecureParam;
+use JMS\DiExtraBundle\Annotation\Inject;
+use Briareos\AjaxBundle\Ajax;
 use Kurumi\MainBundle\Entity\Picture;
 
 class ProfileController extends Controller
 {
     /**
-     * @DI\Inject("templating.ajax.helper")
-     *
      * @var \Briareos\AjaxBundle\Ajax\Helper
+     *
+     * @Inject("templating.ajax.helper")
      */
     private $ajaxHelper;
 
     /**
-     * @DI\Inject("doctrine.orm.default_entity_manager")
-     *
      * @var \Doctrine\ORM\EntityManager
+     *
+     * @Inject("doctrine.orm.default_entity_manager")
      */
     private $em;
 
     /**
-     * @DI\Inject("router")
-     *
      * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
+     *
+     * @Inject("router")
      */
     private $router;
 
     /**
-     * @DI\Inject("profile.info.provider")
-     *
      * @var \Kurumi\MainBundle\InfoProvider\ProfileInfoProvider
+     *
+     * @Inject("profile.info.provider")
      */
     private $profileInfo;
 
     /**
-     * @Route("/profile/{id}", name="profile", defaults={"id"=null})
-     * @ParamConverter("subject", class="KurumiMainBundle:User")
-     * @Secure(roles="authenticated_user")
+     * @var \Spy\Timeline\Driver\ActionManagerInterface
+     *
+     * @Inject("spy_timeline.action_manager")
      */
-    public function viewAction(User $subject = null)
-    {
-        /** @var $user User */
-        $user = $this->getUser();
-        if ($subject === null) {
-            $subject = $user;
-        }
-        $ownProfile = $user->getId() === $subject->getId();
+    private $actionManager;
 
+    /**
+     * @var \Spy\Timeline\Driver\TimelineManagerInterface
+     *
+     * @Inject("spy_timeline.timeline_manager")
+     */
+    private $timelineManager;
+
+    /**
+     * @Route("/profile/{id}", name="profile")
+     * @ParamConverter("profile", class="KurumiMainBundle:Profile")
+     * @SecureParam(name="profile", permissions="VIEW")
+     */
+    public function viewAction(Profile $profile)
+    {
+        $user = $this->getUser();
+        $ownProfile = $profile->isUser($user);
+
+        $subject = $this->actionManager->findOrCreateComponent($profile);
+        $timeline = $this->timelineManager->getTimeline($subject);
+
+        $pjaxContainer = sprintf('profile_page-%s', $profile->getId());
         $templateFile = ':Profile:view.html.twig';
         $templateParams = array(
-            'user' => $user,
-            'subject' => $subject,
+            'profile' => $profile,
             'own_profile' => $ownProfile,
+            'pjax_container' => $pjaxContainer,
+            'timeline' => $timeline,
         );
 
-        if ($ownProfile) {
-            $url = $this->router->generate('front');
-        } else {
-            $url = $this->router->generate('profile', array('id' => $subject->getId()));
-        }
+        $url = $this->router->generate('profile', array('id' => $profile->getId()));
 
         if ($this->getRequest()->isXmlHttpRequest()) {
-            return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, 'profile_page');
+
+            return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, $pjaxContainer);
         } else {
             return $this->render($templateFile, $templateParams);
         }
@@ -79,52 +94,88 @@ class ProfileController extends Controller
 
     /**
      * @Route("/profile/{id}/photo", name="profile_photos")
-     * @ParamConverter("subject", class="KurumiMainBundle:User")
+     * @ParamConverter("profile", class="KurumiMainBundle:Profile")
+     * @SecureParam(name="profile", permissions="VIEW")
      */
-    public function photosAction(User $subject = null)
+    public function photosAction(Profile $profile)
     {
         /** @var $user User */
         $user = $this->getUser();
-        if ($subject === null) {
-            $subject = $user;
-        }
-        $ownProfile = $user->getId() === $subject->getId();
 
-        if (!$ownProfile && !$this->profileInfo->hasPhotos($user->getProfile())) {
-            return $this->redirect($this->generateUrl('profile', array('id' => $subject->getId())));
+        $ownProfile = $profile->isUser($user);
+
+        if (!$ownProfile && !$this->profileInfo->hasPhotos($profile)) {
+            // This user has no photos and it's not the current user's profile
+            $redirect = $this->generateUrl('profile', array('id' => $profile->getId()));
+
+            return $this->redirect($redirect);
         }
 
+        $pjaxContainer = sprintf('profile_page-%s', $profile->getId());
         $templateFile = ':Profile:photos.html.twig';
         $templateParams = array(
-            'user' => $user,
-            'subject' => $subject,
+            'profile' => $profile,
             'own_profile' => $ownProfile,
+            'pjax_container' => $pjaxContainer,
         );
 
         if ($this->getRequest()->isXmlHttpRequest()) {
-            return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $this->router->generate('profile_photos', array('id' => $subject->getId())), 'profile_page');
+            $url = $this->router->generate('profile_photos', array('id' => $profile->getId()));
+
+            return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, $pjaxContainer);
         } else {
             return $this->render($templateFile, $templateParams);
         }
     }
 
     /**
+     * @Route("/profile/{profile_id}/photo/{id}", name="profile_photo")
+     * @ParamConverter("profile", class="KurumiMainBundle:Profile", options={"id" = "profile_id"})
+     * @ParamConverter("picture", class="KurumiMainBundle:Picture")
+     * @SecureParam(name="picture", permissions="VIEW")
+     */
+    public function photoAction(Profile $profile, Picture $picture, Request $request)
+    {
+        if ($profile->getId() !== $picture->getProfile()->getId()) {
+            throw $this->createNotFoundException();
+        }
+
+        /** @var $user User */
+        $user = $this->getUser();
+
+        $ownProfile = $profile->isUser($user);
+
+        $templateFile = ':Profile:photo.html.twig';
+        $modalTemplateFile = ':Profile:photo_modal.html.twig';
+        $templateParams = array(
+            'profile' => $profile,
+            'own_profile' => $ownProfile,
+            'picture' => $picture,
+        );
+
+        if ($request->isXmlHttpRequest()) {
+
+            return $this->ajaxHelper->renderModal($modalTemplateFile, $templateParams);
+        }
+    }
+
+    /**
      * @Route("/profile/{id}/photo/add/{type}", name="profile_photo_add", requirements={"gallery"="(profile|public|private)"})
-     * @ParamConverter("subject", class="KurumiMainBundle:User")
+     * @ParamConverter("profile", class="KurumiMainBundle:Profile")
      *
-     * @param \Kurumi\MainBundle\Entity\User $subject
+     * @param \Kurumi\MainBundle\Entity\User $profile
      * @param string $type
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Symfony\Component\Security\Core\Exception\AccessDeniedException
      */
-    public function photoAddAction(User $subject = null, $type)
+    public function photoAddAction(User $profile = null, $type)
     {
         /** @var $user User */
         $user = $this->getUser();
-        if ($subject === null) {
-            $subject = $user;
+        if ($profile === null) {
+            $profile = $user;
         }
-        $ownProfile = $user->getId() === $subject->getId();
+        $ownProfile = $user->getId() === $profile->getId();
 
         if (!$ownProfile) {
             throw new AccessDeniedException();
@@ -133,24 +184,24 @@ class ProfileController extends Controller
         $photo = new Picture();
         switch ($type) {
             case 'profile':
-                $gallery = $subject->getProfile()->getGalleryProfile();
+                $gallery = $profile->getProfile()->getGalleryProfile();
                 if ($gallery === null) {
                     $gallery = new Gallery();
-                    $subject->getProfile()->setGalleryProfile($gallery);
+                    $profile->getProfile()->setGalleryProfile($gallery);
                 }
                 break;
             case 'public':
-                $gallery = $subject->getProfile()->getGalleryPublic();
+                $gallery = $profile->getProfile()->getGalleryPublic();
                 if ($gallery === null) {
                     $gallery = new Gallery();
-                    $subject->getProfile()->setGalleryPublic($gallery);
+                    $profile->getProfile()->setGalleryPublic($gallery);
                 }
                 break;
             case 'private':
-                $gallery = $subject->getProfile()->getGalleryPrivate();
+                $gallery = $profile->getProfile()->getGalleryPrivate();
                 if ($gallery === null) {
                     $gallery = new Gallery();
-                    $subject->getProfile()->setGalleryPrivate($gallery);
+                    $profile->getProfile()->setGalleryPrivate($gallery);
                 }
                 break;
             default:
@@ -161,14 +212,13 @@ class ProfileController extends Controller
         if ($this->getRequest()->isMethod('post')) {
             $profilePhotoForm->bind($this->getRequest());
             if ($profilePhotoForm->isValid()) {
-                /** @var $gallery \Application\Sonata\MediaBundle\Entity\Gallery */
             }
         }
 
         $templateFile = ':Profile:photo_add.html.twig';
         $templateParams = array(
             'user' => $user,
-            'subject' => $subject,
+            'profile' => $profile,
             'own_profile' => $ownProfile,
             'form' => $profilePhotoForm->createView(),
         );

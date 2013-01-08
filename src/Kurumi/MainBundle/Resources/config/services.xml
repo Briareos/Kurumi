@@ -6,7 +6,8 @@
     <parameters>
         <parameter key="stream_wrapper.public.class">Kurumi\MainBundle\StreamWrapper\PublicStreamWrapper</parameter>
         <parameter key="stream_wrapper.private.class">Kurumi\MainBundle\StreamWrapper\PrivateStreamWrapper</parameter>
-        <parameter key="stream_wrapper.temporary.class">Kurumi\MainBundle\StreamWrapper\TemporaryStreamWrapper</parameter>
+        <parameter key="stream_wrapper.temporary.class">Kurumi\MainBundle\StreamWrapper\PrivateStreamWrapper</parameter>
+        <parameter key="imagine.cache.path.resolver.class">Kurumi\MainBundle\Imagine\CachePathResolver</parameter>
     </parameters>
     <services>
         <!-- Form types -->
@@ -37,6 +38,9 @@
         <service id="user.manager" class="Kurumi\MainBundle\Manager\UserManager">
             <argument type="service" id="security.encoder_factory"/>
         </service>
+        <service id="profile.cache.manager" class="Kurumi\MainBundle\Manager\ProfileCacheManager">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
         <!-- Sonata admin services -->
         <service id="sonata.admin.user" class="Kurumi\MainBundle\Admin\UserAdmin">
             <argument>null</argument>
@@ -59,24 +63,40 @@
             <tag name="doctrine.event_listener" event="prePersist"/>
             <tag name="doctrine.event_listener" event="preUpdate"/>
         </service>
+        <service id="picture.listener" class="Kurumi\MainBundle\EventListener\PictureListener">
+            <tag name="doctrine.event_listener" event="prePersist"/>
+            <tag name="doctrine.event_listener" event="preUpdate"/>
+        </service>
+        <service id="timeline.listener" class="Kurumi\MainBundle\EventListener\TimelineListener">
+            <tag name="doctrine.event_listener" event="postRemove"/>
+        </service>
         <!-- Info providers -->
-        <service id="user.picture.provider" class="Kurumi\MainBundle\InfoProvider\PictureProvider">
-            <argument>user_picture_thumbnail</argument>
+        <service id="profile.picture.provider" class="Kurumi\MainBundle\InfoProvider\ProfilePictureProvider">
         </service>
         <service id="profile.info.provider" class="Kurumi\MainBundle\InfoProvider\ProfileInfoProvider">
             <argument type="service" id="doctrine.orm.default_entity_manager"/>
+            <argument type="service" id="profile.cache.manager"/>
+        </service>
+        <service id="chat.subject.picture.provider" class="Kurumi\MainBundle\InfoProvider\ChatSubjectPictureProvider">
+            <argument type="service" id="profile.picture.provider"/>
+            <argument type="service" id="picture.info.provider"/>
+            <argument>thumbnail</argument>
+        </service>
+        <service id="picture.info.provider" class="Kurumi\MainBundle\InfoProvider\PictureInfoProvider">
+            <argument type="service" id="vich_uploader.storage"/>
+            <argument type="service" id="liip_imagine.cache.manager"/>
         </service>
         <!-- Twig extensions -->
-        <service id="twig.extension.profile.info.provider" class="Kurumi\MainBundle\Twig\Extension\UserProfileInfoProvider">
+        <service id="twig.extension.profile.info" class="Kurumi\MainBundle\Twig\Extension\ProfileInfoExtension">
             <argument type="service" id="profile.info.provider"/>
             <tag name="twig.extension"/>
         </service>
-        <service id="twig.extension.user.picture.provider" class="Kurumi\MainBundle\Twig\Extension\UserPictureProvider">
-            <argument type="service" id="user.picture.provider"/>
+        <service id="twig.extension.picture" class="Kurumi\MainBundle\Twig\Extension\PictureExtension">
+            <argument type="service" id="profile.picture.provider"/>
+            <argument type="service" id="picture.info.provider"/>
             <tag name="twig.extension"/>
         </service>
-        <service id="twig.extension.routing_helper" class="Kurumi\MainBundle\Twig\Extension\RoutingHelper">
-            <argument type="service" id="service_container"/>
+        <service id="twig.extension.templating.helper" class="Kurumi\MainBundle\Twig\Extension\TemplatingHelper">
             <tag name="twig.extension"/>
         </service>
         <!-- JavaScript settings -->
@@ -97,19 +117,27 @@
             <argument type="service" id="router"/>
             <tag name="javascript_settings" priority="1"/>
         </service>
-        <!-- Front page kernel listener -->
-        <service id="kernel.listener.front_page" class="Kurumi\MainBundle\EventListener\FrontPage" scope="request">
-            <argument type="service" id="request"/>
-            <argument type="service" id="router"/>
-            <argument type="service" id="security.context"/>
-            <argument type="service" id="event_dispatcher"/>
-            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="-10"/>
-        </service>
         <!-- Account info kernel listener -->
         <service id="kernel.listener.account_info" class="Kurumi\MainBundle\EventListener\AccountInfoListener">
             <argument type="service" id="security.context"/>
             <argument type="service" id="router"/>
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="-32"/>
+        </service>
+        <!-- Ajax debug toolbar kernel listener -->
+        <service id="web_profiler.ajax_debug_toolbar" parent="web_profiler.debug_toolbar" class="Kurumi\MainBundle\EventListener\AjaxWebDebugToolbarListener">
+            <tag name="kernel.event_subscriber"/>
+            <call method="setRouter">
+                <argument type="service" id="router"/>
+            </call>
+            <call method="setProfiler">
+                <argument type="service" id="profiler"/>
+            </call>
+            <call method="setTwig">
+                <argument type="service" id="twig"/>
+            </call>
+            <call method="setDataCollectorTemplates">
+                <argument>%data_collector.templates%</argument>
+            </call>
         </service>
         <!-- OAuth services -->
         <service id="oauth.login.user.provider" class="Kurumi\MainBundle\OAuth\Login\UserProvider">
@@ -136,20 +164,10 @@
         </service>
         <service id="oauth.login.user.provider.windows_live" class="Kurumi\MainBundle\OAuth\Login\WindowsLiveUserProvider" parent="oauth.login.user.provider.abstract">
         </service>
-        <!-- Stream wrappers -->
-        <service id="stream_wrapper.manager" class="Kurumi\MainBundle\StreamWrapper\StreamWrapperManager">
-            <argument type="service" id="router"/>
+        <!-- Picture services -->
+        <service id="picture.namer" class="Kurumi\MainBundle\Naming\PictureNamer">
         </service>
-        <service id="stream_wrapper.abstract" class="Kurumi\MainBundle\StreamWrapper\AbstractLocalStreamWrapper" abstract="true">
-        </service>
-        <service id="stream_wrapper.public" class="%stream_wrapper.public.class%" parent="stream_wrapper.abstract">
-            <tag name="stream_wrapper" scheme="public" path="%kernel.root_dir%/../web/media/public" route="media_public"/>
-        </service>
-        <service id="stream_wrapper.private" class="%stream_wrapper.private.class%" parent="stream_wrapper.abstract">
-            <tag name="stream_wrapper" scheme="private" path="%kernel.root_dir%/../web/media/private" route="media_private"/>
-        </service>
-        <service id="stream_wrapper.temporary" class="%stream_wrapper.temporary.class%" parent="stream_wrapper.abstract">
-            <tag name="stream_wrapper" scheme="temporary" path="%kernel.root_dir%/../web/media/temporary" route="media_temporary"/>
+        <service id="picture.directory.namer" class="Kurumi\MainBundle\Naming\PictureDirectoryNamer">
         </service>
     </services>
 </container>

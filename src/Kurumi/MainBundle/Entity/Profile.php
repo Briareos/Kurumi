@@ -50,12 +50,12 @@ class Profile
     /**
      * @var \DateTime
      */
-    private $created;
+    private $createdAt;
 
     /**
      * @var \DateTime
      */
-    private $updated;
+    private $updatedAt;
 
     /**
      * @var integer
@@ -72,9 +72,25 @@ class Profile
      */
     private $lookingAgedTo;
 
+    /**
+     * @var ProfileCache
+     */
+    private $cache;
+
+    /**
+     * @var Picture
+     */
+    private $picture;
+
+    /**
+     * @var Picture[]
+     */
+    private $pictures;
+
 
     public function __construct()
     {
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId()
@@ -150,16 +166,16 @@ class Profile
         return $this->user;
     }
 
-    public function setCreated(\DateTime $created)
+    public function setCreatedAt(\DateTime $createdAt)
     {
-        $this->created = $created;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getCreated()
+    public function getCreatedAt()
     {
-        return $this->created;
+        return $this->createdAt;
     }
 
     public function __toString()
@@ -172,14 +188,14 @@ class Profile
         return $name;
     }
 
-    public function setUpdated(\DateTime $updated)
+    public function setUpdatedAt(\DateTime $updatedAt)
     {
-        $this->updated = $updated;
+        $this->updatedAt = $updatedAt;
     }
 
-    public function getUpdated()
+    public function getUpdatedAt()
     {
-        return $this->updated;
+        return $this->updatedAt;
     }
 
     public function getLookingFor()
@@ -222,5 +238,45 @@ class Profile
           ->y;
 
         return $age;
+    }
+
+    public function getCache()
+    {
+        return $this->cache;
+    }
+
+    public function setCache(ProfileCache $cache)
+    {
+        $this->cache = $cache;
+    }
+
+    public function getPictures()
+    {
+        return $this->pictures;
+    }
+
+    public function setPictures($pictures)
+    {
+        $this->pictures = $pictures;
+    }
+
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(Picture $picture)
+    {
+        $this->picture = $picture;
+    }
+
+    public function removePicture()
+    {
+        $this->picture = null;
+    }
+
+    public function isUser($user)
+    {
+        return ($user instanceof User) && ($user->getId() === $this->user->getId());
     }
 }

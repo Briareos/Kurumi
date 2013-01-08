@@ -20,11 +20,10 @@ class UserRepository extends EntityRepository implements ChatSubjectRepositoryIn
           ->execute();
         $subjects = array();
         /** @var $presence \Briareos\NodejsBundle\Entity\NodejsPresence */
-        foreach ($presences as $i => $presence) {
-            if ($presence->getSubject()->getId() !== $subject->getId()) {
-                $subjects[] = $presence->getSubject();
-            }
+        foreach ($presences as $presence) {
+            $subjects[] = $presence->getSubject();
         }
+
         return $subjects;
     }
 

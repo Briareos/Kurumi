@@ -1,6 +1,16 @@
 @import "../bootstrap/less/variables.less";
 @import "../bootstrap/less/mixins.less";
 
+body.modal-open {
+  overflow: hidden;
+}
+
+.inline-block {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+
 #front-page {
   .container-wrapper {
     background: url(../images/background-1.jpg) #1E2638 top left no-repeat;
@@ -156,8 +166,10 @@
 
 }
 
-.main.container {
-  margin-top: 55px;
+@media (min-width: 980px) {
+  .main.container {
+    margin-top: 55px;
+  }
 }
 
 @media (max-width: 767px) {
@@ -297,5 +309,37 @@
   border-radius: 5px;
 }
 
-.
+@media (min-width: 980px) {
+  #search_people .control-group {
+    margin-bottom: 0;
+  }
+
+  #search_people .input {
+    margin-bottom: 0;
+  }
+
+  .search-form-container {
+    padding-top: 5px;
+  }
+
+}
+
+@media (max-width: 979px) {
+  .search-form-container .search-second-half {
+    clear: left;
+    margin-left: 0;
+    margin-right: 61px;
+  }
+}
+
+.timeline-action {
+  border-bottom: 1px dotted #CECECE;
+  padding-bottom: 13px;
+  margin-bottom: 18px;
+}
+
+.timeline-action .thumbnail {
+  display: inline-block;
+  .ie7-inline-block();
+}
 

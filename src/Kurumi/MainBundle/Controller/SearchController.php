@@ -7,7 +7,7 @@ use Zend\Paginator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use JMS\SecurityExtraBundle\Annotation\Secure;
-use JMS\DiExtraBundle\Annotation as DI;
+use JMS\DiExtraBundle\Annotation\Inject;
 use Briareos\AjaxBundle\Ajax;
 use Kurumi\MainBundle\Form\Type\SearchPeopleFormType;
 use DoctrineExtensions\Paginate\Paginate;
@@ -15,37 +15,30 @@ use DoctrineExtensions\Paginate\Paginate;
 class SearchController extends Controller
 {
     /**
-     * @DI\Inject("templating.ajax")
-     *
-     * @var \Briareos\AjaxBundle\Twig\AjaxEngine
-     */
-    private $ajax;
-
-    /**
-     * @DI\Inject("templating.ajax.helper")
-     *
      * @var \Briareos\AjaxBundle\Ajax\Helper
+     *
+     * @Inject("templating.ajax.helper")
      */
     private $ajaxHelper;
 
     /**
-     * @DI\Inject("router")
-     *
      * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
+     *
+     * @Inject("router")
      */
     private $router;
 
     /**
-     * @DI\Inject("doctrine.orm.default_entity_manager")
-     *
      * @var \Doctrine\ORM\EntityManager
+     *
+     * @Inject("doctrine.orm.default_entity_manager")
      */
     private $em;
 
     /**
-     * @DI\Inject("session")
-     *
      * @var \Symfony\Component\HttpFoundation\Session\Session
+     *
+     * @Inject("session")
      */
     private $session;
 
@@ -61,25 +54,40 @@ class SearchController extends Controller
         $searchPeopleForm = $this->createForm(new SearchPeopleFormType(), $user->getProfile());
 
         $qb = $this->em->createQueryBuilder();
+        // Holds parameters that are required only for the actual select query and can be omitted in the count query.
         $parameters = array();
 
         $qb->from('KurumiMainBundle:User', 'u');
         $qb->addSelect('u As user');
-        $qb->addSelect('p'); // User.Profile
-        $qb->addSelect('c'); // User.Profile.City
-        $qb->innerJoin('u.profile', 'p');
-        $qb->innerJoin('p.city', 'c');
-        $qb->where($qb->expr()->neq('u.id', $user->getId())); // Exclude current user.
 
-        // Show only users that have no age preference, or the current user falls into it.
-        $qb->andWhere($qb->expr()->orX(
-            $qb->expr()->isNull('p.lookingAgedFrom'),
-            $qb->expr()->lte('p.lookingAgedFrom', $user->getProfile()->getAge())
-        ));
-        $qb->andWhere($qb->expr()->orX(
-            $qb->expr()->isNull('p.lookingAgedTo'),
-            $qb->expr()->gte('p.lookingAgedTo', $user->getProfile()->getAge())
-        ));
+        // User.Profile
+        $qb->innerJoin('u.profile', 'p');
+        $qb->addSelect('p');
+
+        // User.Profile.City
+        $qb->innerJoin('p.city', 'c');
+        $qb->addSelect('c');
+
+        // User.Profile.ProfileCache
+        $qb->leftJoin('p.cache', 'pc');
+        $qb->addSelect('pc');
+
+        // Exclude current user.
+        $qb->where($qb->expr()->neq('u.id', $user->getId()));
+
+        // Show users without a preference and those which the user falls into.
+        $qb->andWhere(
+            $qb->expr()->orX(
+                $qb->expr()->isNull('p.lookingAgedFrom'),
+                $qb->expr()->lte('p.lookingAgedFrom', $user->getProfile()->getAge())
+            )
+        );
+        $qb->andWhere(
+            $qb->expr()->orX(
+                $qb->expr()->isNull('p.lookingAgedTo'),
+                $qb->expr()->gte('p.lookingAgedTo', $user->getProfile()->getAge())
+            )
+        );
 
         // Select distance, so we can order by it.
         $qb->addSelect('(:unit * ACOS(COS(RADIANS(:latitude)) * COS(RADIANS(c.latitude)) * COS(RADIANS(c.longitude) - RADIANS(:longitude)) + SIN(RADIANS(:latitude)) * SIN(RADIANS(c.latitude)))) As distance');
@@ -95,7 +103,6 @@ class SearchController extends Controller
 
         // Search users older than the current user's preference.
         if ($user->getProfile()->getLookingAgedFrom()) {
-            //$qb->andWhere($qb->expr()->lte('p.birthday', new \DateTime(sprintf('-%s years', $user->getProfile()->getLookingAgedFrom()))));
             $agedFrom = new \DateTime(sprintf('-%s years', $user->getProfile()->getLookingAgedFrom()));
             $qb->andWhere('p.birthday <= :aged_from');
             $qb->setParameter(':aged_from', $agedFrom);
@@ -104,24 +111,28 @@ class SearchController extends Controller
 
         // Search users younger than the current user's preference.
         if ($user->getProfile()->getLookingAgedTo()) {
-            //$qb->andWhere($qb->expr()->gte('p.birthday', new \DateTime(sprintf('-%s years', $user->getProfile()->getLookingAgedTo()))));
             $agedTo = new \DateTime(sprintf('-%s years', $user->getProfile()->getLookingAgedTo()));
             $qb->andWhere('p.birthday >= :aged_to');
             $qb->setParameter(':aged_to', $agedTo);
             $parameters[':aged_to'] = $agedTo;
         }
 
-        // Match gender search. 1 is male, 2 is female, 3 is both. Users that have no gender set are excluded from the query.
+        // Match gender search. 1 is male, 2 is female, 3 is both. Users that have no gender set are excluded.
         if ($user->getProfile()->getLookingFor() === 3) {
             $qb->andWhere($qb->expr()->isNotNull('p.gender'));
         } else {
             $qb->andWhere($qb->expr()->eq('p.gender', $user->getProfile()->getLookingFor()));
         }
-        $qb->andWhere($qb->expr()->orX(
-            $qb->expr()->eq('p.lookingFor', $user->getProfile()->getGender()),
-            $qb->expr()->eq('p.lookingFor', 3)
-        ));
 
+        // Reverse the gender match.
+        $qb->andWhere(
+            $qb->expr()->orX(
+                $qb->expr()->eq('p.lookingFor', $user->getProfile()->getGender()),
+                $qb->expr()->eq('p.lookingFor', 3)
+            )
+        );
+
+        // Generate the count query before binding the parameters that are not needed for it.
         $totalResults = Paginate::getTotalQueryResults($qb->getQuery());
 
         $page = $this->getRequest()->query->getInt('page', 1);
@@ -135,10 +146,15 @@ class SearchController extends Controller
         $paginator->setPageRange($pageRange);
         $paginatorView = $paginator->getPages($paginatorScrollingStyle);
 
+        // Finally, bind the parameters required for ordering.
         $qb->setParameters($parameters);
-        $results = $qb->setFirstResult(($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage())->setMaxResults($paginator->getItemCountPerPage())->getQuery()->execute();
 
-        /** @var $nodejsAuthenticator \Briareos\NodejsBundle\Nodejs\Authenticator */
+        $results = $qb
+          ->setFirstResult(($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage())
+          ->setMaxResults($paginator->getItemCountPerPage())
+          ->getQuery()
+          ->execute();
+
         $templateFile = ':Search:search.html.twig';
         $templateParams = array(
             'user' => $user,
@@ -147,12 +163,14 @@ class SearchController extends Controller
             'total_results' => $totalResults,
             'form' => $searchPeopleForm->createView(),
         );
+
         if ($this->getRequest()->isXmlHttpRequest()) {
             $pageParameters = array();
             if ($paginator->getCurrentPageNumber() !== 1) {
                 $pageParameters['page'] = $paginator->getCurrentPageNumber();
             }
             $pageUrl = $this->router->generate('search', $pageParameters);
+
             return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $pageUrl);
         } else {
             return $this->render($templateFile, $templateParams);
@@ -188,7 +206,8 @@ class SearchController extends Controller
                 'user' => $user,
                 'form' => $searchPeopleForm->createView(),
             );
-            return $this->ajaxHelper->renderAjaxForm(':Form:search_people.html.twig',$templateParams);
+
+            return $this->ajaxHelper->renderAjaxForm(':Form:search_people.html.twig', $templateParams);
         }
     }
 }

@@ -9,10 +9,10 @@
     <fieldset>
         <legend>
             Profile photos
-            <span class="badge badge-info">{{ profile_info.countProfilePhotos(subject.profile) }}</span>
+            <span class="badge badge-info">{{ profile_info.countProfilePhotos(profile) }}</span>
         </legend>
-        <a href="{{ path('profile_photo_add',{'type':'profile','id':subject.id}) }}" data-ajax class="btn btn-small pull-right"><i class="icon-upload"></i> Upload</a>
-        {% if profile_info.hasProfilePhotos(subject.profile) %}
+        <a href="{{ path('profile_photo_add',{'type':'profile','id':profile.id}) }}" data-ajax class="btn btn-small pull-right"><i class="icon-upload"></i> Upload</a>
+        {% if profile_info.hasProfilePhotos(profile) %}
 
         {% else %}
             <p>
@@ -20,7 +20,7 @@
                 {% if own_profile %}
                     You do not have any profile photos yet.
                 {% else %}
-                    {{ "%name% does not have any profile photos yet."|trans({'%name%':subject.name}) }}
+                    {{ "%name% does not have any profile photos yet."|trans({'%name%':profile.user.name}) }}
                 {% endif %}
             </p>
         {% endif %}
@@ -28,10 +28,10 @@
     <fieldset>
         <legend>
             Public photos
-            <span class="badge badge-info">{{ profile_info.countPublicPhotos(subject.profile) }}</span>
+            <span class="badge badge-info">{{ profile_info.countPublicPhotos(profile) }}</span>
         </legend>
-        <a href="{{ path('profile_photo_add',{'type':'public','id':subject.id}) }}" data-ajax class="btn btn-small pull-right"><i class="icon-upload"></i> Upload</a>
-        {% if profile_info.hasPublicPhotos(subject.profile) %}
+        <a href="{{ path('profile_photo_add',{'type':'public','id':profile.id}) }}" data-ajax class="btn btn-small pull-right"><i class="icon-upload"></i> Upload</a>
+        {% if profile_info.hasPublicPhotos(profile) %}
 
         {% else %}
             <p>
@@ -39,7 +39,7 @@
                 {% if own_profile %}
                     You do not have any public photos yet.
                 {% else %}
-                    {{ "%name% does not have any public photos yet."|trans({'%name%':subject.name}) }}
+                    {{ "%name% does not have any public photos yet."|trans({'%name%':profile.user.name}) }}
                 {% endif %}
             </p>
         {% endif %}
@@ -47,10 +47,10 @@
     <fieldset>
         <legend>
             Private photos
-            <span class="badge badge-info">{{ profile_info.countPrivatePhotos(subject.profile) }}</span>
+            <span class="badge badge-info">{{ profile_info.countPrivatePhotos(profile) }}</span>
         </legend>
-        <a href="{{ path('profile_photo_add',{'type':'private','id':subject.id}) }}" data-ajax class="btn btn-small pull-right"><i class="icon-upload"></i> Upload</a>
-        {% if profile_info.hasPrivatePhotos(subject.profile) %}
+        <a href="{{ path('profile_photo_add',{'type':'private','id':profile.id}) }}" data-ajax class="btn btn-small pull-right"><i class="icon-upload"></i> Upload</a>
+        {% if profile_info.hasPrivatePhotos(profile) %}
 
         {% else %}
             <p>
@@ -58,7 +58,7 @@
                 {% if own_profile %}
                     You do not have any private photos yet.
                 {% else %}
-                    {{ "%name% does not have any private photos yet."|trans({'%name%':subject.name}) }}
+                    {{ "%name% does not have any private photos yet."|trans({'%name%':profile.user.name}) }}
                 {% endif %}
             </p>
         {% endif %}

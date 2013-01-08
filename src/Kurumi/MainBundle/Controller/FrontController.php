@@ -14,33 +14,40 @@ use Briareos\AjaxBundle\Ajax;
 use Kurumi\MainBundle\Entity\User;
 use Kurumi\MainBundle\Entity\Profile;
 use Kurumi\MainBundle\Entity\City;
-use JMS\DiExtraBundle\Annotation as DI;
+use JMS\DiExtraBundle\Annotation\Inject;
 
 class FrontController extends Controller
 {
     /**
-     * @DI\Inject("templating.ajax.helper")
-     *
      * @var \Briareos\AjaxBundle\Ajax\Helper
+     *
+     * @Inject("templating.ajax.helper")
      */
     private $ajaxHelper;
 
     /**
-     * @DI\Inject("router")
-     *
      * @var \Symfony\Bundle\FrameworkBundle\Routing\Router
+     *
+     * @Inject("router")
      */
     private $router;
 
     /**
-     * @DI\Inject("session")
-     *
      * @var \Symfony\Component\HttpFoundation\Session\Session
+     *
+     * @Inject("session")
      */
     private $session;
 
     /**
-     * @Route("/front", name="front_page")
+     * @var \Symfony\Component\Security\Core\SecurityContextInterface
+     *
+     * @Inject("security.context")
+     */
+    private $securityContext;
+
+    /**
+     * @Route("/", name="front")
      * @Method("GET")
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -48,6 +55,15 @@ class FrontController extends Controller
      */
     public function frontAction(Request $request)
     {
+        $user = $this->getUser();
+        if ($user instanceof User) {
+            if ($user->getProfile() !== null) {
+                return $this->redirect($this->generateUrl('profile', ['id' => $user->getProfile()->getId()]));
+            } elseif ($user->getAffiliate() !== null) {
+                return $this->redirect($this->generateUrl('affiliate', ['id' => $user->getAffiliate()->getId()]));
+            }
+        }
+
         $defaultUser = new User();
         $defaultProfile = new Profile();
         $defaultCity = new City();

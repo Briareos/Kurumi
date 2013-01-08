@@ -2,14 +2,23 @@
 
 namespace Kurumi\MainBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Picture
+ *
+ * @Vich\Uploadable
  */
 class Picture
 {
+    const PROFILE_PICTURE = 1;
+
+    const PUBLIC_PICTURE = 2;
+
+    const PRIVATE_PICTURE = 3;
+
     /**
      * @var integer
      */
@@ -38,7 +47,7 @@ class Picture
     /**
      * @var boolean
      */
-    private $status;
+    private $temporary;
 
     /**
      * @var \DateTime
@@ -46,172 +55,139 @@ class Picture
     private $createdAt;
 
     /**
+     * @var integer
+     */
+    private $pictureType;
+
+    /**
      * @var File
+     *
+     * @Vich\UploadableField(mapping="picture", fileNameProperty="uri")
      */
     private $file;
 
-
     /**
-     * Get id
-     *
-     * @return integer 
+     * @var Profile
      */
+    private $profile;
+
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime();
+        $this->temporary = false;
+    }
+
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set fileName
-     *
-     * @param string $fileName
-     * @return Picture
-     */
     public function setFileName($fileName)
     {
         $this->fileName = $fileName;
-    
+
         return $this;
     }
 
-    /**
-     * Get fileName
-     *
-     * @return string 
-     */
     public function getFileName()
     {
         return $this->fileName;
     }
 
-    /**
-     * Set uri
-     *
-     * @param string $uri
-     * @return Picture
-     */
     public function setUri($uri)
     {
         $this->uri = $uri;
-    
+
         return $this;
     }
 
-    /**
-     * Get uri
-     *
-     * @return string 
-     */
     public function getUri()
     {
         return $this->uri;
     }
 
-    /**
-     * Set fileMime
-     *
-     * @param string $fileMime
-     * @return Picture
-     */
     public function setFileMime($fileMime)
     {
         $this->fileMime = $fileMime;
-    
+
         return $this;
     }
 
-    /**
-     * Get fileMime
-     *
-     * @return string 
-     */
     public function getFileMime()
     {
         return $this->fileMime;
     }
 
-    /**
-     * Set fileSize
-     *
-     * @param integer $fileSize
-     * @return Picture
-     */
     public function setFileSize($fileSize)
     {
         $this->fileSize = $fileSize;
-    
+
         return $this;
     }
 
-    /**
-     * Get fileSize
-     *
-     * @return integer 
-     */
     public function getFileSize()
     {
         return $this->fileSize;
     }
 
-    /**
-     * Set status
-     *
-     * @param boolean $status
-     * @return Picture
-     */
-    public function setStatus($status)
+    public function setTemporary($temporary)
     {
-        $this->status = $status;
-    
+        $this->temporary = $temporary;
+
         return $this;
     }
 
-    /**
-     * Get status
-     *
-     * @return boolean 
-     */
-    public function getStatus()
+    public function getTemporary()
     {
-        return $this->status;
+        return $this->temporary;
     }
 
-    /**
-     * Set createdAt
-     *
-     * @param \DateTime $createdAt
-     * @return Picture
-     */
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
-    
+
         return $this;
     }
 
-    /**
-     * Get createdAt
-     *
-     * @return \DateTime 
-     */
     public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\File\File
-     */
     public function getFile()
     {
         return $this->file;
     }
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\File\File $file
-     */
-    public function setFile(File $file)
+    public function setFile(File $file = null)
     {
         $this->file = $file;
+
+        if ($file instanceof UploadedFile) {
+            $this->fileMime = $file->getMimeType();
+            $this->fileSize = $file->getSize();
+            $this->fileName = $file->getClientOriginalName();
+        }
+    }
+
+    public function getPictureType()
+    {
+        return $this->pictureType;
+    }
+
+    public function setPictureType($pictureType)
+    {
+        $this->pictureType = $pictureType;
+    }
+
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(Profile $profile)
+    {
+        $this->profile = $profile;
     }
 }

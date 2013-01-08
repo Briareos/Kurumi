@@ -22,7 +22,11 @@ class KurumiMainExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
+
+        if (!$container->hasDefinition('web_profiler.debug_toolbar')) {
+            $container->removeDefinition('web_profiler.ajax_debug_toolbar');
+        }
     }
 }

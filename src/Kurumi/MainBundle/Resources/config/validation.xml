@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="Kurumi\MainBundle\Entity\User">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">
+                <value>email</value>
+            </option>
+            <option name="groups">
+                <value>registration</value>
+                <value>admin</value>
+                <value>edit_email</value>
+            </option>
+            <option name="message">User with specified email address already exists.</option>
+        </constraint>
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>registration</value>
+                    <value>edit_name</value>
+                </option>
+                <option name="message">Please enter your e-mail address.</option>
+            </constraint>
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>admin</value>
+                </option>
+            </constraint>
+            <constraint name="Length">
+                <option name="min">3</option>
+                <option name="max">24</option>
+                <option name="groups">
+                    <value>registration</value>
+                    <value>admin</value>
+                    <value>edit_name</value>
+                </option>
+            </constraint>
+        </property>
+        <property name="email">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>registration</value>
+                    <value>admin</value>
+                    <value>edit_email</value>
+                </option>
+            </constraint>
+            <constraint name="Email">
+                <option name="groups">
+                    <value>registration</value>
+                    <value>admin</value>
+                    <value>edit_email</value>
+                </option>
+            </constraint>
+        </property>
+        <property name="currentPassword">
+            <constraint name="Symfony\Component\Security\Core\Validator\Constraint\UserPassword">
+                <option name="groups">
+                    <value>edit_email</value>
+                    <value>edit_password</value>
+                </option>
+            </constraint>
+        </property>
+        <property name="plainPassword">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>registration</value>
+                </option>
+                <option name="message">Please enter a password.</option>
+            </constraint>
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>set_password</value>
+                    <value>edit_password</value>
+                </option>
+            </constraint>
+        </property>
+        <property name="timezone">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>registration</value>
+                    <value>admin</value>
+                </option>
+            </constraint>
+        </property>
+        <property name="locale">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>registration</value>
+                    <value>admin</value>
+                </option>
+            </constraint>
+            <constraint name="Locale">
+                <option name="groups">
+                    <value>registration</value>
+                    <value>admin</value>
+                </option>
+            </constraint>
+        </property>
+        <property name="profile">
+            <constraint name="Valid"/>
+        </property>
+    </class>
+    <class name="Kurumi\MainBundle\Entity\Profile">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">
+                <value>user</value>
+            </option>
+            <option name="groups">
+                <value>admin</value>
+            </option>
+            <option name="message">The specified user already has a profile assigned.</option>
+        </constraint>
+        <property name="birthday">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>registration</value>
+                </option>
+                <option name="message">Enter your date of birth</option>
+            </constraint>
+            <constraint name="Kurumi\MainBundle\Validator\MinAge">
+                <option name="limit">16</option>
+                <option name="groups">
+                    <value>registration</value>
+                </option>
+            </constraint>
+        </property>
+        <property name="gender">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>registration</value>
+                </option>
+            </constraint>
+        </property>
+        <property name="user">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>admin</value>
+                </option>
+                <option name="message">Profile owner must be specified.</option>
+            </constraint>
+        </property>
+        <property name="lookingFor">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>search</value>
+                </option>
+                <option name="message">Please specify a gender you're interested in.</option>
+            </constraint>
+        </property>
+        <property name="city">
+            <constraint name="Valid">
+            </constraint>
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>search</value>
+                </option>
+                <option name="message">You didn't specify a city we recognize.</option>
+            </constraint>
+        </property>
+    </class>
+    <class name="Kurumi\MainBundle\Entity\City">
+        <property name="name">
+            <constraint name="NotBlank">
+                <option name="groups">
+                    <value>registration</value>
+                </option>
+                <option name="message">Please enter your city</option>
+            </constraint>
+        </property>
+    </class>
+    <class name="Kurumi\MainBundle\Entity\Picture">
+        <property name="file">
+            <constraint name="NotBlank"/>
+            <constraint name="File">
+                <option name="maxSize">10M</option>
+                <option name="mimeTypes">
+                    <value>image/png</value>
+                    <value>image/jpeg</value>
+                    <value>image/gif</value>
+                </option>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>

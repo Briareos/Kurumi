@@ -28,6 +28,8 @@
         "sonata-project/intl-bundle":"dev-master",
         "sonata-project/cache-bundle":"dev-master",
         "knplabs/gaufrette":"dev-master",
+        "knplabs/knp-gaufrette-bundle":"dev-master",
+        "vich/uploader-bundle":"dev-master",
         "kriswallsmith/buzz":"v0.7",
         "beberlei/DoctrineExtensions":"v0.1",
         "knplabs/knp-menu":"v1.1.2",
@@ -38,13 +40,15 @@
         "briareos/chat-bundle":"dev-master",
         "briareos/ajax-bundle":"dev-master",
         "mopa/bootstrap-bundle":"dev-master",
-        "avalanche123/imagine-bundle":"2.1.*",
-        "imagine/imagine":"0.4.1",
+        "liip/imagine-bundle":"dev-master",
+        "imagine/imagine":"0.4.*",
         "oldsound/rabbitmq-bundle":"dev-master",
         "fzaninotto/faker":"1.0.0",
         "zendframework/zend-paginator":"2.0.*",
         "hwi/oauth-bundle":"dev-master",
-        "doctrine/migrations":"dev-master"
+        "doctrine/migrations":"dev-master",
+        "stephpy/timeline":"1.0.*",
+        "stephpy/TimelineBundle":"2.0.*"
     },
     "repositories":[
         {
