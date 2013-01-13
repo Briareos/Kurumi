@@ -290,7 +290,8 @@ briareos_nodejs:
         lifetime: 900
 
 briareos_chat:
-    picture_provider: chat.subject.picture.provider
+    picture_provider:   chat.subject.picture.provider
+    presence_provider:  chat_subject.basic_presence_provider
 
 hwi_oauth:
     firewall_name: main

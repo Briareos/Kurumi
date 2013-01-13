@@ -30,9 +30,8 @@ BriareosNodejsBundle:
     prefix:   /
 
 BriareosChatBundle:
-    resource: "@BriareosChatBundle/Controller/"
-    type:     annotation
-    prefix:   /
+    resource: "@BriareosChatBundle/Resources/config/routing.xml"
+    prefix:   /chat
 
 LuneticsLocaleBundle:
     resource: "@LuneticsLocaleBundle/Resources/config/routing.yml"

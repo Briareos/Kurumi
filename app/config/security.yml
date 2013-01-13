@@ -47,6 +47,9 @@ security:
                 target:             /
                 csrf_parameter:     _token
                 csrf_provider:      form.csrf_provider
+                invalidate_session: false
+                handlers:
+                    - security.logout.handler.nodejs_invalidator
             anonymous: ~
             remember_me:
                 key:      %secret%

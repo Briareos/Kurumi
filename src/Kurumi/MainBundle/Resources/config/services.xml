@@ -1,5 +1,4 @@
 <?xml version="1.0" ?>
-
 <container xmlns="http://symfony.com/schema/dic/services"
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
@@ -77,7 +76,7 @@
             <argument type="service" id="doctrine.orm.default_entity_manager"/>
             <argument type="service" id="profile.cache.manager"/>
         </service>
-        <service id="chat.subject.picture.provider" class="Kurumi\MainBundle\InfoProvider\ChatSubjectPictureProvider">
+        <service id="chat.subject.picture.provider" class="Kurumi\MainBundle\InfoProvider\ChatSubjectPictureProvider" public="false">
             <argument type="service" id="profile.picture.provider"/>
             <argument type="service" id="picture.info.provider"/>
             <argument>thumbnail</argument>

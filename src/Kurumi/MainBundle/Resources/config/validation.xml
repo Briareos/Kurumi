@@ -116,6 +116,7 @@
             <constraint name="NotBlank">
                 <option name="groups">
                     <value>registration</value>
+                    <value>fill_profile</value>
                 </option>
                 <option name="message">Enter your date of birth</option>
             </constraint>
@@ -123,6 +124,7 @@
                 <option name="limit">16</option>
                 <option name="groups">
                     <value>registration</value>
+                    <value>fill_profile</value>
                 </option>
             </constraint>
         </property>
@@ -130,6 +132,7 @@
             <constraint name="NotBlank">
                 <option name="groups">
                     <value>registration</value>
+                    <value>fill_profile</value>
                 </option>
             </constraint>
         </property>
@@ -145,16 +148,17 @@
             <constraint name="NotBlank">
                 <option name="groups">
                     <value>search</value>
+                    <value>fill_profile</value>
                 </option>
                 <option name="message">Please specify a gender you're interested in.</option>
             </constraint>
         </property>
         <property name="city">
-            <constraint name="Valid">
-            </constraint>
+            <constraint name="Valid"/>
             <constraint name="NotBlank">
                 <option name="groups">
                     <value>search</value>
+                    <value>fill_profile</value>
                 </option>
                 <option name="message">You didn't specify a city we recognize.</option>
             </constraint>
@@ -165,6 +169,7 @@
             <constraint name="NotBlank">
                 <option name="groups">
                     <value>registration</value>
+                    <value>fill_profile</value>
                 </option>
                 <option name="message">Please enter your city</option>
             </constraint>

@@ -50,8 +50,8 @@ class AccountInfoListener
         if (null === $user->getProfile()
             || null === $user->getProfile()->getAge()
             || null === $user->getProfile()->getGender()
-            || null === $user->getProfile()->getCity()
             || null === $user->getProfile()->getLookingFor()
+            || null === $user->getProfile()->getCity()
         ) {
             return true;
         }

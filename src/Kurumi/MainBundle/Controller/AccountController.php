@@ -5,12 +5,11 @@ namespace Kurumi\MainBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kurumi\MainBundle\Entity\Picture;
 use Symfony\Component\HttpFoundation\Request;
-use Briareos\NodejsBundle\Nodejs\Message;
-use JMS\DiExtraBundle\Annotation\Inject;
 use Kurumi\MainBundle\Entity\User;
 use Kurumi\MainBundle\Entity\Profile;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Briareos\AjaxBundle\Ajax;
+use JMS\DiExtraBundle\Annotation\Inject;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Kurumi\MainBundle\Form\Type\UserNameFormType;
 use Kurumi\MainBundle\Form\Type\FillProfileFormType;
@@ -296,6 +295,8 @@ class AccountController extends Controller
                 return $this->render($templateFile, $templateParams);
             }
         }
+
+        return '';
     }
 
     /**
@@ -337,13 +338,6 @@ class AccountController extends Controller
         /** @var $user User */
         $user = $this->getUser();
         $profile = $user->getProfile();
-        if ($profile === null) {
-            $this->session->getFlashBag()->add('warning', "You don't have a profile. If you would like to create one, please fill in the form below.");
-            $profile = new Profile();
-            $user->setProfile($profile);
-        } else {
-            $this->session->getFlashBag()->add('warning', "Your profile is incomplete. Please fill in the information below.");
-        }
 
         $createProfileForm = $this->createForm(new FillProfileFormType(), $user->getProfile());
 
@@ -364,6 +358,16 @@ class AccountController extends Controller
 
         if ($createProfileForm->isBound() && $createProfileForm->isValid()) {
             return $this->redirect($this->router->generate($route, $this->ajaxHelper->getPjaxParameters()));
+        }
+
+        if (!$createProfileForm->isBound()) {
+            if ($profile === null) {
+                $this->session->getFlashBag()->add('warning', "You don't have a profile. If you would like to create one, please fill in the form below.");
+                $profile = new Profile();
+                $user->setProfile($profile);
+            } else {
+                $this->session->getFlashBag()->add('warning', "Your profile is incomplete. Please fill in the information below.");
+            }
         }
 
         $templateFile = ':Account:fill_profile_page.html.twig';
