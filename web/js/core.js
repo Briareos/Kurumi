@@ -3,14 +3,6 @@ $(function () {
     var $context = $('body');
     var undefined;
 
-    $context
-        .on('shown', '.modal', function () {
-            $context.addClass('modal-open')
-        })
-        .on('hidden', '.modal', function () {
-            $context.removeClass('modal-open')
-        });
-
     $context.bind('settings.default_nodejs', function (event, settings) {
         window.NodejsSettings = settings;
     });
@@ -61,7 +53,7 @@ $(function () {
 
     $context.attach();
 
-    $context.on('click', 'a[data-oauth]', function (event) {
+    $context.on('click', 'a[data-oauth]', function () {
         var $link = $(this);
         $link.ajaxLoader('start', 'slide');
         $link.ajaxLoader('bar', {
@@ -89,13 +81,13 @@ $(function () {
                 OAuthenticating = true;
                 $.ajax({
                     url:data.url,
-                    complete:function (jqXHR, textStatus) {
+                    complete:function () {
                         $link.ajaxLoader('stop');
                         OAuthenticating = false;
                     }
                 });
             }
-        }
+        };
         return false;
     });
 
