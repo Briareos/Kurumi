@@ -4,7 +4,6 @@ namespace Kurumi\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Application\Sonata\MediaBundle\Entity\Gallery;
 
 class Profile
 {
@@ -146,7 +145,7 @@ class Profile
         return $this->lastName;
     }
 
-    public function setCity(City $city)
+    public function setCity(City $city = null)
     {
         $this->city = $city;
     }

@@ -3,6 +3,7 @@
 namespace Kurumi\MainBundle\Form\DataTransformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
+use Kurumi\MainBundle\CityFinder\CityNotFoundException;
 use Kurumi\MainBundle\Entity\City;
 use Kurumi\MainBundle\CityFinder\CityFinderInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
@@ -56,21 +57,21 @@ class CityToCityNameTransformer implements DataTransformerInterface
 
         try {
             $city = $this->cityFinder->find(new City(), $value);
-            if (!$city) {
-                return null;
-            }
+        } catch (CityNotFoundException $e) {
+            return null;
+        }
 
-            if ($existingCity = $this->repository->findOneBy(array(
+        if ($existingCity = $this->repository->findOneBy(
+            array(
                 'latitude' => $city->getLatitude(),
                 'longitude' => $city->getLongitude(),
-            ))
-            ) {
-                return $existingCity;
-            }
-            return $city;
-        } catch (\Exception $e) {
-            throw $e;
+            )
+        )
+        ) {
+            return $existingCity;
         }
+
+        return $city;
     }
 
 

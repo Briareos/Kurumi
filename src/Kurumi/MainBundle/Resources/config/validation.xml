@@ -171,7 +171,7 @@
                     <value>registration</value>
                     <value>fill_profile</value>
                 </option>
-                <option name="message">Please enter your city</option>
+                <option name="message">Please enter your city.</option>
             </constraint>
         </property>
     </class>
