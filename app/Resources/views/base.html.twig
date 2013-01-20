@@ -4,6 +4,14 @@
     <meta charset="utf-8">
     <title>{{ block('title') }}</title>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//kurumi.servehttp.com:1337/bootstrap/less/bootstrap.less">
+    <link rel="stylesheet" href="//kurumi.servehttp.com:1337/bootstrap/less/responsive.less">
+    <link rel="stylesheet" href="//kurumi.servehttp.com:1337/less/style.less">
+    <link rel="stylesheet" href="{{ asset('bundles/briareoschat/css/chat.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/kurumimain/css/bootstrap-fileupload.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/kurumimain/css/bootstrap-modal.css') }}">
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <script src="{{ asset('bootstrap/js/bootstrap-typeahead.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap-transition.js') }}"></script>
@@ -28,14 +36,6 @@
     <script src="{{ asset('bundles/kurumimain/js/bootstrap-modalmanager.js') }}"></script>
     <script src="{{ socket_io_resource() }}"></script>
     <script src="{{ asset('js/core.js') }}"></script>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="//kurumi.servehttp.com:1337/bootstrap/less/bootstrap.less">
-    <link rel="stylesheet" href="//kurumi.servehttp.com:1337/bootstrap/less/responsive.less">
-    <link rel="stylesheet" href="//kurumi.servehttp.com:1337/less/style.less">
-    <link rel="stylesheet" href="{{ asset('bundles/briareoschat/css/chat.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/kurumimain/css/bootstrap-fileupload.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/kurumimain/css/bootstrap-modal.css') }}">
 
     <script>
         $(function () {

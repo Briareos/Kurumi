@@ -9,7 +9,8 @@
             });
             self.close();
         } else {
-            window.location.href = '{{ path('front') }}';
+            console.log(window.opener);
+            //window.location.href = '{{ path('front') }}';
         }
     </script>
 {% endblock %}
