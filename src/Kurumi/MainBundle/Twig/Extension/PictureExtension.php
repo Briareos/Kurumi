@@ -44,20 +44,23 @@ class PictureExtension extends \Twig_Extension
         return $this->getPictureHtml($picture, $format, $attributes);
     }
 
-    public function getPicture(Picture $picture, $format = null, $attributes = [])
+    public function getPicture(Picture $picture, $format = null, $attributes = [], $options = [])
     {
-        return $this->getPictureHtml($picture, $format, $attributes);
+        return $this->getPictureHtml($picture, $format, $attributes, $options);
     }
 
-    public function getPictureHtml(Picture $picture, $format = null, $attributes = [])
+    public function getPictureHtml(Picture $picture, $format = null, $attributes = [], $options = [])
     {
         $url = $this->pictureInfoProvider->getPictureUrl($picture, $format);
-        $pictureInfo = $this->pictureInfoProvider->getPictureInfo($picture, $format);
-        if (isset($pictureInfo[0]) && isset($pictureInfo[1])) {
-            $attributes += [
-                'width' => $pictureInfo[0],
-                'height' => $pictureInfo[1],
-            ];
+        $url = str_replace('/app_dev.php', '', $url);
+        if (!isset($options['auto_dimensions']) || $options['auto_dimensions']) {
+            $pictureInfo = $this->pictureInfoProvider->getPictureInfo($picture, $format);
+            if (isset($pictureInfo[0]) && isset($pictureInfo[1])) {
+                $attributes += [
+                    'width' => $pictureInfo[0],
+                    'height' => $pictureInfo[1],
+                ];
+            }
         }
         $attributes += ['alt' => ''];
         $attributes = $this->convertAttributesToString($attributes);

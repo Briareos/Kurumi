@@ -1,5 +1,12 @@
-<div class="modal modal-overflow" data-modal-id="photo-modal">
+<div class="modal modal-overflow" id="photo-modal">
     <div class="modal-body">
-        {{ picture(picture) }}
+        <ul class="breadcrumb">
+            <li><a href="#">{{ profile_picture(profile, 'thumbnail') }} {{ profile.user.name }}</a> <span class="divider">/</span></li>
+            <li><a href="#">Library</a> <span class="divider">/</span></li>
+            <li class="active">Data</li>
+        </ul>
+        <div class="photo-container">
+            {{ picture(picture, null, {'class':'photo'}) }}
+        </div>
     </div>
 </div>

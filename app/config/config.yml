@@ -2,6 +2,25 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
+parameters:
+    pdo.db_options:
+        db_table:    session
+        db_id_col:   session_id
+        db_data_col: session_value
+        db_time_col: session_time
+
+services:
+    pdo:
+        class: PDO
+        arguments:
+            dsn:      "mysql:dbname=%database_name%"
+            user:     %database_user%
+            password: %database_password%
+
+    session.handler.pdo:
+        class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+        arguments: [@pdo, %pdo.db_options%]
+
 framework:
     #esi:             ~
     translator:      { fallback: %locale% }
@@ -16,7 +35,8 @@ framework:
     default_locale:  %locale%
     session:
         storage_id:         session.storage.native
-        handler_id:         session.handler.native_file
+        #handler_id:         session.handler.native_file
+        handler_id:         session.handler.pdo
         name:               kurumi
         #cookie_lifetime
         #cookie_path:       \
@@ -30,7 +50,7 @@ twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
     form:
-        resources:
+        resources: []
     exception_controller:  Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction
     globals:
         site_name:          Kurumi
@@ -255,6 +275,9 @@ liip_imagine:
         timeline:
             filters:
                 thumbnail: { size: [600, 120], mode: inset }
+        wall:
+            filters:
+                thumbnail: { size: [300, 300], mode: inset }
 
 sonata_intl:
     timezone:
@@ -281,7 +304,7 @@ old_sound_rabbit_mq:
 briareos_nodejs:
     dispatcher:
         secure: false
-        host: kurumi.servehttp.com
+        host: 192.168.0.100
         port: 8080
         resource: /socket.io
         service_key: kurumi2012

@@ -13,14 +13,14 @@
                         <h4 class="slogan">{{ 'page.front.motto'|trans }}</h4>
 
                         <div class="btn-group oauth-dropdown">
-                            <a href="{{ path('hwi_oauth_service_redirect',{'service':'login_facebook'}) }}" data-oauth data-loader="#oauth-loader" data-effect="slide" class="btn btn-primary">Connect with <span class="oauth-facebook">Facebook</span></a>
+                            <a href="{{ path('hwi_oauth_service_redirect',{'service':'login_facebook'}) }}" data-oauth data-loader="#oauth-loader" data-loader-effect="slide" class="btn btn-primary">Connect with <span class="oauth-facebook">Facebook</span></a>
                             <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                 or… <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ path('hwi_oauth_service_redirect',{'service':'login_google'}) }}" data-oauth data-loader="#oauth-loader" data-effect="slide"><span class="oauth oauth-google"></span> Google</a></li>
-                                {# <li><a href="{{ path('hwi_oauth_service_redirect',{'service':'login_yahoo'}) }}" data-oauth data-loader="#oauth-loader" data-effect="slide"><span class="oauth oauth-yahoo"></span> Yahoo!</a></li> #}
-                                <li><a href="{{ path('hwi_oauth_service_redirect',{'service':'login_windows_live'}) }}" data-oauth data-loader="#oauth-loader" data-effect="slide"><span class="oauth oauth-msn"></span> Windows Live</a></li>
+                                <li><a href="{{ path('hwi_oauth_service_redirect',{'service':'login_google'}) }}" data-oauth data-loader="#oauth-loader" data-loader-effect="slide"><span class="oauth oauth-google"></span> Google</a></li>
+                                {# <li><a href="{{ path('hwi_oauth_service_redirect',{'service':'login_yahoo'}) }}" data-oauth data-loader="#oauth-loader" data-loader-effect="slide"><span class="oauth oauth-yahoo"></span> Yahoo!</a></li> #}
+                                <li><a href="{{ path('hwi_oauth_service_redirect',{'service':'login_windows_live'}) }}" data-oauth data-loader="#oauth-loader" data-loader-effect="slide"><span class="oauth oauth-msn"></span> Windows Live</a></li>
                             </ul>
                         </div>
 

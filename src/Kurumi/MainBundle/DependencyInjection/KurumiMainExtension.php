@@ -2,6 +2,7 @@
 
 namespace Kurumi\MainBundle\DependencyInjection;
 
+use Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -25,7 +26,7 @@ class KurumiMainExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
-        if (!$container->hasDefinition('web_profiler.debug_toolbar')) {
+        if (1) {
             $container->removeDefinition('web_profiler.ajax_debug_toolbar');
         }
     }

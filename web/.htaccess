@@ -4,8 +4,11 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ app.php [QSA,L]
 
 RewriteCond %{REQUEST_URI} ^/media/picture/private- [OR]
-RewriteCond %{REQUEST_URI} ^/media/cache/[a-z_]+/media/picture/private-
+RewriteCond %{REQUEST_URI} ^/media/cache/[a-z0-9_-]+/media/picture/private-
 RewriteRule ^(.*)$ app.php [QSA,L]
+
+RewriteCond %{REQUEST_URI} ^(.*\.less)$
+RewriteRule ^(.*)$ http://%{SERVER_NAME}:1337/$1 [NC,R,L]
 
 <IfModule mod_expires.c>
   # Enable expirations.

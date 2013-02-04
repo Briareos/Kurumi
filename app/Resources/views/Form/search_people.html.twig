@@ -1,4 +1,4 @@
-<form novalidate id="{{ form.vars.id }}" method="post" {{ form_enctype(form) }} action="{{ path('search_form') }}" data-ajax>
+<form novalidate id="{{ form.vars.id }}" method="post" {{ form_enctype(form) }} action="{{ path('search_form') }}" data-ajax data-loader="#search_results" data-loader-type="overlay">
 
     <div class="row-fluid">
         <div class="span2">

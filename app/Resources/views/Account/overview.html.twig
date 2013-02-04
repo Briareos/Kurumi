@@ -5,58 +5,66 @@
         <div class="span3">
             {% include ':Account:sidebar.html.twig' %}
         </div>
-        <div class="span4">
+        <div class="span9">
+            <div id="account-info">
 
-            {% include '::flash_messages.html.twig' %}
+                {% include '::flash_messages.html.twig' %}
 
-            <fieldset>
-                <legend>Your account info</legend>
-                <dl class="dl-horizontal">
-                    <dt>Name</dt>
-                    <dd>{{ profile.user.name }} <a href="{{ path('account_edit_name') }}" class="btn btn-mini" data-ajax>Edit</a></dd>
-                    <dt>E-mail address</dt>
-                    <dd>{{ profile.user.email }} <a href="{{ path('account_edit_email') }}" class="btn btn-mini" data-ajax>Edit</a></dd>
-                    <dt>Password</dt>
-                    <dd>{% if profile.user.password is empty %}<em>Not set</em>{% else %}**********{% endif %} <a href="{{ path('account_edit_password') }}" class="btn btn-mini" data-ajax>Edit</a></dd>
-                    <dt>Timezone</dt>
-                    <dd>{% if profile.user.timezone is empty %}<em>Not set</em>{% else %}{{ profile.user.timezone }}{% endif %}</dd>
-                    <dt>Language</dt>
-                    <dd>{% if profile.user.locale is empty %}<em>Not set</em>{% else %}{{ profile.user.locale }}{% endif %}</dd>
-                </dl>
-            </fieldset>
-        </div>
-        <div class="span5">
-            <fieldset>
-                <legend>Your profile picture <a href="{{ path('account_edit_picture') }}" class="btn btn-mini" data-ajax>Edit</a></legend>
-                {% if profile.picture is empty %}
-                    <em>Not set</em>
-                {% else %}
-                    {{ profile_picture(profile, 'profile') }}
-                {% endif %}
-            </fieldset>
-            {% if profile %}
-                <fieldset>
-                    <legend>Your profile info</legend>
-                    <dl class="dl-horizontal">
-                        <dt>Gender</dt>
-                        <dd>{% if profile.gender %}
-                            {% if profile.gender == 1 %}
-                                Male
-                            {% else %}
-                                Female
-                            {% endif %}
-                        {% else %}
-                            <em>Not set</em>
-                        {% endif %}</dd>
-                        <dt>Birthday</dt>
-                        <dd>{% if profile.birthday %}
-                            {{ profile.birthday|format_date(null, app.request.locale ) }}
-                        {% else %}
-                            <em>Not set</em>
-                        {% endif %}</dd>
-                    </dl>
-                </fieldset>
-            {% endif %}
+
+                <ul class="link-table unstyled">
+                    <li id="link-name" class="link-row" data-pjax-container="account_edit_name">
+                        {% block account_edit_name %}
+                            <a class="link-element" href="{{ path('account_edit_name') }}" data-ajax data-loader="#link-name" data-loader-type="overlay">
+                                <span class="link-label">Name</span>
+                                <span class="link-edit"><i class="icon-pencil"></i> <span class="link-edit-text">Edit</span></span>
+                                <span class="link-value"><strong>{{ profile.user.name }}</strong></span>
+                            </a>
+                        {% endblock %}
+                    </li>
+                    <li id="link-email" class="link-row" data-pjax-container="account_edit_email">
+                        {% block account_edit_email %}
+                            <a class="link-element" href="{{ path('account_edit_email') }}" data-ajax data-loader="#link-email" data-loader-type="overlay">
+                                <span class="link-label">Email</span>
+                                <span class="link-edit"><i class="icon-pencil"></i> <span class="link-edit-text">Edit</span></span>
+                                <span class="link-value"><strong>{{ profile.user.email }}</strong></span>
+                            </a>
+                        {% endblock %}
+                    </li>
+                    <li id="link-password" class="link-row" data-pjax-container="account_edit_password">
+                        {% block account_edit_password %}
+                            <a class="link-element" href="{{ path('account_edit_password') }}" data-ajax data-loader="#link-password" data-loader-type="overlay">
+                                <span class="link-label">Password</span>
+                                <span class="link-edit"><i class="icon-pencil"></i> <span class="link-edit-text">Edit</span></span>
+                            <span class="link-value">
+                                {% if profile.user.password is empty %}
+                                    <i class="icon-warning-sign"></i>
+                                    <strong>Warning:</strong> password is not set.
+                                {% else %}
+                                    Password is set.
+                                {% endif %}
+                            </span>
+                            </a>
+                        {% endblock %}
+                    </li>
+                    <li id="link-locale" class="link-row" data-pjax-container="account_edit_locale">
+                        {% block account_edit_locale %}
+                            <a class="link-element" href="{{ path('account_edit_locale') }}" data-ajax data-loader="#link-locale" data-loader-type="overlay">
+                                <span class="link-label">Language</span>
+                                <span class="link-edit"><i class="icon-pencil"></i> <span class="link-edit-text">Edit</span></span>
+                            <span class="link-value">
+                                {% if profile.user.locale is empty %}
+                                    Locale is <strong>not</strong> set.
+                                {% else %}
+                                    {{ profile.user.locale }}
+                                {% endif %}
+                            </span>
+                            </a>
+                        {% endblock %}
+                    </li>
+
+                </ul>
+
+            </div>
         </div>
     </div>
 {% endblock %}

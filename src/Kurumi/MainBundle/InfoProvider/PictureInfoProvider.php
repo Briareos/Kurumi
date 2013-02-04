@@ -30,6 +30,13 @@ class PictureInfoProvider
     {
         $webRoot = $this->cacheManager->getWebRoot();
         $picturePath = $this->getPictureUrl($picture, $format);
+
+        // @HACK
+        // Since we can't access the request scope to get the base path, we must
+        // strip /app_dev.php/ and such from the start of the picture path.
+        if (preg_match('{^/[a-z0-9_-]+\.php/}', $picturePath, $matches)) {
+            $picturePath = '/' . substr($picturePath, strlen($matches[0]));
+        }
         $path = $webRoot . $picturePath;
 
         return $path;

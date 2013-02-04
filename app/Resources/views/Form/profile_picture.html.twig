@@ -24,14 +24,19 @@
                 <i class="icon-file fileupload-exists"></i>
                 <span class="fileupload-preview"></span>
             </div>
-            <span class="btn btn-file">
+            <div class="btn btn-file">
                 <span class="fileupload-new">Select file</span>
                 <span class="fileupload-exists">Change</span>
                 {{ form_widget(form.file) }}
-        </span>
+            </div>
             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
         </div>
     </div>
+    {% if form.file.vars.errors|length %}
+        <div class="control-group error">
+            <span class="help-inline">{{ form_errors(form.file) }}</span>
+        </div>
+    {% endif %}
 
 
     {% if profile.picture is empty %}

@@ -18,64 +18,68 @@
 
         <div class="row-fluid">
             {% if results %}
-                {% for result in results %}
-                    {% if loop.index % 4 == 1 %}
-                        <ul class="thumbnails">
-                    {% endif %}
-                    <li class="span3">
-                        <div class="thumbnail">
-                            <a href="{{ path('profile', {'id':result.user.profile.id}) }}" data-ajax>
-                                {{ profile_picture(result.user.profile, 'search') }}
-                            </a>
+                <div id="search_results">
+                    {% for result in results %}
+                        {% if loop.index % 4 == 1 %}
+                            <ul class="thumbnails">
+                        {% endif %}
+                        <li class="span3">
+                            <div class="thumbnail">
+                                <a href="{{ path('profile', {'id':result.user.profile.id}) }}" data-ajax>
+                                    {{ profile_picture(result.user.profile, 'search') }}
+                                </a>
 
-                            <div class="caption">
-                                <h5>{{ result.user.name }} <span class="label">{{ result.user.profile.age }}</span>
-                                    {% if result.user.profile.city is not empty %}
-                                        <small class="">{{ result.user.profile.city.name }}</small>
-                                    {% endif %}
-                                </h5>
+                                <div class="caption">
+                                    <h5>{{ result.user.name }} <span class="label">{{ result.user.profile.age }}</span>
+                                        {% if result.user.profile.city is not empty %}
+                                            <small class="">{{ result.user.profile.city.name }}</small>
+                                        {% endif %}
+                                    </h5>
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                    {% if loop.index % 4 == 0 or loop.last %}
-                        </ul>
-                    {% endif %}
-                {% endfor %}
+                        </li>
+                        {% if loop.index % 4 == 0 or loop.last %}
+                            </ul>
+                        {% endif %}
+                    {% endfor %}
+                </div>
                 <div class="pagination">
                     <ul>
                         {% if paginator.previous is defined %}
-                            <li><a data-ajax href="{{ path('search', {'page':paginator.previous}) }}">«</a></li>
+                            <li><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':paginator.previous}) }}">≪</a></li>
                         {% else %}
-                            <li class="disabled"><a>«</a></li>
+                            <li class="disabled"><a>≪</a></li>
                         {% endif %}
 
                         {% if paginator.first < paginator.firstPageInRange %}
-                            <li><a data-ajax href="{{ path('search', {'page':paginator.first}) }}">{{ paginator.first }}</a></li>
+                            <li><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':paginator.first}) }}">{{ paginator.first }}</a></li>
                             <li class="disabled"><a>…</a></li>
                         {% endif %}
 
                         {% for pageNumber in paginator.pagesInRange %}
                             {% if pageNumber == paginator.current %}
-                                <li class="active"><a data-ajax href="{{ path('search', {'page':pageNumber}) }}">{{ pageNumber }}</a></li>
+                                <li class="active"><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':pageNumber}) }}">{{ pageNumber }}</a></li>
                             {% else %}
-                                <li><a data-ajax href="{{ path('search', {'page':pageNumber}) }}">{{ pageNumber }}</a></li>
+                                <li><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':pageNumber}) }}">{{ pageNumber }}</a></li>
                             {% endif %}
                         {% endfor %}
 
                         {% if paginator.last > paginator.lastPageInRange %}
                             {# <li class="disabled"><a>…</a></li> #}
-                            {# <li><a data-ajax href="{{ path('search', {'page':paginator.last}) }}">{{ paginator.last }}</a></li> #}
+                            {# <li><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':paginator.last}) }}">{{ paginator.last }}</a></li> #}
                         {% endif %}
 
                         {% if paginator.next is defined %}
-                            <li><a data-ajax href="{{ path('search', {'page':paginator.next}) }}">»</a></li>
+                            <li><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':paginator.next}) }}">≫</a></li>
                         {% else %}
-                            <li class="disabled"><a>»</a></li>
+                            <li class="disabled"><a>≫</a></li>
                         {% endif %}
                     </ul>
                 </div>
             {% else %}
-                Where is everyone?
+                <p id="search_results">
+                    Where is everyone?
+                </p>
             {% endif %}
         </div>
     </div>

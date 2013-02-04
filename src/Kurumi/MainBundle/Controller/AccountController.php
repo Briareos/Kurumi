@@ -2,6 +2,7 @@
 
 namespace Kurumi\MainBundle\Controller;
 
+use Kurumi\MainBundle\Form\Type\UserLocaleFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Kurumi\MainBundle\Entity\Picture;
 use Symfony\Component\HttpFoundation\Request;
@@ -262,28 +263,24 @@ class AccountController extends Controller
 
         if ($request->isXmlHttpRequest()) {
             if ($this->ajaxHelper->isModal()) {
-                if ($profilePictureForm->isBound()) {
-                    if ($profilePictureForm->isValid()) {
-                        return $this->ajaxHelper->renderModal($modalTemplateFile, $templateParams);
-                    } elseif ($profilePictureForm->isBound()) {
-                        return $this->ajaxHelper->renderAjaxForm($modalFormTemplateFile, $templateParams);
-                    }
+                if ($profilePictureForm->isBound() && $profilePictureForm->isValid()) {
+                    return $this->ajaxHelper->renderModal($modalTemplateFile, $templateParams);
+                } elseif ($profilePictureForm->isBound()) {
+                    return $this->ajaxHelper->renderAjaxForm($modalFormTemplateFile, $templateParams);
                 } else {
                     return $this->ajaxHelper->renderModal($modalTemplateFile, $templateParams);
                 }
             } else {
-                if ($profilePictureForm->isBound()) {
-                    if ($profilePictureForm->isValid()) {
-                        $url = $this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters());
+                if ($profilePictureForm->isBound() && $profilePictureForm->isValid()) {
+                    $url = $this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters());
 
-                        return $this->redirect($url);
-                    } elseif ($profilePictureForm->isBound()) {
-                        return $this->ajaxHelper->renderAjaxForm($formTemplateFile, $templateParams);
-                    }
+                    return $this->redirect($url);
+                } elseif ($profilePictureForm->isBound()) {
+                    return $this->ajaxHelper->renderAjaxForm($formTemplateFile, $templateParams);
                 } else {
                     $url = $this->router->generate('account_edit_picture');
 
-                    return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, 'edit_account');
+                    return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, 'account_edit_picture');
                 }
             }
         } else {
@@ -295,8 +292,56 @@ class AccountController extends Controller
                 return $this->render($templateFile, $templateParams);
             }
         }
+    }
 
-        return '';
+    /**
+     * @Route("/account/edit-locale", name="account_edit_locale")
+     */
+    public function editLocaleAction(Request $request)
+    {
+        /** @var $user User */
+        $user = $this->getUser();
+        $profile = $user->getProfile();
+
+        $localeForm = $this->createForm(new UserLocaleFormType(), $user);
+
+        if ($request->isMethod('post')) {
+            $localeForm->bind($request);
+
+            if ($localeForm->isValid()) {
+                $this->em->persist($user);
+                $this->em->flush();
+            }
+        }
+
+        $pageTemplate = ':Account:edit_locale.html.twig';
+        $formTemplate = ':Form:user_locale.html.twig';
+        $templateParams = [
+            'profile' => $profile,
+            'form' => $localeForm->createView(),
+        ];
+
+        if ($request->isXmlHttpRequest()) {
+            if ($localeForm->isBound() && $localeForm->isValid()) {
+                $url = $this->generateUrl('account_overview');
+
+                return $this->redirect($url);
+            } elseif ($localeForm->isBound()) {
+                return $this->ajaxHelper->renderAjaxForm($formTemplate, $templateParams);
+            } else {
+                $url = $this->generateUrl('account_edit_locale');
+
+                return $this->ajaxHelper->renderPjaxBlock($pageTemplate, $templateParams, $url, 'edit_account');
+            }
+        } else {
+            if ($localeForm->isBound() && $localeForm->isValid()) {
+                $url = $this->generateUrl('account_overview');
+
+                return $this->redirect($url);
+            } else {
+                return $this->render($pageTemplate, $templateParams);
+            }
+        }
     }
 
     /**

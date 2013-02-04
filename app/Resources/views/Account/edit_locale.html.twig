@@ -1,13 +1,13 @@
 {% extends ':Account:overview.html.twig' %}
 
-{% block account_edit_email %}
+{% block account_edit_locale %}
 
     {% include '::flash_messages.html.twig' %}
 
     <div class="well">
         <fieldset>
-            <legend>Change your e-mail address</legend>
-            {% include ':Form:user_email.html.twig' %}
+            <legend>Change your locale</legend>
+            {% include ':Form:user_locale.html.twig' %}
         </fieldset>
     </div>
 

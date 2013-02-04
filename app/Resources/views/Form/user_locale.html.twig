@@ -1,14 +1,13 @@
-<form id="{{ form.vars.id }}" class="form-horizontal" novalidate action="{{ path('account_edit_name') }}" {{ form_enctype(form) }} method="post" data-ajax>
+<form id="{{ form.vars.id }}" class="form-horizontal" novalidate action="{{ path('account_edit_locale') }}" {{ form_enctype(form) }} method="post" data-ajax>
 
     {{ form_errors(form) }}
 
-    {{ form_row(form.name) }}
+    {{ form_row(form.locale) }}
 
     {{ form_rest(form) }}
 
-    <div class="controls">
+    <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save</button>
         <a class="btn" href="{{ path('account_overview') }}" data-ajax>Cancel</a>
     </div>
-
 </form>

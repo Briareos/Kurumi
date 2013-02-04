@@ -1,20 +1,19 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}{{ user.name }} | Home{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block body %}
 
     {% include ':Segment:navbar_top.html.twig' %}
 
     <div class="main container">
-        <a href="{{ path('account_edit_picture', {'modal':1}) }}" data-ajax>Set your photo!</a>
-
         <div class="row">
-            <div class="span6">
-
-            </div>
-            <div class="span6">
-
+            <div class="span12 picture-wall">
+                {% for picture in pictures %}
+                    <div class="picture-brick">
+                        {{ picture(picture, 'wall', {}, {'auto_dimensions':true}) }}
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>

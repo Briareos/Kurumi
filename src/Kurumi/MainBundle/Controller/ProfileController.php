@@ -154,7 +154,7 @@ class ProfileController extends Controller
         );
 
         if ($request->isXmlHttpRequest()) {
-
+            
             return $this->ajaxHelper->renderModal($modalTemplateFile, $templateParams);
         }
     }

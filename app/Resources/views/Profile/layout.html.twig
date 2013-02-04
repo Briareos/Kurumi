@@ -20,9 +20,15 @@
             <div class="span9">
                 <div class="row-fluid">
                     <div class="span4">
-                        <a href="{{ path('account_edit_picture') }}" data-ajax data-modal>
-                            {{ profile_picture(profile) }}
-                        </a>
+                        {% if own_profile %}
+                            <a href="{{ path('account_edit_picture') }}" data-ajax data-modal>
+                                {{ profile_picture(profile, 'profile') }}
+                            </a>
+                        {% else %}
+                            <a href="#">
+                                {{ profile_picture(profile, 'profile') }}
+                            </a>
+                        {% endif %}
                     </div>
                     <div class="span8">
                         <div data-pjax-container="{{ pjax_container }}">
@@ -33,19 +39,35 @@
             </div>
             <div class="span3">
                 <ul class="nav nav-tabs nav-stacked">
-                    <li><a data-ajax href="#">Recent visitors <span class="badge pull-right"">2</span>
-                        <div class="clearfix"></div>
-                    </a></li>
-                    <li><a data-ajax href="#">Who likes me <span class="badge pull-right"">2</span>
-                        <div class="clearfix"></div>
-                    </a></li>
-                    <li><a data-ajax href="#">Who I like <span class="badge-empty pull-right">0</span>
+                    <li>
+                        <a data-ajax href="#">
+                            Recent visitors
+                            <span class="badge pull-right"">2</span>
+                            <div class="clearfix"></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-ajax href="#">
+                            Who likes me
+                            <span class="badge pull-right"">2</span>
+                            <div class="clearfix"></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-ajax href="#">
+                            Who I like
+                            <span class="badge-empty pull-right">0</span>
 
-                        <div class="clearfix"></div>
-                    </a></li>
-                    <li><a data-ajax href="#">Mutual attractions <span class="badge pull-right"">2</span>
-                        <div class="clearfix"></div>
-                    </a></li>
+                            <div class="clearfix"></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a data-ajax href="#">
+                            Mutual attractions
+                            <span class="badge pull-right"">2</span>
+                            <div class="clearfix"></div>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
