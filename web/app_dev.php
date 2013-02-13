@@ -2,6 +2,8 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
+require __DIR__.'/../../xhprof/external/header.php';
+
 // If you don't want to setup permissions the proper way, just uncomment the following PHP line
 // read http://symfony.com/doc/current/book/installation.html#configuration-and-setup for more information
 //umask(0000);
@@ -16,6 +18,7 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
           '127.0.0.1',
           '::1',
           '94.189.195.228',
+          '10.0.2.2',
       )
   )
 ) {

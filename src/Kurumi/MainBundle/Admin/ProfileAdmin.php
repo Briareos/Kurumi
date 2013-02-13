@@ -24,65 +24,65 @@ class ProfileAdmin extends Admin
     public function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-          ->add('firstName')
-          ->add('lastName')
-          ->add('birthday')
-          ->add('gender')
-          ->add('created');
+            ->add('firstName')
+            ->add('lastName')
+            ->add('birthday')
+            ->add('gender')
+            ->add('created');
     }
 
     public function configureFormFields(FormMapper $formMapper)
     {
         $profile = $this->getSubject();
         $userQuery = $this
-          ->getModelManager()
-          ->getEntityManager($this->getClass())
-          ->createQuery('Select p From KurumiMainBundle:Profile p Where p.user Is Null Order By p.id Asc');
+            ->getModelManager()
+            ->getEntityManager($this->getClass())
+            ->createQuery('Select p From KurumiMainBundle:Profile p Where p.user Is Null Order By p.id Asc');
 
         $formMapper
-          ->with("General")
-          ->add(
-            'firstName',
-            null,
-            array(
-                'required' => false,
+            ->with("General")
+            ->add(
+                'firstName',
+                null,
+                array(
+                    'required' => false,
+                )
             )
-        )
-          ->add(
-            'lastName',
-            null,
-            array(
-                'required' => false,
+            ->add(
+                'lastName',
+                null,
+                array(
+                    'required' => false,
+                )
             )
-        )
-          ->add(
-            'birthday',
-            'birthday',
-            array(
-                'required' => false,
+            ->add(
+                'birthday',
+                'birthday',
+                array(
+                    'required' => false,
+                )
             )
-        )
-          ->add(
-            'gender',
-            'gender',
-            array(
-                'required' => false,
-                'empty_value' => $this->trans('admin.gender.unspecified'),
+            ->add(
+                'gender',
+                'gender',
+                array(
+                    'required' => false,
+                    'empty_value' => $this->trans('admin.gender.unspecified'),
+                )
             )
-        )
-          ->add(
-            'city',
-            'city',
-            array(
-                'required' => false,
+            ->add(
+                'city',
+                'city',
+                array(
+                    'required' => false,
+                )
             )
-        )
-          ->add(
-            'user',
-            'sonata_type_model',
-            array()
-        )
-          ->end();
+            ->add(
+                'user',
+                'sonata_type_model',
+                array()
+            )
+            ->end();
     }
 
     public function getUsersWithoutProfile()
@@ -93,27 +93,27 @@ class ProfileAdmin extends Admin
     public function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-          ->addIdentifier('id')
-          ->add('firstName')
-          ->add('lastName')
-          ->add('user')
-          ->add(
-            '_actions',
-            'actions',
-            array(
-                'actions' => array(
-                    'view' => array(),
-                    'edit' => array(),
+            ->addIdentifier('id')
+            ->add('firstName')
+            ->add('lastName')
+            ->add('user')
+            ->add(
+                '_actions',
+                'actions',
+                array(
+                    'actions' => array(
+                        'view' => array(),
+                        'edit' => array(),
+                    )
                 )
-            )
-        );
+            );
     }
 
     public function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-          ->add('firstName')
-          ->add('lastName')
-          ->add('gender');
+            ->add('firstName')
+            ->add('lastName')
+            ->add('gender');
     }
 }

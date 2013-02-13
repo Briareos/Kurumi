@@ -103,8 +103,9 @@ class AccountController extends Controller
                 $this->em->persist($user);
                 $this->em->flush();
                 $this->session->getFlashBag()->add('success', "Your name was successfully changed.");
+                $url = $this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters());
 
-                return $this->redirect($this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters()));
+                return $this->redirect($url);
             }
         }
 
@@ -145,8 +146,8 @@ class AccountController extends Controller
                 $this->em->persist($user);
                 $this->em->flush();
                 $this->session->getFlashBag()->add('success', "Your email has been updated.");
-
-                return $this->redirect($this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters()));
+                $url = $this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters());
+                return $this->redirect($url);
             }
         }
 
@@ -162,7 +163,6 @@ class AccountController extends Controller
                 return $this->ajaxHelper->renderAjaxForm($formTemplate, $templateParams);
             } else {
                 $url = $this->router->generate('account_edit_email');
-
                 return $this->ajaxHelper->renderPjaxBlock($pageTemplate, $templateParams, $url, 'edit_account');
             }
         } else {
@@ -188,8 +188,9 @@ class AccountController extends Controller
                 $this->em->persist($user);
                 $this->em->flush();
                 $this->session->getFlashBag()->add('success', "Your password has been updated.");
-
-                return $this->redirect($this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters()));
+                return $this->redirect(
+                    $this->router->generate('account_overview', $this->ajaxHelper->getPjaxParameters())
+                );
             }
         }
 
@@ -204,7 +205,6 @@ class AccountController extends Controller
                 return $this->ajaxHelper->renderAjaxForm(':Form:user_password.html.twig', $templateParams);
             } else {
                 $url = $this->router->generate('account_edit_password');
-
                 return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, 'edit_account');
             }
         } else {
@@ -280,7 +280,12 @@ class AccountController extends Controller
                 } else {
                     $url = $this->router->generate('account_edit_picture');
 
-                    return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, 'account_edit_picture');
+                    return $this->ajaxHelper->renderPjaxBlock(
+                        $templateFile,
+                        $templateParams,
+                        $url,
+                        'account_edit_picture'
+                    );
                 }
             }
         } else {
@@ -361,7 +366,8 @@ class AccountController extends Controller
             $profile->removePicture();
 
             // Currently, Vich\UploaderBundle\Storage\AbstractStorage gets the uri property by using \ReflectionClass,
-            // which bypasses doctrine proxy lazy-loading. Calling any method but getId() would make sure the entity is fully loaded.
+            // which bypasses doctrine proxy lazy-loading. Calling any method but getId() would make sure the entity is
+            // fully loaded.
             // @TODO find an alternative to force the lazy-loading of the doctrine proxy
             $picture->getUri();
 
@@ -407,11 +413,17 @@ class AccountController extends Controller
 
         if (!$createProfileForm->isBound()) {
             if ($profile === null) {
-                $this->session->getFlashBag()->add('warning', "You don't have a profile. If you would like to create one, please fill in the form below.");
+                $this->session->getFlashBag()->add(
+                    'warning',
+                    "You don't have a profile. If you would like to create one, please fill in the form below."
+                );
                 $profile = new Profile();
                 $user->setProfile($profile);
             } else {
-                $this->session->getFlashBag()->add('warning', "Your profile is incomplete. Please fill in the information below.");
+                $this->session->getFlashBag()->add(
+                    'warning',
+                    "Your profile is incomplete. Please fill in the information below."
+                );
             }
         }
 

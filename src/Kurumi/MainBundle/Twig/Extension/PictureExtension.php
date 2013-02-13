@@ -52,7 +52,6 @@ class PictureExtension extends \Twig_Extension
     public function getPictureHtml(Picture $picture, $format = null, $attributes = [], $options = [])
     {
         $url = $this->pictureInfoProvider->getPictureUrl($picture, $format);
-        $url = str_replace('/app_dev.php', '', $url);
         if (!isset($options['auto_dimensions']) || $options['auto_dimensions']) {
             $pictureInfo = $this->pictureInfoProvider->getPictureInfo($picture, $format);
             if (isset($pictureInfo[0]) && isset($pictureInfo[1])) {

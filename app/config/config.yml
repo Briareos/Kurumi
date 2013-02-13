@@ -304,7 +304,7 @@ old_sound_rabbit_mq:
 briareos_nodejs:
     dispatcher:
         secure: false
-        host: 192.168.0.100
+        host: kurumi.servehttp.com
         port: 8080
         resource: /socket.io
         service_key: kurumi2012
