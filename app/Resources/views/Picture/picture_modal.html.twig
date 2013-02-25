@@ -1,0 +1,19 @@
+<div class="modal container" id="photo-modal" tabindex="-1" data-modal-overflow="true">
+    <div class="modal-body">
+        <ul class="breadcrumb">
+            <li><a href="{{ path('profile',{'id':profile.id}) }}" data-ajax data-modal>{{ profile_picture(profile, 'thumbnail') }} {{ profile.user.name }}</a> <span class="divider">/</span></li>
+            <li><a href="#">Library</a> <span class="divider">/</span></li>
+            <li class="active">Data</li>
+        </ul>
+        <div class="row-fluid">
+            <div class="span9 photo-container">
+                {{ picture(picture, null, {'class':'photo'}, {'max_width':848, 'max_height':848}) }}
+            </div>
+            <div class="span3 photo-comments" data-pjax-container="picture_comments-{{ picture.id }}">
+                <h3>Comments</h3>
+
+                {% include ':Form:picture_comment_modal.html.twig' with { 'form':form, 'picture':picture } %}
+            </div>
+        </div>
+    </div>
+</div>

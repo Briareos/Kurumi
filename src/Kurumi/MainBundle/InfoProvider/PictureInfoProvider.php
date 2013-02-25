@@ -34,7 +34,7 @@ class PictureInfoProvider
         // @HACK
         // Since we can't access the request scope to get the base path, we must
         // strip /app_dev.php/ and such from the start of the picture path.
-        if (preg_match('{^/[a-z0-9_-]+\.php/}', $picturePath, $matches)) {
+        if (preg_match('{^/app_[a-z0-9_-]+\.php/}', $picturePath, $matches)) {
             $picturePath = '/' . substr($picturePath, strlen($matches[0]));
         }
         $path = $webRoot . $picturePath;
@@ -70,5 +70,18 @@ class PictureInfoProvider
         }
 
         return $imageInfo;
+    }
+
+    public function getPictureDimensions(Picture $picture, $format = null)
+    {
+        $imageInfo = $this->getPictureInfo($picture, $format);
+        $dimensions = null;
+        if ($imageInfo !== null) {
+            $dimensions = [
+                'width' => $imageInfo[0],
+                'height' => $imageInfo[1],
+            ];
+        }
+        return $dimensions;
     }
 }

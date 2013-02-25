@@ -168,5 +168,7 @@
         </service>
         <service id="picture.directory.namer" class="Kurumi\MainBundle\Naming\PictureDirectoryNamer">
         </service>
+        <service id="paginator.helper" class="Kurumi\MainBundle\Paginator\PaginatorHelper">
+        </service>
     </services>
 </container>

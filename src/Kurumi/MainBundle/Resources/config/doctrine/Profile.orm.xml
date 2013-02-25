@@ -48,6 +48,11 @@
                 <cascade-remove/>
             </cascade>
         </one-to-many>
+        <one-to-many target-entity="Kurumi\MainBundle\Entity\PictureComment" mapped-by="profile" field="pictureComments">
+            <order-by>
+                <order-by-field name="createdAt"/>
+            </order-by>
+        </one-to-many>
         <many-to-one field="city" target-entity="Kurumi\MainBundle\Entity\City" inversed-by="profiles">
             <cascade>
                 <cascade-persist/>

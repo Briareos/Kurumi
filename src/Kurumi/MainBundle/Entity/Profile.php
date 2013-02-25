@@ -86,6 +86,11 @@ class Profile
      */
     private $pictures;
 
+    /**
+     * @var PictureComment[]
+     */
+    private $pictureComments;
+
 
     public function __construct()
     {
@@ -277,5 +282,15 @@ class Profile
     public function isUser($user)
     {
         return ($user instanceof User) && ($user->getId() === $this->user->getId());
+    }
+
+    public function getPictureComments()
+    {
+        return $this->pictureComments;
+    }
+
+    public function setPictureComments($pictureComments)
+    {
+        $this->pictureComments = $pictureComments;
     }
 }

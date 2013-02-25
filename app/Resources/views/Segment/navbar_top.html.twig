@@ -4,7 +4,7 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-                <a data-ajax href="{{ path('home') }}" class="brand">{{ site_name }}</a>
+                <a data-ajax data-loader="#body" data-loader-type="overlay" href="{{ path('home') }}" class="brand">{{ site_name }}</a>
 
                 <ul class="nav">
                     {% if app.user %}

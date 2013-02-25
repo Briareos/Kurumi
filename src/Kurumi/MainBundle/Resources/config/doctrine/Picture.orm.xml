@@ -16,6 +16,11 @@
         <field name="temporary" type="boolean" column="temporary"/>
         <field name="createdAt" type="datetime" column="createdAt"/>
         <field name="pictureType" type="smallint" column="pictureType" nullable="true"/>
+        <one-to-many target-entity="Kurumi\MainBundle\Entity\PictureComment" mapped-by="picture" field="comments">
+            <order-by>
+                <order-by-field name="createdAt"/>
+            </order-by>
+        </one-to-many>
         <many-to-one target-entity="Kurumi\MainBundle\Entity\Profile" field="profile" inversed-by="photos">
             <join-column name="profile_id" nullable="false"/>
         </many-to-one>

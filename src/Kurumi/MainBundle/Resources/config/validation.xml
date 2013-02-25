@@ -188,4 +188,13 @@
             </constraint>
         </property>
     </class>
+    <class name="Kurumi\MainBundle\Entity\PictureComment">
+        <property name="body">
+            <constraint name="NotBlank"/>
+            <constraint name="Length">
+                <option name="min">3</option>
+                <option name="max">500</option>
+            </constraint>
+        </property>
+    </class>
 </constraint-mapping>

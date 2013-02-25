@@ -2,6 +2,7 @@
 
 <form novalidate id="{{ form.vars.id }}" class="register-form" action="{{ path('register') }}" {{ form_enctype(form) }} method="post" data-ajax data-modal>
 
+    {{ form_errors(form) }}
     {{ form_row(form.email, {attr:{class:'input-xlarge', autocomplete:'off' }})}}
     {{ form_row(form.plainPassword, {attr:{class:'input-xlarge'} }) }}
     {{ form_row(form.profile.birthday, {month:{attr:{class:'input-small'} } }) }}

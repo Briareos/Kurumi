@@ -1,5 +1,5 @@
 /* ===========================================================
- * bootstrap-modal.js v2.0
+ * bootstrap-modal.js v2.1
  * ===========================================================
  * Copyright 2012 Jordan Schroter
  *
@@ -26,7 +26,7 @@
 
     var Modal = function (element, options) {
         this.init(element, options);
-    }
+    };
 
     Modal.prototype = {
 
@@ -54,37 +54,13 @@
         },
 
         show: function () {
-            var that = this,
-                e = $.Event('show');
+            var e = $.Event('show');
 
             if (this.isShown) return;
 
-            this.$element.triggerHandler(e);
+            this.$element.trigger(e);
 
             if (e.isDefaultPrevented()) return;
-
-            if (this.options.width){
-                this.$element.css('width', this.options.width);
-
-                var that = this;
-                this.$element.css('margin-left', function () {
-                    if (/%/ig.test(that.options.width)){
-                        return -(parseInt(that.options.width) / 2) + '%';
-                    } else {
-                        return -($(this).width() / 2) + 'px';
-                    }
-                });
-            }
-
-            var prop = this.options.height ? 'height' : 'max-height';
-
-            var value = this.options.height || this.options.maxHeight;
-
-            if (value){
-                this.$element.find('.modal-body')
-                    .css('overflow', 'auto')
-                    .css(prop, value);
-            }
 
             this.escape();
 
@@ -98,7 +74,7 @@
 
             e = $.Event('hide');
 
-            this.$element.triggerHandler(e);
+            this.$element.trigger(e);
 
             if (!this.isShown || e.isDefaultPrevented()) return (this.isShown = false);
 
@@ -122,6 +98,49 @@
             $.support.transition && this.$element.hasClass('fade') ?
                 this.hideWithTransition() :
                 this.hideModal();
+        },
+
+        layout: function () {
+            var prop = this.options.height ? 'height' : 'max-height',
+                value = this.options.height || this.options.maxHeight;
+
+            if (this.options.width){
+                this.$element.css('width', this.options.width);
+
+                var that = this;
+                this.$element.css('margin-left', function () {
+                    if (/%/ig.test(that.options.width)){
+                        return -(parseInt(that.options.width) / 2) + '%';
+                    } else {
+                        return -($(this).width() / 2) + 'px';
+                    }
+                });
+            } else {
+                this.$element.css('width', '');
+                this.$element.css('margin-left', '');
+            }
+
+            this.$element.find('.modal-body')
+                .css('overflow', '')
+                .css(prop, '');
+
+            var modalOverflow = $(window).height() - 10 < this.$element.height();
+
+            if (value){
+                this.$element.find('.modal-body')
+                    .css('overflow', 'auto')
+                    .css(prop, value);
+            }
+
+            if (modalOverflow || this.options.modalOverflow) {
+                this.$element
+                    .css('margin-top', 0)
+                    .addClass('modal-overflow');
+            } else {
+                this.$element
+                    .css('margin-top', 0 - this.$element.height() / 2)
+                    .removeClass('modal-overflow');
+            }
         },
 
         tab: function () {
@@ -149,7 +168,6 @@
                             $next.focus() : $rollover.focus();
 
                         e.preventDefault();
-
                     }
                 });
             } else if (!this.isShown) {
@@ -173,21 +191,20 @@
         hideWithTransition: function () {
             var that = this
                 , timeout = setTimeout(function () {
-                    that.$element.off($.support.transition.end)
-                    that.hideModal()
+                    that.$element.off($.support.transition.end);
+                    that.hideModal();
                 }, 500);
 
             this.$element.one($.support.transition.end, function () {
-                clearTimeout(timeout)
-                that.hideModal()
+                clearTimeout(timeout);
+                that.hideModal();
             });
         },
 
         hideModal: function () {
             this.$element
                 .hide()
-                .triggerHandler('hidden');
-
+                .trigger('hidden');
 
             var prop = this.options.height ? 'height' : 'max-height';
             var value = this.options.height || this.options.maxHeight;
@@ -218,9 +235,9 @@
                     .append(this.options.spinner)
                     .appendTo(this.$element);
 
-                if (doAnimate) this.$loading[0].offsetWidth // force reflow
+                if (doAnimate) this.$loading[0].offsetWidth; // force reflow
 
-                this.$loading.addClass('in')
+                this.$loading.addClass('in');
 
                 this.isLoading = true;
 
@@ -273,7 +290,7 @@
 
         destroy: function () {
             var e = $.Event('destroy');
-            this.$element.triggerHandler(e);
+            this.$element.trigger(e);
             if (e.isDefaultPrevented()) return;
 
             this.teardown();
@@ -296,23 +313,23 @@
                 .removeClass('in')
                 .attr('aria-hidden', true);
         }
-    }
+    };
 
 
     /* MODAL PLUGIN DEFINITION
      * ======================= */
 
-    $.fn.modal = function (option) {
+    $.fn.modal = function (option, args) {
         return this.each(function () {
             var $this = $(this),
                 data = $this.data('modal'),
                 options = $.extend({}, $.fn.modal.defaults, $this.data(), typeof option == 'object' && option);
 
-            if (!data) $this.data('modal', (data = new Modal(this, options)))
-            if (typeof option == 'string') data[option]()
+            if (!data) $this.data('modal', (data = new Modal(this, options)));
+            if (typeof option == 'string') data[option].apply(data, [].concat(args));
             else if (options.show) data.show()
         })
-    }
+    };
 
     $.fn.modal.defaults = {
         keyboard: true,
@@ -325,19 +342,21 @@
         modalOverflow: false,
         consumeTab: true,
         focusOn: null,
+        replace: false,
+        resize: false,
         attentionAnimation: 'shake',
         manager: 'body',
         spinner: '<div class="loading-spinner" style="width: 200px; margin-left: -100px;"><div class="progress progress-striped active"><div class="bar" style="width: 100%;"></div></div></div>'
-    }
+    };
 
-    $.fn.modal.Constructor = Modal
+    $.fn.modal.Constructor = Modal;
 
 
     /* MODAL DATA-API
      * ============== */
 
     $(function () {
-        $(document).off('.modal').on('click.modal.data-api', '[data-toggle="modal"]', function ( e ) {
+        $(document).off('click.modal').on('click.modal.data-api', '[data-toggle="modal"]', function ( e ) {
             var $this = $(this),
                 href = $this.attr('href'),
                 $target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))), //strip for ie7

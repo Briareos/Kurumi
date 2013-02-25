@@ -1,7 +1,7 @@
 @import "../bootstrap/less/variables.less";
 @import "../bootstrap/less/mixins.less";
 
-html {
+.page-container {
   overflow: -moz-scrollbars-vertical;
   overflow-y: scroll;
 }
@@ -339,14 +339,15 @@ html {
 }
 
 #photo-modal.modal {
-  margin-top: 10px !important;
-  top: auto;
 }
 
 .photo-container {
-  display: table-cell;
-  vertical-align: middle;
-  width: 100%;
+  background: black;
+
+  .photo {
+    margin: 0 auto;
+    display: block;
+  }
 }
 
 .ajax-overlay-loader {
@@ -450,7 +451,6 @@ html {
     margin-bottom: 4px;
 
     img {
-      width: 200px;
       display: block;
     }
   }

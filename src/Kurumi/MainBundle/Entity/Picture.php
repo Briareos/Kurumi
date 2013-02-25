@@ -71,6 +71,11 @@ class Picture
      */
     private $profile;
 
+    /**
+     * @var PictureComment[]
+     */
+    private $comments;
+
 
     public function __construct()
     {
@@ -189,5 +194,15 @@ class Picture
     public function setProfile(Profile $profile)
     {
         $this->profile = $profile;
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function setComments($comments)
+    {
+        $this->comments = $comments;
     }
 }

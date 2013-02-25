@@ -51,14 +51,45 @@ class PictureExtension extends \Twig_Extension
 
     public function getPictureHtml(Picture $picture, $format = null, $attributes = [], $options = [])
     {
+        $options += [
+            'auto_dimensions' => true,
+            'scale_width' => 0,
+            'scale_height' => 0,
+            'max_width' => 0,
+            'max_height' => 0,
+        ];
         $url = $this->pictureInfoProvider->getPictureUrl($picture, $format);
-        if (!isset($options['auto_dimensions']) || $options['auto_dimensions']) {
-            $pictureInfo = $this->pictureInfoProvider->getPictureInfo($picture, $format);
-            if (isset($pictureInfo[0]) && isset($pictureInfo[1])) {
-                $attributes += [
-                    'width' => $pictureInfo[0],
-                    'height' => $pictureInfo[1],
-                ];
+        if ($options['auto_dimensions']) {
+            $dimensions = $this->pictureInfoProvider->getPictureDimensions($picture, $format);
+            if ($dimensions !== null) {
+                $heightRatio = $widthRatio = 1;
+                if ($options['max_width']) {
+                    if ($dimensions['width'] > $options['max_width']) {
+                        $widthRatio = $dimensions['width'] / $options['max_width'];
+                    }
+                }
+                if ($options['max_height']) {
+                    if ($dimensions['height'] > $options['max_height']) {
+                        $heightRatio = $dimensions['height'] / $options['max_height'];
+                    }
+                }
+
+                if ($widthRatio > $heightRatio) {
+                    $options['scale_width'] = $options['max_width'];
+                } elseif ($heightRatio > $widthRatio) {
+                    $options['scale_height'] = $options['max_height'];
+                }
+
+                if ($options['scale_width']) {
+                    $ratio = $dimensions['width'] / $options['scale_width'];
+                    $dimensions['width'] = $options['scale_width'];
+                    $dimensions['height'] = $dimensions['height'] / $ratio;
+                } elseif ($options['scale_height']) {
+                    $ratio = $dimensions['height'] / $options['scale_height'];
+                    $dimensions['height'] = $options['scale_height'];
+                    $dimensions['width'] = $dimensions['width'] / $ratio;
+                }
+                $attributes += $dimensions;
             }
         }
         $attributes += ['alt' => ''];
@@ -74,7 +105,7 @@ HTML;
     {
         $string = ' ';
         foreach ($attributes as $attributeName => $attributeValue) {
-            $string .= sprintf('%s="%s" ', $attributeName, $attributeValue);
+            $string .= sprintf('%s="%s" ', $attributeName, htmlentities($attributeValue, ENT_QUOTES, 'UTF-8'));
         }
 
         return $string;

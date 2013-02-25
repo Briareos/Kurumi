@@ -97,7 +97,7 @@ $(function () {
         $('.picture-brick', $wall).wookmark({
             container: $wall,
             offset: 5,
-            itemWidth: 200,
+            itemWidth: 210,
             autoResize: true
         });
     };
