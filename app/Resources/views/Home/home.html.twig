@@ -8,9 +8,9 @@
 
     <div class="main container">
         <div class="row">
-            <div class="span12 picture-wall">
+            <div class="span12 picture-wall" data-column-gutter="5" data-column-width="200">
                 {% for picture in pictures %}
-                    <div class="picture-brick" id="picture-{{ picture.id }}" style="padding: 5px; background: black;">
+                    <div class="picture-brick" id="picture-{{ picture.id }}" style="">
                         <a data-ajax data-modal data-loader="#picture-{{ picture.id }}" data-loader-type="overlay" href="{{ path('picture',{'id':picture.id}) }}">
                             {{ picture(picture, 'wall', {}, {'scale_width':200}) }}
                         </a>

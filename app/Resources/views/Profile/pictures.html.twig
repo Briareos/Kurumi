@@ -13,12 +13,12 @@
             Profile photos
             <span class="badge badge-info">{{ count_profile_pictures(profile) }}</span>
         </legend>
-        <a href="{{ path('picture_add',{'type':'profile','id':profile.id}) }}" data-ajax data-modal class="btn btn-small pull-right"><i class="icon-upload"></i> Upload</a>
+        <a href="{{ path('picture_add',{'type':'profile','id':profile.id}) }}" data-ajax data-modal class="btn btn-small pull-right"><span class="glyphicon glyphicon-upload"></span> Upload</a>
         {% if has_profile_pictures(profile) %}
 
         {% else %}
             <p>
-                <i class="icon-info-sign"></i>
+                <span class="glyphicon glyphicon-info-sign"></span>
                 {% if own_profile %}
                     You do not have any profile photos yet.
                 {% else %}
@@ -32,12 +32,12 @@
             Public photos
             <span class="badge badge-info">{{ count_public_pictures(profile) }}</span>
         </legend>
-        <a href="{{ path('picture_add',{'type':'public','id':profile.id}) }}" data-ajax data-modal class="btn btn-small pull-right"><i class="icon-upload"></i> Upload</a>
+        <a href="{{ path('picture_add',{'type':'public','id':profile.id}) }}" data-ajax data-modal class="btn btn-small pull-right"><span class="glyphicon glyphicon-upload"></span> Upload</a>
         {% if has_public_pictures(profile) %}
 
         {% else %}
             <p>
-                <i class="icon-info-sign"></i>
+                <span class="glyphicon glyphicon-info-sign"></span>
                 {% if own_profile %}
                     You do not have any public photos yet.
                 {% else %}
@@ -51,12 +51,12 @@
             Private photos
             <span class="badge badge-info">{{ count_private_pictures(profile) }}</span>
         </legend>
-        <a href="{{ path('picture_add',{'type':'private','id':profile.id}) }}" data-ajax data-modal class="btn btn-small pull-right"><i class="icon-upload"></i> Upload</a>
+        <a href="{{ path('picture_add',{'type':'private','id':profile.id}) }}" data-ajax data-modal class="btn btn-small pull-right"><span class="glyphicon glyphicon-upload"></span> Upload</a>
         {% if has_private_pictures(profile) %}
 
         {% else %}
             <p>
-                <i class="icon-info-sign"></i>
+                <span class="glyphicon glyphicon-info-sign"></span>
                 {% if own_profile %}
                     You do not have any private photos yet.
                 {% else %}

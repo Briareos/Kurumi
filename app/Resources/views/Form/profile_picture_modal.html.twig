@@ -30,7 +30,7 @@
         <div class="fileupload {{ form.file.vars.value ? 'fileupload-exists' : 'fileupload-new' }}" data-provides="fileupload">
             <div class="input-append">
                 <div class="uneditable-input span3">
-                    <i class="icon-file fileupload-exists"></i>
+                    <span class="glyphicon glyphicon-file fileupload-exists"></span>
                     <span class="fileupload-preview"></span>
                 </div>
             <span class="btn btn-file">
@@ -54,7 +54,7 @@
 
         {% if profile.picture is empty %}
             <div class="alert alert-info">
-                <i class="icon-exclamation-sign"></i> Please note that you - and only you - must be clearly visible. Your age and gender need to match your profile photo. It must <strong>not</strong> contain any nudity.
+                <span class="glyphicon glyphicon-exclamation-sign"></span> Please note that you - and only you - must be clearly visible. Your age and gender need to match your profile photo. It must <strong>not</strong> contain any nudity.
             </div>
         {% endif %}
 

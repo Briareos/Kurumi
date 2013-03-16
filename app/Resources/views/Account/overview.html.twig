@@ -11,12 +11,12 @@
                 {% include '::flash_messages.html.twig' %}
 
 
-                <ul class="link-table unstyled">
+                <ul class="link-table list-unstyled">
                     <li id="link-name" class="link-row" data-pjax-container="account_edit_name">
                         {% block account_edit_name %}
                             <a class="link-element" href="{{ path('account_edit_name') }}" data-ajax data-loader="#link-name" data-loader-type="overlay">
                                 <span class="link-label">Name</span>
-                                <span class="link-edit"><i class="icon-pencil"></i> <span class="link-edit-text">Edit</span></span>
+                                <span class="link-edit"><span class="glyphicon glyphicon-pencil"></span> <span class="link-edit-text">Edit</span></span>
                                 <span class="link-value"><strong>{{ profile.user.name }}</strong></span>
                             </a>
                         {% endblock %}
@@ -25,7 +25,7 @@
                         {% block account_edit_email %}
                             <a class="link-element" href="{{ path('account_edit_email') }}" data-ajax data-loader="#link-email" data-loader-type="overlay">
                                 <span class="link-label">Email</span>
-                                <span class="link-edit"><i class="icon-pencil"></i> <span class="link-edit-text">Edit</span></span>
+                                <span class="link-edit"><span class="glyphicon glyphicon-pencil"></span> <span class="link-edit-text">Edit</span></span>
                                 <span class="link-value"><strong>{{ profile.user.email }}</strong></span>
                             </a>
                         {% endblock %}
@@ -34,10 +34,10 @@
                         {% block account_edit_password %}
                             <a class="link-element" href="{{ path('account_edit_password') }}" data-ajax data-loader="#link-password" data-loader-type="overlay">
                                 <span class="link-label">Password</span>
-                                <span class="link-edit"><i class="icon-pencil"></i> <span class="link-edit-text">Edit</span></span>
+                                <span class="link-edit"><span class="glyphicon glyphicon-pencil"></span> <span class="link-edit-text">Edit</span></span>
                             <span class="link-value">
                                 {% if profile.user.password is empty %}
-                                    <i class="icon-warning-sign"></i>
+                                    <span class="glyphicon glyphicon-warning-sign"></span>
                                     <strong>Warning:</strong> password is not set.
                                 {% else %}
                                     Password is set.
@@ -50,7 +50,7 @@
                         {% block account_edit_locale %}
                             <a class="link-element" href="{{ path('account_edit_locale') }}" data-ajax data-loader="#link-locale" data-loader-type="overlay">
                                 <span class="link-label">Language</span>
-                                <span class="link-edit"><i class="icon-pencil"></i> <span class="link-edit-text">Edit</span></span>
+                                <span class="link-edit"><i class="glyphicon glyphicon-pencil"></i> <span class="link-edit-text">Edit</span></span>
                             <span class="link-value">
                                 {% if profile.user.locale is empty %}
                                     Locale is <strong>not</strong> set.

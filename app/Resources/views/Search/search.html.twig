@@ -43,39 +43,37 @@
                         {% endif %}
                     {% endfor %}
                 </div>
-                <div class="pagination">
-                    <ul>
-                        {% if paginator.previous is defined %}
-                            <li><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':paginator.previous}) }}">≪</a></li>
+                <ul class="pagination">
+                    {% if paginator.previous is defined %}
+                        <li><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':paginator.previous}) }}">≪</a></li>
+                    {% else %}
+                        <li class="disabled"><a>«</a></li>
+                    {% endif %}
+
+                    {% if paginator.first < paginator.firstPageInRange %}
+                        <li><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':paginator.first}) }}">{{ paginator.first }}</a></li>
+                        <li class="disabled"><a>…</a></li>
+                    {% endif %}
+
+                    {% for pageNumber in paginator.pagesInRange %}
+                        {% if pageNumber == paginator.current %}
+                            <li class="active"><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':pageNumber}) }}">{{ pageNumber }}</a></li>
                         {% else %}
-                            <li class="disabled"><a>≪</a></li>
+                            <li><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':pageNumber}) }}">{{ pageNumber }}</a></li>
                         {% endif %}
+                    {% endfor %}
 
-                        {% if paginator.first < paginator.firstPageInRange %}
-                            <li><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':paginator.first}) }}">{{ paginator.first }}</a></li>
-                            <li class="disabled"><a>…</a></li>
-                        {% endif %}
+                    {% if paginator.last > paginator.lastPageInRange %}
+                        {# <li class="disabled"><a>…</a></li> #}
+                        {# <li><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':paginator.last}) }}">{{ paginator.last }}</a></li> #}
+                    {% endif %}
 
-                        {% for pageNumber in paginator.pagesInRange %}
-                            {% if pageNumber == paginator.current %}
-                                <li class="active"><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':pageNumber}) }}">{{ pageNumber }}</a></li>
-                            {% else %}
-                                <li><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':pageNumber}) }}">{{ pageNumber }}</a></li>
-                            {% endif %}
-                        {% endfor %}
-
-                        {% if paginator.last > paginator.lastPageInRange %}
-                            {# <li class="disabled"><a>…</a></li> #}
-                            {# <li><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':paginator.last}) }}">{{ paginator.last }}</a></li> #}
-                        {% endif %}
-
-                        {% if paginator.next is defined %}
-                            <li><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':paginator.next}) }}">≫</a></li>
-                        {% else %}
-                            <li class="disabled"><a>≫</a></li>
-                        {% endif %}
-                    </ul>
-                </div>
+                    {% if paginator.next is defined %}
+                        <li><a data-ajax data-loader="#search_results" data-loader-type="overlay" href="{{ path('search', {'page':paginator.next}) }}">≫</a></li>
+                    {% else %}
+                        <li class="disabled"><a>»</a></li>
+                    {% endif %}
+                </ul>
             {% else %}
                 <p id="search_results">
                     Where is everyone?

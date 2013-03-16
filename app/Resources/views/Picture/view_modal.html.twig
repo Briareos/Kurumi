@@ -1,0 +1,22 @@
+<div class="modal fade in" id="photo-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row-fluid">
+                    <div class="span9 photo-container" style="position: relative">
+                        {{ picture(picture, null, {'class':'photo'}, {'max_width':848, 'max_height':848}) }}
+                        <div class="photo-caption">
+                            <a href="{{ path('profile',{'id':profile.id}) }}" data-ajax data-modal>{{ profile_picture(profile, 'thumbnail') }}</a>
+                            <a href="{{ path('profile',{'id':profile.id}) }}" data-ajax data-modal>{{ profile.user.name }}</a>
+                        </div>
+                    </div>
+                    <div class="span3 photo-comments" data-pjax-container="picture_comments-{{ picture.id }}">
+                        <h3>Comments</h3>
+
+                        {% include ':Form:picture_comment_modal.html.twig' with { 'form':form, 'picture':picture } %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -94,10 +94,12 @@ $(function () {
 
     var attachMosaicGenerator = function ($element) {
         var $wall = $('.picture-wall', $element);
+        var columnWidth = $wall.data('column-width');
+        var columnGutter = $wall.data('column-gutter');
         $('.picture-brick', $wall).wookmark({
             container: $wall,
-            offset: 5,
-            itemWidth: 210,
+            offset: columnGutter,
+            itemWidth: columnWidth,
             autoResize: true
         });
     };
