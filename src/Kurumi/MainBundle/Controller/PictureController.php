@@ -128,8 +128,8 @@ class PictureController extends Controller
         //$comments = $this->getComments($picture, $request->query->getDigits('page', 1), 10, false);
         //$this->paginatorHelper
 
-        $templateFile = ':Picture:picture.html.twig';
-        $modalTemplateFile = ':Picture:picture_modal.html.twig';
+        $templateFile = ':Picture:view.html.twig';
+        $modalTemplateFile = ':Picture:view_modal.html.twig';
         $templateParams = array(
             'profile' => $profile,
             'own_profile' => $ownProfile,

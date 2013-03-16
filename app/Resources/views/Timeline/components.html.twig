@@ -3,7 +3,7 @@
 {% endblock %}
 
 {% block _kurumi_mainbundle_entity_picture_picture_component %}
-    <a data-ajax class="thumbnail" href="{{ path('picture', {'id':value.id}) }}">
+    <a data-ajax data-modal class="thumbnail" href="{{ path('picture', {'id':value.id}) }}">
         {{ picture(value, 'timeline') }}
     </a>
 {% endblock %}

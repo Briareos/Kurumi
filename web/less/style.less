@@ -184,32 +184,25 @@
   margin: 0 0 0 15px;
 }
 
-.nav.nav-tabs.nav-stacked.nav-chevron li {
+.nav.nav-list.nav-chevron li {
   a {
-    .icon-chevron-right {
+    .glyphicon-chevron-right {
       float: right;
-      margin-top: 2px;
+      margin-top: 1px;
       margin-right: -6px;
-      .opacity(25);
+      .opacity(.25);
+      color: #000;
     }
     &:hover {
-      background-color: whiteSmoke;
-
-      .icon-chevron-right {
-        .opacity(50);
+      .glyphicon-chevron-right {
+        .opacity(.50);
       }
     }
   }
   &.active a {
-    background: @link-color;
-    color: white;
-    cursor: pointer;
-
-    .icon-chevron-right {
-      .opacity(75);
-    }
-    &:hover .icon-chevron-right {
-      .opacity(50);
+    .glyphicon-chevron-right {
+      color: #fff;
+      .opacity(1);
     }
   }
 }
@@ -232,10 +225,6 @@
 
     }
   }
-}
-
-#buy-credits-top {
-  margin-top: 10px;
 }
 
 #search_people {
@@ -296,7 +285,9 @@
   .search-form-container {
     padding-top: 5px;
   }
+}
 
+@media (min-width: 768px) {
   .main.container {
     margin-top: 55px;
   }
@@ -372,7 +363,7 @@
       text-decoration: none;
 
       .link-edit {
-        .icon-pencil {
+        .glyphicon-pencil {
           display: inline-block;
         }
         .link-edit-text {
@@ -415,7 +406,7 @@
     float: right;
     text-align: right;
 
-    .icon-pencil {
+    .glyphicon-pencil {
       display: none;
     }
   }
@@ -433,7 +424,7 @@
   }
 
   #link-password {
-    .icon-warning-sign {
+    .glyphicon-warning-sign {
       margin-left: -20px;
     }
   }
