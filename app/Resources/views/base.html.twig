@@ -6,7 +6,6 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('bootstrap/less/bootstrap.less') }}">
-    <link rel="stylesheet" href="{{ asset('bootstrap/less/responsive.less') }}">
     <link rel="stylesheet" href="{{ asset('less/style.less') }}">
     <link rel="stylesheet" href="{{ asset('bundles/briareoschat/css/chat.css') }}">
     <link rel="stylesheet" href="{{ asset('bundles/kurumimain/css/bootstrap-fileupload.css') }}">
@@ -49,10 +48,8 @@
     </script>
 </head>
 <body>
-<div data-pjax-container="body" id="body">
-    <div class="page-container">
+<div data-pjax-container="body" id="body" class="page-container">
         {{ block('body') }}
-    </div>
 </div>
 </body>
 </html>

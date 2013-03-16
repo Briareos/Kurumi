@@ -1,0 +1,5 @@
+<form novalidate id="{{ form.vars.id }}" action="{{ path('picture_add',{'id':profile.id,'type':type}) }}" method="post" {{ form_enctype(form) }} data-ajax data-modal>
+
+    {{ form_widget(form) }}
+
+</form>

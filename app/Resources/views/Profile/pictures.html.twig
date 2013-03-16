@@ -1,5 +1,7 @@
 {% extends ':Profile:layout.html.twig' %}
 
+{% block title %}{{ profile.user.name }} | Pictures{% endblock %}
+
 {% block profile_page %}
 
     {% include '::flash_messages.html.twig' %}
@@ -9,10 +11,10 @@
     <fieldset>
         <legend>
             Profile photos
-            <span class="badge badge-info">{{ profile_info.countProfilePhotos(profile) }}</span>
+            <span class="badge badge-info">{{ count_profile_pictures(profile) }}</span>
         </legend>
-        <a href="{{ path('profile_photo_add',{'type':'profile','id':profile.id}) }}" data-ajax class="btn btn-small pull-right"><i class="icon-upload"></i> Upload</a>
-        {% if profile_info.hasProfilePhotos(profile) %}
+        <a href="{{ path('picture_add',{'type':'profile','id':profile.id}) }}" data-ajax data-modal class="btn btn-small pull-right"><i class="icon-upload"></i> Upload</a>
+        {% if has_profile_pictures(profile) %}
 
         {% else %}
             <p>
@@ -28,10 +30,10 @@
     <fieldset>
         <legend>
             Public photos
-            <span class="badge badge-info">{{ profile_info.countPublicPhotos(profile) }}</span>
+            <span class="badge badge-info">{{ count_public_pictures(profile) }}</span>
         </legend>
-        <a href="{{ path('profile_photo_add',{'type':'public','id':profile.id}) }}" data-ajax class="btn btn-small pull-right"><i class="icon-upload"></i> Upload</a>
-        {% if profile_info.hasPublicPhotos(profile) %}
+        <a href="{{ path('picture_add',{'type':'public','id':profile.id}) }}" data-ajax data-modal class="btn btn-small pull-right"><i class="icon-upload"></i> Upload</a>
+        {% if has_public_pictures(profile) %}
 
         {% else %}
             <p>
@@ -47,10 +49,10 @@
     <fieldset>
         <legend>
             Private photos
-            <span class="badge badge-info">{{ profile_info.countPrivatePhotos(profile) }}</span>
+            <span class="badge badge-info">{{ count_private_pictures(profile) }}</span>
         </legend>
-        <a href="{{ path('profile_photo_add',{'type':'private','id':profile.id}) }}" data-ajax class="btn btn-small pull-right"><i class="icon-upload"></i> Upload</a>
-        {% if profile_info.hasPrivatePhotos(profile) %}
+        <a href="{{ path('picture_add',{'type':'private','id':profile.id}) }}" data-ajax data-modal class="btn btn-small pull-right"><i class="icon-upload"></i> Upload</a>
+        {% if has_private_pictures(profile) %}
 
         {% else %}
             <p>

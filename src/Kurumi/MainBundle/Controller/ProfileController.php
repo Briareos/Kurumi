@@ -5,7 +5,6 @@ namespace Kurumi\MainBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Kurumi\MainBundle\Entity\User;
-use Kurumi\MainBundle\Form\Type\ProfilePhotoFormType;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Kurumi\MainBundle\Entity\Profile;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -93,18 +92,18 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/profile/{id}/photo", name="profile_photos")
+     * @Route("/profile/{id}/pictures", name="profile_pictures")
      * @ParamConverter("profile", class="KurumiMainBundle:Profile")
      * @SecureParam(name="profile", permissions="VIEW")
      */
-    public function photosAction(Profile $profile)
+    public function picturesAction(Profile $profile)
     {
         /** @var $user User */
         $user = $this->getUser();
 
         $ownProfile = $profile->isUser($user);
 
-        if (!$ownProfile && !$this->profileInfo->hasPhotos($profile)) {
+        if (!$ownProfile && !$this->profileInfo->hasPictures($profile)) {
             // This user has no photos and it's not the current user's profile
             $redirect = $this->generateUrl('profile', array('id' => $profile->getId()));
 
@@ -112,7 +111,7 @@ class ProfileController extends Controller
         }
 
         $pjaxContainer = sprintf('profile_page-%s', $profile->getId());
-        $templateFile = ':Profile:photos.html.twig';
+        $templateFile = ':Profile:pictures.html.twig';
         $templateParams = array(
             'profile' => $profile,
             'own_profile' => $ownProfile,
@@ -120,7 +119,7 @@ class ProfileController extends Controller
         );
 
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $url = $this->router->generate('profile_photos', array('id' => $profile->getId()));
+            $url = $this->router->generate('profile_pictures', array('id' => $profile->getId()));
 
             return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, $pjaxContainer);
         } else {

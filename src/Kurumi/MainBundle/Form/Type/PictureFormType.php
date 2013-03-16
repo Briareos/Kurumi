@@ -15,7 +15,7 @@ class PictureFormType extends AbstractType
      */
     function getName()
     {
-        return 'user_picture';
+        return 'picture';
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

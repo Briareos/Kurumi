@@ -5,11 +5,13 @@ namespace Kurumi\MainBundle\EventListener;
 use Kurumi\MainBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Kurumi\MainBundle\Controller\SearchController;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-class AccountInfoListener
+class AccountInfoListener implements EventSubscriberInterface
 {
     private $securityContext;
 
@@ -31,7 +33,7 @@ class AccountInfoListener
         $activeController = $event->getRequest()->attributes->get('_controller');
 
         if ($activeController === 'Kurumi\MainBundle\Controller\ProfileController::viewAction'
-            && in_array($event->getRequest()->attributes->get('id'), array(null, $user->getId()))
+            && in_array($event->getRequest()->attributes->get('id'), [null, $user->getId()])
         ) {
             if ($this->profileIsPartial($user)) {
                 $this->fillAccount($event->getRequest(), 'profile');
@@ -45,7 +47,7 @@ class AccountInfoListener
         }
     }
 
-    protected function profileIsPartial(User $user)
+    public function profileIsPartial(User $user)
     {
         if (null === $user->getProfile()
             || null === $user->getProfile()->getAge()
@@ -79,5 +81,15 @@ class AccountInfoListener
             return null;
         }
         return $user;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function getSubscribedEvents()
+    {
+        return [
+            KernelEvents::REQUEST => [['onKernelRequest', 32]],
+        ];
     }
 }

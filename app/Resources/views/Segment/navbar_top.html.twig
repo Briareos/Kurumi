@@ -10,7 +10,7 @@
                     {% if app.user %}
                         <li class="{{ route == 'play' ? 'active' : '' }}"><a data-ajax data-loader="#body" data-loader-type="overlay" href="{{ path('play') }}"><i class="icon-star"></i> Play</a></li>
                         <li class="{{ route == 'search' ? 'active' : '' }}"><a data-ajax data-loader="#body" data-loader-type="overlay" href="{{ path('search') }}"><i class="icon-globe"></i> Search</a></li>
-                        <li class="{{ app.user and route in ['profile','profile_photos'] and route_params.id == app.user.profile.id ? 'active' : '' }}"><a data-ajax data-loader="#body" data-loader-type="overlay" href="{{ path('profile', {'id':app.user.profile.id}) }}"><i class="icon-home"></i> Profile</a></li>
+                        <li class="{{ app.user and route in ['profile','profile_pictures'] and route_params.id == app.user.profile.id ? 'active' : '' }}"><a data-ajax data-loader="#body" data-loader-type="overlay" href="{{ path('profile', {'id':app.user.profile.id}) }}"><i class="icon-home"></i> Profile</a></li>
                     {% else %}
                         <li class="{{ route == 'register' ? 'active' }}"><a href="{{ path('register') }}">Join us now!</a></li>
                     {% endif %}

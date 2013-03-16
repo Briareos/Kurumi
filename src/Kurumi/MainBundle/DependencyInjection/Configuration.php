@@ -18,7 +18,15 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('kurumi_main');
+        $rootNode = $treeBuilder->root('kurumi');
+
+        $rootNode
+            ->children()
+                ->arrayNode('enabled_locales')
+                    ->prototype('scalar')
+                    ->end()
+                ->end()
+            ->end();
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for

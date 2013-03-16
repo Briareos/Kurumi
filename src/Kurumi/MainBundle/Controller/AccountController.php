@@ -308,12 +308,17 @@ class AccountController extends Controller
         $user = $this->getUser();
         $profile = $user->getProfile();
 
-        $localeForm = $this->createForm(new UserLocaleFormType(), $user);
+        $enabledLocales = $this->container->getParameter('enabled_locales');
+
+        $localeForm = $this->createForm(new UserLocaleFormType($request->getLocale(), $enabledLocales), $user);
 
         if ($request->isMethod('post')) {
             $localeForm->bind($request);
 
             if ($localeForm->isValid()) {
+                if ($user->getLocale() !== null) {
+                    $this->session->set('_locale', $user->getLocale());
+                }
                 $this->em->persist($user);
                 $this->em->flush();
             }

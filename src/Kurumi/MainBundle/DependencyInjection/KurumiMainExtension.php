@@ -23,11 +23,9 @@ class KurumiMainExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('enabled_locales', $config['enabled_locales']);
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
-
-        if (1) {
-            $container->removeDefinition('web_profiler.ajax_debug_toolbar');
-        }
     }
 }

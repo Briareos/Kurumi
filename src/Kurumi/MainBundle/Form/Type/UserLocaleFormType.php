@@ -7,6 +7,16 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class UserLocaleFormType extends AbstractType
 {
+    private $locale;
+
+    private $locales;
+
+    function __construct($locale, array $locales)
+    {
+        $this->locale = $locale;
+        $this->locales = $locales;
+    }
+
 
     /**
      * {@inheritdoc}
@@ -18,7 +28,17 @@ class UserLocaleFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('locale', 'locale', []);
+        $locales = [];
+        foreach ($this->locales as $locale) {
+            $locales[$locale] = \Locale::getDisplayLanguage($locale, $locale);
+        }
+        $builder->add(
+            'locale',
+            'choice',
+            [
+                'choices' => $locales,
+            ]
+        );
     }
 
 

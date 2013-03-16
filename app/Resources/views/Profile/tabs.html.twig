@@ -1,8 +1,8 @@
 {% set route = app.request.attributes.get('_route') %}
 <ul class="nav nav-tabs">
     <li class="{{ route == 'profile' ? 'active' }}"><a href="{{ path('profile', {'id':profile.id}) }}" data-ajax>Profile</a></li>
-    {% if own_profile or profile_info.hasPhotos(profile) %}
-        <li class="{{ route == 'profile_photos' ? 'active' }}"><a href="{{ path('profile_photos', {'id':profile.id}) }}" data-ajax>Photos</a></li>
+    {% if own_profile or has_pictures(profile) %}
+        <li class="{{ route == 'profile_pictures' ? 'active' }}"><a href="{{ path('profile_pictures', {'id':profile.id}) }}" data-ajax>Photos</a></li>
     {% else %}
         <li class="disabled"><a>Photos</a></li>
     {% endif %}

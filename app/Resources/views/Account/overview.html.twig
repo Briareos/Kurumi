@@ -55,7 +55,7 @@
                                 {% if profile.user.locale is empty %}
                                     Locale is <strong>not</strong> set.
                                 {% else %}
-                                    {{ profile.user.locale }}
+                                    {{ locale_name(profile.user.locale, profile.user.locale) }}
                                 {% endif %}
                             </span>
                             </a>

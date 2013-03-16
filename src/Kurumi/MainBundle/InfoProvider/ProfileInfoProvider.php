@@ -46,46 +46,46 @@ class ProfileInfoProvider
         return $searchInfo;
     }
 
-    public function hasPhotos(Profile $profile)
+    public function hasPictures(Profile $profile)
     {
-        return ($this->hasProfilePhotos($profile) || $this->hasPublicPhotos($profile) || $this->hasPrivatePhotos($profile));
+        return ($this->hasProfilePictures($profile) || $this->hasPublicPictures($profile) || $this->hasPrivatePictures($profile));
     }
 
-    public function hasProfilePhotos(Profile $profile)
+    public function hasProfilePictures(Profile $profile)
     {
-        return ($this->countProfilePhotos($profile) > 0);
+        return ($this->countProfilePictures($profile) > 0);
     }
 
-    public function hasPublicPhotos(Profile $profile)
+    public function hasPublicPictures(Profile $profile)
     {
-        return ($this->countPublicPhotos($profile) > 0);
+        return ($this->countPublicPictures($profile) > 0);
     }
 
-    public function hasPrivatePhotos(Profile $profile)
+    public function hasPrivatePictures(Profile $profile)
     {
-        return ($this->countPrivatePhotos($profile) > 0);
+        return ($this->countPrivatePictures($profile) > 0);
     }
 
     public function getCache(Profile $profile) {
         return $this->profileCacheManager->getCache($profile);
     }
 
-    public function countPhotos(Profile $profile)
+    public function countPictures(Profile $profile)
     {
         return $this->getCache($profile)->getPictureCount();
     }
 
-    public function countProfilePhotos(Profile $profile)
+    public function countProfilePictures(Profile $profile)
     {
         return 0;
     }
 
-    public function countPublicPhotos(Profile $profile)
+    public function countPublicPictures(Profile $profile)
     {
         return 0;
     }
 
-    public function countPrivatePhotos(Profile $profile)
+    public function countPrivatePictures(Profile $profile)
     {
         return 0;
     }

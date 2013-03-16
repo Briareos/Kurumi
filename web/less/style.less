@@ -1,17 +1,6 @@
 @import "../bootstrap/less/variables.less";
 @import "../bootstrap/less/mixins.less";
 
-.page-container {
-  overflow: -moz-scrollbars-vertical;
-  overflow-y: scroll;
-}
-
-.inline-block {
-  display: inline-block;
-  *display: inline;
-  *zoom: 1;
-}
-
 #front-page {
   .container-wrapper {
     background: url(../images/background-1.jpg) #1E2638 top left no-repeat;
@@ -45,9 +34,9 @@
       }
 
       .help-inline {
-        background: @black;
+        background: black;
         background: rgba(0, 0, 0, 0.7);
-        .border-radius(3px);
+        border-radius: 3px;
         padding-top: 2px;
         padding-bottom: 2px;
         padding-right: 5px;
@@ -69,8 +58,8 @@
   }
 
   .footer-wrapper {
-    background: @white;
-    border-top: 3px solid @orange;
+    background: white;
+    border-top: 3px solid #f89406;
     padding-top: 14px;
     padding-bottom: 28px;
     color: #777;
@@ -95,14 +84,14 @@
   .register-header,
   .white-text,
   .register-form label {
-    color: @white;
+    color: white;
     text-shadow: rgba(0, 0, 0, .6) 0 1px 1px;
   }
 
   .control-group.error > label,
   .control-group.error .help-block,
   .control-group.error .help-inline {
-    color: @white;
+    color: white;
   }
 
   .icon-male {
@@ -113,11 +102,6 @@
     background: url(../images/icon-female.png);
   }
 
-  #user_register_profile_gender_0 {
-    color: @blueDark !important;
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75) !important;
-  }
-
   .label-female {
     color: #cc64d4 !important;
     text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75) !important;
@@ -126,7 +110,7 @@
   .meet-message {
     font-size: 44px;
     line-height: 48px;
-    color: @white;
+    color: white;
     text-shadow: rgba(0, 0, 0, .5) 0 2px 2px;
     margin-top: 60%;
   }
@@ -186,8 +170,7 @@
     }
 
     .bottom-wrapper {
-      .border-top-left-radius(4px);
-      .border-top-right-radius(4px);
+      .border-top-radius(4px);
     }
 
     .footer-wrapper {
@@ -218,8 +201,8 @@
     }
   }
   &.active a {
-    background: @linkColor;
-    color: @white;
+    background: @link-color;
+    color: white;
     cursor: pointer;
 
     .icon-chevron-right {
@@ -260,7 +243,7 @@
 }
 
 .badge-empty {
-  font-size: @baseFontSize * .846;
+  font-size: @font-size-base * .846;
   line-height: 14px;
   padding: 1px 9px 2px;
   vertical-align: baseline;
@@ -284,7 +267,7 @@
   background: white url(../images/bevel-bg.png) repeat-x 0 100%;
   .background-clip(padding);
   background-clip: padding-box;
-  .border-radius(5px);
+  border-radius: 5px;
 }
 
 .bevel:before {
@@ -335,7 +318,6 @@
 
 .timeline-action .thumbnail {
   display: inline-block;
-  .ie7-inline-block();
 }
 
 #photo-modal.modal {
@@ -343,10 +325,25 @@
 
 .photo-container {
   background: black;
+  position: relative;
 
   .photo {
     margin: 0 auto;
     display: block;
+  }
+
+  .photo-caption {
+    color: white;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .7);
+    padding: 10px;
+
+    a {
+      color: white;
+    }
   }
 }
 
@@ -377,7 +374,6 @@
       .link-edit {
         .icon-pencil {
           display: inline-block;
-          .ie7-inline-block();
         }
         .link-edit-text {
           text-decoration: underline;
@@ -396,7 +392,6 @@
 
   .link-label, .link-value, .link-edit {
     display: inline-block;
-    .ie7-inline-block();
   }
 
   .link-value {

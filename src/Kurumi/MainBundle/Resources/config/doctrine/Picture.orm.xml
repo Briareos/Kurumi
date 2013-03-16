@@ -21,7 +21,7 @@
                 <order-by-field name="createdAt"/>
             </order-by>
         </one-to-many>
-        <many-to-one target-entity="Kurumi\MainBundle\Entity\Profile" field="profile" inversed-by="photos">
+        <many-to-one target-entity="Kurumi\MainBundle\Entity\Profile" field="profile" inversed-by="pictures">
             <join-column name="profile_id" nullable="false"/>
         </many-to-one>
     </entity>

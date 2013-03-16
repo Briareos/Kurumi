@@ -126,19 +126,6 @@ swiftmailer:
     password:  %mailer_password%
     spool:     { type: memory }
 
-lunetics_locale:
-    allowed_locales:
-        - en_US
-        - sr_Cyrl
-    guessing_order:
-        - router
-        - cookie
-        - browser
-    cookie:
-        set_on_detection: true
-    switcher:
-        template: ::locale_switcher.html.twig
-
 sonata_block:
     default_contexts: [cms]
     blocks:
@@ -368,3 +355,8 @@ spy_timeline:
             filter_unresolved:  true
             locators:
                 - spy_timeline.filter.data_hydrator.locator.doctrine_orm
+
+kurumi_main:
+    enabled_locales:
+      - en_US
+      - sr_Cyrl

@@ -1,12 +1,16 @@
 {% spaceless %}
     <div class="btn-group">
-        <a class="btn dropdown-toggle" data-toggle="dropdown">
-            {{ locales[current_locale].locale_target_language }}
+        <a href="#" class="btn dropdown-toggle" data-toggle="dropdown">
+            {{ locale_name(app.request.locale, app.request.locale) }}
             <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-            {% for locale in locales %}
-                <li class="{{ locale.locale == current_locale ? 'active' : '' }}"><a href="{{ locale.link }}" data-ajax title="{{ locale.locale_current_language }}">{{ locale.locale_target_language }}</a></li>
+            {% for locale in enabled_locales %}
+                <li class="{{ locale == app.request.locale ? 'active' : '' }}">
+                    <a href="{{ path('switch_locale', {'locale':locale, 'token':csrf_token('switch_locale')}) }}" data-ajax title="{{ locale_name(locale, app.request.locale) }}">
+                        {{ locale_name(locale, locale) }}
+                    </a>
+                </li>
             {% endfor %}
         </ul>
     </div>
