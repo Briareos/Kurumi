@@ -20,12 +20,12 @@ class UserAdmin extends Admin
      */
     protected $userManager;
 
-    protected $formOptions = array(
-        'validation_groups' => array('admin'),
-    );
+    protected $formOptions = [
+        'validation_groups' => ['admin'],
+    ];
 
     /**
-     * @param UserManager
+     * @param UserManager $userManager
      */
     public function setUserManager(UserManager $userManager)
     {
@@ -35,97 +35,97 @@ class UserAdmin extends Admin
     public function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-          ->add('name')
-          ->add('email')
-          ->add('timezone')
-          ->add('created');
+            ->add('name')
+            ->add('email')
+            ->add('timezone')
+            ->add('created');
     }
 
     public function configureFormFields(FormMapper $formMapper)
     {
         $user = $this->getSubject();
         $formMapper
-          ->with("General")
-          ->add(
-            'email',
-            null,
-            array(
-                'attr' => array(
-                    'autocomplete' => 'off',
-                ),
+            ->with("General")
+            ->add(
+                'email',
+                null,
+                [
+                    'attr' => [
+                        'autocomplete' => 'off',
+                    ],
+                ]
             )
-        )
-          ->add(
-            'plainPassword',
-            'password',
-            array(
-                'attr' => array(
-                    'autocomplete' => 'off',
-                ),
-                'label' => "Password",
-                'required' => false,
-            )
-        );
+            ->add(
+                'plainPassword',
+                'password',
+                [
+                    'attr' => [
+                        'autocomplete' => 'off',
+                    ],
+                    'label' => "Password",
+                    'required' => false,
+                ]
+            );
 
         if ($user->getId()) {
             $formMapper->add(
                 'passwordClear',
                 'checkbox',
-                array(
+                [
                     'required' => false,
-                )
+                ]
             );
         }
 
         $formMapper
-          ->add('name')
-          ->add(
-            'timezone',
-            'timezone',
-            array(
-                'required' => false,
-                'empty_value' => '-',
+            ->add('name')
+            ->add(
+                'timezone',
+                'timezone',
+                [
+                    'required' => false,
+                    'empty_value' => '-',
+                ]
             )
-        )
-          ->end();
+            ->end();
     }
 
     public function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-          ->addIdentifier('email')
-          ->add('name')
-          ->add(
-            'profile',
-            null,
-            array(
-                'template' => ':UserCRUD:list_profile.html.twig',
+            ->addIdentifier('email')
+            ->add('name')
+            ->add(
+                'profile',
+                null,
+                [
+                    'template' => ':UserCRUD:list_profile.html.twig',
+                ]
             )
-        )
-          ->add(
-            'oauth',
-            null,
-            array(
-                'template' => ':UserCRUD:list_oauth.html.twig'
+            ->add(
+                'oauth',
+                null,
+                [
+                    'template' => ':UserCRUD:list_oauth.html.twig'
+                ]
             )
-        )
-          ->add(
-            '_actions',
-            'actions',
-            array(
-                'actions' => array(
-                    'view' => array(),
-                    'edit' => array(),
-                )
-            )
-        );
+            ->add(
+                '_actions',
+                'actions',
+                [
+                    'actions' => [
+                        'view' => [],
+                        'edit' => [],
+                    ]
+                ]
+            );
     }
 
     public function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-          ->add('name')
-          ->add('email');
+            ->add('name')
+            ->add('email');
     }
 
     public function toString($object)

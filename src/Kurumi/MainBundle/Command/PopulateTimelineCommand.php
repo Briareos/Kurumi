@@ -20,15 +20,15 @@ class PopulateTimelineCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-          ->setName('kurumi:profile:populate-timeline')
-          ->setDescription('Populate profiles with their timelines')
-          ->setHelp(
-            <<<EOT
-The <info>kurumi:profile:populate-timeline</info> command tries to populate missing timeline entries for profiles:
+            ->setName('kurumi:profile:populate-timeline')
+            ->setDescription('Populate profiles with their timelines')
+            ->setHelp(
+                <<<EOT
+    The <info>kurumi:profile:populate-timeline</info> command tries to populate missing timeline entries for profiles:
 
   <info>php app/console kurumi:profile:populate-timeline</info>
 EOT
-        );
+            );
     }
 
     /**
@@ -42,7 +42,7 @@ EOT
         foreach ($profile->getPictures() as $picture) {
             $pictureSubject = $actionManager->findOrCreateComponent('Kurumi\MainBundle\Entity\Picture', $picture->getId());
             /** @var $action \Spy\Timeline\Model\ActionInterface */
-            $action = $actionManager->create($subject, 'picture_add', array('picture' => $pictureSubject));
+            $action = $actionManager->create($subject, 'picture_add', ['picture' => $pictureSubject]);
             $action->setCreatedAt($picture->getCreatedAt());
             $actionManager->updateAction($action);
         }
@@ -75,8 +75,8 @@ EOT
 
         /** @var $profile \Kurumi\MainBundle\Entity\Profile|null */
         $profile = $em->createQuery('Select p From KurumiMainBundle:Profile p Inner Join p.pictures pics Where p.gender = 2 Order By p.updatedAt Asc')
-          ->setMaxResults(1)
-          ->getOneOrNullResult();
+            ->setMaxResults(1)
+            ->getOneOrNullResult();
 
         return $profile;
     }

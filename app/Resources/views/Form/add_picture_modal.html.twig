@@ -1,6 +1,14 @@
 <form novalidate id="{{ form.vars.id }}" action="{{ path('picture_add',{'id':profile.id,'type':type}) }}" method="post" {{ form_enctype(form) }} data-ajax data-modal>
+    <div class="modal-header">
+        <h4>Upload a {{ type }} picture</h4>
+    </div>
+    <div class="modal-body">
+        {{ form_row(form.file) }}
 
-    {{ form_widget(form) }}
-
-    <button class="btn btn-primary" type="submit">Submit</button>
+        {{ form_rest(form) }}
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="submit">Submit</button>
+        <a class="btn" data-dismiss="modal" href="#">Close</a>
+    </div>
 </form>

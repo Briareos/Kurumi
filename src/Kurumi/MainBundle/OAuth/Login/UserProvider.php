@@ -18,7 +18,7 @@ class UserProvider implements OAuthAwareUserProviderInterface
     /**
      * @var AbstractUserProvider[]
      */
-    protected $providers = array();
+    protected $providers = [];
 
     protected $em;
 

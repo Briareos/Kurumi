@@ -22,16 +22,11 @@ class RegisterFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('email', 'email', array(
-        ));
-        $builder->add('plainPassword', 'password', array(
-        ));
-        $builder->add('name', 'text', array(
-        ));
-        $builder->add('profile', new RegisterProfileType(), array(
-        ));
-        $builder->add('timezone', 'detect_timezone', array(
-        ));
+        $builder->add('email', 'email');
+        $builder->add('plainPassword', 'password');
+        $builder->add('name', 'text');
+        $builder->add('profile', new RegisterProfileType());
+        $builder->add('timezone', 'detect_timezone');
     }
 
     public function finishView(FormView $view, FormInterface $form, array $options)
@@ -54,10 +49,10 @@ class RegisterFormType extends AbstractType
 
     public function  setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Kurumi\MainBundle\Entity\User',
-            'validation_groups' => array('registration'),
-        ));
+            'validation_groups' => ['registration'],
+        ]);
     }
 
 

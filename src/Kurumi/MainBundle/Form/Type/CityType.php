@@ -40,9 +40,9 @@ class CityType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-            array(
-                'validation_groups' => array('registration'),
-            )
+            [
+                'validation_groups' => ['registration'],
+            ]
         );
     }
 

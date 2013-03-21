@@ -15,15 +15,15 @@ class PaymentController extends Controller
      */
     public function paymentAction()
     {
-        $availablePayments = array(
+        $availablePayments = [
             'fortumo',
             'paypal',
-        );
+        ];
         $defaultPayment = 'fortumo';
 
         if ($this->getRequest()->isXmlHttpRequest()) {
             $commands = new Ajax\CommandContainer();
-            $commands->add(new Ajax\Command\Modal($this->renderView(':Payment:payment.html.twig', array())));
+            $commands->add(new Ajax\Command\Modal($this->renderView(':Payment:payment.html.twig', [])));
             return new Ajax\Response($commands);
         }
     }

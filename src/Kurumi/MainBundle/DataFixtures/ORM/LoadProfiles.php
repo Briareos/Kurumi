@@ -23,7 +23,7 @@ class LoadProfiles extends AbstractFixture implements OrderedFixtureInterface, C
     /**
      * Load data fixtures with the passed EntityManager
      *
-     * @param Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
@@ -33,7 +33,7 @@ class LoadProfiles extends AbstractFixture implements OrderedFixtureInterface, C
         $adminProfile->setUser($admin);
         $manager->persist($adminProfile);
 
-        $cities = array();
+        $cities = [];
         $c = 1;
         while ($this->hasReference(sprintf('city_%s', $c))) {
             $cities[] = $this->getReference(sprintf('city_%s', $c));

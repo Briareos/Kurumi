@@ -25,10 +25,10 @@ class EditUserFormType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'class' => 'KurumiMainBundle:User',
-            'validation_group' => array('register'),
-        ));
+            'validation_group' => ['register'],
+        ]);
     }
 
 

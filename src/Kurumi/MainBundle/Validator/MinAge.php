@@ -16,6 +16,6 @@ class MinAge extends Constraint
      */
     public function getRequiredOptions()
     {
-        return array('limit');
+        return ['limit'];
     }
 }

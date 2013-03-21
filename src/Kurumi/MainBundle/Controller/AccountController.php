@@ -72,9 +72,9 @@ class AccountController extends Controller
         $profile = $user->getProfile();
 
         $templateFile = ':Account:overview.html.twig';
-        $templateParams = array(
+        $templateParams = [
             'profile' => $profile,
-        );
+        ];
 
         if ($request->isXmlHttpRequest()) {
             $url = $this->router->generate('account_overview');
@@ -111,10 +111,10 @@ class AccountController extends Controller
 
         $pageTemplate = ':Account:edit_name.html.twig';
         $formTemplate = ':Form:user_name.html.twig';
-        $templateParams = array(
+        $templateParams = [
             'profile' => $profile,
             'form' => $userNameForm->createView(),
-        );
+        ];
         if ($request->isXmlHttpRequest()) {
             if ($userNameForm->isBound()) {
                 return $this->ajaxHelper->renderAjaxForm($formTemplate, $templateParams);
@@ -153,10 +153,10 @@ class AccountController extends Controller
 
         $pageTemplate = ':Account:edit_email.html.twig';
         $formTemplate = ':Form:user_email.html.twig';
-        $templateParams = array(
+        $templateParams = [
             'profile' => $profile,
             'form' => $editEmailForm->createView(),
-        );
+        ];
 
         if ($request->isXmlHttpRequest()) {
             if ($editEmailForm->isBound()) {
@@ -195,10 +195,10 @@ class AccountController extends Controller
         }
 
         $templateFile = ':Account:edit_password.html.twig';
-        $templateParams = array(
+        $templateParams = [
             'profile' => $profile,
             'form' => $editPasswordForm->createView(),
-        );
+        ];
 
         if ($request->isXmlHttpRequest()) {
             if ($editPasswordForm->isBound()) {
@@ -256,10 +256,10 @@ class AccountController extends Controller
         $modalTemplateFile = ':Account:edit_picture_modal.html.twig';
         $formTemplateFile = ':Form:profile_picture.html.twig';
         $modalFormTemplateFile = ':Form:profile_picture_modal.html.twig';
-        $templateParams = array(
+        $templateParams = [
             'profile' => $profile,
             'form' => $profilePictureForm->createView(),
-        );
+        ];
 
         if ($request->isXmlHttpRequest()) {
             if ($this->ajaxHelper->isModal()) {
@@ -407,7 +407,7 @@ class AccountController extends Controller
         }
 
         $activeRoute = $route;
-        if ($activeRoute === 'profile' && in_array($id, array(null, $user->getId()))) {
+        if ($activeRoute === 'profile' && in_array($id, [null, $user->getId()])) {
             $route = 'front';
             $activeRoute = 'home';
         }
@@ -433,12 +433,12 @@ class AccountController extends Controller
         }
 
         $templateFile = ':Account:fill_profile_page.html.twig';
-        $templateParams = array(
+        $templateParams = [
             'user' => $user,
             'form' => $createProfileForm->createView(),
             'active' => $activeRoute,
             'route' => $route,
-        );
+        ];
 
         if ($request->isXmlHttpRequest()) {
             if ($createProfileForm->isBound()) {

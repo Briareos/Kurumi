@@ -15,10 +15,10 @@ class UserRepository extends EntityRepository implements ChatSubjectRepositoryIn
     public function getPresentSubjects(ChatSubjectInterface $subject)
     {
         $presences = $this->getEntityManager()
-          ->createQuery('Select p From BriareosNodejsBundle:NodejsPresence p Inner Join p.subject s Where p.subject <> :subject And p.subject Is Not Null Group By p.subject Order By p.seenAt Desc')
-          ->setParameter('subject', $subject)
-          ->execute();
-        $subjects = array();
+            ->createQuery('Select p From BriareosNodejsBundle:NodejsPresence p Inner Join p.subject s Where p.subject <> :subject And p.subject Is Not Null Group By p.subject Order By p.seenAt Desc')
+            ->setParameter('subject', $subject)
+            ->execute();
+        $subjects = [];
         /** @var $presence \Briareos\NodejsBundle\Entity\NodejsPresence */
         foreach ($presences as $presence) {
             $subjects[] = $presence->getSubject();
@@ -38,14 +38,14 @@ class UserRepository extends EntityRepository implements ChatSubjectRepositoryIn
                 WHERE p.id <> :current_profile
                 ORDER BY distance ASC
             ',
-            array(
+            [
                 ':current_profile' => $profile->getId(),
                 ':unit' => 6371,
                 ':latitude' => $city->getLatitude(),
                 ':longitude' => $city->getLongitude(),
-            )
+            ]
         )
-          ->fetchAll(\PDO::FETCH_CLASS);
+            ->fetchAll(\PDO::FETCH_CLASS);
 
         return $result;
     }

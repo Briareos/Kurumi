@@ -65,8 +65,8 @@ class AjaxWebDebugToolbarListener extends WebDebugToolbarListener
         }
 
         if (!$response instanceof Ajax\Response
-          || !$response->headers->has('X-Debug-Token')
-          || ($response->isRedirect() && !$this->interceptRedirects)
+            || !$response->headers->has('X-Debug-Token')
+            || ($response->isRedirect() && !$this->interceptRedirects)
         ) {
             return;
         }
@@ -77,19 +77,19 @@ class AjaxWebDebugToolbarListener extends WebDebugToolbarListener
 
         $url = null;
         try {
-            $url = $this->router->generate('_profiler', array('token' => $token));
+            $url = $this->router->generate('_profiler', ['token' => $token]);
         } catch (\Exception $e) {
             // the profiler is not enabled
         }
 
         $toolbarHtml = $toolbar = $this->templating->render(
             'WebProfilerBundle:Profiler:toolbar.html.twig',
-            array(
+            [
                 'position' => 'normal', // This is to not include any CSS
                 'profile' => $profile,
                 'templates' => $this->getTemplateManager()->getTemplates($profile),
-                'profiler_url' => $url
-            )
+                'profiler_url' => $url,
+            ]
         );
 
         /** @var $response Ajax\Response */

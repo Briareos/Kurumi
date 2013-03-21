@@ -28,9 +28,9 @@ class EditProfileFormType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'class' => 'KurumiMainBundle:Profile',
-        ));
+        ]);
     }
 
 

@@ -130,12 +130,12 @@ class PictureController extends Controller
 
         $templateFile = ':Picture:view.html.twig';
         $modalTemplateFile = ':Picture:view_modal.html.twig';
-        $templateParams = array(
+        $templateParams = [
             'profile' => $profile,
             'own_profile' => $ownProfile,
             'picture' => $picture,
             'form' => $form->createView(),
-        );
+        ];
 
         if ($request->isXmlHttpRequest()) {
             if ($this->ajaxHelper->isModal()) {
@@ -190,12 +190,12 @@ class PictureController extends Controller
         $modalTemplateFile = ':Picture:add_modal.html.twig';
         $formTemplateFile = ':Form:add_picture.html.twig';
         $modalFormTemplateFile = ':Form:add_picture_modal.html.twig';
-        $templateParams = array(
+        $templateParams = [
             'profile' => $profile,
             'own_profile' => $ownProfile,
             'type' => $type,
             'form' => $form->createView(),
-        );
+        ];
 
         // Handle ajax.
         if ($this->getRequest()->isXmlHttpRequest()) {

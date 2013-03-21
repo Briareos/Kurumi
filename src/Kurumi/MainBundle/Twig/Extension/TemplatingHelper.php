@@ -31,7 +31,6 @@ class TemplatingHelper extends \Twig_Extension
 
     public function getGlobals()
     {
-        return array(
-        );
+        return [];
     }
 }

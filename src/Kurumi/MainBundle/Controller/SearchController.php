@@ -55,7 +55,7 @@ class SearchController extends Controller
 
         $qb = $this->em->createQueryBuilder();
         // Holds parameters that are required only for the actual select query and can be omitted in the count query.
-        $parameters = array();
+        $parameters = [];
 
         $qb->from('KurumiMainBundle:User', 'u');
         $qb->addSelect('u As user');
@@ -150,22 +150,22 @@ class SearchController extends Controller
         $qb->setParameters($parameters);
 
         $results = $qb
-          ->setFirstResult(($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage())
-          ->setMaxResults($paginator->getItemCountPerPage())
-          ->getQuery()
-          ->execute();
+            ->setFirstResult(($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage())
+            ->setMaxResults($paginator->getItemCountPerPage())
+            ->getQuery()
+            ->execute();
 
         $templateFile = ':Search:search.html.twig';
-        $templateParams = array(
+        $templateParams = [
             'user' => $user,
             'results' => $results,
             'paginator' => $paginatorView,
             'total_results' => $totalResults,
             'form' => $searchPeopleForm->createView(),
-        );
+        ];
 
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $pageParameters = array();
+            $pageParameters = [];
             if ($paginator->getCurrentPageNumber() !== 1) {
                 $pageParameters['page'] = $paginator->getCurrentPageNumber();
             }
@@ -202,10 +202,10 @@ class SearchController extends Controller
         if ($searchPeopleForm->isValid()) {
             return $this->redirect($this->router->generate('search', $this->ajaxHelper->getPjaxParameters()));
         } else {
-            $templateParams = array(
+            $templateParams = [
                 'user' => $user,
                 'form' => $searchPeopleForm->createView(),
-            );
+            ];
 
             return $this->ajaxHelper->renderAjaxForm(':Form:search_people.html.twig', $templateParams);
         }

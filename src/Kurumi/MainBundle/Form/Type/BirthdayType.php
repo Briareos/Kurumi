@@ -12,13 +12,13 @@ class BirthdayType extends BaseBirthdayType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'empty_value' => array(
+        $resolver->setDefaults([
+            'empty_value' => [
                 'year' => 'Year',
                 'month' => 'Month',
                 'day' => 'Day'
-            ),
+            ],
             'years' => range(date('Y'), date('Y') - 100),
-        ));
+        ]);
     }
 }

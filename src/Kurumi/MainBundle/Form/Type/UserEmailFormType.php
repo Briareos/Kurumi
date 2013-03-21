@@ -20,20 +20,20 @@ class UserEmailFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('currentPassword', 'password', array(
-        ));
-        $builder->add('email', 'repeated', array(
+        $builder->add('currentPassword', 'password', [
+        ]);
+        $builder->add('email', 'repeated', [
             'type' => 'email',
             'data' => '',
-        ));
+        ]);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'class' => 'KurumiMainBundle:User',
             'validation_groups' => 'edit_email',
-        ));
+        ]);
     }
 
 

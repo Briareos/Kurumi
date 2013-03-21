@@ -31,9 +31,9 @@ class OAuthController extends Controller
 
         return $this->render(
             ':OAuth:failure.html.twig',
-            array(
+            [
                 'error' => $error,
-            )
+            ]
         );
     }
 

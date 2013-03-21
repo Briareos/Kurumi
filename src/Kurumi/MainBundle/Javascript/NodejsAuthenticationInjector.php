@@ -31,9 +31,9 @@ class NodejsAuthenticationInjector implements JavascriptSettingsInjectorInterfac
             return;
         }
         $nodejsAuthToken = $this->getNodejsAuthToken($event->getRequest());
-        $settingsContainer->addJavascriptSettings(new JavascriptSettings('nodejs_authenticate', array(
+        $settingsContainer->addJavascriptSettings(new JavascriptSettings('nodejs_authenticate', [
             'nodejs_auth_token' => $nodejsAuthToken,
-        )));
+        ]));
     }
 
     public function getNodejsAuthToken(Request $request, $authenticate = true)

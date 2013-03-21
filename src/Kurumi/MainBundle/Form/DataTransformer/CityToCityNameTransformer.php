@@ -62,10 +62,10 @@ class CityToCityNameTransformer implements DataTransformerInterface
         }
 
         if ($existingCity = $this->repository->findOneBy(
-            array(
+            [
                 'latitude' => $city->getLatitude(),
                 'longitude' => $city->getLongitude(),
-            )
+            ]
         )
         ) {
             return $existingCity;

@@ -94,12 +94,12 @@ class FrontController extends Controller
         }
 
         $templateFile = ':Front:front.html.twig';
-        $templateParams = array(
+        $templateParams = [
             'login_error' => $loginError,
             'last_username' => $lastUsername,
             'form_register' => $registerForm->createView(),
             'detected_city' => $city,
-        );
+        ];
 
         if ($request->isXmlHttpRequest()) {
             if ($loginError) {

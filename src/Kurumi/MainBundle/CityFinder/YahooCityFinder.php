@@ -18,11 +18,11 @@ class YahooCityFinder implements CityFinderInterface
     {
         $callback = sprintf('http://where.yahooapis.com/geocode?flags=JG&appid=%s&location=%s', urlencode($this->apiKey), urlencode($name));
         $ch = curl_init($callback);
-        curl_setopt_array($ch, array(
+        curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CONNECTTIMEOUT => 2,
             CURLOPT_TIMEOUT => 2,
-        ));
+        ]);
         $response = curl_exec($ch);
         $location = json_decode($response, true);
         if (!isset($location['ResultSet']['Results'][0])) {
@@ -41,7 +41,7 @@ class YahooCityFinder implements CityFinderInterface
     public function find(City $city, $name)
     {
         $result = $this->lookup($name);
-        if($result === null) {
+        if ($result === null) {
             throw new CityNotFoundException();
         }
 

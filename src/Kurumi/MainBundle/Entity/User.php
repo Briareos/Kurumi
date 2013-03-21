@@ -151,7 +151,7 @@ class User implements UserInterface, EquatableInterface, \Serializable, ChatSubj
      */
     public function getRoles()
     {
-        return array('ROLE_IDDQD');
+        return ['ROLE_IDDQD'];
     }
 
     public function isEqualTo(UserInterface $user)

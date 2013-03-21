@@ -31,9 +31,9 @@ class PlayController extends Controller
     {
         $user = $this->getUser();
         $templateFile = ':Play:play.html.twig';
-        $templateParams = array(
+        $templateParams = [
             'user' => $user,
-        );
+        ];
         if ($this->getRequest()->isXmlHttpRequest()) {
             $commands = new Ajax\CommandContainer();
             $commands->add(new Ajax\Command\Page($this->ajax->renderBlock($templateFile, 'title', $templateParams), $this->ajax->renderBlock($templateFile, 'body', $templateParams), $this->router->generate('play')));

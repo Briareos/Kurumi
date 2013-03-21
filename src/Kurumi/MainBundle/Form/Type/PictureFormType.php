@@ -21,7 +21,7 @@ class PictureFormType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-            array()
+            []
         );
     }
 
@@ -35,9 +35,9 @@ class PictureFormType extends AbstractType
         $builder->add(
             'file',
             'file',
-            array(
+            [
                 'by_reference' => false,
-            )
+            ]
         );
     }
 }

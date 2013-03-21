@@ -16,7 +16,7 @@ class MinAgeValidator extends ConstraintValidator
         $today = new \DateTime('now');
         $age = $today->diff($value);
         if ($age->y < $constraint->limit) {
-            $this->context->addViolation($constraint->message, array('{{ limit }}' => $constraint->limit));
+            $this->context->addViolation($constraint->message, ['{{ limit }}' => $constraint->limit]);
         }
     }
 

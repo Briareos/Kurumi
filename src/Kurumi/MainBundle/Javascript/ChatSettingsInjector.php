@@ -40,20 +40,20 @@ class ChatSettingsInjector implements JavascriptSettingsInjectorInterface
 
     public function getSettings()
     {
-        $compiledTemplates = array();
+        $compiledTemplates = [];
         foreach ($this->templates as $templateKey => $templateName) {
             $compiledTemplates[$templateKey] = $this->templating->render($templateName);
         }
 
-        $compiledRoutes = array();
+        $compiledRoutes = [];
         foreach ($this->routes as $routeKey => $routeName) {
             $compiledRoutes[$routeKey] = $this->router->generate($routeName);
         }
 
-        return array(
+        return [
             'container' => $this->defaultContainer,
             'tpl' => $compiledTemplates,
             'url' => $compiledRoutes,
-        );
+        ];
     }
 }

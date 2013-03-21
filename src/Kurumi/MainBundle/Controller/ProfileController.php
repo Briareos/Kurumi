@@ -73,14 +73,14 @@ class ProfileController extends Controller
 
         $pjaxContainer = sprintf('profile_page-%s', $profile->getId());
         $templateFile = ':Profile:view.html.twig';
-        $templateParams = array(
+        $templateParams = [
             'profile' => $profile,
             'own_profile' => $ownProfile,
             'pjax_container' => $pjaxContainer,
             'timeline' => $timeline,
-        );
+        ];
 
-        $url = $this->router->generate('profile', array('id' => $profile->getId()));
+        $url = $this->router->generate('profile', ['id' => $profile->getId()]);
 
         if ($this->getRequest()->isXmlHttpRequest()) {
             $ajaxResponse = $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, $pjaxContainer);
@@ -105,21 +105,21 @@ class ProfileController extends Controller
 
         if (!$ownProfile && !$this->profileInfo->hasPictures($profile)) {
             // This user has no photos and it's not the current user's profile
-            $redirect = $this->generateUrl('profile', array('id' => $profile->getId()));
+            $redirect = $this->generateUrl('profile', ['id' => $profile->getId()]);
 
             return $this->redirect($redirect);
         }
 
         $pjaxContainer = sprintf('profile_page-%s', $profile->getId());
         $templateFile = ':Profile:pictures.html.twig';
-        $templateParams = array(
+        $templateParams = [
             'profile' => $profile,
             'own_profile' => $ownProfile,
             'pjax_container' => $pjaxContainer,
-        );
+        ];
 
         if ($this->getRequest()->isXmlHttpRequest()) {
-            $url = $this->router->generate('profile_pictures', array('id' => $profile->getId()));
+            $url = $this->router->generate('profile_pictures', ['id' => $profile->getId()]);
 
             return $this->ajaxHelper->renderPjaxBlock($templateFile, $templateParams, $url, $pjaxContainer);
         } else {

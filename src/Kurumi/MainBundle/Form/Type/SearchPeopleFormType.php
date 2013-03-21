@@ -22,25 +22,24 @@ class SearchPeopleFormType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('lookingFor', 'choice', array(
-            'choices' => array(
+        $builder->add('lookingFor', 'choice', [
+            'choices' => [
                 1 => 'Men',
                 2 => 'Women',
                 3 => 'Both',
-            ),
-        ));
-        $builder->add('city', 'city', array(
-        ));
-        $builder->add('lookingAgedFrom', 'choice', array(
+            ],
+        ]);
+        $builder->add('city', 'city');
+        $builder->add('lookingAgedFrom', 'choice', [
             'empty_value' => '-',
             'choices' => array_combine(range(16, 99), range(16, 99)),
             'required' => false,
-        ));
-        $builder->add('lookingAgedTo', 'choice', array(
+        ]);
+        $builder->add('lookingAgedTo', 'choice', [
             'empty_value' => '-',
             'choices' => array_combine(range(16, 99), range(16, 99)),
             'required' => false,
-        ));
+        ]);
     }
 
     public function finishView(FormView $view, FormInterface $form, array $options)
@@ -55,9 +54,9 @@ class SearchPeopleFormType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'class' => 'KurumiMainBundle:Profile',
             'validation_groups' => 'search',
-        ));
+        ]);
     }
 }

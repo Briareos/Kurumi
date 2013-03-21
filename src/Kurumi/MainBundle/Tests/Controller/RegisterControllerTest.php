@@ -35,10 +35,10 @@ class RegisterControllerTest extends WebTestCase
         $crawler = $this->getFrontPageCrawler();
         $client = static::createClient();
         $form = $crawler->filter('form#user_login')->form(
-            array(
+            [
                 'email' => 'invalid email',
                 'password' => '',
-            )
+            ]
         );
         $response = $client->submit($form);
         $this->assertTrue($response->filter('p:contains("Bad credentials")')->count() > 0);

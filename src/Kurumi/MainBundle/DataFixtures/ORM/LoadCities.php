@@ -2,6 +2,7 @@
 
 namespace Kurumi\MainBundle\DataFixtures\ORM;
 
+use Kurumi\MainBundle\CityFinder\CityFinderInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -17,7 +18,7 @@ class LoadCities extends AbstractFixture implements OrderedFixtureInterface, Con
      */
     private $container;
 
-    private $cities = array(
+    private $cities = [
         "TOKYO, Japan",
         "JAKARTA, Indonesia",
         "New York (NY), United States",
@@ -1019,20 +1020,20 @@ class LoadCities extends AbstractFixture implements OrderedFixtureInterface, Con
         "Kemerovo, Russia",
         "Duisburg, Germany",
         "Rasht, Iran",
-    );
+    ];
 
     /**
      * Load data fixtures with the passed EntityManager
      *
-     * @param Doctrine\Common\Persistence\ObjectManager $manager
+     * @param \Doctrine\Common\Persistence\ObjectManager $manager
      */
     public function load(ObjectManager $manager)
     {
-        /** @var $cityFinder \Kurumi\MainBundle\City\CityFinderInterface */
+        /** @var $cityFinder CityFinderInterface */
         $cityFinder = $this->container->get('city_finder');
 
         $j = 1;
-        $existingCities = array();
+        $existingCities = [];
         for ($i = 1; $i <= 500; $i++) {
             /** @var $city City */
             $city = $cityFinder->find('Kurumi\MainBundle\Entity\City', $this->cities[rand(0, count($this->cities) - 1)]);

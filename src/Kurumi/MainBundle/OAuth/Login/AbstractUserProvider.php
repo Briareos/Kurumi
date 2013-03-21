@@ -35,24 +35,24 @@ abstract class AbstractUserProvider
     public function findUserByEmail($email)
     {
         $userRepository = $this->em->getRepository('KurumiMainBundle:User');
-        return $userRepository->findOneBy(array(
+        return $userRepository->findOneBy([
             'email' => $email,
-        ));
+        ]);
     }
 
     public function findOAuthById($oauthId)
     {
-        return $this->getRepository()->findOneBy(array(
+        return $this->getRepository()->findOneBy([
             'oauthId' => $oauthId,
             'name' => $this->getName(),
-        ));
+        ]);
     }
 
     public function findOAuthEntityByEmail($email)
     {
-        return $this->getRepository()->findOneBy(array(
+        return $this->getRepository()->findOneBy([
             'email' => $email,
-        ));
+        ]);
     }
 
     public function getRepository()
@@ -97,10 +97,10 @@ abstract class AbstractUserProvider
         $city = null;
         $newCity = $this->cityFinder->find(new City(), $name);
         if ($newCity) {
-            if ($existingCity = $this->em->getRepository('KurumiMainBundle:City')->findOneBy(array(
+            if ($existingCity = $this->em->getRepository('KurumiMainBundle:City')->findOneBy([
                 'latitude' => $city->getLatitude(),
                 'longitude' => $city->getLongitude(),
-            ))
+            ])
             ) {
                 $city = $existingCity;
             } else {

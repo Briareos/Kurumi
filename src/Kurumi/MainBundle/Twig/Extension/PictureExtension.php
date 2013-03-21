@@ -31,10 +31,10 @@ class PictureExtension extends \Twig_Extension
 
     public function getFunctions()
     {
-        return array(
+        return [
             'profile_picture' => new \Twig_Function_Method($this, 'getProfilePicture', ['is_safe' => ['html']]),
             'picture' => new \Twig_Function_Method($this, 'getPicture', ['is_safe' => ['html']]),
-        );
+        ];
     }
 
     public function getProfilePicture(Profile $profile, $format = null, $attributes = [])

@@ -24,16 +24,16 @@ class UserPasswordFormType extends AbstractType
         /** @var $user \Kurumi\MainBundle\Entity\User */
         $user = $options['data'];
         if ($user->getPassword() !== null) {
-            $builder->add('currentPassword', 'password', array());
+            $builder->add('currentPassword', 'password');
         }
-        $builder->add('plainPassword', 'repeated', array(
+        $builder->add('plainPassword', 'repeated', [
             'type' => 'password',
-        ));
+        ]);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'class' => 'Kurumi\MainBundle\Entity\User',
             'validation_groups' => function (FormInterface $form) {
                 /** @var $user \Kurumi\MainBundle\Entity\User */
@@ -44,7 +44,7 @@ class UserPasswordFormType extends AbstractType
                     return 'edit_password';
                 }
             }
-        ));
+        ]);
     }
 
 

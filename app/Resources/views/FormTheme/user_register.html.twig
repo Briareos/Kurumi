@@ -81,9 +81,9 @@
         {% else %}
             {% set attr = attr|merge({'class': attr.class|default('inline')}) %}
             {{ date_pattern|replace({
-            '{{ year }}':  form_widget(form.year, {'attr': {'class': attr.widget_class|default('') ~ ' input-small'}}),
-            '{{ month }}': form_widget(form.month, {'attr': {'class': attr.widget_class|default('') ~ ' input-small'}}),
-            '{{ day }}':   form_widget(form.day, {'attr': {'class': attr.widget_class|default('') ~ ' input-small'}}),
+            '{{ year }}':  form_widget(form.year, {'attr': {'class': attr.widget_class|default('') ~ ' span2'}}),
+            '{{ month }}': form_widget(form.month, {'attr': {'class': attr.widget_class|default('') ~ ' span2'}}),
+            '{{ day }}':   form_widget(form.day, {'attr': {'class': attr.widget_class|default('') ~ ' span2'}}),
             })|raw }}
             {{ block('help') }}
         {% endif %}

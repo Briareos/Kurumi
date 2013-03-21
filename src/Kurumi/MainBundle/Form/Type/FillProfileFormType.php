@@ -27,10 +27,10 @@ class FillProfileFormType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
-            array(
+            [
                 'class' => 'KurumiMainBundle:Profile',
-                'validation_groups' => array('fill_profile'),
-            )
+                'validation_groups' => ['fill_profile'],
+            ]
         );
     }
 }

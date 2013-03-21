@@ -21,18 +21,16 @@ class RegisterProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('birthday', 'birthday');
-        $builder->add('gender', 'gender', array(
-        ));
-        $builder->add('city', 'city', array(
-        ));
+        $builder->add('gender', 'gender');
+        $builder->add('city', 'city');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Kurumi\MainBundle\Entity\Profile',
-            'validation_groups' => array('registration'),
-        ));
+            'validation_groups' => ['registration'],
+        ]);
     }
 
 

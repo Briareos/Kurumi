@@ -17,9 +17,9 @@ class ProfileAdmin extends Admin
 
     protected $baseRoutePattern = 'profile';
 
-    protected $formOptions = array(
-        'validation_groups' => array('admin'),
-    );
+    protected $formOptions = [
+        'validation_groups' => ['admin'],
+    ];
 
     public function configureShowFields(ShowMapper $showMapper)
     {
@@ -44,43 +44,43 @@ class ProfileAdmin extends Admin
             ->add(
                 'firstName',
                 null,
-                array(
+                [
                     'required' => false,
-                )
+                ]
             )
             ->add(
                 'lastName',
                 null,
-                array(
+                [
                     'required' => false,
-                )
+                ]
             )
             ->add(
                 'birthday',
                 'birthday',
-                array(
+                [
                     'required' => false,
-                )
+                ]
             )
             ->add(
                 'gender',
                 'gender',
-                array(
+                [
                     'required' => false,
                     'empty_value' => $this->trans('admin.gender.unspecified'),
-                )
+                ]
             )
             ->add(
                 'city',
                 'city',
-                array(
+                [
                     'required' => false,
-                )
+                ]
             )
             ->add(
                 'user',
                 'sonata_type_model',
-                array()
+                []
             )
             ->end();
     }
@@ -100,12 +100,12 @@ class ProfileAdmin extends Admin
             ->add(
                 '_actions',
                 'actions',
-                array(
-                    'actions' => array(
-                        'view' => array(),
-                        'edit' => array(),
-                    )
-                )
+                [
+                    'actions' => [
+                        'view' => [],
+                        'edit' => [],
+                    ]
+                ]
             );
     }
 

@@ -26,10 +26,10 @@ class UserNameFormType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'class' => 'KurumiMainBundle:User',
-            'validation_groups' => array('edit_name'),
-        ));
+            'validation_groups' => ['edit_name'],
+        ]);
     }
 
 

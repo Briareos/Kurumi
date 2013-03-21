@@ -27,13 +27,13 @@ class NodejsSettingsInjector implements JavascriptSettingsInjectorInterface
 
     public function getSettings()
     {
-        return array(
+        return [
             'secure' => $this->dispatcher->getSecure(),
             'host' => $this->dispatcher->getHost(),
             'port' => $this->dispatcher->getPort(),
             'resource' => $this->dispatcher->getResource(),
             'connectTimeout' => $this->dispatcher->getConnectTimeout(),
             'contentTokens' => '',
-        );
+        ];
     }
 }

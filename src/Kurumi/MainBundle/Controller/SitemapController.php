@@ -42,7 +42,7 @@ class SitemapController extends Controller
 
         // Add the front page
         $url = $document->createElement('url');
-        $url->appendChild($document->createElement('loc', $this->router->generate('front', array(), true)));
+        $url->appendChild($document->createElement('loc', $this->router->generate('front', [], true)));
         $url->appendChild($document->createElement('lastmod', (new \DateTime())->format('Y-m-d')));
         $url->appendChild($document->createElement('changefreq', 'hourly'));
         $url->appendChild($document->createElement('priority', '1.0'));
@@ -51,16 +51,16 @@ class SitemapController extends Controller
         foreach ($users as $i => $user) {
             if ($i > 100) break;
             $url = $document->createElement('url');
-            $url->appendChild($document->createElement('loc', $this->router->generate('profile', array('id' => $user->getId()), true)));
+            $url->appendChild($document->createElement('loc', $this->router->generate('profile', ['id' => $user->getId()], true)));
             $url->appendChild($document->createElement('lastmod', (new \DateTime())->format('Y-m-d')));
             $url->appendChild($document->createElement('changefreq', 'monthly'));
             $url->appendChild($document->createElement('priority', '0.5'));
             $urlSet->appendChild($url);
         }
 
-        $response = new Response($document->saveHTML(), 200, array(
+        $response = new Response($document->saveHTML(), 200, [
             'Content-Type' => 'application/xml',
-        ));
+        ]);
 
         return $response;
     }

@@ -10,13 +10,14 @@ class GenderType extends AbstractType
 {
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'choices' => array(
+        $resolver->setDefaults([
+            'choices' => [
                 1 => 'Male',
                 2 => 'Female',
-            ),
-            'empty_value' => "Gender"
-        ));
+            ],
+            'empty_value' => "Gender",
+            'expanded' => true,
+        ]);
     }
 
     public function getParent()
